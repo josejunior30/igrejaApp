@@ -1,0 +1,114 @@
+/* Adapte os estilos conforme necessário para o seu layout específico */
+
+.membro-container {
+  margin-top: 40px;
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo na página */
+  }
+  
+  .detalhe-container {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .conteudo-centralizado {
+    text-align: center; /* Centraliza o texto */
+  }
+  
+  .foto-membro {
+    width: 100px; /* Ajuste o tamanho da imagem conforme necessário */
+    height: 100px; /* Ajuste o tamanho da imagem conforme necessário */
+    border-radius: 50%; /* Para criar uma imagem circular, ajuste conforme necessário */
+    margin: 0 auto; /* Adiciona margem automática para centralizar a imagem */
+    display: block;
+  }
+  
+  .nome-id {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #0b1f34;
+    padding-top: 10px;
+  }
+  
+  .dados {
+    margin-top: 10px;
+   color: #0b1f34;
+  }
+  .botoes-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .botao-editar,
+  .botao-deletar {
+    margin: 0 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Cor de fundo verde, ajuste conforme necessário */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .botao-deletar {
+    background-color: #f44336; /* Cor de fundo vermelha, ajuste conforme necessário */
+  }
+  .botao-voltar {
+    margin: 0 auto; /* Adiciona margem automática para centralizar o botão */
+    display: block; /* Certifica-se de que o botão é exibido como bloco */
+    background-color:  #0056b3;
+    color:   white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+ 
+
+
+  .pg{
+    font-weight: bold;
+  }
+  .setas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    left: 400px;
+    right: 400px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    
+   
+  }
+
+  .btn-left,
+  .btn-right {
+    font-size: 50px;
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .pg-id1 {
+    color: blue;
+  }
+  
+  .pg-id2 {
+    color: green;
+  }
+  .pg-id3 {
+    color:yellow;
+  }
+  .pg-id4 {
+    color: indigo;
+  }

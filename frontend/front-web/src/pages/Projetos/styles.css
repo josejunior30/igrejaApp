@@ -1,0 +1,130 @@
+
+.projeto-container {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    
+  }
+  
+  
+  .pj-container {
+    width: 250px;
+    height: 200px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    position: relative; 
+    background-color: white;
+  }
+  
+
+  .pj-container:hover {
+    transform: scale(1.1);
+   transition: 1s;
+  }
+ 
+  .btn-celula {
+    background-color: #ed7947;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute; 
+    bottom: 20px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    transition: background-color 0.3s ease-in-out;
+    
+  }
+  
+ 
+  .btn-celula:hover {
+    background-color:  #333;
+    
+    
+  }
+
+  .text-lider,
+  .text-nome {
+    font-weight: bold;
+    padding: 5px;
+    color: #0b1f34;
+  }
+  .icon{
+    font-weight: bold;
+    color: #0b1f34;
+  }
+  .text-nome{
+    color:#ed7947;
+  }
+  
+  h1 {
+    color: #0b1f34;
+    margin-top: 0px;
+    padding-top: 0px;
+    
+  }
+  .pj-text-container{
+    display: flex;
+    flex-direction: column;
+   padding: 0px;
+   
+  }
+  .filters-container input {
+    height: 44px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #9E9E9E;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-right: 20px;
+    padding-left: 15px;
+  }
+
+  .filters-container input:focus {
+    outline: none;
+  }
+  .filters-container button {
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 13px 60px;
+}
+
+.pg-estudo {
+  width: 250px;
+  height: 150px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+  position: relative; 
+  background-color: white;
+}
+.pg-relatorio {
+  width: 250px;
+  height: 150px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+  position: relative; 
+  background-color:  white;
+}
+.pg-estudo:hover {
+  transform: scale(1.1);
+  transition: 1s;
+}
+.pg-relatorio:hover {
+  transform: scale(1.1);
+  transition: 1s;
+}

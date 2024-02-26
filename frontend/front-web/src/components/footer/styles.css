@@ -1,0 +1,12 @@
+.footer-container {
+    height: 30px;
+    padding: 20px;
+    display: flex;
+    
+    
+    justify-content: space-between; /* Para adicionar espaço entre os elementos */
+    align-items: center; /* Para alinhar verticalmente no centro */
+    background-color: var(--color-darkslategray);
+  }
+  
+  

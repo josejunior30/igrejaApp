@@ -1,0 +1,97 @@
+/* styles.css */
+.sidebar-container {
+  width: 150px;
+  height: calc(100vh - 30px);
+  background-color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  padding-top: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-top: 1px solid #fff; /* Adiciona uma borda superior */
+}
+
+.sidebar {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+  transition: border-left 0.3s ease, width 0.3s ease; /* Adiciona transição para a largura */
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.sidebar li:hover {
+  border: 1px solid #fff;
+  background-color: #0b1f34;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  width: 144px;
+}
+
+.sidebar li.active {
+  border-left: 5px solid #00f;
+}
+
+/* Estiliza os links */
+.sidebar li a {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estiliza os ícones */
+.sidebar li svg {
+  color: white;
+  font-size: 24px;
+  transition: transform 0.3s ease; /* Adiciona transição para o ícone */
+}
+
+/* Estiliza o rótulo */
+.sidebar li span {
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+/* Adiciona regras de mídia para tornar a barra lateral responsiva */
+@media screen and (max-width: 768px) {
+  .sidebar-container {
+    width: 50px; /* Reduz a largura da barra lateral */
+    padding-top: 15px;
+  }
+
+  .sidebar li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sidebar li:hover {
+    
+    width: 100%;
+  }
+
+  /* Esconde os rótulos e ajusta o espaçamento */
+  .sidebar li span {
+    display: none;
+  }
+
+  /* Ajusta o tamanho dos ícones */
+  .sidebar li svg {
+    font-size: 18px;
+  }
+
+  /* Adiciona crescimento ao ícone no hover */
+  .sidebar li:hover svg {
+    transform: scale(1.5); /* Ajusta o fator de escala conforme necessário */
+  }
+}
