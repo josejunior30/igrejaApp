@@ -11,6 +11,12 @@ export type MembroDetail ={
     url: string;
     cpf:string;
     estadoCivil: number;
+    rua: string;
+    complemento: string;
+    cep: number;
+    bairro: string;
+    cidade: string;
+    numero: number;
     pequenoGrupo: pequenoGrupo;
 }
 export type pequenoGrupo={

@@ -1,0 +1,88 @@
+.fm-container {
+  margin-top: 10px;
+  max-width: 60%;
+  width: auto;
+  margin-left: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: grid;
+  gap: 16px;
+  background-color: white;
+  font-size: 14px;
+}
+
+.input-group {
+  display: grid;
+  gap: 16px;
+}
+
+.f-nome {
+  margin-bottom:4px;
+  padding-left: 10px;
+
+}
+
+.form-input {
+  padding: 6px;
+  box-sizing: border-box;
+  width: 100%; 
+  margin-top: 2px;
+}
+
+.btn-add {
+  width: 100%; /* Ocupa 100% da largura da div pai */
+  background-color: #ed7947;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-add:hover,
+.btn-add:focus {
+  background-color: #004080;
+}
+
+.add-voltar {
+  margin-top: 40px;
+  background-color: #0056b3;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.titulo-form {
+  margin: 0px;
+  padding: 0px;
+}
+
+.input-group-div {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, 1fr) ;  /* Duas colunas igualmente distribuídas */
+  align-items: center;
+}
+.form-select{
+
+  box-sizing: border-box;
+  margin-top: 2px;
+  width: 40%;
+}
+.form-select-pg{
+  width: 60%;
+}
+.titulo-form{
+  text-align: center;
+}

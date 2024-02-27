@@ -1,15 +1,14 @@
-import axios from "axios";
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { MembroDetail, pequenoGrupo } from "./types";
+import { pequenoGrupo } from "./types";
 import './styles.css';
 import SuccessModal from "../../components/Modal";
-import { Link } from "react-router-dom";
+import { insertMembro } from "../../service/membroService";
+import { MembroDTO } from "../../models/membro";
+import { BASE_URL } from "../../ultilitarios/system";
+import axios from "axios";
 
-
-const BASE_URL = 'http://localhost:8080';
-
-const Formulario: React.FC =() => {
-  const [membroDetail, setMembroDetail] = useState<MembroDetail>({
+const Formulario: React.FC = () => {
+  const [membroDTO, setMembroDTO] = useState<MembroDTO>({
     id: 0,
     nome: "",
     sobrenome: "",
@@ -18,62 +17,73 @@ const Formulario: React.FC =() => {
     dataNascimento: new Date(),
     telefone: "",
     url: "",
-    cpf: "", 
-   estadoCivil: 0,
+    cpf: "",
+    estadoCivil: 0,
+    rua: "", bairro: "", cep: 0, numero: 0, cidade: "", complemento: "",
     pequenoGrupo: {
-    id: 0,
+      id: 0,
       apelido: ""
     }
   });
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [listaDeGrupos, setListaDeGrupos] = useState<pequenoGrupo[]>([]);
 
+  useEffect(() => {
+    const fetchGrupos = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/pg`);
+        setListaDeGrupos((await response).data);
+      } catch (error) {
+        console.error("Erro ao obter a lista de grupos:", error);
+      }
+    };
+
+    fetchGrupos();
+  }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-  
+
     if (name === "pequenoGrupo") {
       const grupoId = parseInt(value, 10);
-  
-      setMembroDetail((prevMembroDetail) => ({
-        ...prevMembroDetail,
+
+      setMembroDTO((prevMembroDTO) => ({
+        ...prevMembroDTO,
         pequenoGrupo: {
-          ...prevMembroDetail.pequenoGrupo,
+          ...prevMembroDTO.pequenoGrupo,
           id: grupoId,
         },
       }));
-    }else if(name === "dataNascimento") {
+    } else if (name === "dataNascimento") {
       const dataNascimento = new Date(value);
-      
-      setMembroDetail((prevMembroDetail) => ({
-        ...prevMembroDetail,
+
+      setMembroDTO((prevMembroDTO) => ({
+        ...prevMembroDTO,
         [name]: dataNascimento,
       }));
     } else {
-      setMembroDetail((prevMembroDetail) => ({
-        ...prevMembroDetail,
+      setMembroDTO((prevMembroDTO) => ({
+        ...prevMembroDTO,
         [name]: value,
       }));
     }
   };
-  
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      console.log("Membro Detail antes do POST:", membroDetail);
-      // Faça a chamada para adicionar o membro utilizando axios aqui
-       await axios.post<{ id: number }>(`${BASE_URL}/membro`, membroDetail);
-    
+      console.log("Membro Detail antes do POST:", membroDTO);
+      // Utilizando a função insertMembro para adicionar o membro
+      await insertMembro(membroDTO);
+
       // Lógica de manipulação de sucesso, redirecionamento, etc.
-      setMembroDetail((prevMembroDetail) => ({
-        ...prevMembroDetail
-        
-      })); setShowSuccessModal(true);
-      setMembroDetail({
+      setShowSuccessModal(true);
+      setMembroDTO({
         id: 0, nome: "", sobrenome: "", email: "",
-        idade: 0,dataNascimento: new Date(), telefone: "",url: "", cpf: "", estadoCivil: 0,
+        idade: 0, dataNascimento: new Date(), telefone: "", url: "", cpf: "", estadoCivil: 0,
+        rua: "", bairro: "", cep: 0, numero: 0, cidade: "", complemento: "",
         pequenoGrupo: {
           id: 0, apelido: "",
         },
@@ -81,25 +91,8 @@ const Formulario: React.FC =() => {
     } catch (error) {
       console.error("Erro ao adicionar membro:", error);
       // Lógica de manipulação de erro
-      console.error("Erro ao adicionar membro:", error);
     }
   };
-  const [listaDeGrupos, setListaDeGrupos] = useState<pequenoGrupo[]>([]);
-
-
-useEffect(() => {
-  const fetchGrupos = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/pg`);
-      setListaDeGrupos(response.data);
-    } catch (error) {
-      console.error("Erro ao obter a lista de grupos:", error);
-    }
-  };
-
-  fetchGrupos();
-}, []); // O 
-
   return (
     <>
     <form onSubmit={handleSubmit} className="fm-container">
@@ -112,7 +105,7 @@ useEffect(() => {
         type="text"
        className="form-input"
         name="nome"
-        value={membroDetail.nome}
+        value={membroDTO.nome}
         onChange={handleChange}
         required
       />
@@ -123,7 +116,7 @@ useEffect(() => {
         type="text"
         className="form-input"
         name="sobrenome"
-        value={membroDetail.sobrenome}
+        value={membroDTO.sobrenome}
         onChange={handleChange}
         required
       />
@@ -134,9 +127,10 @@ useEffect(() => {
     <div className="input-group">
     <label htmlFor="telefone" className="f-nome">CPF:</label>
       <input 
-        type="cpf"
+        type="text"
+        name="cpf"
         className="form-input"
-        value={membroDetail.cpf}
+        value={membroDTO.cpf}
         onChange={handleChange}
         required
       />
@@ -144,9 +138,10 @@ useEffect(() => {
       <div className="input-group">
       <label htmlFor="email" className="f-nome">Email:</label>
       <input 
-        type="text"
+        type="email"
+        name="email"
         className="form-input"
-        value={membroDetail.email}
+        value={membroDTO.email}
         onChange={handleChange}
         required
       />
@@ -154,8 +149,9 @@ useEffect(() => {
      <div className="input-group">
       <label htmlFor="estado Civil" className="f-nome">Estado Civil:</label>
       <select
+      name="estadoCivil"
         className="form-select"
-        value={membroDetail.estadoCivil} 
+        value={membroDTO.estadoCivil} 
         onChange={handleChange}
         required
       >
@@ -178,7 +174,7 @@ useEffect(() => {
         type="tel"
         className="form-input"
         name="telefone"
-        value={membroDetail.telefone}
+        value={membroDTO.telefone}
         onChange={handleChange}
         required
       />
@@ -189,7 +185,7 @@ useEffect(() => {
   type="date"
   className="form-input"
   name="dataNascimento"
-  value={membroDetail.dataNascimento.toISOString().split('T')[0]}
+  value={membroDTO.dataNascimento.toISOString().split('T')[0]}
   onChange={handleChange}
   required
 />
@@ -198,8 +194,9 @@ useEffect(() => {
 <div className="input-group">
       <label htmlFor="grupo" className="f-nome">Pequeno Grupo:</label>
       <select
+      name="pequenoGrupo"
         className="form-select-pg"
-        value={membroDetail.pequenoGrupo.id} 
+        value={membroDTO.pequenoGrupo.id} 
         onChange={handleChange}
         required
       >
@@ -218,8 +215,9 @@ useEffect(() => {
     <label htmlFor="foto" className="f-nome">Foto</label>
           <input
             type="file"
+            name="url"
             className="form-input"
-            value={membroDetail.url}
+            value={membroDTO.url}
             onChange={handleChange}
             required
           />
@@ -234,8 +232,8 @@ useEffect(() => {
       <input 
         type="text"
        className="form-input"
-        name="nome"
-        value={membroDetail.nome}
+        name="rua"
+        value={membroDTO.rua}
         onChange={handleChange}
         required
       />
@@ -245,19 +243,19 @@ useEffect(() => {
       <input 
         type="text"
         className="form-input"
-        name="sobrenome"
-        value={membroDetail.sobrenome}
+        name="numero"
+        value={membroDTO.numero}
         onChange={handleChange}
         required
       />
       </div>
       <div className="input-group">
-          <label htmlFor="sobrenome" className="f-nome">Bairro</label>
+          <label htmlFor="bairro" className="f-nome">Bairro</label>
       <input 
         type="text"
         className="form-input"
-        name="sobrenome"
-        value={membroDetail.sobrenome}
+        name="bairro"
+        value={membroDTO.bairro}
         onChange={handleChange}
         required
       />
@@ -269,8 +267,8 @@ useEffect(() => {
       <input 
         type="text"
        className="form-input"
-        name="nome"
-        value={membroDetail.nome}
+        name="cidade"
+        value={membroDTO.cidade}
         onChange={handleChange}
         required
       />
@@ -280,8 +278,8 @@ useEffect(() => {
       <input 
         type="text"
         className="form-input"
-        name="sobrenome"
-        value={membroDetail.sobrenome}
+        name="complemento"
+        value={membroDTO.complemento}
         onChange={handleChange}
         required
       />
@@ -289,10 +287,10 @@ useEffect(() => {
       <div className="input-group">
           <label htmlFor="sobrenome" className="f-nome">cep:</label>
       <input 
-        type="text"
+        type="number"
         className="form-input"
-        name="sobrenome"
-        value={membroDetail.sobrenome}
+        name="cep"
+        value={membroDTO.cep}
         onChange={handleChange}
         required
       />

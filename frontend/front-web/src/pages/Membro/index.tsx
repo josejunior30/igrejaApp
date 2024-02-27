@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from "react";
 import './styles.css';
-import axios from "axios";
-
 import Filters from "../../components/Filters";
-import { MembroResponse } from "./types";
 import { Link } from "react-router-dom";
-
-const BASE_URL = 'http://localhost:8080';
-
-
-
+import { MembroDTO } from "../../models/membro";
+import *as membroService from '../../service/membroService';
 
 const Membro = () => {
-  const [membroResponse, setMembroResponse] = useState<MembroResponse[]>([]);
+  const [MembroDTO, setMembroDTO] = useState<MembroDTO[]>([]);
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/membro`)
+   membroService.findAll()
       .then(response => {
         console.log("Dados recebidos:", response.data);
-        setMembroResponse(response.data);
+        setMembroDTO(response.data);
       })
       .catch(error => {
         console.error("Erro ao buscar dados:", error);
@@ -41,8 +35,8 @@ const Membro = () => {
         </thead>
 
         <tbody>
-          {membroResponse.length > 0 ? (
-            membroResponse.map((membro) => (
+          {MembroDTO.length > 0 ? (
+            MembroDTO.map((membro) => (
               <tr key={membro.id}>
                 <td>
                   {membro.dataNascimento

@@ -1,17 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { MembroDetail } from "./types";
+import { MembroDTO } from "../../../models/membro";
 import './styles.css';
 import { MdEmail } from "react-icons/md";
 import { FaChevronRight,FaChevronLeft, FaPhoneVolume } from "react-icons/fa";
+import *as membroService from '../../../service/membroService';
+
 
 const Detalhes = () => {
+  
   const { id } = useParams<{ id: string }>() ?? { id: "" }; // Fornecendo uma string vazia como valor padrão
   const navigate = useNavigate();
-  const [membroDetail, setMembroDetail] = useState<MembroDetail>(); // Estado para armazenar os detalhes do membro
+  const [MembroDTO, setMembroDTO] = useState<MembroDTO>(); // Estado para armazenar os detalhes do membro
   const [loading, setLoading] = useState(true);
+  
+  const loadMembroDTO = (id: string) => {
+    membroService.findById(Number(id))  // Converte id para número
+      .then(response => {
+        console.log("Detalhes do Membro:", response.data);
+        setMembroDTO(response.data);
+      })
+      .catch(error => {
+        console.error("Erro ao buscar detalhes do membro:", error);
+        // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
+  useEffect(() => {
+    if (id) {
+      loadMembroDTO(id);
+    }
+  }, [id]);
+
+ 
   const getColorClassForPequenoGrupo = (id: number): string => {
     switch (id) {
       case 1:
@@ -26,29 +50,6 @@ const Detalhes = () => {
         return ""; // Adicione uma classe padrão ou deixe vazio para a cor padrão
     }
   };
-
-  const loadMembroDetails = (membroId: string) => {
-    axios.get(`http://localhost:8080/membro/${membroId}`)
-      .then(response => {
-        console.log("Detalhes do Membro:", response.data);
-        setMembroDetail(response.data);
-      })
-      .catch(error => {
-        console.error("Erro ao buscar detalhes do membro:", error);
-        // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    if (id) { // Verifica se id não é undefined ou vazio
-      loadMembroDetails(id);
-    }
-  }, [id]);
-
-
 
   const handleNextClick = () => {
     if (id !== undefined) {
@@ -69,33 +70,35 @@ const Detalhes = () => {
   return (
     <>
     <div className="membro-container">
-      {membroDetail ? (
+      {MembroDTO ? (
         <div className="detalhe-container">
           <div className="conteudo-centralizado">
-          <img src={membroDetail.url} alt="Foto do Membro" className="foto-membro" />
-            <span className="nome-id">{membroDetail.nome} {membroDetail.sobrenome}</span>
-            <p className="dados"> CPF: {membroDetail.cpf}</p>
-            <p className="dados"> Estado Civil: {membroDetail.estadoCivil}</p>
-            <p className="dados">Data de Nascimento: {new Date(membroDetail.dataNascimento).toLocaleDateString()}</p>
-            <p className="dados"><span><MdEmail /></span>  Email: {membroDetail.email}</p>
-            <p className="dados"><span><FaPhoneVolume /></span>  Telefone: {membroDetail.telefone}</p>
+          <img src={MembroDTO.url} alt="Foto do Membro" className="foto-membro" />
+            <span className="nome-id">{MembroDTO.nome} {MembroDTO.sobrenome}</span>
+            <p className="dados"> CPF: {MembroDTO.cpf}</p>
+            <p className="dados"> Estado Civil: {MembroDTO.estadoCivil}</p>
+            <p className="dados">Data de Nascimento: {new Date(MembroDTO.dataNascimento).toLocaleDateString()}</p>
+            <p className="dados"><span><MdEmail /></span>  Email: {MembroDTO.email}</p>
+            <p className="dados"><span><FaPhoneVolume /></span>  Telefone: {MembroDTO.telefone}</p>
          
-            {membroDetail.pequenoGrupo && (
+            {MembroDTO.pequenoGrupo && (
               <div >
                 
                 <p className="dados">
       Pequeno Grupo:{" "}
       <span
-        className={`pg ${getColorClassForPequenoGrupo(membroDetail.pequenoGrupo.id)}`}
+        className={`pg ${getColorClassForPequenoGrupo(MembroDTO.pequenoGrupo.id)}`}
       >
-        {membroDetail.pequenoGrupo.apelido}
+        {MembroDTO.pequenoGrupo.apelido}
       </span>
     </p>
             </div>
             )}
           </div>
           <div className="botoes-container">
+          <Link to={`/secretaria/membro/atualizar/${id}`}>
             <button className="botao-editar">Editar</button>
+            </Link>
             <button className="botao-deletar">Deletar</button>
           </div>
         </div>

@@ -7,13 +7,14 @@ import Celulas from './pages/Celulas';
 import App from './App';
 import Charts from './pages/Charts/Charts';
 import Inicial from './pages/Inicial';
-import Sidebar from './components/Secretaria';
+import Sidebar from './components/sidebar';
 import Visitante from './pages/Visitante';
 import Detalhes from './pages/Membro/detalhe-membro';
 import Formulario from './pages/formMembro';
-import Header from './components/Header';
+
 import Projetos from './pages/Projetos';
 import Teste from './pages/formMembro/teste';
+
 
 const AppRouter = () => (
   
@@ -29,6 +30,7 @@ const AppRouter = () => (
               <Route path="visitante" element={<Visitante />} />
               <Route path="membro/:id" element={<Detalhes/>} />
               <Route path="membro/adicionar" element={<Formulario />} />
+              
             </Route>  
             <Route path="/projetos" element={<Projetos />} />
             <Route path="/teste" element={<Teste />}/>

@@ -1,7 +1,7 @@
 
 
-export type MembroDetail ={
-    id: number;
+export type MembroDTO ={
+    id:number;
     nome: string;
     sobrenome: string;
     email: string;
@@ -9,8 +9,14 @@ export type MembroDetail ={
     dataNascimento: Date;
     telefone:  string;
     url: string;
-    cpf: string;
+    cpf:string;
     estadoCivil: number;
+    rua: string;
+    complemento: string;
+    cep: number;
+    bairro: string;
+    cidade: string;
+    numero: number;
     pequenoGrupo: pequenoGrupo;
 }
 export type pequenoGrupo={
