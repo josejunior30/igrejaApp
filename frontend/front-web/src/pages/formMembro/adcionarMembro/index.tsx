@@ -1,13 +1,18 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { pequenoGrupo } from "./types";
+
 import './styles.css';
-import SuccessModal from "../../components/Modal";
-import { insertMembro } from "../../service/membroService";
-import { MembroDTO } from "../../models/membro";
-import { BASE_URL } from "../../ultilitarios/system";
+import SuccessModal from "../../../components/Modal";
+import { insertMembro } from "../../../service/membroService";
+import { MembroDTO, pequenoGrupo } from "../../../models/membro";
+import { BASE_URL } from "../../../ultilitarios/system";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom'; 
 
 const Formulario: React.FC = () => {
+  const [listaDeGrupos, setListaDeGrupos] = useState<pequenoGrupo[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const navigate = useNavigate();
   const [membroDTO, setMembroDTO] = useState<MembroDTO>({
     id: 0,
     nome: "",
@@ -26,9 +31,7 @@ const Formulario: React.FC = () => {
     }
   });
 
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [listaDeGrupos, setListaDeGrupos] = useState<pequenoGrupo[]>([]);
-
+  
   useEffect(() => {
     const fetchGrupos = async () => {
       try {
@@ -79,7 +82,7 @@ const Formulario: React.FC = () => {
       await insertMembro(membroDTO);
 
       // Lógica de manipulação de sucesso, redirecionamento, etc.
-      setShowSuccessModal(true);
+      setIsModalVisible(true);
       setMembroDTO({
         id: 0, nome: "", sobrenome: "", email: "",
         idade: 0, dataNascimento: new Date(), telefone: "", url: "", cpf: "", estadoCivil: 0,
@@ -93,6 +96,13 @@ const Formulario: React.FC = () => {
       // Lógica de manipulação de erro
     }
   };
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+    setIsRedirecting(true);
+  };
+  if (isRedirecting) {
+    navigate('/secretaria/membro');
+  }
   return (
     <>
     <form onSubmit={handleSubmit} className="fm-container">
@@ -300,8 +310,13 @@ const Formulario: React.FC = () => {
 
       <button className="btn-add" type="submit">Adicionar</button>
     </form>
-    
-    {showSuccessModal && <SuccessModal onClose={() => setShowSuccessModal(false)} />}
+    {isModalVisible && (
+        <SuccessModal
+          onClose={handleModalClose}
+          onRedirect={() => setIsRedirecting(true)} 
+          operation="adicionar"
+        />
+      )}
     </>
   );
 };

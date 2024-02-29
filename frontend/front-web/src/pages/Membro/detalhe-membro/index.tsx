@@ -5,14 +5,19 @@ import './styles.css';
 import { MdEmail } from "react-icons/md";
 import { FaChevronRight,FaChevronLeft, FaPhoneVolume } from "react-icons/fa";
 import *as membroService from '../../../service/membroService';
+import { deleteMembro } from "../../formMembro/excluirMembro";
+import SuccessModal from "../../../components/Modal";
+import { CgDanger } from "react-icons/cg";
 
 
 const Detalhes = () => {
-  
   const { id } = useParams<{ id: string }>() ?? { id: "" }; // Fornecendo uma string vazia como valor padrão
   const navigate = useNavigate();
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [MembroDTO, setMembroDTO] = useState<MembroDTO>(); // Estado para armazenar os detalhes do membro
   const [loading, setLoading] = useState(true);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    
   
   const loadMembroDTO = (id: string) => {
     membroService.findById(Number(id))  // Converte id para número
@@ -50,7 +55,26 @@ const Detalhes = () => {
         return ""; // Adicione uma classe padrão ou deixe vazio para a cor padrão
     }
   };
-
+  
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+  
+    navigate('/secretaria/membro');
+  };
+ 
+  const handleDeleteClick = () => {
+    setShowDeleteConfirmation(true);
+  };
+  const handleConfirmDelete = async () => {
+    if (id !== undefined) {
+      await deleteMembro(parseInt(id, 10));
+      setIsModalVisible(true);
+      setShowDeleteConfirmation(false);
+    }
+  };
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmation(false);
+  };
   const handleNextClick = () => {
     if (id !== undefined) {
       const nextId = parseInt(id, 10) + 1;
@@ -99,8 +123,24 @@ const Detalhes = () => {
           <Link to={`/secretaria/membro/atualizar/${id}`}>
             <button className="botao-editar">Editar</button>
             </Link>
-            <button className="botao-deletar">Deletar</button>
+            <button onClick={handleDeleteClick} className="botao-deletar">Deletar</button>
           </div>
+          
+        {showDeleteConfirmation && (
+          <div className="modal-confirm" >
+            <span className="icone-confirm"><CgDanger /></span>
+            <p className="msg-confirm" >tem certeza disso?</p>
+            <button onClick={handleConfirmDelete} className="btn-confirma">Confirmar</button>
+            <button onClick={handleCancelDelete} className="btn-confirma">Cancelar</button>
+          </div>
+        )}
+          {isModalVisible && (
+        <SuccessModal
+          onClose={handleModalClose}
+          onRedirect={() => navigate('/secretaria/membro')}
+          operation={'deletar'}
+        />
+        )}
         </div>
       ) : (
         <p>Carregando detalhes do membro...</p>
@@ -114,6 +154,7 @@ const Detalhes = () => {
     <Link to="/secretaria/membro">
        <button className="botao-voltar">voltar</button>
      </Link>
+     
        </>
   );
 };

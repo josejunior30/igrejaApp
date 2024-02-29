@@ -19,3 +19,6 @@ export function insertMembro(MembroDTO:any){
 export function updateMembro(id: number, MembroDTO:any){
     return axios.put(`${BASE_URL}/membro/${id}`, MembroDTO);
 }
+export function deleteMembro(id: number) {
+    return axios.delete(`${BASE_URL}/membro/${id}`);
+}
