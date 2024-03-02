@@ -107,7 +107,6 @@ const Detalhes = () => {
          
             {MembroDTO.pequenoGrupo && (
               <div >
-                
                 <p className="dados">
       Pequeno Grupo:{" "}
       <span
@@ -119,6 +118,7 @@ const Detalhes = () => {
             </div>
             )}
           </div>
+        
           <div className="botoes-container">
           <Link to={`/secretaria/membro/atualizar/${id}`}>
             <button className="botao-editar">Editar</button>
@@ -129,7 +129,7 @@ const Detalhes = () => {
         {showDeleteConfirmation && (
           <div className="modal-confirm" >
             <span className="icone-confirm"><CgDanger /></span>
-            <p className="msg-confirm" >tem certeza disso?</p>
+            <p className="msg-confirm" >Tem certeza disso?</p>
             <button onClick={handleConfirmDelete} className="btn-confirma">Confirmar</button>
             <button onClick={handleCancelDelete} className="btn-confirma">Cancelar</button>
           </div>
@@ -150,10 +150,24 @@ const Detalhes = () => {
       <button onClick={handlePreviousClick} className="btn-left"> <FaChevronLeft /></button>
       <button onClick={handleNextClick} className="btn-right"><FaChevronRight /></button>
     </div>
+    <div className="membro-container-endereço">
+    <div className="detalhe-container-endereço">
+      {MembroDTO ? (
+          <div className="conteudo-centralizado-endereço">
+            <p className="text-h2">Endereço</p>
+          <p className="dados"> Rua: {MembroDTO.rua}</p>
+            <p className="dados"> Bairro: {MembroDTO.bairro}</p>
+            <p className="dados">Numero: {MembroDTO.numero}</p>
+            <p className="dados"><span><MdEmail /> </span>Cidade: {MembroDTO.cidade}</p>
+            <p className="dados"><span><FaPhoneVolume /></span> Complemento: {MembroDTO.complemento}</p>
+            <p className="dados"><span><FaPhoneVolume /></span> Cep: {MembroDTO.cep}</p>
+          </div>
+        ):(
+          <p>Carregando detalhes do membro...</p>
+          )}
+          </div>
+          </div>
 
-    <Link to="/secretaria/membro">
-       <button className="botao-voltar">voltar</button>
-     </Link>
      
        </>
   );

@@ -3,16 +3,10 @@
 .membro-container {
   margin-top: 40px;
     display: flex;
-    justify-content: center; /* Centraliza o conteúdo na página */
+    justify-content: space-between; 
   }
   
-  .detalhe-container {
-    background-color: white;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+  
   
   .conteudo-centralizado {
     text-align: center; /* Centraliza o texto */
@@ -32,6 +26,7 @@
     font-weight: bold;
     color: #0b1f34;
     padding-top: 10px;
+    text-decoration: underline;
   }
   
   .dados {
@@ -81,8 +76,8 @@
     align-items: center;
     justify-content: space-between;
     position: absolute;
-    left: 400px;
-    right: 400px;
+    left: 250px;
+    right: 280px;
     top: 50%;
     transform: translateY(-50%);
     color: white;
@@ -155,4 +150,41 @@
     background-color: #0056b3;
   }
   
+  .detalhe-container-endereço {
+    background-color: white;
+    margin-left: 200px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-right: 600px;
+    display: flex;
+    position: absolute;
+    flex: 1;
+    padding: 10px;
+    
+  }
+  .detalhe-container {
+    background-color: white;
+    padding: 20px;
+    margin: auto;
+    margin-left: 700px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    position: absolute;
+  }
+    
   
+  .conteudo-centralizado-endereço {
+    text-align: center; /* Centraliza o texto */
+  }
+
+  .membro-container-endereço {
+ margin-bottom: 100px;
+      display: flex;
+      justify-content: center;
+     
+    }
+    .text-h2{
+      font-weight: bold;
+     text-decoration: underline;
+    }

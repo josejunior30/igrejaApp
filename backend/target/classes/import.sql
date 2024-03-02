@@ -3,6 +3,18 @@ INSERT INTO tb_pequeno_Grupo (nome, apelido, lider) VALUES ('Pr. Alex', 'VERDE',
 INSERT INTO tb_pequeno_Grupo (nome, apelido, lider) VALUES ('Amilton', 'AMARELO', 'Beto');
 INSERT INTO tb_pequeno_Grupo (nome, apelido, lider) VALUES ('Yasmin', 'ROXO', 'Douglas');
 
+INSERT INTO tb_projetos (nome, lider) VALUES ('Artesanato','Ana Clara');
+INSERT INTO tb_projetos (nome, lider) VALUES ('Jiu-Jtsu','douglas Orelha');
+INSERT INTO tb_projetos (nome, lider) VALUES ('Musica','Samuel');
+
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (2 , 'Thiago','2010-05-11', 13, 234567899,'Joao Carlos', 1234567-78 );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (1 , 'Joana','1977-05-11', 13, 234567899,'', null );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (3 , 'Lucas','2005-05-15', 14, 23435432,'Lucia Helenar', 1234567-78 );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (3 , 'Weverton','2009-05-11', 14, 23435432,'Maria Ester', 1234567-78 );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (1 , 'Alda','1979-05-11', 56, 23435432,'', null );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (1 , 'Marieta','1955-05-11', 57, 23435432, null, null );
+
+
 INSERT INTO tb_user (nome, email, password, role) VALUES ('Eleilson','leo@gmail.com', '1234', 0);
 INSERT INTO tb_user (nome, email, password, role) VALUES ('Junior','junior@gmail.com', '1234', 1);
 INSERT INTO tb_user (nome, email, password, role) VALUES ('Rhuan','rhuan@gmail.com', '1234', 1);
