@@ -56,7 +56,9 @@ public class ProjetosService {
 	private void copyDtoToEntity(ProjetosDTO dto, Projetos entity) {
 		entity.setNome(dto.getNome());
 		entity.setLider(dto.getLider());
-		
+		entity.setCoordenador(dto.getCoordenador());
+		entity.setFoto_coordenador(dto.getFoto_coordenador());
+		entity.setFoto_lider(dto.getFoto_lider());
 	}
 
 	

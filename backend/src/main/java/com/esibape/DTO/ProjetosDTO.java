@@ -15,27 +15,32 @@ public class ProjetosDTO implements Serializable{
 	private Long id;
 	private String nome;
 	private String lider;
-	
+	private String coordenador;
+	private String foto_coordenador;
+	private String foto_lider;
 	private List<AlunosDTO>alunos = new ArrayList<>();
 
 	public ProjetosDTO() {
 		
 	}
 
-	public ProjetosDTO(Long id, String nome, String lider, List<AlunosDTO> alunos) {
+	public ProjetosDTO(Long id, String nome, String lider, String coordenador,String foto_lider, String foto_coordenador, List<AlunosDTO> alunos) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.lider = lider;
 		this.alunos = alunos;
+		this.foto_coordenador= foto_coordenador;
+		this.foto_lider= foto_lider;
 	}
 	
 	public ProjetosDTO(Projetos entity) {
 		this.id = entity.getId();
 		this.nome = entity.getNome();
 		this.lider = entity.getLider();
-	
-		
+		this.coordenador= entity.getCoordenador();
+		this.foto_coordenador= entity.getFoto_coordenador();
+		this.foto_lider = entity.getFoto_lider();
 	}
 	
 
@@ -76,6 +81,30 @@ public class ProjetosDTO implements Serializable{
 
 	public void setAlunos(List<AlunosDTO> alunos) {
 		this.alunos = alunos;
+	}
+	
+	public String getCoordenador() {
+		return coordenador;
+	}
+
+	public void setCoordenador(String coordenador) {
+		this.coordenador = coordenador;
+	}
+
+	public String getFoto_coordenador() {
+		return foto_coordenador;
+	}
+
+	public void setFoto_coordenador(String foto_coordenador) {
+		this.foto_coordenador = foto_coordenador;
+	}
+
+	public String getFoto_lider() {
+		return foto_lider;
+	}
+
+	public void setFoto_lider(String foto_lider) {
+		this.foto_lider = foto_lider;
 	}
 
 	@Override

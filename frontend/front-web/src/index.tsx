@@ -15,6 +15,7 @@ import Formulario from './pages/formMembro/adcionarMembro';
 import Projetos from './pages/Projetos';
 import Teste from './pages/formMembro/teste';
 import FormularioUpdate from './pages/formMembro/EditarMembro';
+import DetalheProjetos from './pages/Projetos/detalhe-projeto';
 
 
 const AppRouter = () => (
@@ -27,13 +28,16 @@ const AppRouter = () => (
             <Route path="/inicio" element={<Inicial />} />
             <Route path="/Pg" element={<Celulas />} />
             <Route path="/secretaria/*" element={<Sidebar />}>
-              <Route path="membro" element={<Membro />} />
-              <Route path="visitante" element={<Visitante />} />
-              <Route path="membro/:id" element={<Detalhes/>} />
-              <Route path="membro/adicionar" element={<Formulario />} />
-              <Route path="membro/atualizar/:id" element={<FormularioUpdate />} />
+                  <Route path="membro" element={<Membro />} />
+                  <Route path="visitante" element={<Visitante />} />
+                  <Route path="membro/:id" element={<Detalhes/>} />
+                  <Route path="membro/adicionar" element={<Formulario />} />
+                  <Route path="membro/atualizar/:id" element={<FormularioUpdate />} />
             </Route>  
             <Route path="/projetos" element={<Projetos />} />
+            <Route path="/projetos/:id" element={<DetalheProjetos />} />
+                
+            
             <Route path="/teste" element={<Teste />}/>
           </Routes>
       </Router>
