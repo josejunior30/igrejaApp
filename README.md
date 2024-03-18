@@ -17,7 +17,9 @@ O objetivo deste projeto é criar uma plataforma abrangente para auxiliar na ges
   - TypeScript
   - HTML/CSS 
 
+## Equipe 📚
+Este projeto está sendo desenvolvido por mim,  como forma de portifolio e aprendizado.
 
-
-
+## Licença
+Este projeto está licenciado sob a Licença MIT. Consulte o arquivo LICENSE para obter mais informações.
 
