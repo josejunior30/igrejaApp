@@ -4,11 +4,12 @@ import React from 'react';
 import { FaHome, FaUser, FaUsers, FaFile, FaUsersCog, FaSmile } from 'react-icons/fa';
 import './styles.css';
 import { Link, Outlet } from 'react-router-dom';
-import Header from '../Header';
+import Header from '../../../../components/Header';
 
 
 
-const Sidebar: React.FC = () => {
+
+const SidebarProjetos: React.FC = () => {
   return (
 <>
 <Header/>
@@ -60,5 +61,5 @@ const Sidebar: React.FC = () => {
   
 };
 
-export default Sidebar;
+export default SidebarProjetos;
 

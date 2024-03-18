@@ -78,20 +78,20 @@ color:white;
 
 }
 .btn-celula-voltar {
-  margin-top: 20px;
+  margin-top: 40px;
   background-color: #0056b3;
     color: white;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 12px;
     bottom: 20px; 
     left: 50%; 
     transform: translateX(-50%); 
     transition: background-color 0.3s ease-in-out;
     position: relative; 
-
+margin-bottom: 30px;
 }
 .text-lider-projeto{
   margin-bottom: 20px;

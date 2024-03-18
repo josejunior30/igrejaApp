@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import { projetosDTO } from "../../../models/projetos";
 import { Link, useParams } from "react-router-dom";
 import * as projetosService from '../../../service/projetosService';
+import Sidebar from "../../../components/sidebar";
+
+import './styles.css';
+
+import BarraAlunos from "../Filters";
 
 const DetalheProjetos = () => {
   const { id } = useParams<{ id: string }>() ?? { id: "" };
@@ -27,41 +32,77 @@ const DetalheProjetos = () => {
       loadProjetosDTO(id);
     }
   }, [id]);
+  useEffect(() => {
+    console.log("Dados de projetosDTO:", projetosDTO);
+  }, [projetosDTO]);
 
   return (
-    <div>
-      <div className="membro-container">
-        {projetosDTO ? (
-          <div className="detalhe-container">
-            <div className="conteudo-centralizado">
-              <img src={projetosDTO.foto_lider} alt="Foto do Membro" className="foto-membro" />
-              <span className="nome-id">{projetosDTO.lider}</span>
-
+    <>
+    <Sidebar/>
+      <div className="alunos-pj-container">
+      <BarraAlunos/>
+        {projetosDTO && (
+          <table className="alunos-table" cellPadding="0" cellSpacing="0">
+            <thead>
+              <tr>
+                <th>Nascimento</th>
+                <th>Nome</th>
+                <th>Idade</th>
+                <th>Identidade</th>
+                <th>semana 1</th>
+                <th>semana 2</th>
+                <th>semana 3</th>
+             
+              </tr>
+            </thead>
+            <tbody>
               {projetosDTO.alunos && (
-                <div>
-                  {projetosDTO.alunos.map((aluno, index) => (
-                    <p key={index} className="dados">
-                      <span>{aluno.nome}</span>
+                projetosDTO.alunos.map((aluno) => (
+                  <tr key={aluno.id}>
+                    <td>
+                  {aluno.dataNascimento
+                    ? new Date(aluno.dataNascimento).toLocaleDateString()
+                    : "Data de Nascimento Não Disponível"}
+                </td>
+                    <td >
+                      <Link to={`${aluno.id}`} className="dados-alunos">
+                      {aluno.nome}
+                      </Link>
+                   </td>
+                    <td > 
+                    <Link to={`${aluno.id}`} className="dados-alunos">
                       {aluno.idade}
-                    </p>
-                  ))}
-                </div>
+                      </Link>
+                      </td>
+                    <td>
+                      <Link to={`${aluno.id}`} className="dados-alunos">
+                      {aluno.rg}
+                      </Link>
+                    </td>
+                <td>
+                  {aluno.chamada.length > 0 ? (
+                    aluno.chamada.map((item) => (
+                      <span key={item.id}>{item.data.toLocaleDateString()}</span>
+                    ))
+                  ) : (
+                    <span>Dados de chamada vazios</span>
+                  )}
+              </td>
+                  
+                 
+                   
+                    <td>
+                           ----
+                    </td>
+                  </tr>
+                ))
               )}
-
-              <div className="botoes-container">
-                <Link to="#">
-                  <button className="botao-editar">Editar</button>
-                </Link>
-                <button className="botao-deletar">Deletar</button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <p>Carregando detalhes do membro...</p>
+            </tbody>
+          </table>
         )}
       </div>
-    </div>
+    </>
   );
-};
+                };
 
 export default DetalheProjetos;

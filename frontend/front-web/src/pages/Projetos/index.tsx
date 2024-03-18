@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import './styles.css';
 import { projetosDTO } from "../../models/projetos";
 import *as projetosService from '../../service/projetosService';
+import BarraAlunos from "./Filters";
 
 const Projetos = () => {
     const [projetosDTO, setProjetosDTO] = useState<projetosDTO[]>([]);
@@ -25,6 +26,7 @@ const Projetos = () => {
     <>
     <Header/>
     <div className="projeto-container">
+      
                 <div className="coordenador">
                     <img src={fotoCoordenador} alt="Foto do coordenador" className="foto-coordenador" />
                     <span className="text-coordenador">Coordenador de Projetos: </span>

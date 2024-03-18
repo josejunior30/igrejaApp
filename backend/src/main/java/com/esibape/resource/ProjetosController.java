@@ -31,6 +31,7 @@ public class ProjetosController {
 		List<ProjetosDTO>list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
+	
 	@GetMapping(value="/{id}")
 	public ResponseEntity<ProjetosDTO>findById(@PathVariable Long id){
 		ProjetosDTO entity = service.findById(id);

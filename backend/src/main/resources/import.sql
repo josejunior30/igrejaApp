@@ -7,12 +7,31 @@ INSERT INTO tb_projetos (nome, lider , coordenador, foto_coordenador, foto_lider
 INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider) VALUES ('Jiu-Jtsu','Douglas Orellha', null, null, 'https://i.postimg.cc/wjKN09td/Orelha.png');
 INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider) VALUES ('Musica','Samuel', null, null, 'https://i.postimg.cc/7L8NGg10/Samuel.png');
 
-INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (2 , 'Thiago','2010-05-11', 13, 234567899,'Joao Carlos', 1234567-78 );
-INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (1 , 'Joana','1977-05-11', 13, 234567899,'', null );
-INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (3 , 'Lucas','2005-05-15', 14, 23435432,'Lucia Helenar', 1234567-78 );
-INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (3 , 'Weverton','2009-05-11', 14, 23435432,'Maria Ester', 1234567-78 );
-INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (1 , 'Alda','1979-05-11', 56, 23435432,'', null );
-INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel) VALUES (1 , 'Marieta','1955-05-11', 57, 23435432, null, null );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (2 , 'Thiago Pereira Fonseca','2010-05-11', 13, 234567899,'Joao Carlos', 1234567-78, '97434578',  'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221 );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep)  VALUES (1 , 'Joana Lopez Marques','1977-05-11', 13, 234567899, null, null, '965786324', 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221 );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (3 , 'Lucas Soares Fonseca','2005-05-15', 14, 23435432,'Lucia Helenar', 1234567-78, '978956732', 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221 );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (3 , 'Weverton  Henriques Silva ','2009-05-11', 14, 23435432,'Maria Ester', 1234567-78, '978956732', 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221 );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (1 , 'Alda Chavier Galvão','1979-05-11', 56, 23435432,'', null, '978956732','rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221);
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (1 , 'Ilza  nobre da Silva  ','1955-05-11', 57, 23435432, null, null, '978956732', 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221 );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (1 , 'Jamile Hebert Judá  ','1955-05-11', 57, 23435432, null, null, '978956732', 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221 );
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (1 , 'Marieta Loureiro da Silva  ','1955-05-11', 57, 23435432, null, null, '978956732' , 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221);
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (1 , 'Carla Moreno da Silva  ','1955-05-11', 57, 23435432, null, null, '978956732' , 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221);
+INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (1 , 'Lucia kaiser da Costa  ','1955-05-11', 57, 23435432, null, null, '978956732',' rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221 );
+
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-05', 0, 1)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id ) VALUES ('2024-04-05', 1, 2)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-05', 2, 3)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-05', 2, 4)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-05', 2, 5)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-10', 0, 1)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-10', 0, 2)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-10', 0, 3)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-10', 2, 4)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-17', 1, 1)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-23', 2, 1)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-27', 0, 1)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-05-01', 0, 1)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-05-04', 1, 1)
 
 
 INSERT INTO tb_user (nome, email, password, role) VALUES ('Eleilson','leo@gmail.com', '1234', 0);

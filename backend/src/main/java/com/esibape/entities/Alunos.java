@@ -2,14 +2,17 @@ package com.esibape.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,19 +29,31 @@ public class Alunos implements Serializable{
 	private String rg;
 	private String responsavel;
 	private String cpfResponsavel;
+	private String telefone;
+	private String url;
+	private String rua;
+	private String cep;
+	private String numero;
+	private String bairro;
+	private String cidade;
+	private String complemento;
 	
 	
 	@ManyToOne()
 	@JoinColumn(name= "projeto_id")
 	private Projetos projetos;
 	
+	 @OneToMany(mappedBy = "alunos", cascade = CascadeType.ALL)
+	private List<Chamada> chamada = new ArrayList<>();
+	
 	public Alunos() {
 		
 		
 	}
-
+	
 	public Alunos(Long id, String nome, LocalDate dataNascimento, String idade, String rg, String responsavel,
-			String cpfResponsavel, Projetos projetos) {
+			String cpfResponsavel, String telefone, String url, String rua, String cep, String numero, String bairro,
+			String cidade, String complemento, Projetos projetos, List<Chamada> chamada) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -47,8 +62,20 @@ public class Alunos implements Serializable{
 		this.rg = rg;
 		this.responsavel = responsavel;
 		this.cpfResponsavel = cpfResponsavel;
-		this.projetos= projetos;
+		this.telefone = telefone;
+		this.url = url;
+		this.rua = rua;
+		this.cep = cep;
+		this.numero = numero;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.complemento = complemento;
+		this.projetos = projetos;
+		this.chamada = chamada;
 	}
+
+
+
 
 	public Long getId() {
 		return id;
@@ -107,6 +134,70 @@ public class Alunos implements Serializable{
 	}
 	
 
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
 	public Projetos getProjetos() {
 		return projetos;
 	}
@@ -114,6 +205,19 @@ public class Alunos implements Serializable{
 	public void setProjetos(Projetos projetos) {
 		this.projetos = projetos;
 	}
+	
+
+	public List<Chamada> getChamada() {
+		return chamada;
+	}
+
+
+
+	public void setChamada(List<Chamada> chamada) {
+		this.chamada = chamada;
+	}
+
+
 
 	@Override
 	public int hashCode() {

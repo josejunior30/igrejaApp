@@ -5,10 +5,11 @@ export type projetosDTO={
     coordenador: string;
     foto_coordenador: string;
     foto_lider: string;
-    alunos: alunos;
+    alunos: alunos[];
+
 }
 export type alunos={
-  map(arg0: (aluno: any, index: any) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
+  
     id:number;
     nome: string;
     dataNascimento:Date;
@@ -16,5 +17,11 @@ export type alunos={
 	 rg: string;
     responsavel: string;
 	 cpfResponsavel: string;
-	
+     chamada: chamada[];
+
+}
+export type chamada = {
+    id: number,
+    data: Date;
+    chamadaAluno: number;
 }
