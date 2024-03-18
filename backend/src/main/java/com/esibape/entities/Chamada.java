@@ -27,16 +27,21 @@ public class Chamada implements Serializable{
     @JoinColumn(name = "aluno_id", nullable = false)
 	private Alunos alunos ;
 	
+	@ManyToOne
+	@JoinColumn(name= "projeto_id")
+	private Projetos projetosChamada; 
+	
 	public Chamada() {
 		
 	}
 
-	public Chamada(Long id, LocalDate data, ChamadaAluno chamadaAluno, Alunos alunos) {
+	public Chamada(Long id, LocalDate data, ChamadaAluno chamadaAluno, Alunos alunos, Projetos projetosChamada) {
 		super();
 		this.id = id;
 		this.data = data;
 		this.chamadaAluno = chamadaAluno;
 		this.alunos = alunos;
+		this.projetosChamada= projetosChamada;
 	}
 
 	public Long getId() {
@@ -71,6 +76,17 @@ public class Chamada implements Serializable{
 
 	public void setAlunos(Alunos alunos) {
 		this.alunos = alunos;
+	}
+	
+	
+	
+
+	public Projetos getProjetosChamada() {
+		return projetosChamada;
+	}
+
+	public void setProjetosChamada(Projetos projetosChamada) {
+		this.projetosChamada = projetosChamada;
 	}
 
 	@Override

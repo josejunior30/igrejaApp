@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.esibape.entities.Alunos;
+import com.esibape.entities.Chamada;
 import com.esibape.entities.Projetos;
 
 public class ProjetosDTO implements Serializable{
@@ -19,7 +20,7 @@ public class ProjetosDTO implements Serializable{
 	private String foto_coordenador;
 	private String foto_lider;
 	private List<AlunosDTO>alunos = new ArrayList<>();
-
+	private List<ChamadaDTO> chamada=  new ArrayList<>();
 	public ProjetosDTO() {
 		
 	}
@@ -41,13 +42,14 @@ public class ProjetosDTO implements Serializable{
 		this.coordenador= entity.getCoordenador();
 		this.foto_coordenador= entity.getFoto_coordenador();
 		this.foto_lider = entity.getFoto_lider();
+		
 	}
 	
 
-	public ProjetosDTO(Projetos entity, List<Alunos>alunos) {
+	public ProjetosDTO(Projetos entity, List<Alunos>alunos, List<Chamada>chamada) {
 		this(entity);
 		alunos.forEach(x-> this.alunos.add(new AlunosDTO(x)));
-		
+		chamada.forEach(y-> this.chamada.add(new ChamadaDTO(y)));
 		
 	}
 	public Long getId() {
@@ -105,6 +107,15 @@ public class ProjetosDTO implements Serializable{
 
 	public void setFoto_lider(String foto_lider) {
 		this.foto_lider = foto_lider;
+	}
+	
+
+	public List<ChamadaDTO> getChamada() {
+		return chamada;
+	}
+
+	public void setChamada(List<ChamadaDTO> chamada) {
+		this.chamada = chamada;
 	}
 
 	@Override

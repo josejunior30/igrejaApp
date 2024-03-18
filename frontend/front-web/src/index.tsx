@@ -63,9 +63,7 @@ const root = document.getElementById('root') as HTMLElement;
 
 ReactDOM.render(
   <React.StrictMode>
-     
-    <AppRouter />
-    
+    <AppRouter />   
     <App />
   </React.StrictMode>,
   root

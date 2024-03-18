@@ -8,6 +8,7 @@ import java.util.Objects;
 import com.esibape.entities.Alunos;
 import com.esibape.entities.Chamada;
 import com.esibape.entities.ChamadaAluno;
+import com.esibape.entities.Projetos;
 
 public class ChamadaDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -17,7 +18,10 @@ public class ChamadaDTO implements Serializable{
 	private ChamadaAluno chamadaAluno;
 	
 	private AlunosDTO alunos;
-
+	private ProjetosDTO projetos;
+	
+	
+	
 	public ChamadaDTO() {
 		
 		
@@ -29,10 +33,10 @@ public class ChamadaDTO implements Serializable{
 		this.data = entity.getData();
 		this.chamadaAluno = entity.getChamadaAluno();
 	}
-	public ChamadaDTO(Chamada entity,Alunos alunos) {
+	public ChamadaDTO(Chamada entity,Alunos alunos, Projetos projetos) {
 		this(entity);
 		this.alunos= new AlunosDTO(alunos);
-		
+		this.projetos= new ProjetosDTO(projetos);
 		
 	}
 	
@@ -61,9 +65,6 @@ public class ChamadaDTO implements Serializable{
 		this.chamadaAluno = chamadaAluno;
 	}
 	
-	
-
-	
 
 	public AlunosDTO getAlunos() {
 		return alunos;
@@ -72,6 +73,16 @@ public class ChamadaDTO implements Serializable{
 
 	public void setAlunos(AlunosDTO alunos) {
 		this.alunos = alunos;
+	}
+	
+
+	public ProjetosDTO getProjetos() {
+		return projetos;
+	}
+
+
+	public void setProjetos(ProjetosDTO projetos) {
+		this.projetos = projetos;
 	}
 
 

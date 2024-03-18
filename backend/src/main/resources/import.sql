@@ -18,20 +18,20 @@ INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel
 INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (1 , 'Carla Moreno da Silva  ','1955-05-11', 57, 23435432, null, null, '978956732' , 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221);
 INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep) VALUES (1 , 'Lucia kaiser da Costa  ','1955-05-11', 57, 23435432, null, null, '978956732',' rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221 );
 
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-05', 0, 1)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id ) VALUES ('2024-04-05', 1, 2)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-05', 2, 3)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-05', 2, 4)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-05', 2, 5)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-10', 0, 1)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-10', 0, 2)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-10', 0, 3)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-10', 2, 4)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-17', 1, 1)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-23', 2, 1)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-04-27', 0, 1)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-05-01', 0, 1)
-INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id) VALUES ('2024-05-04', 1, 1)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-05', 0, 1, 2)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id ) VALUES ('2024-04-05', 1, 2, 1)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-05', 2, 3, 3)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-05', 2, 4, 3)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-05', 2, 5, 1)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-10', 0, 1, 2)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-10', 0, 2, 1)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-10', 0, 3, 3)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-10', 2, 4, 3)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-17', 1, 1, 2)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-23', 2, 1, 2)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-27', 0, 1, 2)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-05-01', 0, 1, 2)
+INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-05-04', 1, 1, 2)
 
 
 INSERT INTO tb_user (nome, email, password, role) VALUES ('Eleilson','leo@gmail.com', '1234', 0);

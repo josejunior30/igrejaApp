@@ -1,4 +1,191 @@
-.chamada{
-    margin-left: 300px;
-    color: beige;
-}
+.filtro-data {
+    margin-bottom: 20px; /* Espaçamento inferior */
+    padding: 20px; /* Espaçamento interno */
+    background-color: #04c7ef;/* Cor de fundo */
+    border-radius: 5px; /* Borda arredondada */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  .filtro-data h1 {
+    margin-bottom: 10px; /* Espaçamento inferior */
+  }
+  
+  .filtro-data label {
+    display: block; /* Torna o rótulo um bloco para que ocupe toda a largura disponível */
+    margin-bottom: 5px; /* Espaçamento inferior */
+  }
+  
+  .filtro-data input[type="date"] {
+    padding: 5px; /* Espaçamento interno */
+    border-radius: 3px; /* Borda arredondada */
+    border: 1px solid #ccc; /* Borda com cor cinza claro */
+  }
+  
+  .filtro-data button {
+    padding: 8px 16px; /* Espaçamento interno */
+    border: none; /* Remove a borda */
+    border-radius: 3px; /* Borda arredondada */
+    background-color: #007bff; /* Cor de fundo azul */
+    color: #fff; /* Cor do texto branco */
+    cursor: pointer; /* Mostra o cursor de clique */
+  }
+  
+  .filtro-data button:hover {
+    background-color: #0056b3; /* Cor de fundo azul mais escura ao passar o mouse */
+  }
+
+  
+  .page-container {
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    padding-top: 20px;
+   
+  
+  }
+  
+  .filters-container.records-actions {
+    justify-content: flex-end;
+  }
+   
+  .records-table {
+    width: 100%;
+    border-bottom: 10px solid var(--color-turquoise);
+    border-radius: 0 0 10px 10px;
+  }
+  
+  .records-table thead {
+    background-color: var(--color-turquoise);
+    text-align: left;
+    color: #0E1B28;
+    border-radius: 10px;
+  }
+  
+  .records-table thead tr {
+    height: 50px;
+  }
+  
+  .records-table thead th:first-child {
+    padding-left: 50px;
+    border-top-left-radius: 10px;
+  }
+  
+  .records-table thead th:last-child {
+    border-top-right-radius: 10px;
+  }
+  
+  .records-table tbody td:first-child {
+    padding-left: 50px;
+   
+  }
+  
+  .records-table tbody tr {
+    height: 45px;
+    color: #FFF;
+    font-size: 14px;
+  }
+  .name-link{
+    height: 45px;
+    color: #FFF;
+    font-size: 14px;
+    
+  }
+  .name-link:hover{
+    color: var(--color-turquoise); ;
+    
+  }
+  .records-table tbody tr:nth-child(odd) {
+    background-color: var(--color-darkslategray);
+  }
+  
+  .records-table tbody tr:nth-child(even) {
+    background-color: var(--color-dimgray);
+  }
+  
+  .filters-container {
+    background-color: var(--color-darkslategray);
+    display: flex;
+
+    padding: 13px 15px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    height: 40px;
+  }
+  
+  .filters-container input {
+    height: 35px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #9E9E9E;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-right: 20px;
+    padding-left: 15px;
+  }
+  
+  .filters-container input:focus {
+    outline: none;
+  }
+  
+  .add-membro {
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 10px;
+    
+  }
+  
+  .filters-container .clean-filters {
+    background-color: var(--color-coral);
+    color: #FFF;
+    margin-left: 20px;
+  }
+  
+  .filters-container .clean-filters:hover {
+    background-color: #e07243;
+  }
+  
+  .filters-container .add-membro{
+    background-color: var(--color-turquoise);
+    color: #0E1B28;
+    margin-left: 40px;
+  }
+  
+  .filters-container .add-membro:hover {
+    background-color: #04c7ef;
+  }
+  
+  .filters-container select {
+    height: 35px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #9E9E9E;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-right: 20px;
+    padding-left: 15px;
+  }
+  .seletor{
+    
+    color: #FFF;
+    font-size: 14px;
+    padding-right: 20px;
+    padding-top: 10px;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+  
+  }
+  .login{
+  
+    height: 44px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #9E9E9E;
+  
+   
+    margin-right: 20px;
+    padding-left: 15px;
+  }
+  
