@@ -1,4 +1,4 @@
-# Sistema de Gestão para Igrejas
+# Sistema de Gestão para Igrejas 💒
 
 Este é um projeto em desenvolvimento para um sistema de gestão para igrejas, utilizando Java Spring Boot para o backend e React com TypeScript para o frontend.
 
@@ -16,5 +16,8 @@ O objetivo deste projeto é criar uma plataforma abrangente para auxiliar na ges
   - React
   - TypeScript
   - HTML/CSS 
+
+
+
 
 
