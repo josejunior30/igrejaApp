@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.ChamadaDTO;
 import com.esibape.entities.Chamada;
+
 import com.esibape.repository.ChamadaRepository;
 
 @Service
@@ -44,6 +45,18 @@ public class ChamadaService {
 	     
 	     return chamadasDTO;
 	 }
-	 
+
+	 @Transactional(readOnly = true)
+	    public List<ChamadaDTO> findByDataAndProjeto(LocalDate data, Long projetoId) {
+	        List<Chamada> chamadas = repository.findByDataAndProjeto(data, projetoId);
+
+	        return mapToDTOList(chamadas);
+	    }
+
+	    private List<ChamadaDTO> mapToDTOList(List<Chamada> chamadas) {
+	        return chamadas.stream()
+	                .map(chamada -> new ChamadaDTO(chamada, chamada.getAlunos(), chamada.getProjetosChamada()))
+	                .collect(Collectors.toList());
+	    }
 	
 }

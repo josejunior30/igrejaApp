@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.esibape.DTO.ChamadaDTO;
 import com.esibape.service.ChamadaService;
+
+
 @CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping(value="/chamada")
@@ -27,6 +29,7 @@ public class ChamadaController {
 		List<ChamadaDTO>list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
+	
 	@GetMapping(value="/{id}")
 	public ResponseEntity<ChamadaDTO>findById(@PathVariable Long id){
 		ChamadaDTO chamada = service.findById(id);
@@ -38,6 +41,12 @@ public class ChamadaController {
         List<ChamadaDTO> chamadas = service.findAll(data);
         return ResponseEntity.ok().body(chamadas);
     }
-	    
+	   @GetMapping(value="/dataProjeto")
+	    public ResponseEntity<List<ChamadaDTO>> findByDataAndProjetos(
+	            @RequestParam(name = "data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
+	            @RequestParam(name = "projeto") Long projetoId) {
+	        List<ChamadaDTO> chamadas = service.findByDataAndProjeto(data, projetoId);
+	        return ResponseEntity.ok().body(chamadas);
+	    } 
 
 }
