@@ -1,0 +1,105 @@
+.alunos-container {
+    margin-top: 20px;
+    max-width: 60%;
+    width: auto;
+    margin-left: 20%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: grid;
+    gap: 16px;
+    background-color: white;
+    font-size: 14px;
+  }
+  .titulo-alunos {
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+  }
+
+  .titulo-form h3{
+    background-color: rgb(205, 205, 205);
+    padding: 10px;
+  }
+  
+  .input-group-alunos {
+    display: grid;
+    gap: 16px;
+  }
+  
+  .a-nome {
+    margin-bottom:4px;
+    padding-left: 10px;
+    font-weight: bold;
+  
+  }
+  
+  .alunos-input {
+    padding: 6px;
+    box-sizing: border-box;
+    width: 100%; 
+    margin-top: 2px;
+    
+  }
+  
+  .btn-alunos {
+   
+  
+  padding: 8px 60px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  width: 40%;
+  margin-left: 30%;
+margin-top: 20px;
+  }
+  
+  .btn-alunos:hover,
+  .btn-alunos:focus {
+    background-color: #004080;
+  }
+  
+
+  
+
+  
+  .input-group-alunos {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(3, 1fr) ;  /* Duas colunas igualmente distribuídas */
+    align-items: center;
+  }
+  .form-select{
+  
+    box-sizing: border-box;
+    margin-top: 2px;
+    width: 40%;
+  }
+  .form-select-pg{
+    width: 60%;
+  }
+  .titulo-form{
+    text-align: center;
+  }
+
+  .btn-aluno-voltar {
+   
+    padding:10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    width: 8%;
+    margin-left: 47%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    
+    }
+    .btn-aluno-voltar:hover,
+    .btn-aluno-voltar:focus {
+      background-color: #004080;
+    }

@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import './styles.css';
 import Header from "../../components/Header";
 
+const projetos ='https://i.postimg.cc/XJnWvPsT/Whats-App-Image-2024-03-20-at-22-06-16.jpg'
+
 const Inicial = () => (
   <>
     <Header/>
@@ -29,12 +31,8 @@ const Inicial = () => (
           <button>Clique aqui</button>
           </Link>
         </div>
-        
-      
-        
-        
-        
-              </div>
+  
+  </div>
 
       <div className="image">
         <img src={Secretaria} alt="Calendario" />
@@ -80,7 +78,7 @@ const Inicial = () => (
       </div>
 
       <div className="image">
-        <img src={Calendario} alt="Calendario" />
+        <img src={projetos} alt="Calendario" />
         <div className="overlay">
           <p>Projetos</p>
         <Link to="/projetos">

@@ -18,7 +18,7 @@ public class ChamadaDTO implements Serializable{
 	private ChamadaAluno chamadaAluno;
 	
 	private AlunosDTO alunos;
-	private ProjetosDTO projetos;
+	private ProjetosDTO projetosChamada;
 	
 	
 	
@@ -33,10 +33,10 @@ public class ChamadaDTO implements Serializable{
 		this.data = entity.getData();
 		this.chamadaAluno = entity.getChamadaAluno();
 	}
-	public ChamadaDTO(Chamada entity,Alunos alunos, Projetos projetos) {
+	public ChamadaDTO(Chamada entity,Alunos alunos, Projetos projetosChamada) {
 		this(entity);
 		this.alunos= new AlunosDTO(alunos);
-		this.projetos= new ProjetosDTO(projetos);
+		this.projetosChamada= new ProjetosDTO(projetosChamada);
 		
 	}
 	
@@ -76,13 +76,15 @@ public class ChamadaDTO implements Serializable{
 	}
 	
 
-	public ProjetosDTO getProjetos() {
-		return projetos;
+	
+
+	public ProjetosDTO getProjetosChamada() {
+		return projetosChamada;
 	}
 
 
-	public void setProjetos(ProjetosDTO projetos) {
-		this.projetos = projetos;
+	public void setProjetosChamada(ProjetosDTO projetosChamada) {
+		this.projetosChamada = projetosChamada;
 	}
 
 

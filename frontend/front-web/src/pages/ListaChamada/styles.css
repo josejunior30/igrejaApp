@@ -3,20 +3,22 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
-  padding: 20px;
-  background-color: #04c7ef;
+  padding: 10px;
+  background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
-
-.filtro-data h1 {
-  margin-bottom: 10px;
+.filtro-data h3{
+  text-align: center;
+ color: #0b1f34;;
 }
+
 
 .filtro-data label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  margin-left: 15px;
 }
 
 .input-container {
@@ -43,13 +45,13 @@
 }
 
 .filtro-data button {
-  padding: 8px 70px;
+  padding: 8px 85px;
   border: none;
   border-radius: 3px;
   background-color: #007bff;
   color: #fff;
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 10%;
  
 }
 
@@ -60,7 +62,7 @@
 .page-container-lista {
   width: 50%;
   margin: 0 auto;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   padding-top: 20px;
 }
 
@@ -68,46 +70,180 @@
   justify-content: flex-end;
 }
 
-.records-table {
+.lista-table {
   width: 100%;
   border-bottom: 10px solid var(--color-turquoise);
   border-radius: 0 0 10px 10px;
 }
-
-.records-table thead {
+.lista-table thead {
   background-color: var(--color-turquoise);
   text-align: left;
   color: #0E1B28;
   border-radius: 10px;
 }
 
-.records-table thead tr {
+.lista-table thead tr {
   height: 50px;
+  text-align: center;
 }
-
-.records-table thead th:first-child {
+.lista-table thead th:first-child {
   padding-left: 50px;
   border-top-left-radius: 10px;
 }
 
-.records-table thead th:last-child {
+.lista-table thead th:last-child {
   border-top-right-radius: 10px;
 }
 
-.records-table tbody td:first-child {
+.lista-table tbody td:first-child {
   padding-left: 50px;
 }
 
-.records-table tbody tr {
+.lista-table tbody tr {
   height: 45px;
   color: #FFF;
-  font-size: 14px;
+  font-size: 16px;
+  text-align: center;
 }
-
-.records-table tbody tr:nth-child(odd) {
+.lista-table tbody tr:nth-child(odd) {
   background-color: var(--color-darkslategray);
 }
 
-.records-table tbody tr:nth-child(even) {
+.lista-table tbody tr:nth-child(even) {
   background-color: var(--color-dimgray);
 }
+
+
+-------------------
+
+
+.form-lista {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color:white;
+ 
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+}
+
+.lista-titulo {
+  margin-bottom: 10px;
+  color: #0b1f34;
+  font-size: 20px;
+
+  text-align: center;
+}
+
+.lista-input {
+  display: flex;
+  flex-direction: column;
+  background-color: white;;
+  margin-bottom: 10px;
+  border-radius: 10px;
+ 
+}
+
+.input-input-grupo {
+  margin-bottom: 10px;
+  background-color: white;
+ 
+}
+
+.div-input-grupo {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.l-nome {
+  margin-right: 10px;
+  color: black; 
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.form-input,
+.form-select-pg,
+.form-select {
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  width: 50%;
+}
+
+.btn-lista {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  margin-left:67%;
+}
+
+.btn-lista:hover {
+  background-color: #0056b3;
+}
+.img-print-lista{
+margin-left: 80%;
+font-size: 20px;
+text-align: center;
+
+color: white;
+}
+
+.img-print-lista p{
+  color: white;
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

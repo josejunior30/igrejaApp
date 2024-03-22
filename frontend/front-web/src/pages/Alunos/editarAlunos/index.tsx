@@ -30,6 +30,10 @@ const EditarAlunos =()=>{
       projetos: {
         id: 0,
         nome: "",
+      },
+      chamada:{
+        id:0,
+        chamadaAluno:0,
       }
     });
   

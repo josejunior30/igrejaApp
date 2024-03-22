@@ -81,6 +81,7 @@ public class Chamada implements Serializable{
 	
 	
 
+
 	public Projetos getProjetosChamada() {
 		return projetosChamada;
 	}

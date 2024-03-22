@@ -3,13 +3,18 @@ import { findAll, findAlunosByDate, findDataAndProjeto } from "../../service/pre
 import { PresencaDTO } from "../../models/presenca";
 import './styles.css';
 import Header from "../../components/Header";
-
+import AddAlunos from "../Alunos/addAlunos";
+import AddLista from "./criarLista";
+import { PiPrinterFill } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 const Presenca = () => {
-  const [presencas, setPresencas] = useState<PresencaDTO[]>([]);
+  
   const [dataEscolhida, setDataEscolhida] = useState("");
   const [projeto, setProjeto] = useState<number | null>(null); 
-
+  const [presencas, setPresencas] = useState<PresencaDTO[]>([]);
+  
+  
   useEffect(() => {
     fetchPresencas();
   }, []);
@@ -78,8 +83,11 @@ const Presenca = () => {
     <>
     <Header/>
     <div className="page-container-lista">
+      <AddLista/>
+      </div>
+    <div className="page-container-lista">
       <div className="filtro-data">
-        <h1>Lista de Presença</h1>
+        <h3>Lista de Presença</h3>
         <div className="input-container">
           <label htmlFor="dataEscolhida">Escolha a data:</label>
           <input
@@ -91,13 +99,6 @@ const Presenca = () => {
         </div>
       
         <div className="input-container">
-        <label htmlFor="todos">Todos</label>
-        <input
-              type="radio"
-              id="todos"
-              value={dataEscolhida} 
-              onChange={buscarAlunosPorData}
-            />
            
           <label htmlFor="projeto1">Artesanato</label>
           <input
@@ -126,10 +127,13 @@ const Presenca = () => {
 
         <button onClick={buscarPresencasPorDataEProjeto}>Buscar</button>
         </div>
-       
       </div>
-  
-      <table className="records-table">
+     <div className="img-print-lista">
+    <Link to="#">
+        <p><PiPrinterFill /> Imprimir</p>
+    </Link>
+     </div>
+      <table className="lista-table">
         <thead>
           <tr>
             <th>Aluno</th>
@@ -138,19 +142,20 @@ const Presenca = () => {
           </tr>
         </thead>
         <tbody>
-          {presencas.length > 0 ? (
-            presencas.map((presenca:any) => (
-              <tr key={presenca.id}>
-                <td>{presenca.alunos ? presenca.alunos.nome : 'Aluno não encontrado'}</td>
-                <td>{presenca.chamadaAluno}</td>
-                <td>{presenca.projetos.nome}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td >Nenhuma presença encontrada</td>
+        {presencas.length > 0 ? (
+              presencas.map((presenca:any) => (
+            <tr key={presenca.id}>
+              <td>{presenca.alunos ? presenca.alunos.nome : 'Aluno não encontrado'}</td>
+              <td>{presenca.chamadaAluno}</td>
+              <td>{presenca.projetosChamada ? presenca.projetosChamada.nome : 'Projeto não encontrado'}</td>
             </tr>
-          )}
+          ))
+        ) : (
+          <tr>
+            <td>Nenhuma presença encontrada</td>
+          </tr>
+        )}
+
         </tbody>
       </table>
     </div>

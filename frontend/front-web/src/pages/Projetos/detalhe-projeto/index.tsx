@@ -49,10 +49,8 @@ const DetalheProjetos = () => {
                 <th>Nome</th>
                 <th>Idade</th>
                 <th>Identidade</th>
-                <th>semana 1</th>
-                <th>semana 2</th>
-                <th>semana 3</th>
-             
+                <th>Responsável</th>
+              
               </tr>
             </thead>
             <tbody>
@@ -65,36 +63,28 @@ const DetalheProjetos = () => {
                     : "Data de Nascimento Não Disponível"}
                 </td>
                     <td >
-                      <Link to={`${aluno.id}`} className="dados-alunos">
+                    <Link to={`/alunos/${aluno.id}`} className="dados-alunos">
                       {aluno.nome}
                       </Link>
                    </td>
                     <td > 
-                    <Link to={`${aluno.id}`} className="dados-alunos">
+                    <Link to={`/alunos/${aluno.id}`} className="dados-alunos">
                       {aluno.idade}
                       </Link>
                       </td>
                     <td>
-                      <Link to={`${aluno.id}`} className="dados-alunos">
+                    <Link to={`/alunos/${aluno.id}`} className="dados-alunos">
                       {aluno.rg}
                       </Link>
                     </td>
-                <td>
-                  {aluno.chamada.length > 0 ? (
-                    aluno.chamada.map((item) => (
-                      <span key={item.id}>{item.data.toLocaleDateString()}</span>
-                    ))
-                  ) : (
-                    <span>Dados de chamada vazios</span>
-                  )}
-              </td>
-                  
-                 
-                   
+        
                     <td>
-                           ----
-                    </td>
-                  </tr>
+                    <Link to={`/alunos/${aluno.id}`}  className="dados-alunos">
+                      {aluno.responsavel}
+                      </Link>
+
+                  </td>
+                </tr>
                 ))
               )}
             </tbody>
@@ -103,6 +93,6 @@ const DetalheProjetos = () => {
       </div>
     </>
   );
-                };
+ };
 
 export default DetalheProjetos;

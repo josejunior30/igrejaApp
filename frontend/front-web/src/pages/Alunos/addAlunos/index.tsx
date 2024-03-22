@@ -5,14 +5,12 @@ import axios from "axios";
 import { BASE_URL } from "../../../ultilitarios/system";
 import { insertMembro } from "../../../service/alunosService";
 import SuccessModal from "../../../components/Modal";
-
+import './styles.css';
+import Header from "../../../components/Header";
 const AddAlunos: React.FC = () => {
     const [projetos, setProjetos] = useState<projetos[]>([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isRedirecting, setIsRedirecting] = useState(false);
-    
-
-
     const navigate = useNavigate();
     const [alunosDTO, setAlunosDTO] = useState<alunosDTO>({
       id: 0,
@@ -30,6 +28,10 @@ const AddAlunos: React.FC = () => {
       projetos: {
         id: 0,
         nome: "",
+      },
+      chamada:{
+        id:0,
+        chamadaAluno:0,
       }
     });
   
@@ -103,7 +105,12 @@ const AddAlunos: React.FC = () => {
       projetos: {
         id: 0,
         nome: "",
+      },
+      chamada:{
+        id:0,
+        chamadaAluno:0,
       }
+
     });
           
       
@@ -118,201 +125,188 @@ const AddAlunos: React.FC = () => {
     };
  
     return (
-      
       <>
-      <form onSubmit={handleSubmit} className="fm-container">
-        <h3 className="titulo-form">Dados pessoais </h3>
-        <fieldset className="dados-pessoais">
-            <fieldset className="input-group-div">
-                <div className="input-group">
-                <label htmlFor="nome" className="f-nome">Nome:</label>
-                    <input 
-                    type="text"
-                    className="form-input"
-                    name="nome"
-                    value={alunosDTO.nome}
-                    onChange={handleChange}
-                    required
-                    />
-                    </div>
-           <div className="input-group">
-            <label htmlFor="sobrenome" className="f-nome">Identidade:</label>
-                <input 
-                type="text"
-                className="form-input"
-                name="rg"
-                value={alunosDTO.rg}
-                onChange={handleChange}
-                required
-                />
-          </div>
-        <div className="input-group">
-        <label htmlFor="data" className="f-nome">Nascimento</label>
-            <input
-                type="date"
-                className="form-input"
-                name="dataNascimento"
-                value={alunosDTO.dataNascimento.toISOString().split('T')[0]}
-                onChange={handleChange}
-                required
-            />
-            </div>
-            <div className="input-group">
-            <label htmlFor="sobrenome" className="f-nome">Telefone:</label>
-                <input 
-                type="text"
-                className="form-input"
-                name="rg"
-                value={alunosDTO.telefone}
-                onChange={handleChange}
-                required
-                />
-          </div>
-    </fieldset>
-  
-    <fieldset className="input-group-div">
-                <div className="input-group">
-                <label htmlFor="telefone" className="f-nome">Responsavel:</label>
-                    <input 
-                    type="text"
-                    name="responsavel"
-                    className="form-input"
-                    value={alunosDTO.responsavel}
-                    onChange={handleChange}
-                    required
-                    />
-                    </div>
-                    <div className="input-group">
-                    <label htmlFor="email" className="f-nome">Cpf do Responsável:</label>
-                    <input 
-                    type="text"
-                    name="cpfResponsavel"
-                    className="form-input"
-                    value={alunosDTO.cpfResponsavel}
-                    onChange={handleChange}
-                    required
-                    />
-                    </div>
-                
-        </fieldset>
-  
-  
-         <fieldset className="input-group-div">
-            
-            <div className="input-group">
-                    <label htmlFor="grupo" className="f-nome">Projeto:</label>
-                    <select
-                    name="projetos"
-                    className="form-select-pg"
-                    value={alunosDTO.projetos.id} 
-                    onChange={handleChange}
-                    required
-                    >
-                    <option >Selecione </option>
-                    {projetos.map((projeto) => (
-                    
-                        <option key={projeto.id} value={projeto.id}>
-                        {projeto.id} - {projeto.nome}
-                        </option>
-                    ))}
-                </select>
-            </div>
-  
-        </fieldset> 
-        
-    <fieldset className="input-group-div">
-                <div className="input-group">
-                <label htmlFor="telefone" className="f-nome">Responsavel:</label>
-                    <input 
-                    type="text"
-                    name="responsavel"
-                    className="form-input"
-                    value={alunosDTO.responsavel}
-                    onChange={handleChange}
-                    required
-                    />
-                    </div>
-                    <div className="input-group">
-                    <label htmlFor="email" className="f-nome">Cpf do Responsável:</label>
-                    <input 
-                    type="text"
-                    name="cpfResponsavel"
-                    className="form-input"
-                    value={alunosDTO.cpfResponsavel}
-                    onChange={handleChange}
-                    required
-                    />
-                    </div>
 
-                 
-                
-        </fieldset>
-        <h3 className="titulo-form">Endereço</h3>
-        <fieldset className="input-group-div">
-                <div className="input-group">
-                <label htmlFor="telefone" className="f-nome">Rua:</label>
-                    <input 
-                    type="text"
-                    name="responsavel"
-                    className="form-input"
-                    value={alunosDTO.rua}
-                    onChange={handleChange}
-                    required
-                    />
-                    </div>
-                    <div className="input-group">
-                    <label htmlFor="email" className="f-nome">numero:</label>
-                    <input 
-                    type="text"
-                    name="cpfResponsavel"
-                    className="form-input"
-                    value={alunosDTO.numero}
-                    onChange={handleChange}
-                    required
-                    />
-                    </div>
-                    <div className="input-group">
-                    <label htmlFor="email" className="f-nome">bairro:</label>
-                    <input 
-                    type="text"
-                    name="cpfResponsavel"
-                    className="form-input"
-                    value={alunosDTO.bairro}
-                    onChange={handleChange}
-                    required
-                    />
-                    </div>
-                    <div className="input-group">
-                    <label htmlFor="cidade" className="f-nome">Cidade:</label>
-                    <input 
-                    type="text"
-                    name="cidade"
-                    className="form-input"
-                    value={alunosDTO.cidade}
-                    onChange={handleChange}
-                    required
-                    />
-                    </div>
-                    <div className="input-group">
-                    <label htmlFor="complemento" className="f-nome">Complemento:</label>
-                    <input 
-                    type="text"
-                    name="complemento"
-                    className="form-input"
-                    value={alunosDTO.complemento}
-                    onChange={handleChange}
-                    required
-                    />
-                    </div>
-                
-        </fieldset>
+    <Header/>
+        <form onSubmit={handleSubmit} className="alunos-container">
         
-        <button className="btn-add" type="submit">Adicionar</button>
-        </fieldset>
-      </form>
-      <button className="btn-celula-voltar" onClick={handleGoBack}>Voltar</button>
+          <div   className="titulo-form">
+          <h3 >Dados pessoais </h3>
+                    </div>
+            <fieldset className="input-group-alunos">
+              <div className="div-group-alunos">
+                <label htmlFor="nome" className="a-nome">Nome:</label>
+                <input 
+                  type="text"
+                  className="alunos-input"
+                  name="nome"
+                  value={alunosDTO.nome}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="sobrenome" className="a-nome">Identidade:</label>
+                <input 
+                  type="text"
+                  className="alunos-input"
+                  name="rg"
+                  value={alunosDTO.rg}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="data" className="a-nome">Nascimento</label>
+                <input
+                  type="date"
+                  className="alunos-input"
+                  name="dataNascimento"
+                  value={alunosDTO.dataNascimento.toISOString().split('T')[0]}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="telefone" className="a-nome">Telefone:</label>
+                <input 
+                  type="text"
+                  className="alunos-input"
+                  name="telefone"
+                  value={alunosDTO.telefone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="projetos" className="a-nome">Projeto:</label>
+                <select
+                  name="projetos"
+                  className="alunos-input"
+                  value={alunosDTO.projetos.id} 
+                  onChange={handleChange}
+                  required
+                >
+                  <option>Selecione</option>
+                  {projetos.map((projeto) => (
+                    <option key={projeto.id} value={projeto.id}>
+                      {projeto.id} - {projeto.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </fieldset>
+    
+         <div   className="titulo-form">
+            <h3 >Dados do Responsável </h3>
+          </div>
+            <fieldset className="input-group-alunos">
+              
+          
+              <div className="div-group-alunos">
+                <label htmlFor="responsavel" className="a-nome">Nome:</label>
+                <input 
+                  type="text"
+                  name="responsavel"
+                  className="alunos-input"
+                  value={alunosDTO.responsavel}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="cpfResponsavel" className="a-nome">CPF:</label>
+                <input 
+                  type="text"
+                  name="cpfResponsavel"
+                  className="alunos-input"
+                  value={alunosDTO.cpfResponsavel}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="cpfResponsavel" className="a-nome">Grau de Parentesco:</label>
+                <input 
+                  type="text"
+                  name="cpfResponsavel"
+                  className="alunos-input"
+                  value={alunosDTO.cpfResponsavel}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </fieldset>
+    
+         
+                    <div   className="titulo-form">
+                      <h3 >Endereço</h3>
+                    </div>
+            
+            <fieldset className="input-group-alunos">
+              <div className="div-group-alunos">
+                <label htmlFor="rua" className="a-nome">Rua:</label>
+                <input 
+                  type="text"
+                  name="rua"
+                  className="alunos-input"
+                  value={alunosDTO.rua}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="numero" className="a-nome">Número:</label>
+                <input 
+                  type="text"
+                  name="numero"
+                  className="alunos-input"
+                  value={alunosDTO.numero}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="bairro" className="a-nome">Bairro:</label>
+                <input 
+                  type="text"
+                  name="bairro"
+                  className="alunos-input"
+                  value={alunosDTO.bairro}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="cidade" className="a-nome">Cidade:</label>
+                <input 
+                  type="text"
+                  name="cidade"
+                  className="alunos-input"
+                  value={alunosDTO.cidade}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="complemento" className="a-nome">Complemento:</label>
+                <input 
+                  type="text"
+                  name="complemento"
+                  className="alunos-input"
+                  value={alunosDTO.complemento}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </fieldset>
+            
+            <button className="btn-alunos" type="submit">Adicionar</button>
+          
+        </form>
+        <button className="btn-aluno-voltar" onClick={handleGoBack}>Voltar</button>
       
-      {isModalVisible && (
+        {isModalVisible && (
           <SuccessModal
             onClose={handleModalClose}
             onRedirect={() => setIsRedirecting(true)} 
@@ -321,6 +315,7 @@ const AddAlunos: React.FC = () => {
         )}
       </>
     );
+    
   };
   
   export default AddAlunos;

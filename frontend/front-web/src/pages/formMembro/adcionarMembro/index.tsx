@@ -106,8 +106,9 @@ const Formulario: React.FC = () => {
   return (
     <>
     <form onSubmit={handleSubmit} className="fm-container">
-      <h3 className="titulo-form">Dados pessoais </h3>
-      <fieldset className="dados-pessoais">
+      <div className="titulo-form">
+      <h3 >Dados pessoais </h3>
+      </div>
    <fieldset className="input-group-div">
     <div className="input-group">
       <label htmlFor="nome" className="f-nome">Nome:</label>
@@ -233,10 +234,12 @@ const Formulario: React.FC = () => {
           />
     
       </div>
-      </fieldset>
-      <h3 className="titulo-form">Endereço</h3>
-      <fieldset>
-      <fieldset className="input-group-div">
+      
+      <div className="titulo-form">
+      <h3 >Endereço </h3>
+      </div>
+    
+  <fieldset className="input-group-div">
     <div className="input-group">
       <label htmlFor="nome" className="f-nome">Rua</label>
       <input 
@@ -270,8 +273,8 @@ const Formulario: React.FC = () => {
         required
       />
       </div>
-      </fieldset>
-      <fieldset className="input-group-div">
+      
+      
     <div className="input-group">
       <label htmlFor="nome" className="f-nome">Cidade</label>
       <input 
@@ -305,7 +308,7 @@ const Formulario: React.FC = () => {
         required
       />
       </div>
-      </fieldset>
+      
       </fieldset>
 
       <button className="btn-add" type="submit">Adicionar</button>

@@ -6,6 +6,8 @@ import { deleteAluno } from "../excluirAlunos";
 import { CgDanger } from "react-icons/cg";
 import SuccessModal from "../../../components/Modal";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Header from "../../../components/Header";
+import './styles.css';
 
 
 const DetalhesAlunos = () => {
@@ -75,7 +77,7 @@ const DetalhesAlunos = () => {
     const handleNextClick = () => {
       if (id !== undefined) {
         const nextId = parseInt(id, 10) + 1;
-        navigate(`/secretaria/alunos/${nextId}`);
+        navigate(`/alunos/${nextId}`);
       }
     };
   
@@ -83,13 +85,14 @@ const DetalhesAlunos = () => {
       if (id !== undefined) {
         const previousId = parseInt(id, 10) - 1;
         if (previousId > 0) {
-          navigate(`/secretaria/alunos/${previousId}`);
+          navigate(`/alunos/${previousId}`);
         }
       }
     };
   
     return (
       <>
+      <Header/>
       <div className="membro-container">
         {alunosDTO ? (
           <div className="detalhe-container">
@@ -97,7 +100,7 @@ const DetalhesAlunos = () => {
             <img src={alunosDTO.url} alt="Foto do Membro" className="foto-membro" />
               <span className="nome-id">{alunosDTO.nome}</span>
               <p className="dados"> Identidade: {alunosDTO.rg}</p>
-              <p className="dados"> : {alunosDTO.idade}</p>
+              <p className="dados"> Idade: {alunosDTO.idade}</p>
               <p className="dados">Data de Nascimento: {new Date(alunosDTO.dataNascimento).toLocaleDateString()}</p>
               <p className="dados"> Email: {alunosDTO.responsavel}</p>
               <p className="dados"> Cpf Responsavel: {alunosDTO.cpfResponsavel}</p>
@@ -163,6 +166,10 @@ const DetalhesAlunos = () => {
             <p>Carregando detalhes do membro...</p>
             )}
             </div>
+            <Link to = {`projetos/${id}`}>
+            <button className="btn-aluno-detalhe-voltar">Voltar</button>
+            </Link>
+           
             </div>
   
        
