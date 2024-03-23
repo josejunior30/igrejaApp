@@ -22,14 +22,14 @@ public class ProjetosService {
 	public List<ProjetosDTO> findAll() {
 		List <Projetos> entity = repository.findAll();
 		return  entity.stream()
-	               .map(x -> new ProjetosDTO(x, x.getAlunos(), x.getChamada() ))
+	               .map(x -> new ProjetosDTO(x, x.getAlunos(), x.getChamada(),x.getRelatorio() ))
 	               .collect(Collectors.toList());
 	}
 	@Transactional(readOnly = true)
     public ProjetosDTO findById(Long id) {
     	Optional<Projetos> projetos = repository.findById(id);
     	Projetos entity = projetos.get();
-    	return  new ProjetosDTO(entity, entity.getAlunos(), entity.getChamada()) ;
+    	return  new ProjetosDTO(entity, entity.getAlunos(), entity.getChamada(),entity.getRelatorio()) ;
     }
 	
 	@Transactional

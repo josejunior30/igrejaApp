@@ -44,7 +44,7 @@ const Projetos = () => {
               <div className="linha-container">
               <img src={projeto.foto_lider} alt="Foto do líder" className="foto-projeto" />
                 <div className="text-coordenador">{projeto.nome}</div>
-                <div className="text-lider-projeto">Professor(a): {projeto.lider}</div>
+                <div className="text-lider-projeto">Líder (a): {projeto.lider}</div>
               
               </div>
               </Link>

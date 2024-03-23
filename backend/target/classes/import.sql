@@ -3,7 +3,7 @@ INSERT INTO tb_pequeno_Grupo (nome, apelido, lider) VALUES ('Pr. Alex', 'VERDE',
 INSERT INTO tb_pequeno_Grupo (nome, apelido, lider) VALUES ('Amilton', 'AMARELO', 'Beto');
 INSERT INTO tb_pequeno_Grupo (nome, apelido, lider) VALUES ('Yasmin', 'ROXO', 'Douglas');
 
-INSERT INTO tb_projetos (nome, lider , coordenador, foto_coordenador, foto_lider) VALUES ('Artesanato','Ana Clara', 'Gilson Ornelas', 'https://i.postimg.cc/8zsRnZ4h/gilson.png',  'https://i.postimg.cc/R0VrgjNt/whatsapp-image-2022-10-03-at-15-34-37.webp');
+INSERT INTO tb_projetos (nome, lider , coordenador, foto_coordenador, foto_lider) VALUES ('Artesanato','Ana Clara', 'Gilson Ornelas', 'https://i.postimg.cc/8zsRnZ4h/gilson.png',  'https://i.postimg.cc/gkkD7ppc/Whats-App-Image-2024-03-21-at-10-34-03.jpg');
 INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider) VALUES ('Jiu-Jtsu','Douglas Orellha', null, null, 'https://i.postimg.cc/wjKN09td/Orelha.png');
 INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider) VALUES ('Musica','Samuel', null, null, 'https://i.postimg.cc/7L8NGg10/Samuel.png');
 
@@ -33,6 +33,7 @@ INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES
 INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-05-01', 0, 1, 2)
 INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-05-04', 1, 1, 2)
 
+INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-05', 1,'teste1','teste2','teste3','teste4','teste5')
 
 INSERT INTO tb_user (nome, email, password, role) VALUES ('Eleilson','leo@gmail.com', '1234', 0);
 INSERT INTO tb_user (nome, email, password, role) VALUES ('Junior','junior@gmail.com', '1234', 1);
