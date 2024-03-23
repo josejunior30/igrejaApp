@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.esibape.DTO.ChamadaDTO;
 import com.esibape.DTO.RelatorioDTO;
 import com.esibape.service.RelatorioService;
 
@@ -49,6 +51,11 @@ public class RelatorioController {
 	     return ResponseEntity.ok().body(relatorios);
 	 }
 
+		@GetMapping(value="/data")
+		public ResponseEntity<List<RelatorioDTO>> findAll(@RequestParam(name = "data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
+	        List<RelatorioDTO> relatorios = service.findByDate(data);
+	        return ResponseEntity.ok().body(relatorios);
+	    }
 	 
 	@PostMapping
 	public ResponseEntity<RelatorioDTO>insert(@RequestBody RelatorioDTO dto){

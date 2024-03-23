@@ -1,14 +1,18 @@
 package com.esibape.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+
 import com.esibape.DTO.ProjetosDTO;
 import com.esibape.DTO.RelatorioDTO;
+
 import com.esibape.entities.Projetos;
 import com.esibape.entities.Relatorio;
 import com.esibape.repository.ProjetosRepository;
@@ -57,14 +61,27 @@ public class RelatorioService {
 	    }
 	 
 	 @Transactional
-	public RelatorioDTO insert(RelatorioDTO dto) {
+	 	public RelatorioDTO insert(RelatorioDTO dto) {
 		Relatorio entity = new Relatorio();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
 		return new RelatorioDTO(entity);
-		
 
 	}
+	 
+	 @Transactional(readOnly = true)
+	 public List<RelatorioDTO> findByDate(LocalDate data) {
+	     List<Relatorio> relatorios = repository.findByData(data);
+	     List<RelatorioDTO> relatorioDTOList = new ArrayList<>();
+	     for (Relatorio relatorio : relatorios) {
+	         RelatorioDTO relatorioDTOItem = new RelatorioDTO(relatorio, relatorio.getProjetosRelatorio());
+	         relatorioDTOList.add(relatorioDTOItem);
+	     }
+	     return relatorioDTOList;
+	 }
+	 
+	 
+	
 	 public void delete(Long id) {
 	    	repository.deleteById(id);
 	 

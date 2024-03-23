@@ -56,6 +56,8 @@ public class ChamadaService {
 	     
 	     return chamadasDTO;
 	 }
+	 
+	 
 
 	 @Transactional(readOnly = true)
 	    public List<ChamadaDTO> findByDataAndProjeto(LocalDate data, Long projetoId) {
