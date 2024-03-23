@@ -43,21 +43,22 @@ public class ChamadaController {
         List<ChamadaDTO> chamadas = service.findAll(data);
         return ResponseEntity.ok().body(chamadas);
     }
-	   @GetMapping(value="/dataProjeto")
-	    public ResponseEntity<List<ChamadaDTO>> findByDataAndProjetos(
-	            @RequestParam(name = "data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
-	            @RequestParam(name = "projeto") Long projetoId) {
-	        List<ChamadaDTO> chamadas = service.findByDataAndProjeto(data, projetoId);
-	        return ResponseEntity.ok().body(chamadas);
-	    } 
+	
+   @GetMapping(value="/dataProjeto")
+    public ResponseEntity<List<ChamadaDTO>> findByDataAndProjetos(
+            @RequestParam(name = "data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
+            @RequestParam(name = "projeto") Long projetoId) {
+        List<ChamadaDTO> chamadas = service.findByDataAndProjeto(data, projetoId);
+        return ResponseEntity.ok().body(chamadas);
+    } 
 
-	   @PostMapping
-	   public ResponseEntity <ChamadaDTO> insert(@RequestBody ChamadaDTO dto) {
-		 ChamadaDTO entity = service.insert(dto);
-			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-					.buildAndExpand(entity.getId()).toUri();
-			return ResponseEntity.created(uri).body(entity);
-	 
+   @PostMapping
+   public ResponseEntity <ChamadaDTO> insert(@RequestBody ChamadaDTO dto) {
+	 ChamadaDTO entity = service.insert(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(entity.getId()).toUri();
+		return ResponseEntity.created(uri).body(entity);
+ 
 		 }
 	 
 		

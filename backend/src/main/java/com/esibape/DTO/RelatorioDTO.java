@@ -7,17 +7,24 @@ import java.util.Objects;
 
 import com.esibape.entities.Projetos;
 import com.esibape.entities.Relatorio;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RelatorioDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private LocalDate data;
-	private String pergunta1 = "A aula ocorreu normalmente?";
-    private String pergunta2 = "Algum(a) aluno(a) apresentou problemas de comportamento, aprendizagem, assistência social ou espiritual? Qual?";
-    private String pergunta3 = "Houve dificuldade com o material das aulas?";
-    private String pergunta4 =	"Alguma sugestão para a equipe de trabalho?";
-    private String pergunta5 = "Mais alguma observação ou sugestão?";
+	@JsonProperty("A aula ocorreu normalmente?")
+	private String pergunta1;
+	@JsonProperty("Algum(a) aluno(a) apresentou problemas de comportamento, aprendizagem, assistência social ou espiritual? Qual?")
+    private String pergunta2;
+	@JsonProperty("Houve dificuldade com o material das aulas?")
+	private String pergunta3;
+    @JsonProperty("Alguma sugestão para a equipe de trabalho?")
+    private String pergunta4;
+	@JsonProperty("Mais alguma observação ou sugestão?")
+	private String pergunta5;
+
 	
 	
 	private ProjetosDTO projetosRelatorio;
@@ -133,13 +140,6 @@ public class RelatorioDTO implements Serializable {
 		this.projetosRelatorio = projetosRelatorio;
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "RelatorioDTO [pergunta1=" + "A aula ocorreu normalmente?" + ", pergunta2=" + pergunta2 + ", pergunta3=" + pergunta3
-				+ ", pergunta4=" + pergunta4 + ", pergunta5=" + pergunta5 + "]";
-	}
 
 	@Override
 	public int hashCode() {

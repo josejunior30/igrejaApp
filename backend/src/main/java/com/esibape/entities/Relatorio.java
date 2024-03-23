@@ -24,11 +24,11 @@ public class Relatorio implements Serializable{
 	private LocalDate data;
 	
 	@Column(columnDefinition = "TEXT")
-	private String pergunta1 = "A aula ocorreu normalmente?";
-    private String pergunta2 = "Algum(a) aluno(a) apresentou problemas de comportamento, aprendizagem, assistência social ou espiritual? Qual?";
-    private String pergunta3 = "Houve dificuldade com o material das aulas?";
-    private String pergunta4 =	"Alguma sugestão para a equipe de trabalho?";
-    private String pergunta5= "Mais alguma observação ou sugestão?";
+	private String pergunta1;
+    private String pergunta2; 
+    private String pergunta3; 
+    private String pergunta4;
+    private String pergunta5;
 	
 	
 	
