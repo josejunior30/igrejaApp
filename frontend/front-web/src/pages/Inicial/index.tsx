@@ -25,7 +25,6 @@ const Inicial = () => (
         <img src={Financeiro} alt="Calendario" />
         <div className="overlay">
           
-      
           <p>Tesouraria</p>
           <Link to="#">
           <button>Clique aqui</button>

@@ -77,7 +77,7 @@ const AddAlunos: React.FC = () => {
       }
     };
     const handleGoBack = () => {
-      navigate(-1); // Utiliza a função goBack do hook useNavigate para voltar para a página anterior
+      navigate(-1); 
     }
     const handleSubmit = async (e: FormEvent) => {
       e.preventDefault();

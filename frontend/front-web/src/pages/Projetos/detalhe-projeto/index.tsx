@@ -38,7 +38,7 @@ const DetalheProjetos = () => {
 
   return (
     <>
-    <Sidebar/>
+   
       <div className="alunos-pj-container">
       <BarraAlunos/>
         {projetosDTO && (

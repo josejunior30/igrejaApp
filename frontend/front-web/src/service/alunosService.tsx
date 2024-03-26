@@ -7,7 +7,7 @@ export function findAll():Promise<AxiosResponse<alunosDTO[]>>{
     return axios.get(`${BASE_URL}/alunos`);
 }
 
-export function findById(id:number):Promise<AxiosResponse<alunosDTO>>{
+export function findById(id:number){
     return axios.get(`${BASE_URL}/alunos/${id}`);
 }
 export function insertMembro(alunosDTO:any){

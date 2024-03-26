@@ -15,7 +15,7 @@ const BarraAlunos = () =>(
       Lista Presença
       </button>
       </Link>
-      <Link to= "adicionar">
+      <Link to= "/enviarRelatorio">
       <button className="barra-alunos">
       Relatórios
       </button>

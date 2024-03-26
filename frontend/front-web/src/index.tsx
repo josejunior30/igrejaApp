@@ -22,6 +22,9 @@ import DetalhesAlunos from './pages/Alunos/detalhesAlunos';
 import EditarAlunos from './pages/Alunos/editarAlunos';
 import Presenca from './pages/ListaChamada';
 import AddLista from './pages/ListaChamada/criarLista';
+import DetalhesRelatorio from './pages/Relatorio/detalhes';
+import Relatorio from './pages/Relatorio/pesquisa';
+import AddRelatorio from './pages/Relatorio/adicionar';
 
 
 const AppRouter = () => (
@@ -39,21 +42,26 @@ const AppRouter = () => (
                   <Route path="membro/:id" element={<Detalhes/>} />
                   <Route path="membro/adicionar" element={<Formulario />} />
                   <Route path="membro/atualizar/:id" element={<FormularioUpdate />} />
-                  <Route path="alunos" element={<Alunos />} />
-                  <Route path="alunos/:id" element={<DetalhesAlunos />}/> 
+                 
             </Route>  
             <Route path="/projetos" element={<Projetos />} />
             <Route path="/projetos/:id" element={<DetalheProjetos />}> 
             </Route>
 
-            <Route path="alunos/:id" element={<DetalhesAlunos />}/> 
+            
             <Route path="/alunos" element={<Alunos />} /> 
             <Route path="/adicionar/alunos" element={<AddAlunos />} /> 
             <Route path="/alunos/:id" element={<DetalhesAlunos />}/> 
             <Route path="/editarAlunos/:id" element={<EditarAlunos />}/> 
+           
             <Route path="/teste" element={<Teste />}/>
+           
             <Route path="/chamada" element={<Presenca />} />
             <Route path="/addlista" element={<AddLista />} />
+            
+            <Route path="/relatorio" element={<Relatorio />} />
+            <Route path="/relatorio/:id" element={<DetalhesRelatorio />} />
+            <Route path="/enviarRelatorio" element={<AddRelatorio />} />
           </Routes>
       </Router>
 

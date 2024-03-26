@@ -58,7 +58,7 @@ const DetalhesAlunos = () => {
     
     const handleModalClose = () => {
       setIsModalVisible(false);
-      navigate('/secretaria/alunos')
+      navigate('/alunos')
     };
    
     const handleDeleteClick = () => {
@@ -74,6 +74,11 @@ const DetalhesAlunos = () => {
     const handleCancelDelete = () => {
       setShowDeleteConfirmation(false);
     };
+
+  
+    const handleGoBack = () => {
+      navigate(-1); 
+    }
     const handleNextClick = () => {
       if (id !== undefined) {
         const nextId = parseInt(id, 10) + 1;
@@ -83,13 +88,10 @@ const DetalhesAlunos = () => {
   
     const handlePreviousClick = () => {
       if (id !== undefined) {
-        const previousId = parseInt(id, 10) - 1;
-        if (previousId > 0) {
+          const previousId = parseInt(id, 10) - 1;
           navigate(`/alunos/${previousId}`);
-        }
       }
-    };
-  
+  };
     return (
       <>
       <Header/>
@@ -137,7 +139,7 @@ const DetalhesAlunos = () => {
             {isModalVisible && (
           <SuccessModal
             onClose={handleModalClose}
-            onRedirect={() => navigate('/secretaria/alunos')}
+            onRedirect={() => navigate('/alunos')}
             operation={'deletar'}
           />
           )}
@@ -146,10 +148,7 @@ const DetalhesAlunos = () => {
           <p>Carregando detalhes do membro...</p>
         )}
       </div>
-      <div className="setas">
-        <button onClick={handlePreviousClick} className="btn-left"> <FaChevronLeft /></button>
-        <button onClick={handleNextClick} className="btn-right"><FaChevronRight /></button>
-      </div>
+    
       <div className="membro-container-endereço">
       <div className="detalhe-container-endereço">
         {alunosDTO ? (
@@ -166,9 +165,12 @@ const DetalhesAlunos = () => {
             <p>Carregando detalhes do membro...</p>
             )}
             </div>
-            <Link to = {`projetos/${id}`}>
-            <button className="btn-aluno-detalhe-voltar">Voltar</button>
-            </Link>
+           
+            <button className="btn-aluno-detalhe-voltar" onClick={handleGoBack}>Voltar</button>
+            <div className="setas">
+        <button onClick={handlePreviousClick} className="btn-left"> <FaChevronLeft/></button>
+        <button onClick={handleNextClick} className="btn-right"><FaChevronRight /></button>
+      </div>
            
             </div>
   

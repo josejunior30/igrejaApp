@@ -39,9 +39,15 @@ const Sidebar: React.FC = () => {
           </Link>
         </li>
         <li>
-        <Link to="#">
+        <Link to="/relatorio">
         <FaSmile />
-          <span>Kids</span>
+          <span>Relatorio</span>
+          </Link>
+        </li>
+        <li>
+        <Link to="/chamada">
+        <FaSmile />
+          <span>Chamada</span>
           </Link>
         </li>
         <li>

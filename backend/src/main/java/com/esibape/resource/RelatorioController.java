@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.esibape.DTO.ChamadaDTO;
+
 import com.esibape.DTO.RelatorioDTO;
 import com.esibape.service.RelatorioService;
 

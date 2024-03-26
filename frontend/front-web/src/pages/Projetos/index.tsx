@@ -39,7 +39,6 @@ const Projetos = () => {
           projetosDTO.map((projeto) => (
            
             <div key={projeto.id} className="pj-container">
-
             <Link to={`${projeto.id}`}>
               <div className="linha-container">
               <img src={projeto.foto_lider} alt="Foto do líder" className="foto-projeto" />

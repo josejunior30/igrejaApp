@@ -45,21 +45,22 @@
   
   .btn-alunos {
    
-  
-  padding: 8px 60px;
-  border: none;
-  border-radius: 3px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  width: 40%;
-  margin-left: 30%;
-margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ed7947;
+    color: #fff;
+    cursor: pointer;
+    width: 20%;
+    margin-left: 40%;
+  margin-top: 20px;
+  font-size: 18px;
+    
   }
   
   .btn-alunos:hover,
   .btn-alunos:focus {
-    background-color: #004080;
+    background-color: #8e492c;
   }
   
 
