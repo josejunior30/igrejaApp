@@ -11,20 +11,19 @@
   margin: 0;
 }
 
-.logo-text {
-  font-weight: bold;
-  font-size: 24px;
-  color: white;
-
-  margin-left: 20px;
+.logo-img {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+ 
+  
 }
 
-.logo-text-1 {
-  color: var(--color-coral);
-}
-
-.logo-text-2 {
-  color: #FFF;
+.logo-img img{
+  width: 40%;
+  height: 40%;
+  object-fit: contain;
+  margin-top: 45px;
 }
 
 .login-container {

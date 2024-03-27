@@ -4,15 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
+
+const logoHeader = 'https://i.postimg.cc/JnzYtqZJ/Esta-o-siba-250-x-150-mm-3.png'
 const Header = () =>(
 
 <header className="main-header">
 
     
-    <div className="logo-text">
+    <div className="logo-img">
         <Link to="/inicio">
-        <span  className="logo-text-1">APP</span>
-        <span  className="logo-text-2"> SIBAPE</span>
+        <img src={logoHeader}></img>
         </Link>
     </div>
   

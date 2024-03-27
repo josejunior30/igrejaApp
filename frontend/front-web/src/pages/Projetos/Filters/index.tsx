@@ -10,7 +10,7 @@ const BarraAlunos = () =>(
       Assitencia Social
       </button>
       </Link>
-      <Link to= "/chamada">
+      <Link to= "/addlista">
       <button className="barra-alunos">
       Lista Presença
       </button>

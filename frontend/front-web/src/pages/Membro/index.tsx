@@ -4,6 +4,7 @@ import Filters from "../../components/Filters";
 import { Link } from "react-router-dom";
 import { MembroDTO } from "../../models/membro";
 import *as membroService from '../../service/membroService';
+import Sidebar from "../../components/sidebar";
 
 const Membro = () => {
   const [MembroDTO, setMembroDTO] = useState<MembroDTO[]>([]);
@@ -21,6 +22,8 @@ const Membro = () => {
   }, []);
 
   return (
+    <>
+    <Sidebar/>
     <div className="page-container">
       <Filters />
       <table className="records-table" cellPadding="0" cellSpacing="0">
@@ -69,6 +72,7 @@ const Membro = () => {
         </tbody>
       </table>
     </div>
+    </>
   );
 };
 

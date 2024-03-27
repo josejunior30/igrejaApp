@@ -74,6 +74,7 @@
   width: 100%;
   border-bottom: 10px solid var(--color-turquoise);
   border-radius: 0 0 10px 10px;
+  margin-bottom: 100px;
 }
 .lista-table thead {
   background-color: var(--color-turquoise);

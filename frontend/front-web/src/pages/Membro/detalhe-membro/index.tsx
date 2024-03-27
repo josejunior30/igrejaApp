@@ -8,6 +8,8 @@ import *as membroService from '../../../service/membroService';
 import { deleteMembro } from "../../formMembro/excluirMembro";
 import SuccessModal from "../../../components/Modal";
 import { CgDanger } from "react-icons/cg";
+import Sidebar from "../../../components/sidebar";
+import Header from "../../../components/Header";
 
 
 const Detalhes = () => {
@@ -78,7 +80,7 @@ const Detalhes = () => {
   const handleNextClick = () => {
     if (id !== undefined) {
       const nextId = parseInt(id, 10) + 1;
-      navigate(`/secretaria/membro/${nextId}`);
+      navigate(`/membro/${nextId}`);
     }
   };
 
@@ -86,13 +88,15 @@ const Detalhes = () => {
     if (id !== undefined) {
       const previousId = parseInt(id, 10) - 1;
       if (previousId > 0) {
-        navigate(`/secretaria/membro/${previousId}`);
+        navigate(`/membro/${previousId}`);
       }
     }
   };
 
   return (
     <>
+    
+    <Sidebar/>
     <div className="membro-container">
       {MembroDTO ? (
         <div className="detalhe-container">

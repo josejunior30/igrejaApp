@@ -1,0 +1,140 @@
+
+
+
+.form-lista-criar {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  width: 70%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+margin: auto;
+margin-top: 40px;
+}
+
+.lista-titulo {
+  margin-bottom: 10px;
+  color: #0b1f34;
+  font-size: 20px;
+  text-align: center;
+
+  
+}
+
+.lista-input-criar {
+  display: flex;
+  flex-direction: column;
+  background-color: white;;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  text-align: center;
+  
+ 
+}
+
+.input-input-grupo-criar {
+  margin-bottom: 10px;
+  background-color: white;
+ 
+}
+
+.div-input-grupo {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.c-nome {
+  margin-right: 10px;
+  color: black; 
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.form-input-criar,
+.form-select-criar,
+.form-select-criar {
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  width: 35%;
+  margin: 10px;
+}
+
+.btn-lista-criar {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #ed7947;
+  width: 10%;
+  color: #fff;
+  cursor: pointer;
+  margin-left:88%;
+  margin-top: 20px;
+}
+
+.btn-lista-criar:hover {
+  background-color: #7a3f25;;
+}
+.img-print-lista{
+margin-left: 80%;
+font-size: 20px;
+text-align: center;
+
+color: white;
+}
+
+.img-print-lista p{
+  color: white;
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

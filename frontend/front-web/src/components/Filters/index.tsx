@@ -18,9 +18,9 @@ const Filters = () =>(
       <input/>
       <button type="submit" className="clean-filters">Pesquisar</button>
     
-      <Link to= "adicionar">
+      <Link to= "/alunos">
       <button className="add-membro">
-        Adicionar 
+        Adicionar
       </button>
       </Link>
    </div> 

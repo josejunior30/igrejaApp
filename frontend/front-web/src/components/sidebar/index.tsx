@@ -21,19 +21,19 @@ const Sidebar: React.FC = () => {
           </Link>
         </li>
         <li>
-          <Link to="membro">
+          <Link to="/membro">
           <FaUser />
           <span>Membro</span>
           </Link>
         </li>
         <li>
-        <Link to="visitante">
+        <Link to="/visitante">
           <FaUsers />
           <span>Visitante</span>
           </Link>
         </li>
         <li>
-        <Link to="alunos">
+        <Link to="/alunos">
           <FaUsersCog />
           <span>Alunos</span>
           </Link>

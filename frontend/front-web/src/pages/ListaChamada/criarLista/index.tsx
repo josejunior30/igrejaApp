@@ -2,8 +2,9 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { PresencaDTO, alunos, projetosChamada } from "../../../models/presenca";
 import { BASE_URL } from "../../../ultilitarios/system";
 import axios from "axios";
-
+import './styles.css';
 import { insert } from "../../../service/presencaService";
+import Header from "../../../components/Header";
 
 
 const AddLista = () => {
@@ -110,26 +111,27 @@ const AddLista = () => {
 
           return (
             <>
-        <form onSubmit={handleSubmit} className="form-lista">
+            <Header/>
+        <form onSubmit={handleSubmit} className="form-lista-criar">
              
-        <fieldset className="lista-input">
-        <h3 className="lista-titulo">Criar Lista de Presença</h3>
-           <fieldset className="input-input-grupo">
-             <div className="div-input-grupo">
-                    <label htmlFor="data" className="l-nome">Data</label>
+        <fieldset className="lista-input-criar">
+        <h3 className="lista-titulo-criar">Criar Lista de Presença</h3>
+          
+             <div className="div-input-grupo-criar">
+                    <label htmlFor="data" className="c-nome">Data</label>
                         <input
                         type="date"
-                        className="form-input"
+                        className="form-input-criar"
                         name="data"
                         value={presencas.data ? presencas.data.toISOString().split('T')[0] : ''}
 
                         onChange={handleChange}
                         required
                         />
-                         <label htmlFor="projetos" className="l-nome">Projeto:</label>
+                         <label htmlFor="projetos" className="c-nome">Projeto:</label>
                     <select
                     name="projetos"
-                        className="form-select-pg"
+                        className="form-select-criar"
                         value={presencas.projetosChamada.id} 
                         onChange={handleChange}
                         required
@@ -144,11 +146,11 @@ const AddLista = () => {
                 </select>
             </div>
             
-            <div className="div-input-grupo">
-                <label htmlFor="alunos" className="l-nome">Aluno:</label>
+            <div className="div-input-grupo-criar">
+                <label htmlFor="alunos" className="c-nome">Aluno:</label>
                 <select
                 name="alunos"
-                    className="form-select-pg"
+                    className="form-select-criar"
                     value={presencas.alunos.id} 
                     onChange={handleChange}
                     required
@@ -160,10 +162,10 @@ const AddLista = () => {
                     </option>
                     ))}
                 </select>
-                <label htmlFor="estado Civil" className="l-nome">Presença:</label>
+                <label htmlFor="estado Civil" className="c-nome">Presença:</label>
                     <select
                     name="chamadaAluno"
-                        className="form-select"
+                        className="form-select-criar"
                         value={presencas.chamadaAluno} 
                         onChange={handleChange}
                         required
@@ -175,8 +177,8 @@ const AddLista = () => {
                         <option value="2">LICENÇA</option>
                     </select>
         </div>
-     </fieldset>
-        <button className="btn-lista" type="submit">Adicionar</button>
+    
+        <button className="btn-lista-criar" type="submit">Enviar</button>
      </fieldset>
     
  </form>

@@ -27,7 +27,7 @@ const Alunos = () => {
     return (
 
         <>
-   
+   <Sidebar/>
       <div className="page-container">
         <Filters />
         <table className="records-table" cellPadding="0" cellSpacing="0">

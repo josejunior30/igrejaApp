@@ -3,6 +3,7 @@ import './styles.css';
 import axios from "axios";
 import { VisitanteResponse } from "./types";
 import Filters from "../../components/Filters";
+import Sidebar from "../../components/sidebar";
 
 const BASE_URL = 'http://localhost:8080';
 
@@ -24,7 +25,8 @@ const Visitante = () => {
     }, []);
   
     return (
-     
+     <>
+     <Sidebar/>
       <div className="page-container">
        
        <Filters/>
@@ -54,6 +56,7 @@ const Visitante = () => {
           </tbody>
         </table>
       </div>
+      </>
     );
   };
 

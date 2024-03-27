@@ -38,7 +38,7 @@ const Inicial = () => (
         <div className="overlay">
         
           <p>Secretaria</p>
-          <Link to="/secretaria">
+          <Link to="/membro">
           <button>Clique aqui</button>
 
           </Link>

@@ -25,6 +25,7 @@ import AddLista from './pages/ListaChamada/criarLista';
 import DetalhesRelatorio from './pages/Relatorio/detalhes';
 import Relatorio from './pages/Relatorio/pesquisa';
 import AddRelatorio from './pages/Relatorio/adicionar';
+import Filters from './components/Filters';
 
 
 const AppRouter = () => (
@@ -36,14 +37,14 @@ const AppRouter = () => (
             <Route path="/charts" element={<Charts />} />
             <Route path="/inicio" element={<Inicial />} />
             <Route path="/Pg" element={<Celulas />} />
-            <Route path="/secretaria/*" element={<Sidebar />}>
-                  <Route path="membro" element={<Membro />} />
-                  <Route path="visitante" element={<Visitante />} />
-                  <Route path="membro/:id" element={<Detalhes/>} />
-                  <Route path="membro/adicionar" element={<Formulario />} />
-                  <Route path="membro/atualizar/:id" element={<FormularioUpdate />} />
+            <Route path="/filtro" element={<Filters />} />
+                  <Route path="/membro" element={<Membro />} />
+                  <Route path="/visitante" element={<Visitante />} />
+                  <Route path="/membro/:id" element={<Detalhes/>} />
+                  <Route path="/membro/adicionar" element={<Formulario />} />
+                  <Route path="/membro/atualizar/:id" element={<FormularioUpdate />} />
                  
-            </Route>  
+           
             <Route path="/projetos" element={<Projetos />} />
             <Route path="/projetos/:id" element={<DetalheProjetos />}> 
             </Route>

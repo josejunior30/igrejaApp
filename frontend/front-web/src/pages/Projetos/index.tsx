@@ -25,6 +25,7 @@ const Projetos = () => {
     return(
     <>
     <Header/>
+    
     <div className="projeto-container">
       
                 <div className="coordenador">

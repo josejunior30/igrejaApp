@@ -83,7 +83,6 @@ const Presenca = () => {
     <>
     <Header/>
     <div className="page-container-lista">
-      <AddLista/>
       </div>
     <div className="page-container-lista">
       <div className="filtro-data">
