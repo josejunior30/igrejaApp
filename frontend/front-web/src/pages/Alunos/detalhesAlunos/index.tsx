@@ -77,7 +77,7 @@ const DetalhesAlunos = () => {
 
   
     const handleGoBack = () => {
-      navigate(-1); 
+      navigate(`/alunos`);
     }
     const handleNextClick = () => {
       if (id !== undefined) {

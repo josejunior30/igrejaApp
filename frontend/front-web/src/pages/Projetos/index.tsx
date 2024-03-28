@@ -59,11 +59,10 @@ const Projetos = () => {
 
         </div>
    </div>
-    <Link to="/inicio">
+    <Link to="/">
      <button className="btn-celula-voltar">Voltar </button>
      </Link>
         
-
 </>
     )
 };

@@ -3,7 +3,7 @@
     margin: 0 auto;
     margin-bottom: 50px;
     padding-top: 20px;
-   margin-left: 350px;
+    margin-left: 20%
   
   }
   
@@ -151,4 +151,16 @@
     margin-right: 20px;
     padding-left: 15px;
   }
-  
+ 
+  .voltar-projetos-detalhes{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 110px;
+    margin-left: 10%;
+    position: absolute;
+    font-size: 20px;
+  }
+  .voltar-projetos-detalhes a{
+    color: white;
+  }

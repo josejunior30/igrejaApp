@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import './styles.css';
 import axios from "axios";
 import { VisitanteResponse } from "./types";
-import Filters from "../../components/Filters";
+import Filters from "../Filters";
 import Sidebar from "../../components/sidebar";
+import Header from "../../components/Header";
 
 const BASE_URL = 'http://localhost:8080';
 
@@ -26,6 +27,7 @@ const Visitante = () => {
   
     return (
      <>
+     <Header/>
      <Sidebar/>
       <div className="page-container">
        

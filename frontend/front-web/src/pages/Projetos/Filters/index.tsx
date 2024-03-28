@@ -5,7 +5,7 @@ const BarraAlunos = () =>(
 
    <div className="barra-container alunos-actions">
      
-     <Link to= "adicionar">
+     <Link to= "#">
       <button className="barra-alunos">
       Assitencia Social
       </button>
@@ -20,7 +20,7 @@ const BarraAlunos = () =>(
       Relatórios
       </button>
       </Link>
-      <Link to= "/adicionar/alunos">
+      <Link to= "/adicionarAlunos">
       <button className="barra-alunos">
         Adicionar alunos
       </button>

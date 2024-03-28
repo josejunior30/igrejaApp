@@ -112,8 +112,9 @@ const Relatorio = () => {
     return (
       <>
         <Header />
-        <div className="voltar-relatorio"  onClick={() => navigate(-1)}>
-    <Link to="/projetos">
+        
+        <div className="voltar-relatorio-pesquisa">
+    <Link to="/membro">
       <TiArrowBack />  Voltar
     </Link>
   </div>

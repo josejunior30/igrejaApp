@@ -5,11 +5,13 @@ import axios from "axios";
 import './styles.css';
 import { insert } from "../../../service/presencaService";
 import Header from "../../../components/Header";
+import { Link, useNavigate } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
 
 
 const AddLista = () => {
     const [listaDeAlunos, setListaDeAlunos] = useState<alunos[]>([]);
-
+    const navigate = useNavigate();
     const [listaDeProjetos, setListaDeProjetos] = useState<projetosChamada[]>([]);
     const [presencas, setPresencas] = useState<PresencaDTO>({
         id:  0,
@@ -108,10 +110,18 @@ const AddLista = () => {
     
             }
           }; 
+          const handleGoBack = () => {
+            navigate(-1); 
+          }
 
           return (
             <>
             <Header/>
+         <div className="voltar-lista-criar">
+            <Link to={"/projetos"}>
+              <TiArrowBack />  Voltar
+            </Link>
+          </div>
         <form onSubmit={handleSubmit} className="form-lista-criar">
              
         <fieldset className="lista-input-criar">

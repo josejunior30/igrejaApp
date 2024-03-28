@@ -1,10 +1,16 @@
 package com.esibape.service;
+
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.esibape.DTO.MembroDTO;
 import com.esibape.DTO.PequenoGrupoDTO;
 import com.esibape.entities.Membro;
@@ -35,6 +41,7 @@ public class MembroService {
     	Membro entity = membro.get();
     	return  new MembroDTO(entity, entity.getPequenoGrupo()) ;
     }
+   
     @Transactional
     public MembroDTO insert( MembroDTO dto) {
     		Membro entity =  new Membro();
@@ -43,6 +50,7 @@ public class MembroService {
     		return new MembroDTO(entity);
     	
     }
+    
     @Transactional
     public MembroDTO update(Long id, MembroDTO dto) {
     	Membro entity=repository.getReferenceById(id);
@@ -86,6 +94,17 @@ public class MembroService {
         List<Membro> result = repository.findByPequenoGrupo_Apelido(apelido);
 		 return  result.stream().map(x -> new MembroDTO(x)).toList();
     }
-   
-	
+
+    public void atualizarIdade(MembroDTO dto) {
+        LocalDate dataNascimento = dto.getDataNascimento();
+        Integer idadeAtual = dto.getIdade(); // Verifica se a idade já foi definida explicitamente
+        
+        // Calcula a idade apenas se a idade estiver vazia
+        if (dataNascimento != null && idadeAtual == null) {
+            LocalDate dataAtual = LocalDate.now();
+            Period periodo = Period.between(dataNascimento, dataAtual);
+            dto.setIdade(periodo.getYears());
+        }
+    }
+
 } 

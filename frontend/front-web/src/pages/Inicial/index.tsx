@@ -34,7 +34,7 @@ const Inicial = () => (
   </div>
 
       <div className="image">
-        <img src={Secretaria} alt="Calendario" />
+        <img src={Secretaria} alt="Scretaria" />
         <div className="overlay">
         
           <p>Secretaria</p>

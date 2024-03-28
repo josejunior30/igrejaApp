@@ -17,12 +17,13 @@ const Filters = () =>(
      
       <input/>
       <button type="submit" className="clean-filters">Pesquisar</button>
-    
-      <Link to= "/alunos">
-      <button className="add-membro">
-        Adicionar
-      </button>
+    <div> 
+      <Link to= "/membro/adicionar">
+          <button className="add-membro"> Adicionar </button>
+           
       </Link>
+      </div>
+     
    </div> 
 
 );

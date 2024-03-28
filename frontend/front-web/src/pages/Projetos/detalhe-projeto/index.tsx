@@ -7,6 +7,8 @@ import Sidebar from "../../../components/sidebar";
 import './styles.css';
 
 import BarraAlunos from "../Filters";
+import Header from "../../../components/Header";
+import { TiArrowBack } from "react-icons/ti";
 
 const DetalheProjetos = () => {
   const { id } = useParams<{ id: string }>() ?? { id: "" };
@@ -38,7 +40,12 @@ const DetalheProjetos = () => {
 
   return (
     <>
-   
+ <Header/>
+ <div className="voltar-projetos-detalhes">
+    <Link to="/projetos">
+      <TiArrowBack />  Voltar
+    </Link>
+  </div>
       <div className="alunos-pj-container">
       <BarraAlunos/>
         {projetosDTO && (

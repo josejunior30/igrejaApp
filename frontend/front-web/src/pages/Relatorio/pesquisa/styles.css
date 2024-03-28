@@ -211,4 +211,15 @@
     color: white;
    
   }
-  
+  .voltar-relatorio-pesquisa {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 110px;
+    margin-left: 15%;
+    position: absolute;
+    font-size: 20px;
+  }
+  .voltar-relatorio-pesquisa a{
+    color: white;
+  }

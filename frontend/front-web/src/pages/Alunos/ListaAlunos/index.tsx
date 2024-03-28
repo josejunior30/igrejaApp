@@ -3,8 +3,9 @@ import { alunosDTO } from "../../../models/alunos";
 import *as alunosService from "../../../service/alunosService";
 
 import { Link } from "react-router-dom";
-import Filters from "../../../components/Filters";
+import Filters from "../../Filters";
 import Sidebar from "../../../components/sidebar";
+import Header from "../../../components/Header";
 
 
 
@@ -27,6 +28,7 @@ const Alunos = () => {
     return (
 
         <>
+         <Header/>
    <Sidebar/>
       <div className="page-container">
         <Filters />

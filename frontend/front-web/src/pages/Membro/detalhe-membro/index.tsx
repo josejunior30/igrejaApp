@@ -92,27 +92,30 @@ const Detalhes = () => {
       }
     }
   };
-
+  const handleGoBack = () => {
+    navigate(`/membro`);
+  }
   return (
     <>
-    
-    <Sidebar/>
+    <Header/>
+   
     <div className="membro-container">
       {MembroDTO ? (
         <div className="detalhe-container">
           <div className="conteudo-centralizado">
           <img src={MembroDTO.url} alt="Foto do Membro" className="foto-membro" />
             <span className="nome-id">{MembroDTO.nome} {MembroDTO.sobrenome}</span>
-            <p className="dados"> CPF: {MembroDTO.cpf}</p>
-            <p className="dados"> Estado Civil: {MembroDTO.estadoCivil}</p>
-            <p className="dados">Data de Nascimento: {new Date(MembroDTO.dataNascimento).toLocaleDateString()}</p>
-            <p className="dados"><span><MdEmail /></span>  Email: {MembroDTO.email}</p>
-            <p className="dados"><span><FaPhoneVolume /></span>  Telefone: {MembroDTO.telefone}</p>
+            <p className="dados"><span>CPF: </span> {MembroDTO.cpf}</p>
+            <p className="dados"> <span>Idade: </span>{MembroDTO.idade}</p>
+            <p className="dados"> <span>Estado Civil:</span> {MembroDTO.estadoCivil}</p>
+            <p className="dados"><span>Data de Nascimento:</span> {new Date(MembroDTO.dataNascimento).toLocaleDateString()}</p>
+            <p className="dados"><span>Email: </span> {MembroDTO.email}</p>
+            <p className="dados"> <span> Telefone:</span> {MembroDTO.telefone}</p>
          
             {MembroDTO.pequenoGrupo && (
               <div >
                 <p className="dados">
-      Pequeno Grupo:{" "}
+     <span>  Pequeno Grupo:{" "}:</span>
       <span
         className={`pg ${getColorClassForPequenoGrupo(MembroDTO.pequenoGrupo.id)}`}
       >
@@ -150,6 +153,7 @@ const Detalhes = () => {
         <p>Carregando detalhes do membro...</p>
       )}
     </div>
+    
     <div className="setas">
       <button onClick={handlePreviousClick} className="btn-left"> <FaChevronLeft /></button>
       <button onClick={handleNextClick} className="btn-right"><FaChevronRight /></button>
@@ -159,18 +163,20 @@ const Detalhes = () => {
       {MembroDTO ? (
           <div className="conteudo-centralizado-endereço">
             <p className="text-h2">Endereço</p>
-          <p className="dados"> Rua: {MembroDTO.rua}</p>
-            <p className="dados"> Bairro: {MembroDTO.bairro}</p>
-            <p className="dados">Numero: {MembroDTO.numero}</p>
-            <p className="dados"><span><MdEmail /> </span>Cidade: {MembroDTO.cidade}</p>
-            <p className="dados"><span><FaPhoneVolume /></span> Complemento: {MembroDTO.complemento}</p>
-            <p className="dados"><span><FaPhoneVolume /></span> Cep: {MembroDTO.cep}</p>
+          <p className="dados"><span> Rua:</span> {MembroDTO.rua}</p>
+            <p className="dados"><span>Bairro: </span> {MembroDTO.bairro}</p>
+            <p className="dados"><span>Numero: </span>{MembroDTO.numero}</p>
+            <p className="dados"><span>Cidade:</span> {MembroDTO.cidade}</p>
+            <p className="dados"><span>Complemento:</span>  {MembroDTO.complemento}</p>
+            <p className="dados"><span>Cep:</span>  {MembroDTO.cep}</p>
           </div>
         ):(
           <p>Carregando detalhes do membro...</p>
           )}
           </div>
+      
           </div>
+          <button className="btn-membro-detalhe-voltar" onClick={handleGoBack}>Voltar</button>
 
      
        </>

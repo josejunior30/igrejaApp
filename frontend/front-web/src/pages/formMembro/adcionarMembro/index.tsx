@@ -7,6 +7,8 @@ import { MembroDTO, pequenoGrupo } from "../../../models/membro";
 import { BASE_URL } from "../../../ultilitarios/system";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'; 
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/sidebar";
 
 const Formulario: React.FC = () => {
   const [listaDeGrupos, setListaDeGrupos] = useState<pequenoGrupo[]>([]);
@@ -105,6 +107,8 @@ const Formulario: React.FC = () => {
   }
   return (
     <>
+     <Header/>
+     <Sidebar/>
     <form onSubmit={handleSubmit} className="fm-container">
       <div className="titulo-form">
       <h3 >Dados pessoais </h3>

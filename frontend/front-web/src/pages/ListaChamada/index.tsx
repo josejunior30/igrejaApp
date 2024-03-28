@@ -7,6 +7,7 @@ import AddAlunos from "../Alunos/addAlunos";
 import AddLista from "./criarLista";
 import { PiPrinterFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
 
 const Presenca = () => {
   
@@ -82,6 +83,12 @@ const Presenca = () => {
   return (
     <>
     <Header/>
+ 
+    <div className="voltar-relatorio-pesquisa">
+    <Link to="/membro">
+      <TiArrowBack />  Voltar
+    </Link>
+  </div>
     <div className="page-container-lista">
       </div>
     <div className="page-container-lista">

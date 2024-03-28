@@ -33,6 +33,10 @@
     margin-top: 10px;
    color: #0b1f34;
   }
+
+  .dados span {
+    font-weight: bold;
+  }
   .botoes-container {
     display: flex;
     justify-content: center;
@@ -53,17 +57,18 @@
   .botao-deletar {
     background-color: #f44336; /* Cor de fundo vermelha, ajuste conforme necessário */
   }
-  .botao-voltar {
-    margin: 0 auto; /* Adiciona margem automática para centralizar o botão */
-    display: block; /* Certifica-se de que o botão é exibido como bloco */
-    background-color:  #0056b3;
-    color:   white;
+  .btn-membro-detalhe-voltar{
+    margin-top: 250px; /* Adiciona margem no topo do botão */
+    background-color: #0056b3;
+    color: white;
     border: none;
+   
     border-radius: 5px;
     cursor: pointer;
     padding: 10px 20px;
-    margin-top: 30px;
-    margin-bottom: 20px;
+  margin-left: 31%;
+    width: 10%; 
+   
   }
  
 

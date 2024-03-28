@@ -11,21 +11,22 @@ import Header from '../Header';
 const Sidebar: React.FC = () => {
   return (
 <>
-<Header/>
+
     <div className="sidebar-container">
       <ul className='sidebar'>
         <li>
-        <Link to="/inicio">
-          <FaHome />
-          <span>Home</span>
-          </Link>
+          <Link to="/">
+            <FaHome />
+            <span>Home</span>
+            </Link>
         </li>
         <li>
-          <Link to="/membro">
-          <FaUser />
+        <Link to="/membro">
+          <FaUsers />
           <span>Membro</span>
           </Link>
         </li>
+       
         <li>
         <Link to="/visitante">
           <FaUsers />

@@ -10,13 +10,14 @@ const Header = () =>(
 
 <header className="main-header">
 
-    
-    <div className="logo-img">
-        <Link to="/inicio">
-        <img src={logoHeader}></img>
+
+<div className="logo-img">
+<Link to="/">
+        <img src={logoHeader} alt="Logo da Empresa" />
         </Link>
     </div>
-  
+   
+
     <div className="login-container">
     <span><FontAwesomeIcon icon={faUser} /></span> 
         <h2>Login</h2>

@@ -1,5 +1,6 @@
 package com.esibape.resource;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.esibape.DTO.MembroDTO;
@@ -43,12 +45,14 @@ public class MembroController {
 		
 		@PostMapping
 		public ResponseEntity<MembroDTO> insert(@RequestBody MembroDTO dto){
+			service.atualizarIdade(dto);
 			MembroDTO entity = service.insert(dto);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 					.buildAndExpand(entity.getId()).toUri();
 			return ResponseEntity.created(uri).body(entity);
 		}
 		
+
 		@PutMapping(value="/{id}")
 		public ResponseEntity<MembroDTO>update (@PathVariable Long id, @RequestBody MembroDTO dto){
 			 dto =service.update(id, dto);

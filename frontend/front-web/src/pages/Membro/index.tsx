@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import './styles.css';
-import Filters from "../../components/Filters";
+import Filters from "../Filters";
 import { Link } from "react-router-dom";
 import { MembroDTO } from "../../models/membro";
 import *as membroService from '../../service/membroService';
 import Sidebar from "../../components/sidebar";
+import Header from "../../components/Header";
 
 const Membro = () => {
   const [MembroDTO, setMembroDTO] = useState<MembroDTO[]>([]);
@@ -23,6 +24,7 @@ const Membro = () => {
 
   return (
     <>
+    <Header/>
     <Sidebar/>
     <div className="page-container">
       <Filters />
