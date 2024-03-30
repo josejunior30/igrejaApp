@@ -1,10 +1,16 @@
 package com.esibape.DTO;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.HashSet;
 
+import java.util.Objects;
+import java.util.Set;
+
+
+
+import com.esibape.entities.Role;
 import com.esibape.entities.User;
-import com.esibape.entities.UserRole;
+
 
 public class UserDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -13,29 +19,39 @@ public class UserDTO implements Serializable{
 	private String nome;
 	private String email;
 	private String password;
-	private UserRole role;
 	
-	public UserDTO(){
-		
-	}
-
-	public UserDTO(Long id, String nome, String email, String password, UserRole role) {
+	private Set<RoleDTO> roles = new HashSet<>();
+public UserDTO() {
+	
+}
+	
+	
+	public UserDTO(Long id, String nome, String email, String password, Set<RoleDTO>roles) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.password = password;
-		this.role = role;
-	}
-	
-	public UserDTO(User entity){
-		this.id= entity.getId();
-		this.nome= entity.getNome();
-		this.email= entity.getEmail();
-		this.password= entity.getPassword();
-		this.role= entity.getRole();
+		this.roles = roles;
 	}
 
+
+	public UserDTO(User entity){
+		id= entity.getId();
+		nome= entity.getNome();
+		email= entity.getEmail();
+		password= entity.getPassword();
+		
+	}
+	public UserDTO(User entity, Set<Role>roles) {
+		
+		this(entity);
+	
+		roles.forEach(rol-> this.roles.add(new RoleDTO(rol)));
+		
+		
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -68,13 +84,18 @@ public class UserDTO implements Serializable{
 		this.password = password;
 	}
 
-	public UserRole getRole() {
-		return role;
+
+
+
+	public Set<RoleDTO> getRoles() {
+		return roles;
 	}
 
-	public void setRole(UserRole role) {
-		this.role = role;
+
+	public void setRoles(Set<RoleDTO> roles) {
+		this.roles = roles;
 	}
+
 
 	@Override
 	public int hashCode() {

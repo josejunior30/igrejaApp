@@ -1,11 +1,13 @@
 package com.esibape.resource;
 
-import java.io.IOException;
+
+
 import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.esibape.DTO.MembroDTO;
 import com.esibape.service.MembroService;
+
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -36,7 +38,7 @@ public class MembroController {
 		List<MembroDTO> membro = service.findAll();
 		return ResponseEntity.ok().body(membro);
 	}
-	
+	@PreAuthorize("hasAnyRole('ADMIN','OPERATOR')")
 		@GetMapping(value="/{id}")
 		public ResponseEntity<MembroDTO>findById(@PathVariable Long id){
 			MembroDTO membro = service.findById(id);
@@ -75,5 +77,5 @@ public class MembroController {
 		        List<MembroDTO> membros = service.findByPequenoGrupoApelido(apelido);
 		        return ResponseEntity.ok().body(membros);
 		    }
-	
+		  
 }

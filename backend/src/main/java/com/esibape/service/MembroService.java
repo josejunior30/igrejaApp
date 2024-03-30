@@ -1,5 +1,6 @@
 package com.esibape.service;
 
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -7,9 +8,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.esibape.DTO.MembroDTO;
 import com.esibape.DTO.PequenoGrupoDTO;
@@ -17,6 +18,7 @@ import com.esibape.entities.Membro;
 import com.esibape.entities.PequenoGrupo;
 import com.esibape.repository.MembroRepository;
 import com.esibape.repository.PequenoGrupoRepository;
+
 
 @Service
 public class MembroService {
@@ -26,6 +28,7 @@ public class MembroService {
     
     @Autowired
     private PequenoGrupoRepository pequenoGrupoRepository;
+   
     
     @Transactional(readOnly = true)
     public List<MembroDTO> findAll() {
@@ -82,6 +85,8 @@ public class MembroService {
 		PequenoGrupo pequenoGrupo = pequenoGrupoRepository.getReferenceById(pgDTO.getId());
 		entity.setPequenoGrupo(pequenoGrupo);
 		
+		
+		
 	}	
     @Transactional(readOnly = true)
 	public List<MembroDTO> findByNomeIgnoreCaseContaining(String nome) {
@@ -105,6 +110,10 @@ public class MembroService {
             Period periodo = Period.between(dataNascimento, dataAtual);
             dto.setIdade(periodo.getYears());
         }
+        
     }
+    
+    
+
 
 } 

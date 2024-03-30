@@ -1,7 +1,12 @@
 import React from "react";
 import './styles.css';
 
-const Login =() => (
+const Login =() => {
+
+
+
+
+    return(
     <>
 <body className="body-container">
     <form className="form-container">
@@ -17,6 +22,7 @@ const Login =() => (
 </body> 
 <p className="copy">&copy; Segunda Igreja Batista de Pendotiba 1966-2024. Todos os direitos reservados</p>
         </>
-);
+    )
+};
 
 export default Login;

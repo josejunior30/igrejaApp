@@ -1,40 +1,58 @@
 package com.esibape.entities;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-
+	
+@SuppressWarnings("serial")
 	@Entity
 	@Table(name="tb_user")
-	public class User implements Serializable{
-	private static final long serialVersionUID = 1L;
+	public class User implements UserDetails{
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	private String sobrenome;
+	@Column(unique=true)
 	private String email;
 	private String password;
-	private UserRole role;
+	
+	@ManyToMany(fetch= FetchType.EAGER)
+	@JoinTable(name="tb_user_role", joinColumns =@JoinColumn(name="user_id"),
+	inverseJoinColumns = @JoinColumn(name="role_id"))
+	private Set<Role>roles = new HashSet<>();
 	
 	public User(){
 		
 		
 	}
 
-
-	public User(Long id, String nome, String email, String password, UserRole role) {
+	public User(Long id, String nome, String sobrenome, String email, String password, Set<Role> roles) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.sobrenome = sobrenome;
 		this.email = email;
 		this.password = password;
-		this.role = role;
+		this.roles = roles;
 	}
+
 
 
 
@@ -85,18 +103,36 @@ import jakarta.persistence.Table;
 	}
 
 
-
-	public UserRole getRole() {
-		return role;
+	public String getSobrenome() {
+		return sobrenome;
 	}
 
 
-
-	public void setRole(UserRole role) {
-		this.role = role;
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
 	}
 
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+    public void addRole(Role role) {
+    	roles.add(role);
+    }
+    public boolean hasRole(String roleName) {
+		for (Role role : roles) {
+			if (role.getAuthority().equals(roleName)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public int hashCode() {
@@ -116,6 +152,52 @@ import jakarta.persistence.Table;
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return roles;
+	}
+
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return email;
+	}
+
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+
+
+
 	
 	
 
