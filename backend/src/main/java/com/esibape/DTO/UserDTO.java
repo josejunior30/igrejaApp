@@ -21,9 +21,9 @@ public class UserDTO implements Serializable{
 	private String password;
 	
 	private Set<RoleDTO> roles = new HashSet<>();
-public UserDTO() {
-	
-}
+	public UserDTO() {
+		
+	}
 	
 	
 	public UserDTO(Long id, String nome, String email, String password, Set<RoleDTO>roles) {
