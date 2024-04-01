@@ -25,7 +25,7 @@ import AddLista from './pages/ListaChamada/criarLista';
 import DetalhesRelatorio from './pages/Relatorio/detalhes';
 import Relatorio from './pages/Relatorio/pesquisa';
 import AddRelatorio from './pages/Relatorio/adicionar';
-import Filters from './pages/Filters';
+
 
 
 const AppRouter = () => (
@@ -33,12 +33,12 @@ const AppRouter = () => (
  
       <Router>
           <Routes>
-          <Route path="/" element={<Inicial />} />
-            <Route path="login" element={<Login />} />
+          <Route path="/inicio" element={<Inicial />} />
+            <Route path="/" element={<Login />} />
             <Route path="/Pg" element={<Celulas />} />
             <Route path="/membro" element={<Membro/>} />
             <Route path="/visitante" element={<Visitante />} />
-            <Route path="/membro/:id" element={<Detalhes/>} />
+            <Route path="/membro/:id" element={<Detalhes />} />
             <Route path="/membro/adicionar" element={<Formulario />} />
             <Route path="/membro/atualizar/:id" element={<FormularioUpdate />} />
             

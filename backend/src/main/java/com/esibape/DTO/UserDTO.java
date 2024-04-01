@@ -2,10 +2,8 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.util.HashSet;
-
 import java.util.Objects;
 import java.util.Set;
-
 
 
 import com.esibape.entities.Role;
@@ -51,6 +49,7 @@ public class UserDTO implements Serializable{
 		
 		
 	}
+	
 	
 	public Long getId() {
 		return id;

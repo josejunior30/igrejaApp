@@ -38,13 +38,13 @@ public class MembroController {
 		List<MembroDTO> membro = service.findAll();
 		return ResponseEntity.ok().body(membro);
 	}
-	@PreAuthorize("hasAnyRole('ADMIN','OPERATOR')")
+	
 		@GetMapping(value="/{id}")
 		public ResponseEntity<MembroDTO>findById(@PathVariable Long id){
 			MembroDTO membro = service.findById(id);
 			return ResponseEntity.ok().body(membro);
 		}
-		
+	
 		@PostMapping
 		public ResponseEntity<MembroDTO> insert(@RequestBody MembroDTO dto){
 			service.atualizarIdade(dto);

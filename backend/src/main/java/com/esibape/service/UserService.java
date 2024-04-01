@@ -7,8 +7,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,6 +35,7 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private RoleRepository roleRepository;	
 	
+
 	@Transactional(readOnly = true)
 	public List<UserDTO> findAll() {
 		List<User> list = repository.findAll();
@@ -105,31 +106,5 @@ public class UserService implements UserDetailsService {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
-    public UserDTO getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new IllegalStateException("No user authenticated");
-        }
-        
-        String userEmail = authentication.getName();
-        
-        List<UserDetailsProjection> result = repository.searchUserAndRolesByEmail(userEmail);
-        
-        if (result.isEmpty()) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        
-        User user = new User();
-        user.setEmail(result.get(0).getUsername());
-        user.setPassword(result.get(0).getPassword());
-        for (UserDetailsProjection projection : result) {
-            user.addRole(new Role(projection.getRoleId(), projection.getAuthority()));
-        }
-        
-        return new UserDTO(user);
-    }
-
     
 }

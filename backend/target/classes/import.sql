@@ -49,9 +49,9 @@ INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, per
 
 
 
-INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Eleilson','da Silva' ,'leo@gmail.com', '1234');
-INSERT INTO tb_role (authority ) VALUES ( 'ADMIN');
-INSERT INTO tb_role (authority ) VALUES ( 'OPERADOR');
+INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Eleilson','da Silva' ,'leo@gmail.com', '$2a$10$eVgvAuCpK3vyj6nyXiNxX.MKxbu/kdv.8Iw0snHXTHk54MsGxQ8Au');
+INSERT INTO tb_role (authority ) VALUES ( 'ROLE_ADMIN');
+INSERT INTO tb_role (authority ) VALUES ( 'ROLE_OPERADOR');
 
 
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 1, 1);
