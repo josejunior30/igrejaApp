@@ -5,12 +5,14 @@
   align-items: center;
   width: 95%;
   margin-left: 25px;
+  margin-bottom: 40px;
 }
 
 .text-container {
   text-align: center;
   margin-top: 20px;
   color: white;
+
 }
 
 .text-container p {

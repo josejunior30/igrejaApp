@@ -60,7 +60,7 @@
 /* Estiliza o rótulo */
 .sidebar li span {
   font-size: 15px;
-  margin-top: 10px;
+  margin-top: 1px;
 }
 
 /* Adiciona regras de mídia para tornar a barra lateral responsiva */

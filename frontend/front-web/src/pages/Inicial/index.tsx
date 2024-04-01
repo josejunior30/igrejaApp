@@ -10,19 +10,23 @@ import './styles.css';
 import Header from "../../components/Header";
 
 const projetos ='https://i.postimg.cc/XJnWvPsT/Whats-App-Image-2024-03-20-at-22-06-16.jpg'
-
+const financeiro = 'https://i.postimg.cc/QdwmwPQs/financeiro.jpg'
+const lideranca = 'https://i.postimg.cc/Pq3Pxsqv/liderenca.jpg'
+const pg= 'https://i.postimg.cc/sDMXn0w3/pequeno-Grupo.jpg'
+const secretaria = 'https://i.postimg.cc/TYvd9YLJ/secretaria.jpg'
+const visitante = 'https://i.postimg.cc/TYvd9YLJ/secretaria.jpg'
 const Inicial = () => (
   <>
     <Header/>
     <div className="text-container">
-      <h2>Bem Vindo, Junior !</h2>
+      <h2>Bem Vindo !</h2>
       <p>Escolha uma seção</p>
     </div>
 
     <div className="image-container">
       
       <div className="image">
-        <img src={Financeiro} alt="Calendario" />
+        <img src={financeiro} alt="Calendario" />
         <div className="overlay">
           
           <p>Tesouraria</p>
@@ -34,7 +38,7 @@ const Inicial = () => (
   </div>
 
       <div className="image">
-        <img src={Secretaria} alt="Scretaria" />
+        <img src={secretaria} alt="Scretaria" />
         <div className="overlay">
         
           <p>Secretaria</p>
@@ -47,7 +51,7 @@ const Inicial = () => (
       </div>
 
       <div className="image">
-        <img src={Lideranca} alt="Calendario" />
+        <img src={lideranca} alt="Calendario" />
         <div className="overlay">
           <p>Liderança</p>
           <Link to="#">
@@ -57,7 +61,7 @@ const Inicial = () => (
       </div>
 
       <div className="image">
-        <img src={Pg} alt="Calendario" />
+        <img src={pg} alt="Calendario" />
         <div className="overlay">
           <p>Pequeno Grupo</p>
           <Link to= "/pg">
@@ -67,20 +71,20 @@ const Inicial = () => (
       </div>
 
       <div className="image">
-        <img src={Visitante} alt="Calendario" />
+        <img src={projetos}  alt="Calendario" />
         <div className="overlay">
           <p>Visitante</p>
-          <Link to="#">
+          <Link to="/projetos">
           <button>Clique aqui</button>
           </Link>
         </div>
       </div>
 
       <div className="image">
-        <img src={projetos} alt="Calendario" />
+        <img src={visitante} alt="Calendario" />
         <div className="overlay">
-          <p>Projetos</p>
-        <Link to="/projetos">
+          <p>Visitante</p>
+        <Link to="#">
           <button>Clique aqui</button>
           </Link>
         </div>

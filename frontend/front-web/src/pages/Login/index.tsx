@@ -20,7 +20,7 @@ const Login = () => {
                 console.log('Token recebido:', token);
                 authService.saveAccessToken(token);
                 console.log('Token salvo com sucesso.');
-                navigate("/membro")
+                navigate("/inicio")
             })
             .catch(error => {
                 console.error('Erro ao fazer login:', error);
