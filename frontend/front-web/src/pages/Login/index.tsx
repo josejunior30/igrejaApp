@@ -12,14 +12,13 @@ const Login = () => {
         password: ''
     });
 
-    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    function handleSubmit(event: any) {
         event.preventDefault();
         console.log('Enviando formulário:', formData);
         authService.loginRequest(formData)
-            .then(token => {
-                console.log('Token recebido:', token);
-                authService.saveAccessToken(token);
-                console.log('Token salvo com sucesso.');
+            .then(response => {
+                authService.saveAccessToken(response.data.access_token);
+                console.log('Token salvo com sucesso.' , response.data);
                 navigate("/inicio")
             })
             .catch(error => {

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.esibape.DTO.UserDTO;
 import com.esibape.service.UserService;
 
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping(value="/user")
 public class UserController {
@@ -58,7 +60,7 @@ public class UserController {
 		 service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OPERATOR')")
 	@GetMapping(value="/me")
 	public ResponseEntity<UserDTO> getMe() {
 		UserDTO dto = service.getMe();

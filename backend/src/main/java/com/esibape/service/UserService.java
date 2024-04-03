@@ -73,12 +73,8 @@ public class UserService implements UserDetailsService {
     private void copyDtoToEntity(UserDTO dto, User entity, PasswordEncoder passwordEncoder) {
         entity.setNome(dto.getNome());
         entity.setEmail(dto.getEmail());
-        
-        // Codificando a senha antes de salvar na entidade
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         entity.setPassword(encodedPassword);
-        
-        // Obtendo os IDs das roles do DTO e mapeando para entidades de Role correspondentes
         Set<RoleDTO> roleDTOs = dto.getRoles();
         Set<Role> roles = roleDTOs.stream()
                 .map(roleDto -> roleRepository.findById(roleDto.getId()).orElse(null))
@@ -86,7 +82,6 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toSet());
         entity.setRoles(roles);
 
-        // Definindo as roles na entidade User
         entity.setRoles(roles);
     }
 
