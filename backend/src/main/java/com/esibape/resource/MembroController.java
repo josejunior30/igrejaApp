@@ -32,13 +32,13 @@ public class MembroController {
 	@Autowired
 	private MembroService service;
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping
 	public ResponseEntity <List<MembroDTO>>findAll(){
 		List<MembroDTO> membro = service.findAll();
 		return ResponseEntity.ok().body(membro);
 	}
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 		@GetMapping(value="/{id}")
 		public ResponseEntity<MembroDTO>findById(@PathVariable Long id){
 			MembroDTO membro = service.findById(id);

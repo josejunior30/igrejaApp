@@ -5,14 +5,15 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.springframework.security.core.GrantedAuthority;
 
-import com.esibape.entities.Role;
 import com.esibape.entities.User;
 
 
 public class UserDTO implements Serializable{
-	private static final long serialVersionUID = 1L;
 
+
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nome;
 	private String email;
@@ -23,8 +24,8 @@ public class UserDTO implements Serializable{
 		
 	}
 	
-	
-	public UserDTO(Long id, String nome, String email, String password, Set<RoleDTO>roles) {
+
+	public UserDTO(Long id, String nome, String email, String password, Set<RoleDTO> roles) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -34,21 +35,16 @@ public class UserDTO implements Serializable{
 	}
 
 
-	public UserDTO(User entity){
-		id= entity.getId();
-		nome= entity.getNome();
-		email= entity.getEmail();
-		password= entity.getPassword();
-		
-	}
-	public UserDTO(User entity, Set<Role>roles) {
-		
-		this(entity);
-	
-		roles.forEach(rol-> this.roles.add(new RoleDTO(rol)));
-		
-		
-	}
+	public UserDTO(User entity) {
+        id = entity.getId();
+        nome = entity.getNome();
+        email = entity.getEmail();
+
+        for (GrantedAuthority role : entity.getAuthorities()) {
+            roles.add(new RoleDTO(id, role.getAuthority()));
+        }
+    }
+
 	
 	
 	public Long getId() {
@@ -84,15 +80,8 @@ public class UserDTO implements Serializable{
 	}
 
 
-
-
 	public Set<RoleDTO> getRoles() {
 		return roles;
-	}
-
-
-	public void setRoles(Set<RoleDTO> roles) {
-		this.roles = roles;
 	}
 
 

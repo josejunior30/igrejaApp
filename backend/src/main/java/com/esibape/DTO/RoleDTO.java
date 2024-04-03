@@ -2,12 +2,12 @@ package com.esibape.DTO;
 
 
 
-import org.springframework.security.core.GrantedAuthority;
+
 
 import com.esibape.entities.Role;
 
-@SuppressWarnings("serial")
-public class RoleDTO implements GrantedAuthority{
+
+public class RoleDTO{
 
 	
 	private Long id;
@@ -34,12 +34,17 @@ public class RoleDTO implements GrantedAuthority{
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+
 	public String getAuthority() {
 		return authority;
 	}
+
+
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
+	
 	
 	
 }

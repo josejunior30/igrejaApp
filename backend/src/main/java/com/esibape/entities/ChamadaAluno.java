@@ -1,7 +1,7 @@
 package com.esibape.entities;
 
 public enum ChamadaAluno {
-		PRESENTE("presente"),
+	PRESENTE("presente"),
 	AUSENTE("ausente"),
 	LICENÇA("licença");
 	
@@ -25,7 +25,6 @@ public enum ChamadaAluno {
 		this.chamadaAluno = chamadaAluno;
 	}
 
-
-
 	
 }
+	
