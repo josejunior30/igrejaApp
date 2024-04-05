@@ -14,12 +14,11 @@ const Login = () => {
 
     function handleSubmit(event: any) {
         event.preventDefault();
-        console.log('Enviando formulário:', formData);
         authService.loginRequest(formData)
             .then(response => {
                 authService.saveAccessToken(response.data.access_token);
-                console.log('Token salvo com sucesso.' , response.data);
-                navigate("/inicio")
+                console.log(authService.getAccessTokenPayload());
+                
             })
             .catch(error => {
                 console.error('Erro ao fazer login:', error);
@@ -29,7 +28,6 @@ const Login = () => {
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
         const { value, name } = event.target;
-        console.log('Input alterado:', { name, value });
         setFormData({ ...formData, [name]: value });
     }
 

@@ -1,15 +1,17 @@
 import { BASE_URL } from "../ultilitarios/system";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import * as authService from '../service/AuthService'
 import { requestBackend } from "../models/request";
+import { config } from "localforage";
 
 export function findMe(){
 
-    const headers ={
-        Authorization: "Bearer " + authService.getAccessToken()
+    const config: AxiosRequestConfig={
+        url: "/user/me",
+        withCredentials:true
     }
 
-    return requestBackend({ url: `/user/me`, headers});
+    return requestBackend(config);
 }
 
 export function findById(id:number){

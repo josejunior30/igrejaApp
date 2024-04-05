@@ -1,12 +1,13 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { alunosDTO, projetos } from "../../../models/alunos";
-import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import { BASE_URL } from "../../../ultilitarios/system";
 import { insertMembro } from "../../../service/alunosService";
 import SuccessModal from "../../../components/Modal";
 import './styles.css';
 import Header from "../../../components/Header";
+import { useNavigate } from "react-router-dom";
 const AddAlunos: React.FC = () => {
     const [projetos, setProjetos] = useState<projetos[]>([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
