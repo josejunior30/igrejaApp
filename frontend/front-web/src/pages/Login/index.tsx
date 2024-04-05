@@ -18,7 +18,7 @@ const Login = () => {
             .then(response => {
                 authService.saveAccessToken(response.data.access_token);
                 console.log(authService.getAccessTokenPayload());
-                
+                navigate("/inicial")
             })
             .catch(error => {
                 console.error('Erro ao fazer login:', error);

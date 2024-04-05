@@ -32,7 +32,7 @@ public class MembroController {
 	@Autowired
 	private MembroService service;
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OPERATOR')")
 	@GetMapping
 	public ResponseEntity <List<MembroDTO>>findAll(){
 		List<MembroDTO> membro = service.findAll();

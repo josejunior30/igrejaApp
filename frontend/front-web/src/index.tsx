@@ -25,40 +25,37 @@ import AddLista from './pages/ListaChamada/criarLista';
 import DetalhesRelatorio from './pages/Relatorio/detalhes';
 import Relatorio from './pages/Relatorio/pesquisa';
 import AddRelatorio from './pages/Relatorio/adicionar';
+import { PrivateRoute } from './components/privateRoute';
 
 
 
 const AppRouter = () => (
   
  
-      <Router>
-          <Routes>
-          <Route path="/inicio" element={<Inicial />} />
-            <Route path="/" element={<Login />} />
-            <Route path="/Pg" element={<Celulas />} />
-            <Route path="/membro" element={<Membro/>} />
-            <Route path="/visitante" element={<Visitante />} />
-            <Route path="/membro/:id" element={<Detalhes />} />
-            <Route path="/membro/adicionar" element={<Formulario />} />
-            <Route path="/membro/atualizar/:id" element={<FormularioUpdate />} />
-            
-           
-            <Route path="/projetos" element={<Projetos />} />
-            <Route path="/projetos/:id" element={<DetalheProjetos />}/> 
-            <Route path="/alunos" element={<Alunos />} /> 
-            <Route path="/adicionarAlunos" element={<AddAlunos />} /> 
-            <Route path="/alunos/:id" element={<DetalhesAlunos />}/> 
-            <Route path="/editarAlunos/:id" element={<EditarAlunos />}/> 
-          
-           
-            <Route path="/chamada" element={<Presenca />} />
-            <Route path="/addlista" element={<AddLista />} />
-            
-            <Route path="/relatorio" element={<Relatorio />} />
-            <Route path="/relatorio/:id" element={<DetalhesRelatorio />} />
-            <Route path="/enviarRelatorio" element={<AddRelatorio />} />
-          </Routes>
-      </Router>
+  <Router>
+  <Routes>
+    <Route path="/" element={<Login />} />
+    <Route path="/inicio" element={<PrivateRoute><Inicial /></PrivateRoute>} />
+    <Route path="/Pg" element={<Celulas />} />
+    <Route path="/membro" element={<PrivateRoute><Membro/></PrivateRoute>} />
+    <Route path="/membro/:id" element={<PrivateRoute roles={['ROLE_ADMIN']}><Detalhes /></PrivateRoute>} />
+    <Route path="/membro/adicionar" element={<PrivateRoute><Formulario /></PrivateRoute>} />
+    <Route path="/membro/atualizar/:id" element={<PrivateRoute><FormularioUpdate /></PrivateRoute>} />
+    <Route path="/visitante" element={<Visitante />} />
+    <Route path="/projetos" element={<PrivateRoute><Projetos /></PrivateRoute>} />
+    <Route path="/projetos/:id" element={<PrivateRoute><DetalheProjetos /></PrivateRoute>} />
+    <Route path="/alunos" element={<PrivateRoute><Alunos /></PrivateRoute>} /> 
+    <Route path="/adicionarAlunos" element={<PrivateRoute><AddAlunos /></PrivateRoute>} /> 
+    <Route path="/alunos/:id" element={<PrivateRoute><DetalhesAlunos /></PrivateRoute>} /> 
+    <Route path="/editarAlunos/:id" element={<PrivateRoute><EditarAlunos /></PrivateRoute>} /> 
+    <Route path="/chamada" element={<PrivateRoute><Presenca /></PrivateRoute>} />
+    <Route path="/addlista" element={<PrivateRoute><AddLista /></PrivateRoute>} />
+    <Route path="/relatorio" element={<PrivateRoute><Relatorio /></PrivateRoute>} />
+    <Route path="/relatorio/:id" element={<PrivateRoute><DetalhesRelatorio /></PrivateRoute>} />
+    <Route path="/enviarRelatorio" element={<PrivateRoute><AddRelatorio /></PrivateRoute>} />
+  </Routes>
+</Router>
+
 
 );
 

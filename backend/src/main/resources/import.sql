@@ -50,12 +50,14 @@ INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, per
 
 
 INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Eleilson','da Silva' ,'leo@gmail.com', '$2a$10$eVgvAuCpK3vyj6nyXiNxX.MKxbu/kdv.8Iw0snHXTHk54MsGxQ8Au');
+INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Junior','da Silva' ,'junior@gmail.com', '$2a$10$eVgvAuCpK3vyj6nyXiNxX.MKxbu/kdv.8Iw0snHXTHk54MsGxQ8Au');
+
 INSERT INTO tb_role (authority ) VALUES ( 'ROLE_ADMIN');
 INSERT INTO tb_role (authority ) VALUES ( 'ROLE_OPERADOR');
 
 
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 1, 1);
-
+INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 2, 2);
 
 INSERT INTO tb_membro (PG_id, nome, sobrenome, email, data_Nascimento, idade, telefone, url, cpf, estado_Civil, rua, bairro, numero, cidade, complemento, cep) VALUES (2, 'José Luiz', 'Ribeiro Junior', 'junior@gmail.com', '1988-10-07', 35, 970312251, 'https://i.postimg.cc/MKdx2H0M/fotojpg.jpg', '123.789.964-67', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221);
 INSERT INTO tb_membro (PG_id, nome, sobrenome, email, data_Nascimento, idade, telefone, url, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep) VALUES (4, 'Marcus', 'Fereira Duarte', 'marcus@gmail.com', '1987-05-11', 37, '970312251', 'https://i.postimg.cc/rsDYBTkd/Foto-Perfil.jpg','923.289.964-12' ,0, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221);
