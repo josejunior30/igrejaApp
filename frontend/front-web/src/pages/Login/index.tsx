@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import './styles.css';
 import { CredentialsDTO } from "../../models/auth";
 import *as authService from "../../service/AuthService";
 import { useNavigate } from "react-router-dom";
+import { ContextToken } from "../../ultilitarios/context-token";
 
 
 const Login = () => {
     const navigate = useNavigate();
+    const {setContextTokenPayload} = useContext(ContextToken);
     const [formData, setFormData] = useState<CredentialsDTO>({
         username: '',
         password: ''
@@ -17,8 +19,8 @@ const Login = () => {
         authService.loginRequest(formData)
             .then(response => {
                 authService.saveAccessToken(response.data.access_token);
-                console.log(authService.getAccessTokenPayload());
-                navigate("/inicial")
+                setContextTokenPayload(authService.getAccessTokenPayload());
+                navigate("/inicio")
             })
             .catch(error => {
                 console.error('Erro ao fazer login:', error);
