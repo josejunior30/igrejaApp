@@ -54,3 +54,29 @@
   margin-right: 100px;
   color: white;
 }
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0; 
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 1000;
+  display: none; /* Começa oculto */
+}
+
+.dropdown-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu ul li {
+  cursor: pointer;
+}
+
+
+/* Estilo para mostrar o menu quando houver o hover */
+.user-profile:hover .dropdown-menu {
+  display: block;
+}

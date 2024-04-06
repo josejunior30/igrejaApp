@@ -54,6 +54,12 @@ const Sidebar: React.FC = () => {
         <li>
         <Link to="#">
         <SlDocs />
+          <span>Usuarios</span>
+          </Link>
+        </li>  
+        <li>
+        <Link to="#">
+        <SlDocs />
           <span>Documentos</span>
           </Link>
         </li>  

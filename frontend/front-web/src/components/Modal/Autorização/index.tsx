@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.css';
+import './stylesModal.css';
 
 type Props = {
     showModal: boolean;
@@ -14,15 +14,13 @@ const Modal: React.FC<Props> = ({ showModal, setShowModal, children }) => {
         <>
             {showModal && (
                 
-                    <div className="modal-content">
+                    
                         <span className="close" onClick={closeModal}>
                            
                             {children}
                         </span>
-                      
-                    </div>
-                   
-                  
+
+                 
             )}
         </>
     );

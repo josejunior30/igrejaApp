@@ -4,7 +4,8 @@ import * as authService from '../../service/AuthService'
 import { RoleEnum } from '../../models/auth';
 import Modal from '../Modal/Autorização';
 import { useEffect, useState } from 'react';
-
+import './stylesModal.css';
+import { MdOutlineDangerous } from 'react-icons/md';
 
 type Props ={
     children: JSX.Element;
@@ -30,7 +31,7 @@ export function PrivateRoute({ children, roles = [] }: Props) {
         return (
             <Modal showModal={showModal} setShowModal={setShowModal}>
         <div className="modal-content">
-           
+           <span><MdOutlineDangerous /></span>
             <p>Você não está autorizado a acessar o conteúdo.</p>
             <button onClick={handleCloseModal}>Fechar</button>
             

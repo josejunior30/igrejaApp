@@ -88,8 +88,6 @@ public class UserService implements UserDetailsService {
 
   
 
-    
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
@@ -112,15 +110,39 @@ public class UserService implements UserDetailsService {
 		  throw new UsernameNotFoundException("User not found");
 	  }
   }
+  
+
   @Transactional(readOnly = true)
   public UserDTO getMe() {
       User entity = authenticated();
       if (entity == null) {
-          // Tratar o caso em que nenhum usuário autenticado é encontrado
+        
           throw new UsernameNotFoundException("Authenticated user not found");
       }
       return new UserDTO(entity);
   }
 
+  @Transactional
+  public void changePassword(String username, String oldPassword, String newPassword) {
+      // Recupera o usuário autenticado pelo email
+      User user = repository.findByEmail(username);
+      
+      // Verifica se o usuário foi encontrado
+      if (user == null) {
+          throw new UsernameNotFoundException("Usuário não encontrado");
+      }
+      
+      // Verifica se a senha antiga fornecida corresponde à senha armazenada
+      if (!passwordEncoder().matches(oldPassword, user.getPassword())) {
+          throw new IllegalArgumentException("Senha antiga incorreta");
+      }
+      
+      // Codifica a nova senha
+      String encodedPassword = passwordEncoder().encode(newPassword);
+      
+      // Define a nova senha e salva no banco de dados
+      user.setPassword(encodedPassword);
+      repository.save(user);
+  }
 
 }
