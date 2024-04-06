@@ -48,8 +48,8 @@ const logoHeader = 'https://i.postimg.cc/JnzYtqZJ/Esta-o-siba-250-x-150-mm-3.png
             </div>
             <div className="login-container">
                 <div className="user-profile" onClick={toggleMenu}>
-                    <span className="img-perfil"><FontAwesomeIcon icon={faUser} /></span>
-                    <h2>{userName?.nome}</h2>
+                    
+                    <h2><span className="img-perfil"><FontAwesomeIcon icon={faUser} /> </span> {userName?.nome}</h2>
                     {showMenu && (
                         <div className="dropdown-menu">
                             <ul>

@@ -62,7 +62,11 @@ public class UserController {
 		UserDTO dto = service.getMe();
 		return ResponseEntity.ok(dto);
 	}
-	
+	@PutMapping(value="/{id}")
+	public ResponseEntity<UserDTO>update (@PathVariable Long id, @RequestBody UserDTO dto){
+		 dto =service.update(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_OPERATOR')")
 	@PutMapping(value = "/me/password")
 	public ResponseEntity<Void> changePassword(@RequestParam String oldPassword, @RequestParam String newPassword) {
