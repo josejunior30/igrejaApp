@@ -1,8 +1,8 @@
 .fm-container {
   margin-top: 20px;
-  max-width: 60%;
+  max-width: 50%;
   width: auto;
-  margin-left: 20%;
+  margin-left: 30%;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -13,36 +13,58 @@
   font-size: 14px;
 }
 
-.input-group {
+.input-group-div {
   display: grid;
   gap: 16px;
+  grid-template-columns: repeat(3, 1fr) ; 
+  align-items: center;
 }
+.input-group{
+  display: grid;
 
+ 
+  align-items: center;
+}
+.input-group input{
+  padding: 6px;
+ font-weight: bolder;
+  width: 100%;
+  margin-top: 2px;
+}
 .f-nome {
   margin-bottom:4px;
   padding-left: 10px;
   font-weight: bold;
+  margin-right: 6px;
 
 }
 
 .form-input {
   padding: 6px;
-  box-sizing: border-box;
-  width: 100%; 
-  margin-top: 2px;
-  
+    box-sizing: border-box;
+    width: 100px;
+    margin-top: 2px;
+
+}
+.titulo-form h3{
+
+  text-align: center;
+  background-color: rgb(205, 205, 205);
+    padding: 10px;
 }
 
+
 .btn-add {
-  padding: 8px 60px;
-  border: none;
-  border-radius: 3px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  width: 40%;
-  margin-left: 30%;
-margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ed7947;
+    color: #fff;
+    cursor: pointer;
+    width: 20%;
+    margin-left: 40%;
+  margin-top: 20px;
+  font-size: 18px;
 }
 
 .btn-add:hover,
@@ -65,27 +87,17 @@ margin-top: 20px;
   transform: translateX(-50%);
   transition: background-color 0.3s ease-in-out;
 }
-.titulo-alunos {
-  margin: 0px;
-  padding: 0px;
-  text-align: center;
-}
+
 
 .titulo-form h3{
 
   text-align: center;
-
-
   background-color: rgb(205, 205, 205);
     padding: 10px;
 }
 
-.input-group-div {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(3, 1fr) ;  /* Duas colunas igualmente distribuídas */
-  align-items: center;
-}
+
+
 .form-select{
 
   box-sizing: border-box;

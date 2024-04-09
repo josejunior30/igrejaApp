@@ -113,7 +113,8 @@ const Formulario: React.FC = () => {
       <div className="titulo-form">
       <h3 >Dados pessoais </h3>
       </div>
-   <fieldset className="input-group-div">
+      
+   <fieldset className="input-group-alunos">
     <div className="input-group">
       <label htmlFor="nome" className="f-nome">Nome:</label>
       <input 
@@ -136,6 +137,7 @@ const Formulario: React.FC = () => {
         required
       />
       </div>
+      
       </fieldset>
 
   <fieldset className="input-group-div">

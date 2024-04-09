@@ -133,7 +133,7 @@ const AddAlunos: React.FC = () => {
         
           <div   className="titulo-form">
           <h3 >Dados pessoais </h3>
-                    </div>
+             </div>
             <fieldset className="input-group-alunos">
               <div className="div-group-alunos">
                 <label htmlFor="nome" className="a-nome">Nome:</label>

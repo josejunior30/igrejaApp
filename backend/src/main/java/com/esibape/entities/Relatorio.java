@@ -27,9 +27,13 @@ public class Relatorio implements Serializable{
 	
 	@Column(columnDefinition = "TEXT")
 	private String pergunta1;
-    private String pergunta2; 
-    private String pergunta3; 
+	@Column(columnDefinition = "TEXT")
+    private String pergunta2;
+	@Column(columnDefinition = "TEXT")
+    private String pergunta3;
+	@Column(columnDefinition = "TEXT")
     private String pergunta4;
+	@Column(columnDefinition = "TEXT")
     private String pergunta5;
 	
 	

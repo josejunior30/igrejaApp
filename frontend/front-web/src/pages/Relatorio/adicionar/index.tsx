@@ -190,7 +190,7 @@ const AddRelatorio: React.FC = () => {
                         </div>
                         <div className="relatorio-quiz">
                         <label htmlFor="projetos" className="r-nome">Algum(a) aluno(a) apresentou problemas de comportamento, aprendizagem, assistência social ou espiritual? Qual?</label>
-                        <input type="text" 
+                        <input type="textarea" 
                             name="Algum(a) aluno(a) apresentou problemas de comportamento, aprendizagem, assistência social ou espiritual? Qual?"
                             className="relatorio-input"
                             value={relatorioDTO["Algum(a) aluno(a) apresentou problemas de comportamento, aprendizagem, assistência social ou espiritual? Qual?"]} 

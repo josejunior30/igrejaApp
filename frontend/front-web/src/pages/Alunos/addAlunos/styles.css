@@ -12,35 +12,31 @@
     background-color: white;
     font-size: 14px;
   }
-  .titulo-alunos {
-    margin: 0px;
-    padding: 0px;
-    text-align: center;
-  }
-
-  .titulo-form h3{
-    background-color: rgb(205, 205, 205);
-    padding: 10px;
-  }
-  
   .input-group-alunos {
     display: grid;
     gap: 16px;
+    grid-template-columns: repeat(3, 1fr) ; 
+    align-items: center;
   }
-  
   .a-nome {
     margin-bottom:4px;
     padding-left: 10px;
     font-weight: bold;
   
   }
-  
+   
   .alunos-input {
     padding: 6px;
     box-sizing: border-box;
     width: 100%; 
     margin-top: 2px;
     
+  }
+ 
+
+  .titulo-form h3{
+    background-color: rgb(205, 205, 205);
+    padding: 10px;
   }
   
   .btn-alunos {
@@ -64,15 +60,7 @@
   }
   
 
-  
-
-  
-  .input-group-alunos {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(3, 1fr) ;  /* Duas colunas igualmente distribuídas */
-    align-items: center;
-  }
+ 
   .form-select{
   
     box-sizing: border-box;
