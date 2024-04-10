@@ -5,11 +5,13 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -42,6 +44,7 @@ public class Membro implements Serializable {
 	@JoinColumn(name="PG_id")
 	private PequenoGrupo pequenoGrupo;
 	
+	
 	public Membro() {
 		
 	}
@@ -67,6 +70,7 @@ public class Membro implements Serializable {
 		this.cidade = cidade;
 		this.complemento = complemento;
 		this.pequenoGrupo = pequenoGrupo;
+		
 	}
 
 	public Long getId() {
@@ -135,6 +139,7 @@ public class Membro implements Serializable {
 		this.pequenoGrupo = pequenoGrupo;
 	}
 	
+
 
 	public String getUrl() {
 		return url;

@@ -14,33 +14,37 @@ const Formulario: React.FC = () => {
   const [listaDeGrupos, setListaDeGrupos] = useState<pequenoGrupo[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
-  const navigate = useNavigate();
   const [membroDTO, setMembroDTO] = useState<MembroDTO>({
     id: 0,
-    nome: "",
-    sobrenome: "",
-    email: "",
+    nome: '',
+    sobrenome: '',
+    email: '',
     idade: 0,
     dataNascimento: new Date(),
-    telefone: "",
-    url: "",
-    cpf: "",
+    telefone: '',
+    cpf: '',
     estadoCivil: 0,
-    rua: "", bairro: "", cep: 0, numero: 0, cidade: "", complemento: "",
+    rua: '',
+    bairro: '',
+    cep: 0,
+    numero: 0,
+    cidade: '',
+    complemento: '',
     pequenoGrupo: {
       id: 0,
-      apelido: ""
-    }
+      apelido: '',
+    },
   });
+  const [imagem, setImagem] = useState<File | null>(null); // Estado para armazenar o arquivo de imagem
+  const navigate = useNavigate();
 
-  
   useEffect(() => {
     const fetchGrupos = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/pg`);
-        setListaDeGrupos((await response).data);
+        setListaDeGrupos(response.data);
       } catch (error) {
-        console.error("Erro ao obter a lista de grupos:", error);
+        console.error('Erro ao obter a lista de grupos:', error);
       }
     };
 
@@ -50,28 +54,34 @@ const Formulario: React.FC = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    if (name === "pequenoGrupo") {
+    if (name === 'pequenoGrupo') {
       const grupoId = parseInt(value, 10);
 
-      setMembroDTO((prevMembroDTO) => ({
+      setMembroDTO(prevMembroDTO => ({
         ...prevMembroDTO,
         pequenoGrupo: {
           ...prevMembroDTO.pequenoGrupo,
           id: grupoId,
         },
       }));
-    } else if (name === "dataNascimento") {
+    } else if (name === 'dataNascimento') {
       const dataNascimento = new Date(value);
 
-      setMembroDTO((prevMembroDTO) => ({
+      setMembroDTO(prevMembroDTO => ({
         ...prevMembroDTO,
         [name]: dataNascimento,
       }));
     } else {
-      setMembroDTO((prevMembroDTO) => ({
+      setMembroDTO(prevMembroDTO => ({
         ...prevMembroDTO,
         [name]: value,
       }));
+    }
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setImagem(e.target.files[0]);
     }
   };
 
@@ -79,37 +89,73 @@ const Formulario: React.FC = () => {
     e.preventDefault();
 
     try {
-      console.log("Membro Detail antes do POST:", membroDTO);
-      // Utilizando a função insertMembro para adicionar o membro
-      await insertMembro(membroDTO);
+      // Enviar a imagem antes de enviar o membro
+      let imageUrl = '';
+      if (imagem) {
+        const formData = new FormData();
+        formData.append('file', imagem);
+
+        const response = await axios.post(`${BASE_URL}/api/files/upload`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        imageUrl = response.data.fileDownloadUri;
+      }
+
+      // Atualizar o objeto membroDTO com a URL da imagem, se existir
+      const membroComImagem = {
+        ...membroDTO,
+        imageUrl: imageUrl,
+      };
+
+      // Utilizar a função insertMembro para adicionar o membro
+      await insertMembro(membroComImagem);
 
       // Lógica de manipulação de sucesso, redirecionamento, etc.
       setIsModalVisible(true);
       setMembroDTO({
-        id: 0, nome: "", sobrenome: "", email: "",
-        idade: 0, dataNascimento: new Date(), telefone: "", url: "", cpf: "", estadoCivil: 0,
-        rua: "", bairro: "", cep: 0, numero: 0, cidade: "", complemento: "",
+        id: 0,
+        nome: '',
+        sobrenome: '',
+        email: '',
+        idade: 0,
+        dataNascimento: new Date(),
+        telefone: '',
+        cpf: '',
+        estadoCivil: 0,
+        rua: '',
+        bairro: '',
+        cep: 0,
+        numero: 0,
+        cidade: '',
+        complemento: '',
         pequenoGrupo: {
-          id: 0, apelido: "",
+          id: 0,
+          apelido: '',
         },
       });
     } catch (error) {
-      console.error("Erro ao adicionar membro:", error);
+      console.error('Erro ao adicionar membro:', error);
       // Lógica de manipulação de erro
     }
   };
+
   const handleModalClose = () => {
     setIsModalVisible(false);
     setIsRedirecting(true);
   };
+
   if (isRedirecting) {
-    navigate('/secretaria/membro');
+    navigate('/membro');
   }
+  
   return (
     <>
      <Header/>
      <Sidebar/>
-    <form onSubmit={handleSubmit} className="fm-container">
+    <form onSubmit={handleSubmit} className="fm-container" encType="multipart/form-data">
       <div className="titulo-form">
       <h3 >Dados pessoais </h3>
       </div>
@@ -229,16 +275,15 @@ const Formulario: React.FC = () => {
 
  </fieldset>
  <div className="input-group">
-    <label htmlFor="foto" className="f-nome">Foto</label>
-          <input
-            type="file"
-            name="url"
-            className="form-input"
-            value={membroDTO.url}
-            onChange={handleChange}
-            required
-          />
-    
+      <label htmlFor="nome" className="f-nome">Foto</label>
+      <input 
+        type="file"
+       className="form-input"
+        name="file"
+      
+        onChange={handleImageChange}
+        required
+      />
       </div>
       
       <div className="titulo-form">

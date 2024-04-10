@@ -2,8 +2,12 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import com.esibape.entities.FileStorage;
 import com.esibape.entities.Membro;
 import com.esibape.entities.MembroEstado;
 import com.esibape.entities.PequenoGrupo;
@@ -28,6 +32,7 @@ public class MembroDTO implements Serializable{
 	private String cidade;
 	private String complemento;
 	
+
 	
 	private PequenoGrupoDTO pequenoGrupo;
 
@@ -57,6 +62,7 @@ public class MembroDTO implements Serializable{
 		this.cidade = cidade;
 		this.complemento = complemento;
 		this.pequenoGrupo = pequenoGrupo;
+		
 	}
 
 	public MembroDTO(Membro entity) {
@@ -82,6 +88,8 @@ public class MembroDTO implements Serializable{
 	public MembroDTO(Membro entity, PequenoGrupo pequenoGrupo) {
 		this(entity);
 		this.pequenoGrupo = new PequenoGrupoDTO(pequenoGrupo);
+		
+		
 	}
 	
 	public Long getId() {

@@ -10,7 +10,7 @@ import SuccessModal from "../../../components/Modal";
 import { CgDanger } from "react-icons/cg";
 import Sidebar from "../../../components/sidebar";
 import Header from "../../../components/Header";
-
+import { Foto } from "../../../models/foto";
 
 const Detalhes = () => {
   const { id } = useParams<{ id: string }>() ?? { id: "" }; // Fornecendo uma string vazia como valor padrão
@@ -19,7 +19,7 @@ const Detalhes = () => {
   const [MembroDTO, setMembroDTO] = useState<MembroDTO>(); // Estado para armazenar os detalhes do membro
   const [loading, setLoading] = useState(true);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    
+    const [Foto, setFoto] = useState<Foto>();
   
   const loadMembroDTO = (id: string) => {
     membroService.findById(Number(id))  // Converte id para número
@@ -103,7 +103,7 @@ const Detalhes = () => {
       {MembroDTO ? (
         <div className="detalhe-container">
           <div className="conteudo-centralizado">
-          <img src={MembroDTO.url} alt="Foto do Membro" className="foto-membro" />
+          <img src={Foto?.fileDownloadUri} alt="Foto do Membro" className="foto-membro" />
             <span className="nome-id">{MembroDTO.nome} {MembroDTO.sobrenome}</span>
             <p className="dados"><span>CPF: </span> {MembroDTO.cpf}</p>
             <p className="dados"> <span>Idade: </span>{MembroDTO.idade}</p>

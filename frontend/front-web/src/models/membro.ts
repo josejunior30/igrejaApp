@@ -8,7 +8,6 @@ export type MembroDTO ={
     idade: number;
     dataNascimento: Date;
     telefone:  string;
-    url: string;
     cpf:string;
     estadoCivil: number;
     rua: string;

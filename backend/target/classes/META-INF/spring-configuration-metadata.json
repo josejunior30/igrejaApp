@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "type": "com.esibape.Config.FileStorageProperties",
+      "sourceType": "com.esibape.Config.FileStorageProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.upload-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.esibape.Config.FileStorageProperties"
+    }
+  ],
+  "hints": []
+}

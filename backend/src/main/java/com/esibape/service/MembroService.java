@@ -84,10 +84,11 @@ public class MembroService {
 		PequenoGrupoDTO pgDTO = dto.getPequenoGrupo();
 		PequenoGrupo pequenoGrupo = pequenoGrupoRepository.getReferenceById(pgDTO.getId());
 		entity.setPequenoGrupo(pequenoGrupo);
-		
-		
+	
 		
 	}	
+    
+    
     @Transactional(readOnly = true)
 	public List<MembroDTO> findByNomeIgnoreCaseContaining(String nome) {
 		List<Membro> result = repository.findByNomeIgnoreCaseContaining(nome);
