@@ -18,6 +18,7 @@
     border-radius: 50%; /* Para criar uma imagem circular, ajuste conforme necessário */
     margin: 0 auto; /* Adiciona margem automática para centralizar a imagem */
     display: block;
+    cursor: pointer;
   }
   
   .nome-id {
@@ -193,3 +194,17 @@
       font-weight: bold;
      text-decoration: underline;
     }
+
+    .conteudo-centralizado input[type="file"]{
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f5f5f5;
+      display: none;
+    
+    }
+    
+   
+    

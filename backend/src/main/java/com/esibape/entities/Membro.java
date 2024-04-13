@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,20 +38,21 @@ public class Membro implements Serializable {
 	private String bairro;
 	private String cidade;
 	private String complemento;
-	
+
 	
 	@ManyToOne
 	@JoinColumn(name="PG_id")
 	private PequenoGrupo pequenoGrupo;
 	
-	
+	@OneToOne(mappedBy= "membro", cascade = CascadeType.ALL)
+	private FileStorage foto;
 	public Membro() {
 		
 	}
 	
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, String url, MembroEstado estadoCivil, String rua, String cep, String numero,
-			String bairro, String cidade, String complemento, PequenoGrupo pequenoGrupo) {
+			String bairro, String cidade, String complemento, PequenoGrupo pequenoGrupo, FileStorage foto) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -70,6 +71,8 @@ public class Membro implements Serializable {
 		this.cidade = cidade;
 		this.complemento = complemento;
 		this.pequenoGrupo = pequenoGrupo;
+		this.foto = foto;
+	
 		
 	}
 
@@ -122,7 +125,15 @@ public class Membro implements Serializable {
 	}
 	
 	
-	
+
+	public FileStorage getFoto() {
+		return foto;
+	}
+
+	public void setFoto(FileStorage foto) {
+		this.foto = foto;
+	}
+
 	public String getTelefone() {
 		return telefone;
 	}

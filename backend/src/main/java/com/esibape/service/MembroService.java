@@ -1,6 +1,8 @@
 package com.esibape.service;
 
 
+import java.io.IOException;
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -8,9 +10,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.esibape.DTO.MembroDTO;
 import com.esibape.DTO.PequenoGrupoDTO;
@@ -29,7 +33,9 @@ public class MembroService {
     @Autowired
     private PequenoGrupoRepository pequenoGrupoRepository;
    
-    
+    @Autowired
+    private FileStorageService fileStorageService;
+   
     @Transactional(readOnly = true)
     public List<MembroDTO> findAll() {
         List<Membro> list = repository.findAll();
@@ -42,7 +48,7 @@ public class MembroService {
     public MembroDTO findById(Long id) {
     	Optional<Membro> membro = repository.findById(id);
     	Membro entity = membro.get();
-    	return  new MembroDTO(entity, entity.getPequenoGrupo()) ;
+    	return  new MembroDTO(entity, entity.getPequenoGrupo());
     }
    
     @Transactional
@@ -111,10 +117,10 @@ public class MembroService {
             Period periodo = Period.between(dataNascimento, dataAtual);
             dto.setIdade(periodo.getYears());
         }
-        
     }
+        
+        
     
     
+}
 
-
-} 

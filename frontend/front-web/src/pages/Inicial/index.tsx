@@ -34,7 +34,6 @@ const Inicial = () => (
           <button>Clique aqui</button>
           </Link>
         </div>
-  
   </div>
 
       <div className="image">
@@ -73,7 +72,7 @@ const Inicial = () => (
       <div className="image">
         <img src={projetos}  alt="Calendario" />
         <div className="overlay">
-          <p>Visitante</p>
+          <p>Projeto</p>
           <Link to="/projetos">
           <button>Clique aqui</button>
           </Link>

@@ -7,6 +7,7 @@ import './styles.css';
 import { projetosDTO } from "../../models/projetos";
 import *as projetosService from '../../service/projetosService';
 import BarraAlunos from "./Filters";
+import { TiArrowBack } from "react-icons/ti";
 
 const Projetos = () => {
     const [projetosDTO, setProjetosDTO] = useState<projetosDTO[]>([]);
@@ -19,13 +20,19 @@ const Projetos = () => {
         })
         .catch(error => {
           console.error("Erro ao buscar dados:", error);
-          // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
+        
         });
     }, []);
     return(
     <>
     <Header/>
-    
+    <div className="voltar-relatorio">
+       
+       <Link to= "/inicio">
+          <TiArrowBack />   Voltar 
+      </Link>
+         
+      </div>
     <div className="projeto-container">
       
                 <div className="coordenador">
@@ -59,9 +66,7 @@ const Projetos = () => {
 
         </div>
    </div>
-    <Link to="/inicio">
-     <button className="btn-celula-voltar">Voltar </button>
-     </Link>
+   
         
 </>
     )

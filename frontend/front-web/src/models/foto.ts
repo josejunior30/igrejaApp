@@ -1,5 +1,5 @@
 export type Foto = {
-    id: number;
-    fileName:string;
+    id: number ;
+  
     fileDownloadUri:string;
 }

@@ -2,10 +2,8 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+
 
 import com.esibape.entities.FileStorage;
 import com.esibape.entities.Membro;
@@ -31,7 +29,6 @@ public class MembroDTO implements Serializable{
 	private String bairro;
 	private String cidade;
 	private String complemento;
-	
 
 	
 	private PequenoGrupoDTO pequenoGrupo;
@@ -43,7 +40,7 @@ public class MembroDTO implements Serializable{
 	
 	public MembroDTO(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String url, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero,
-			String bairro, String cidade, String complemento, PequenoGrupoDTO pequenoGrupo) {
+			String bairro, String cidade, String complemento, PequenoGrupoDTO pequenoGrupo ) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -62,7 +59,7 @@ public class MembroDTO implements Serializable{
 		this.cidade = cidade;
 		this.complemento = complemento;
 		this.pequenoGrupo = pequenoGrupo;
-		
+	
 	}
 
 	public MembroDTO(Membro entity) {
@@ -82,13 +79,14 @@ public class MembroDTO implements Serializable{
 		this.complemento= entity.getComplemento();
 		this.rua=entity.getRua();
 		this.numero=entity.getNumero();
+	
+	
 		
 		
 	}
 	public MembroDTO(Membro entity, PequenoGrupo pequenoGrupo) {
 		this(entity);
 		this.pequenoGrupo = new PequenoGrupoDTO(pequenoGrupo);
-		
 		
 	}
 	
@@ -151,6 +149,7 @@ public class MembroDTO implements Serializable{
 	public void setIdade(Integer idade) {
 		this.idade = idade;
 	}
+
 
 
 	public String getTelefone() {

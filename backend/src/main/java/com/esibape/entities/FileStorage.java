@@ -1,11 +1,11 @@
 package com.esibape.entities;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,14 +19,18 @@ public class FileStorage {
     private String fileName;
 
     private String fileDownloadUri;
-
+    
+    @OneToOne
+    @MapsId
+    private Membro membro;
 
     public FileStorage() {
     }
 
-    public FileStorage(String fileName, String fileDownloadUri) {
+    public FileStorage(String fileName, String fileDownloadUri, Membro membro) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
+        this.membro = membro;
     }
 
 	public Long getId() {
@@ -51,6 +55,14 @@ public class FileStorage {
 
 	public void setFileDownloadUri(String fileDownloadUri) {
 		this.fileDownloadUri = fileDownloadUri;
+	}
+
+	public Membro getMembro() {
+		return membro;
+	}
+
+	public void setMembro(Membro membro) {
+		this.membro = membro;
 	}
 
   

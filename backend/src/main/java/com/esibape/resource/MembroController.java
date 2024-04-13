@@ -3,7 +3,6 @@ package com.esibape.resource;
 
 
 import java.net.URI;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.esibape.DTO.MembroDTO;
@@ -34,7 +32,7 @@ public class MembroController {
 	
 	@Autowired
 	private MembroService service;
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping
 	public ResponseEntity <List<MembroDTO>>findAll(){
 		List<MembroDTO> membro = service.findAll();
@@ -55,7 +53,7 @@ public class MembroController {
 					.buildAndExpand(entity.getId()).toUri();
 			
 			return ResponseEntity.created(uri).body(entity);
-		}
+		}		
 		
 
 		@PutMapping(value="/{id}")

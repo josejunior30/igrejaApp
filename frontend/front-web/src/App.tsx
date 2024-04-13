@@ -25,6 +25,7 @@ import { AccessTokenPayloadDTO } from './models/auth';
 import { ContextToken } from './ultilitarios/context-token';
 import * as authService from './service/AuthService';
 import ChangePassword from './pages/Usuario/Redefinir';
+import PresencaBox from './pages/ListaChamada/checkbox';
 
 
 
@@ -61,6 +62,7 @@ function App() {
     <Route path="/relatorio/:id" element={<PrivateRoute><DetalhesRelatorio /></PrivateRoute>} />
     <Route path="/enviarRelatorio" element={<PrivateRoute><AddRelatorio /></PrivateRoute>} />
     <Route path="/redefinirsenha" element={<ChangePassword />} />
+    <Route path="/enviarChamada/:id" element={<PresencaBox />} />
   </Routes>
   </Router>
 </ContextToken.Provider>
