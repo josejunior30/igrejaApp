@@ -1,0 +1,144 @@
+
+
+.modal-chamada-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 1000;
+
+
+  
+}
+.modal-chamada-content button{
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+.modal-chamada-content span{
+   font-size: 30px;
+    color: green;
+   
+}
+.date-picker-container{
+  
+    background-color: white;;
+    margin-bottom: 10px;
+    margin-top: 5%;
+    border-radius: 10px;
+    text-align: center;
+    width: 40%;
+    margin-left: 30%;
+    height: 40px;
+    padding: 20px;
+    font-size: 20px;
+}
+.date-picker-container input{
+    font-size: 20px;
+  margin-left: 30px;
+  font-weight: bold;
+}
+.enviar-chamada{
+    color: white;
+    background-color: #ed7947;
+   padding: 10px;
+    width: 120px;
+    border-radius: 10px;
+    font-size: 18px;
+  margin-left: 30px;
+  }
+.date-picker-container label{
+    
+  
+  }
+  .criar-chamada-container {
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    padding-top: 20px;
+    margin-left: 40%
+  
+  }
+  
+  .filters-container.records-actions {
+    justify-content: flex-end;
+  }
+   
+  .alunos-chamada-table {
+    width: 50%;
+    border-bottom: 10px solid var(--color-turquoise);
+    border-radius: 10px;
+    margin-left:25%;
+    margin-top: 30px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .alunos-chamada-table thead {
+    background-color: var(--color-turquoise);
+    text-align: center;
+    color: #0E1B28;
+    border-radius: 10px;
+  }
+  
+  .alunos-chamada-table thead tr {
+    height: 50px;
+    
+  }
+  
+  .alunos-chamada-table thead th:first-child {
+    border-top-left-radius: 10px;
+  }
+  
+  
+  .alunos-chamada-table thead th:last-child {
+    border-top-right-radius: 10px;
+  }
+  
+
+  .alunos-chamada-table tbody tr {
+    height: 45px;
+    color: #FFF;
+    font-size: 14px;
+  }
+  .chamada-alunos{
+    height: 45px;
+    color: #FFF;
+    font-size: 14px;
+    
+  }
+  .chamada-alunos:hover{
+    color: var(--color-turquoise); ;
+    
+  }
+  .alunos-chamada-table tbody tr:nth-child(odd) {
+    background-color: var(--color-darkslategray);
+  }
+  
+  .alunos-chamada-table tbody tr:nth-child(even) {
+    background-color: var(--color-dimgray);
+  }
+ 
+  .voltar-projetos-detalhes{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 110px;
+    margin-left: 10%;
+    position: absolute;
+    font-size: 20px;
+  }
+  .voltar-projetos-detalhes a{
+    color: white;
+  }
+

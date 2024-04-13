@@ -26,6 +26,3 @@ export function insert(PresencaDTO:PresencaDTO){
 
     
 }
-export function insert1(presencas: PresencaDTO[]) {
-    return axios.post(`${BASE_URL}/chamada`, presencas);
-}

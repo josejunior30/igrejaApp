@@ -1,7 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import './styles.css';
-const BarraAlunos = () =>(
+import { projetosDTO } from "../../../models/projetos";
+import { findById } from "../../../service/projetosService";
+
+
+
+const BarraAlunos = () =>{
+
+  const { id } = useParams<{ id: string }>() ?? { id: "" };
+  const [projetosDTO, setProjetosDTO] = useState<projetosDTO>();
+  useEffect(() => {
+    const loadProjetoById = async (id: number) => {
+        try {
+            const response = await findById(Number(id));
+            setProjetosDTO(response.data);
+        } catch (error) {
+            console.error("Erro ao buscar detalhes do projeto:", error);
+        }
+    };
+
+    if (id) {
+        loadProjetoById(Number(id));
+    }
+}, [id]);
+
+  return(
 
    <div className="barra-container alunos-actions">
      
@@ -10,7 +34,7 @@ const BarraAlunos = () =>(
       Assitencia Social
       </button>
       </Link>
-      <Link to= "/addlista">
+      <Link to={`/enviarChamada/${projetosDTO?.id}`}>
       <button className="barra-alunos">
       Lista Presença
       </button>
@@ -29,5 +53,5 @@ const BarraAlunos = () =>(
 
 );
 
-
+};
 export default BarraAlunos;

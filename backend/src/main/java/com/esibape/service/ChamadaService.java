@@ -85,11 +85,9 @@ public class ChamadaService {
 	    private void copyDtoToEntity(ChamadaDTO dto, Chamada entity) {
 			entity.setData(dto.getData());
 			entity.setChamadaAluno(dto.getChamadaAluno());
-			
 			AlunosDTO AlDTO = dto.getAlunos();
 			Alunos alunos = alunosRepository.getReferenceById(AlDTO.getId());
 			entity.setAlunos(alunos);
-			
 			ProjetosDTO pjDTO = dto.getProjetosChamada();
 			Projetos projetos = projetosrepository.getReferenceById(pjDTO.getId());
 			entity.setProjetosChamada(projetos);
