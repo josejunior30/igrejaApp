@@ -53,10 +53,10 @@ const Formulario: React.FC = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-
+  
     if (name === 'pequenoGrupo') {
       const grupoId = parseInt(value, 10);
-
+  
       setMembroDTO(prevMembroDTO => ({
         ...prevMembroDTO,
         pequenoGrupo: {
@@ -65,8 +65,8 @@ const Formulario: React.FC = () => {
         },
       }));
     } else if (name === 'dataNascimento') {
-      const dataNascimento = new Date(value);
-
+      const dataNascimento = value ? new Date(value) : new Date();
+  
       setMembroDTO(prevMembroDTO => ({
         ...prevMembroDTO,
         [name]: dataNascimento,
@@ -78,12 +78,9 @@ const Formulario: React.FC = () => {
       }));
     }
   };
+  
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setImagem(e.target.files[0]);
-    }
-  };
+
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -274,18 +271,7 @@ const Formulario: React.FC = () => {
  </div>
 
  </fieldset>
- <div className="input-group">
-      <label htmlFor="nome" className="f-nome">Foto</label>
-      <input 
-        type="file"
-       className="form-input"
-        name="file"
-      
-        onChange={handleImageChange}
-        required
-      />
-      </div>
-      
+ 
       <div className="titulo-form">
       <h3 >Endereço </h3>
       </div>

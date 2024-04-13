@@ -82,9 +82,22 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
     setIsRedirecting(true);
   };
   if (isRedirecting) {
-    navigate('/secretaria/membro');
+    navigate('/membro');
   }
-
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+  
+    setMembroDTO(prevMembroDTO => ({
+      ...prevMembroDTO,
+      [name]: name === 'dataNascimento'
+        ? value ? new Date(value) : new Date() // Verificar se value é válido
+        : name === 'estadoCivil' || name === 'pequenoGrupo'
+        ? Number(value)
+        : value,
+    }));
+  };
+  
+  
   return(
 <>
     <form onSubmit={handleUpdateClick} className="fm-container">
@@ -177,8 +190,8 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
       type="date"
       className="form-input"
       name="dataNascimento"
-      value={MembroDTO.dataNascimento instanceof Date ? MembroDTO.dataNascimento.toISOString().split('T')[0] : ''}
-        onChange={(e) => setMembroDTO({ ...MembroDTO, dataNascimento: new Date(e.target.value) })}
+      value={MembroDTO.dataNascimento instanceof Date && !isNaN(MembroDTO.dataNascimento.getTime()) ? MembroDTO.dataNascimento.toISOString().split('T')[0] : ''}
+      onChange={handleChange}
       required
       />
   </div>

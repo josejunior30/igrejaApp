@@ -47,8 +47,8 @@ function App() {
     <Route path="/Pg" element={<Celulas />} />
     <Route path="/membro" element={<PrivateRoute><Membro/></PrivateRoute>} />
     <Route path="/membro/:id" element={<PrivateRoute roles={['ROLE_ADMIN']}><Detalhes /></PrivateRoute>} />
-    <Route path="/membro/adicionar" element={<PrivateRoute><Formulario /></PrivateRoute>} />
-    <Route path="/membro/atualizar/:id" element={<PrivateRoute><FormularioUpdate /></PrivateRoute>} />
+    <Route path="/membro/adicionar" element={<PrivateRoute roles={['ROLE_ADMIN']}><Formulario /></PrivateRoute>} />
+    <Route path="/membro/atualizar/:id" element={<PrivateRoute roles={['ROLE_ADMIN']}><FormularioUpdate /></PrivateRoute>} />
     <Route path="/visitante" element={<Visitante />} />
     <Route path="/projetos" element={<PrivateRoute><Projetos /></PrivateRoute>} />
     <Route path="/projetos/:id" element={<PrivateRoute><DetalheProjetos /></PrivateRoute>} />
@@ -61,8 +61,9 @@ function App() {
     <Route path="/relatorio" element={<PrivateRoute><Relatorio /></PrivateRoute>} />
     <Route path="/relatorio/:id" element={<PrivateRoute><DetalhesRelatorio /></PrivateRoute>} />
     <Route path="/enviarRelatorio" element={<PrivateRoute><AddRelatorio /></PrivateRoute>} />
-    <Route path="/redefinirsenha" element={<ChangePassword />} />
-    <Route path="/enviarChamada/:id" element={<PresencaBox />} />
+    <Route path="/redefinirsenha" element={<PrivateRoute><ChangePassword /></PrivateRoute> } />
+    <Route path="/enviarChamada/:id" element={<PrivateRoute><PresencaBox /></PrivateRoute> } />
+
   </Routes>
   </Router>
 </ContextToken.Provider>

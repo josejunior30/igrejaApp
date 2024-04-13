@@ -24,7 +24,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   transition: border-left 0.3s ease, width 0.3s ease; 
   border-radius: 5px;
   overflow: hidden;
@@ -59,7 +59,7 @@
 
 /* Estiliza o rótulo */
 .sidebar li span {
-  font-size: 15px;
+  font-size: 14px;
   margin-top: 1px;
 }
 

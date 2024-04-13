@@ -144,7 +144,7 @@ const Detalhes = () => {
       src={Foto?.fileDownloadUri} 
       alt="Foto do Membro" 
       className="foto-membro" 
-      onClick={() => inputRef.current?.click()} // Adiciona o evento de clique na imagem
+      onClick={() => inputRef.current?.click()} 
     />
     <input 
       type="file" 
@@ -173,7 +173,7 @@ const Detalhes = () => {
               )}
             </div>
             <div className="botoes-container">
-              <Link to={`/secretaria/membro/atualizar/${id}`}>
+              <Link to={`/membro/atualizar/${id}`}>
                 <button className="botao-editar">Editar</button>
               </Link>
               <button onClick={handleDeleteClick} className="botao-deletar">Deletar</button>
@@ -189,7 +189,7 @@ const Detalhes = () => {
             {isModalVisible && (
               <SuccessModal
                 onClose={handleModalClose}
-                onRedirect={() => navigate('/secretaria/membro')}
+                onRedirect={() => navigate('/membro')}
                 operation={'deletar'}
               />
             )}
