@@ -20,7 +20,6 @@ public class MembroDTO implements Serializable{
 	private LocalDate dataNascimento;
 	private Integer idade;
 	private String telefone;
-	private String url;
 	private String cpf;
 	private MembroEstado estadoCivil;
 	private String rua;
@@ -49,7 +48,6 @@ public class MembroDTO implements Serializable{
 		this.dataNascimento = dataNascimento;
 		this.idade = idade;
 		this.telefone = telefone;
-		this.url = url;
 		this.cpf = cpf;
 		this.estadoCivil = estadoCivil;
 		this.rua = rua;
@@ -70,7 +68,6 @@ public class MembroDTO implements Serializable{
 		this.dataNascimento= entity.getDataNascimento();
 		this.idade = entity.getIdade();
 		this.telefone = entity.getTelefone();
-		this.url=entity.getUrl();
 		this.cpf=entity.getCpf();
 		this.estadoCivil=entity.getEstadoCivil();
 		this.bairro= entity.getBairro();
@@ -161,15 +158,6 @@ public class MembroDTO implements Serializable{
 		this.telefone = telefone;
 	}
 	
-
-	public String getUrl() {
-		return url;
-	}
-
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
 
 	
 	public String getCpf() {

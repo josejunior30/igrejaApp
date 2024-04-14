@@ -1,9 +1,9 @@
 .page-container {
-    width: 70%;
-    margin: 0 auto;
+    width: 60%;
+  
     margin-bottom: 50px;
     padding-top: 20px;
-   
+   margin-left: 10%;
   
   }
   
@@ -12,9 +12,10 @@
   }
    
   .records-table {
-    width: 100%;
+    width: 80%;
     border-bottom: 10px solid var(--color-turquoise);
     border-radius: 0 0 10px 10px;
+    
   }
   
   .records-table thead {
@@ -151,4 +152,25 @@
     margin-right: 20px;
     padding-left: 15px;
   }
+ /* Estilos para impressão */
+@media print {
+  body {
+    margin: 20px;
+    width: 70%;
+  }
+
+  .records-table {
+    width: 100%;
+  }
+
+  .img-print-membro {
+    display: none; /* Oculta o botão de impressão ao imprimir */
+  }
+}
+
   
+  .img-print-membro{
+    margin-left: 90%;
+    text-align: center;
+font-size: 22px
+  }

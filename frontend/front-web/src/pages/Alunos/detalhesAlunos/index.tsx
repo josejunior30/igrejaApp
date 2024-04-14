@@ -17,7 +17,7 @@ const DetalhesAlunos = () => {
     const [alunosDTO, setAlunosDTO] = useState<alunosDTO>(); 
         const [loading, setLoading] = useState(true);
       const [isModalVisible, setIsModalVisible] = useState(false);
-      
+      const [imageUrl, setImageUrl] = useState<string>();
     
     const loadAlunosDTO = (id: string) => {
       alunosService.findById(Number(id))  // Converte id para número

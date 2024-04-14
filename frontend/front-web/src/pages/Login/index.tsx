@@ -7,6 +7,7 @@ import { ContextToken } from "../../ultilitarios/context-token";
 
 
 const Login = () => {
+    const loginImagem = 'https://i.postimg.cc/zDy9k0jx/Ama.png';
     const navigate = useNavigate();
     const {setContextTokenPayload} = useContext(ContextToken);
     const [formData, setFormData] = useState<CredentialsDTO>({
@@ -36,6 +37,7 @@ const Login = () => {
     return (
         <>
             <div className="body-container">
+                <img src={loginImagem} alt="imagem-login"/>
                 <form className="form-container" onSubmit={handleSubmit}>
                     <h2>Login</h2>
                     <label>Usuário:</label>

@@ -1,21 +1,15 @@
 package com.esibape.service;
 
 
-import java.io.IOException;
-import java.net.URI;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.esibape.DTO.MembroDTO;
 import com.esibape.DTO.PequenoGrupoDTO;
 import com.esibape.entities.Membro;
@@ -78,7 +72,6 @@ public class MembroService {
 		entity.setDataNascimento(dto.getDataNascimento());
 		entity.setIdade(dto.getIdade());
 		entity.setTelefone(dto.getTelefone());
-		entity.setUrl(dto.getUrl());
 		entity.setCpf(dto.getCpf());
 		entity.setBairro(dto.getBairro());
 		entity.setCep(dto.getCep());

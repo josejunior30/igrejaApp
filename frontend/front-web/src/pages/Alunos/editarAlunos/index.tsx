@@ -24,6 +24,9 @@ const EditarAlunos =()=>{
       cpfResponsavel: "",
       responsavel: "",
       idade: "",
+      sangue:"",
+      pergunta:"",
+      AlunoDoenca:0,
 
       rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",
       

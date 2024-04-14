@@ -12,7 +12,7 @@ export type MembroDTO ={
     estadoCivil: number;
     rua: string;
     complemento: string;
-    cep: number;
+    cep: string;
     bairro: string;
     cidade: string;
     numero: number;

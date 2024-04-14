@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+import com.esibape.entities.AlunoDoenca;
 import com.esibape.entities.Alunos;
 import com.esibape.entities.Chamada;
 import com.esibape.entities.Projetos;
@@ -30,7 +30,9 @@ public class AlunosDTO implements Serializable{
 	private String bairro;
 	private String cidade;
 	private String complemento;
-	
+	private String pergunta;
+	private String sangue;
+	private AlunoDoenca alunoDoenca;
 	
 	private ProjetosDTO projetos;
 	
@@ -38,6 +40,35 @@ public class AlunosDTO implements Serializable{
 		
 		
 	}
+	
+
+	public AlunosDTO(Long id, String nome, LocalDate dataNascimento, String idade, String rg, String responsavel,
+			String cpfResponsavel, String telefone, String url, String rua, String cep, String numero, String bairro,
+			String cidade, String complemento, String pergunta, String sangue, AlunoDoenca alunoDoenca,
+			ProjetosDTO projetos, List<ChamadaDTO> chamada) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.idade = idade;
+		this.rg = rg;
+		this.responsavel = responsavel;
+		this.cpfResponsavel = cpfResponsavel;
+		this.telefone = telefone;
+		this.url = url;
+		this.rua = rua;
+		this.cep = cep;
+		this.numero = numero;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.complemento = complemento;
+		this.pergunta = pergunta;
+		this.sangue = sangue;
+		this.alunoDoenca = alunoDoenca;
+		this.projetos = projetos;
+		this.chamada = chamada;
+	}
+
 
 	public AlunosDTO(Alunos entity) {
 		
@@ -56,6 +87,9 @@ public class AlunosDTO implements Serializable{
 		this.cep= entity.getCep();
 		this.complemento =entity.getComplemento();
 		this.numero=entity.getNumero();
+		this.alunoDoenca= entity.getAlunoDoenca();
+		this.sangue = entity.getSangue();
+		this.pergunta = entity.getPergunta();
 	}
 	
 	private List<ChamadaDTO> chamada = new ArrayList<>();
@@ -201,6 +235,36 @@ public class AlunosDTO implements Serializable{
 	
 
 	
+	public String getPergunta() {
+		return pergunta;
+	}
+
+
+	public void setPergunta(String pergunta) {
+		this.pergunta = pergunta;
+	}
+
+
+	public String getSangue() {
+		return sangue;
+	}
+
+
+	public void setSangue(String sangue) {
+		this.sangue = sangue;
+	}
+
+
+	public AlunoDoenca getAlunoDoenca() {
+		return alunoDoenca;
+	}
+
+
+	public void setAlunoDoenca(AlunoDoenca alunoDoenca) {
+		this.alunoDoenca = alunoDoenca;
+	}
+
+
 	public void setChamada(List<ChamadaDTO> chamada) {
 		this.chamada = chamada;
 	}

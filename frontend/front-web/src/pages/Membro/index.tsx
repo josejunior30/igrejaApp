@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './styles.css';
 import Filters from "../Filters";
 import { Link } from "react-router-dom";
@@ -6,10 +6,17 @@ import { MembroDTO } from "../../models/membro";
 import *as membroService from '../../service/membroService';
 import Sidebar from "../../components/sidebar";
 import Header from "../../components/Header";
+import { useReactToPrint } from 'react-to-print';
+import { PiPrinterFill } from "react-icons/pi";
+import { jsPDF } from "jspdf";
+import 'jspdf-autotable';
+import { UserOptions } from 'jspdf-autotable';
+
+
 
 const Membro = () => {
   const [MembroDTO, setMembroDTO] = useState<MembroDTO[]>([]);
-
+  const componentRef = useRef(null);
   useEffect(() => {
    membroService.findAll()
       .then(response => {
@@ -22,13 +29,40 @@ const Membro = () => {
       });
   }, []);
 
+  const handlePrint = () => {
+    const doc = new jsPDF();
+  
+    //@ts-ignore
+    doc.autoTable({
+      head: [['Data de Nascimento', 'Nome', 'Idade', 'Email', 'Telefone']],
+      body: MembroDTO.map((membro) => [
+        membro.dataNascimento
+          ? new Date(membro.dataNascimento).toLocaleDateString()
+          : "Data de Nascimento Não Disponível",
+        `${membro.nome} ${membro.sobrenome}`,
+        membro.idade,
+        membro.email,
+        membro.telefone,
+      ]),
+    });
+  
+    doc.save('membros.pdf');
+  };
+  
+ 
+  
   return (
     <>
     <Header/>
     <Sidebar/>
-    <div className="page-container">
+    <div className="page-container" >
       <Filters />
-      <table className="records-table" cellPadding="0" cellSpacing="0">
+      <div className="img-print-membro">
+        <Link to="#">
+            <button onClick={handlePrint}><PiPrinterFill /> Imprimir</button>
+          </Link>
+        </div>
+      <table className="records-table" cellPadding="0" cellSpacing="0" ref={componentRef} >
         <thead>
           <tr>
             <th>Data de Nascimento</th>
@@ -79,3 +113,7 @@ const Membro = () => {
 };
 
 export default Membro;
+function html2pdf() {
+  throw new Error("Function not implemented.");
+}
+

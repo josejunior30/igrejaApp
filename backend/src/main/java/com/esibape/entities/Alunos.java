@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -37,7 +38,9 @@ public class Alunos implements Serializable{
 	private String bairro;
 	private String cidade;
 	private String complemento;
-	
+	private String pergunta;
+	private String sangue;
+	private AlunoDoenca alunoDoenca;
 	
 	@ManyToOne()
 	@JoinColumn(name= "projeto_id")
@@ -46,14 +49,15 @@ public class Alunos implements Serializable{
 	 @OneToMany(mappedBy = "alunos", cascade = CascadeType.ALL)
 	private List<Chamada> chamada = new ArrayList<>();
 	
-	public Alunos() {
+	
+	 public Alunos() {
 		
 		
 	}
 	
 	public Alunos(Long id, String nome, LocalDate dataNascimento, String idade, String rg, String responsavel,
 			String cpfResponsavel, String telefone, String url, String rua, String cep, String numero, String bairro,
-			String cidade, String complemento, Projetos projetos, List<Chamada> chamada) {
+			String cidade, String complemento,AlunoDoenca alunoDoenca, String sangue, String pergunta, Projetos projetos, List<Chamada> chamada) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -72,6 +76,10 @@ public class Alunos implements Serializable{
 		this.complemento = complemento;
 		this.projetos = projetos;
 		this.chamada = chamada;
+		this.alunoDoenca =alunoDoenca;
+		this.sangue = sangue;
+		this.pergunta = pergunta;
+		
 	}
 
 
@@ -218,6 +226,29 @@ public class Alunos implements Serializable{
 	}
 
 
+	public String getPergunta() {
+		return pergunta;
+	}
+
+	public void setPergunta(String pergunta) {
+		this.pergunta = pergunta;
+	}
+
+	public String getSangue() {
+		return sangue;
+	}
+
+	public void setSangue(String sangue) {
+		this.sangue = sangue;
+	}
+
+	public AlunoDoenca getAlunoDoenca() {
+		return alunoDoenca;
+	}
+
+	public void setAlunoDoenca(AlunoDoenca alunoDoenca) {
+		this.alunoDoenca = alunoDoenca;
+	}
 
 	@Override
 	public int hashCode() {
@@ -235,5 +266,6 @@ public class Alunos implements Serializable{
 		Alunos other = (Alunos) obj;
 		return Objects.equals(id, other.id);
 	}
+
 	
 }

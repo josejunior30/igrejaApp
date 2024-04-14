@@ -19,6 +19,9 @@ export type alunosDTO={
     complemento: string;
 	projetos: projetos;
     chamada:chamada;
+    AlunoDoenca:number;
+    sangue: string;
+    pergunta: string;
 }
 
 export type projetos = {
@@ -27,6 +30,7 @@ export type projetos = {
     nome: string;
    
   };
+  
 
  export type chamada = {
     id: number;

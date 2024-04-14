@@ -81,6 +81,9 @@ public class AlunosService {
 			entity.setNumero(dto.getNumero());
 			entity.setTelefone(dto.getTelefone());
 			entity.setUrl(dto.getUrl());
+			entity.setAlunoDoenca(dto.getAlunoDoenca());
+			entity.setSangue(dto.getSangue());
+			entity.setPergunta(dto.getPergunta());
 			List<ChamadaDTO> chaDTO = dto.getChamada();
 			List<Chamada> chamada = chaDTO.stream()
                     .map(chamadaDto -> chamadaRepository.getReferenceById(chamadaDto.getId()))

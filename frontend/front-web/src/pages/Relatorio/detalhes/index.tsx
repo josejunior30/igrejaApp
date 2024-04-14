@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RelatorioDTO } from "../../../models/relatorio";
 import * as relatorioService from '../../../service/relatorioService';
 import { deleteRelatorio } from "../../../service/relatorioService";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'; // Importe os ícones necessários
-import { CgDanger } from 'react-icons/cg'; // Importe o ícone de perigo necessário
-import SuccessModal from '../../../components/Modal'; // Importe o componente de modal de sucesso
 import Header from "../../../components/Header";
 import './styles.css';
 import { PiPrinterFill } from "react-icons/pi";
 import { TiArrowBack } from "react-icons/ti";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
+
 
 const DetalhesRelatorio = () => {
   const { id } = useParams<{ id: string }>() ?? { id: "" }; // Fornecendo uma string vazia como valor padrão
@@ -19,6 +21,9 @@ const DetalhesRelatorio = () => {
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const estacao= 'https://i.postimg.cc/KjkzLLPq/Esta-o-siba-250-x-150-mm-2.png';
+
+  const componentRef = useRef(null);
+
 
   const loadRelatorioDTO = (id: string) => {
     relatorioService.findById(Number(id))
@@ -77,6 +82,18 @@ const DetalhesRelatorio = () => {
       }
     }
   };
+  const generatePdf = () => {
+    if (componentRef.current) {
+      html2canvas(componentRef.current).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const width = pdf.internal.pageSize.getWidth();
+        const height = pdf.internal.pageSize.getHeight();
+        pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+        pdf.save('relatorio.pdf');
+      });
+    }
+  };
 
   return (
     <>
@@ -89,11 +106,11 @@ const DetalhesRelatorio = () => {
        
     </div>
  
-      <div className="relatorio-detalhes">
+      <div className="relatorio-detalhes" ref={componentRef}>
   
       <div className="img-print-relatorio-detalhe">
                 <Link to="#">
-                    <p><PiPrinterFill /> Imprimir</p>
+                    <button onClick={generatePdf}><PiPrinterFill /> Imprimir</button>
                 </Link>
          </div>
         {relatorioDTO ? (

@@ -30,7 +30,6 @@ public class Membro implements Serializable {
 	private Integer idade;
 	private String telefone;
 	private String cpf;
-	private String url;
 	private MembroEstado estadoCivil;
 	private String rua;
 	private String cep;
@@ -51,7 +50,7 @@ public class Membro implements Serializable {
 	}
 	
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
-			String telefone, String cpf, String url, MembroEstado estadoCivil, String rua, String cep, String numero,
+			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero,
 			String bairro, String cidade, String complemento, PequenoGrupo pequenoGrupo, FileStorage foto) {
 		super();
 		this.id = id;
@@ -62,7 +61,6 @@ public class Membro implements Serializable {
 		this.idade = idade;
 		this.telefone = telefone;
 		this.cpf = cpf;
-		this.url = url;
 		this.estadoCivil = estadoCivil;
 		this.rua = rua;
 		this.cep = cep;
@@ -148,16 +146,6 @@ public class Membro implements Serializable {
 
 	public void setPequenoGrupo(PequenoGrupo pequenoGrupo) {
 		this.pequenoGrupo = pequenoGrupo;
-	}
-	
-
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 	
 

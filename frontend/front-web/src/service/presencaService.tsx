@@ -10,14 +10,14 @@ export function findAll(){
     return axios.get(`${BASE_URL}/chamada`);
 }
 
-export function findAlunosByDate(dataEscolhida: Date) {
-    // Supondo que dataEscolhida seja uma string no formato "YYYY-MM-DD"
-    const formattedDate = dataEscolhida.toISOString().split('T')[0]; // Formata a data para o formato "YYYY-MM-DD"
+export function findByDate(dataEscolhida: Date) {
+    
+    const formattedDate = dataEscolhida.toISOString().split('T')[0]; 
     return axios.get(`${BASE_URL}/chamada/data?data=${formattedDate}`);
 }
 
 export function findDataAndProjeto(dataEscolhida: Date, projeto: number) {
-    const formattedDate = dataEscolhida.toISOString().split('T')[0]; // Obtém apenas a parte da data em "YYYY-MM-DD"
+    const formattedDate = dataEscolhida.toISOString().split('T')[0]; 
     return axios.get(`${BASE_URL}/chamada/dataProjeto?data=${formattedDate}&projeto=${projeto}`);
 }
 export function insert(PresencaDTO:PresencaDTO){

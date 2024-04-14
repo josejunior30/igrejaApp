@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { findAll, findAlunosByDate, findDataAndProjeto } from "../../service/presencaService";
+import { findAll, findByDate, findDataAndProjeto } from "../../service/presencaService";
 import { PresencaDTO } from "../../models/presenca";
 import './styles.css';
 import Header from "../../components/Header";
@@ -37,48 +37,40 @@ const Presenca = () => {
   };
 
   const handleProjetoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const projectId = event.target.value === "" ? null : Number(event.target.value);
+    const projectId = event.target.value === "null" ? null : Number(event.target.value);
     setProjeto(projectId);
   };
   
-
+  
   const buscarPresencasPorDataEProjeto = () => {
-    if (projeto === null) {
-      fetchPresencas(); 
+    if (!dataEscolhida) {
+      console.error("Data não especificada.");
       return;
     }
   
-    if (!dataEscolhida) {
-      console.error("Data não especificada.");
-      return;
+    let dataFormatada = new Date(dataEscolhida);
+  
+    if (projeto === null) {
+      findByDate(dataFormatada)
+        .then((response) => {
+          console.log("Alunos recebidos:", response.data);
+          setPresencas(response.data);
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar alunos por data:", error);
+        });
+    } else {
+      findDataAndProjeto(dataFormatada, projeto)
+        .then((response) => {
+          console.log("Presenças recebidas:", response.data);
+          setPresencas(response.data);
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar presenças por data e projeto:", error);
+        });
     }
-    const dataFormatada = new Date(dataEscolhida);
-    findDataAndProjeto(dataFormatada, projeto)
-      .then((response) => {
-        console.log("Presenças recebidas:", response.data);
-        setPresencas(response.data);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar presenças por data e projeto:", error);
-      });
   };
-  const buscarAlunosPorData = () => {
-    if (!dataEscolhida) {
-      console.error("Data não especificada.");
-      return;
-    }
-    
-    const dataFormatada = new Date(dataEscolhida);
-    findAlunosByDate(dataFormatada)
-      .then((response) => {
-        console.log("Alunos recebidos:", response.data);
-        setPresencas(response.data);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar alunos por data:", error);
-      });
-  };
-
+  
 
   return (
     <>
@@ -130,7 +122,14 @@ const Presenca = () => {
             checked={projeto === 3}
             onChange={handleProjetoChange}
           />
-
+<label htmlFor="projetoTodos">Todos</label>
+<input
+  type="radio"
+  id="projetoTodos"
+  value="null"
+  checked={projeto === null}
+  onChange={handleProjetoChange}
+/>
         <button onClick={buscarPresencasPorDataEProjeto}>Buscar</button>
         </div>
       </div>

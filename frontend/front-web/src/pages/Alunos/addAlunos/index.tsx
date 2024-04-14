@@ -23,6 +23,9 @@ const AddAlunos: React.FC = () => {
       cpfResponsavel: "",
       responsavel: "",
       idade: "",
+      sangue:"",
+      pergunta:"",
+      AlunoDoenca:0,
 
       rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",
       
@@ -100,7 +103,9 @@ const AddAlunos: React.FC = () => {
       cpfResponsavel: "",
       responsavel: "",
       idade: "",
-
+      sangue:"",
+      pergunta:"",
+      AlunoDoenca:0,
       rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",
       
       projetos: {
@@ -179,6 +184,7 @@ const AddAlunos: React.FC = () => {
                   required
                 />
               </div>
+          
               <div className="div-group-alunos">
                 <label htmlFor="projetos" className="a-nome">Projeto:</label>
                 <select
@@ -197,6 +203,46 @@ const AddAlunos: React.FC = () => {
                 </select>
               </div>
             </fieldset>
+            <fieldset className="input-group-alunos">
+              <div className="div-group-alunos">
+                <label htmlFor="telefone" className="a-nome">Tipo Sanguíneo:</label>
+                <input 
+                  type="text"
+                  className="alunos-input"
+                  name="telefone"
+                  value={alunosDTO.telefone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="projetos" className="a-nome">Doença ou alergia?:</label>
+                <select
+                  name="projetos"
+                  className="alunos-input"
+                  value={alunosDTO.AlunoDoenca} 
+                  onChange={handleChange}
+                  required
+                >
+                 <option >ESCOLHA</option>
+                    <option value="0">NÃO</option>
+                    <option value="1">SIM</option>
+                  
+                </select>
+              </div>
+              <div className="div-group-alunos">
+                <label htmlFor="telefone" className="a-nome">Qual?</label>
+                <input 
+                  type="text"
+                  className="alunos-input"
+                  name="telefone"
+                  value={alunosDTO.telefone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+          
+              </fieldset>
     
          <div   className="titulo-form">
             <h3 >Dados do Responsável </h3>

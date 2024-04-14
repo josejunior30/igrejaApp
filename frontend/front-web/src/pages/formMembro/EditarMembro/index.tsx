@@ -24,7 +24,7 @@ const FormularioUpdate =()=>{
 
       cpf: "",
       estadoCivil: 0,
-      rua: "", bairro: "", cep: 0, numero: 0, cidade: "", complemento: "",
+      rua: "", bairro: "", cep: "", numero: 0, cidade: "", complemento: "",
       pequenoGrupo: {
         id: 0,
         apelido: ""
@@ -283,7 +283,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
       className="form-input"
       name="cep"
       value={MembroDTO.cep}
-      onChange={(e) => setMembroDTO({ ...MembroDTO, cep: Number( e.target.value) })}
+      onChange={(e) => setMembroDTO({ ...MembroDTO, cep: e.target.value })}
       required
     />
     </div>

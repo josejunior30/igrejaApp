@@ -167,11 +167,7 @@ const Relatorio = () => {
               <button className= "btn-relatorio" onClick={buscarRelatorio}>Buscar</button>
             </div>
           </div>
-          <div className="img-print-relatorio">
-            <Link to="#">
-              <p><PiPrinterFill /> Imprimir</p>
-            </Link>
-          </div>
+      
           <table className="relatorio-table">
             <thead>
               <tr>
