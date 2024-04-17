@@ -164,3 +164,60 @@
   .voltar-projetos-detalhes a{
     color: white;
   }
+  
+  @media (max-width: 768px) {
+    .alunos-pj-container {
+      width: 90%;
+      margin-left: 10%;
+      margin-bottom: 30px;
+      padding-top: 2px;
+    }
+  
+    .alunos-table {
+      width: 100%;
+      border-bottom: 5px solid var(--color-turquoise);
+      border-radius: 0;
+    }
+  
+    .alunos-table thead {
+      background-color: var(--color-turquoise);
+      text-align: left;
+      color: #0E1B28;
+    }
+  
+    .alunos-table thead tr {
+      height: 40px;
+    }
+  
+    .alunos-table tbody td:first-child {
+      padding-left: 20px;
+    }
+  
+    .alunos-table tbody tr {
+      height: 40px;
+      font-size: 12px;
+    }
+  
+    .dados-alunos {
+      height: 40px;
+      font-size: 12px;
+    }
+  
+    .voltar-projetos-detalhes {
+      color: white;
+      display: block;
+      text-align: center;
+   margin-bottom: 10px;
+    
+    }
+  
+    .voltar-projetos-detalhes a {
+      color: white;
+      font-size: 14px;
+      margin-top: 100px;
+    }
+    
+  
+  }
+  
+  

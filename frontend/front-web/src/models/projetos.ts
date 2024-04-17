@@ -17,6 +17,7 @@ export type alunos={
 	 rg: string;
     responsavel: string;
 	 cpfResponsavel: string;
+     telefone: string;
      chamada: chamada[];
 
 }

@@ -1,22 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import './styles.css';
-import Filters from "../Filters";
+
 import { Link } from "react-router-dom";
 import { MembroDTO } from "../../models/membro";
 import *as membroService from '../../service/membroService';
 import Sidebar from "../../components/sidebar";
 import Header from "../../components/Header";
-import { useReactToPrint } from 'react-to-print';
+
 import { PiPrinterFill } from "react-icons/pi";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
-import { UserOptions } from 'jspdf-autotable';
+
 
 
 
 const Membro = () => {
   const [MembroDTO, setMembroDTO] = useState<MembroDTO[]>([]);
   const componentRef = useRef(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [filteredMembros, setFilteredMembros] = useState<MembroDTO[]>([]);
+  
   useEffect(() => {
    membroService.findAll()
       .then(response => {
@@ -28,7 +31,16 @@ const Membro = () => {
         // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
       });
   }, []);
-
+  const handleSearch = async () => {
+    try {
+      const response = await membroService.findByNome(searchTerm);
+      setMembroDTO(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
+    }
+  };
+  
   const handlePrint = () => {
     const doc = new jsPDF();
   
@@ -56,7 +68,25 @@ const Membro = () => {
     <Header/>
     <Sidebar/>
     <div className="page-container" >
-      <Filters />
+   
+    <div className="filters-container records-actions">
+      
+       <input
+        value={searchTerm}
+        placeholder="nome"
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+     
+    
+      <button type="submit" className="clean-filters" onClick={handleSearch}>Pesquisar</button>
+    <div> 
+      <Link to= "/membro/adicionar">
+          <button className="add-membro"> Adicionar </button>
+           
+      </Link>
+      </div>
+     
+   </div> 
       <div className="img-print-membro">
         <Link to="#">
             <button onClick={handlePrint}><PiPrinterFill /> Imprimir</button>
@@ -113,7 +143,5 @@ const Membro = () => {
 };
 
 export default Membro;
-function html2pdf() {
-  throw new Error("Function not implemented.");
-}
+
 

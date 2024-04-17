@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+
 import com.esibape.entities.AlunoDoenca;
 import com.esibape.entities.Alunos;
 import com.esibape.entities.Chamada;
@@ -16,9 +20,12 @@ public class AlunosDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	@Size(min=3, message="O nome deve ter no minimo 3 caracteres")
+    @NotEmpty(message="campo não poe ser nulo ou vazio")
 	private String nome;
+	@PastOrPresent(message="escolha uma data válida") 
 	private LocalDate dataNascimento;
-	private String idade;
+	private Integer idade;
 	private String rg;
 	private String responsavel;
 	private String cpfResponsavel;
@@ -42,7 +49,7 @@ public class AlunosDTO implements Serializable{
 	}
 	
 
-	public AlunosDTO(Long id, String nome, LocalDate dataNascimento, String idade, String rg, String responsavel,
+	public AlunosDTO(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
 			String cpfResponsavel, String telefone, String url, String rua, String cep, String numero, String bairro,
 			String cidade, String complemento, String pergunta, String sangue, AlunoDoenca alunoDoenca,
 			ProjetosDTO projetos, List<ChamadaDTO> chamada) {
@@ -127,11 +134,11 @@ public class AlunosDTO implements Serializable{
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getIdade() {
+	public Integer getIdade() {
 		return idade;
 	}
 
-	public void setIdade(String idade) {
+	public void setIdade(Integer idade) {
 		this.idade = idade;
 	}
 

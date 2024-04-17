@@ -13,6 +13,7 @@ const Relatorio = () => {
     const [dataEscolhida, setDataEscolhida] = useState("");
     const [projeto, setProjeto] = useState<number | null>(null); 
     const [relatorio, setRelatorio] = useState<RelatorioDTO[]>([]);
+  
     
     const navigate = useNavigate();
     useEffect(() => {
@@ -130,6 +131,7 @@ const Relatorio = () => {
                 onChange={handleDataChange}
               />
               <button className="btn-relatorio-clear" onClick={handleLimparData}>Limpar</button>
+              <button className= "btn-relatorio" onClick={buscarRelatorio}>Buscar</button>
             </div>
             <div className="input-container-relatorio">       
               <label htmlFor="projeto1">Artesanato</label>
@@ -148,12 +150,28 @@ const Relatorio = () => {
                 checked={projeto === 2}
                 onChange={handleProjetoChange}
               />
-              <label htmlFor="projeto3">Musica</label>
+              <label htmlFor="projeto3">Teclado/Violão</label>
               <input
                 type="radio"
                 id="projeto3"
                 value="3"
                 checked={projeto === 3}
+                onChange={handleProjetoChange}
+              />
+              <label htmlFor="projeto4">Canto</label>
+              <input
+                type="radio"
+                id="projeto3"
+                value="4"
+                checked={projeto === 4}
+                onChange={handleProjetoChange}
+              />
+              <label htmlFor="projeto5">Bateria/Percursão</label>
+              <input
+                type="radio"
+                id="projeto5"
+                value="5"
+                checked={projeto === 5}
                 onChange={handleProjetoChange}
               />
                <label htmlFor="todos">Todos</label>
@@ -164,7 +182,6 @@ const Relatorio = () => {
                 checked={projeto === null}
                 onChange={handleProjetoChange}
               />
-              <button className= "btn-relatorio" onClick={buscarRelatorio}>Buscar</button>
             </div>
           </div>
       
@@ -173,7 +190,7 @@ const Relatorio = () => {
               <tr>
                 <th>Data</th>
                 <th>Projeto</th>
-                
+                <th>Professor(a)</th>
               </tr>
             </thead>
             <tbody>
@@ -187,7 +204,7 @@ const Relatorio = () => {
                         </Link>
                     </td>
                     <td><Link to={`${relatorio.id}`} className="name-link">{relatorio.projetosRelatorio ? relatorio.projetosRelatorio.nome : 'Projeto não encontrado'}</Link></td>
-                  
+                  <td>{relatorio.projetosRelatorio.lider}</td>
                   </tr>
                 ))
               ) : (

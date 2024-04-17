@@ -10,10 +10,12 @@ export type RelatorioDTO ={
     "Alguma sugestão para a equipe de trabalho?": string;
     "Mais alguma observação ou sugestão?": string;
     projetosRelatorio: projetosRelatorio;
+   
 }
 
 export type projetosRelatorio = {
 
     id:number;
     nome: string;
+    lider:string;
 }

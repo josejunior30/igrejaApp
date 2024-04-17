@@ -3,8 +3,6 @@ package com.esibape.DTO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-
-
 import com.esibape.entities.Projetos;
 import com.esibape.entities.Relatorio;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,15 +22,24 @@ public class RelatorioDTO implements Serializable {
     private String pergunta4;
 	@JsonProperty("Mais alguma observação ou sugestão?")
 	private String pergunta5;
-
-	
 	
 	private ProjetosDTO projetosRelatorio;
 	
-	public RelatorioDTO() {
-		
-	}
 	
+	
+	public RelatorioDTO(Long id, LocalDate data, String pergunta1, String pergunta2, String pergunta3, String pergunta4,
+			String pergunta5, ProjetosDTO projetosRelatorio) {
+		super();
+		this.id = id;
+		this.data = data;
+		this.pergunta1 = pergunta1;
+		this.pergunta2 = pergunta2;
+		this.pergunta3 = pergunta3;
+		this.pergunta4 = pergunta4;
+		this.pergunta5 = pergunta5;
+		this.projetosRelatorio = projetosRelatorio;
+	}
+
 	public RelatorioDTO(Relatorio entity) {
 	    this.id = entity.getId();
 	    this.data = entity.getData();
@@ -43,13 +50,18 @@ public class RelatorioDTO implements Serializable {
 	    this.pergunta5 = entity.getPergunta5();
 	    
 	    
+	    
 	}
 
 	public RelatorioDTO(Relatorio entity, Projetos projetosRelatorio) {
 		this(entity);
+
 		this.projetosRelatorio = new ProjetosDTO(projetosRelatorio);
+		
 	}
 	
+
+
 	public Long getId() {
 		return id;
 	}
@@ -123,12 +135,9 @@ public class RelatorioDTO implements Serializable {
 	}
 
 
-
 	public void setPergunta5(String pergunta5) {
 		this.pergunta5 = pergunta5;
 	}
-
-
 
 	public ProjetosDTO getProjetosRelatorio() {
 		return projetosRelatorio;

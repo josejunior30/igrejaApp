@@ -17,7 +17,7 @@ import AddAlunos from './pages/Alunos/addAlunos';
 import DetalhesAlunos from './pages/Alunos/detalhesAlunos';
 import EditarAlunos from './pages/Alunos/editarAlunos';
 import Presenca from './pages/ListaChamada';
-import AddLista from './pages/ListaChamada/criarLista';
+
 import Relatorio from './pages/Relatorio/pesquisa';
 import DetalhesRelatorio from './pages/Relatorio/detalhes';
 import AddRelatorio from './pages/Relatorio/adicionar';
@@ -26,6 +26,7 @@ import { ContextToken } from './ultilitarios/context-token';
 import * as authService from './service/AuthService';
 import ChangePassword from './pages/Usuario/Redefinir';
 import PresencaBox from './pages/ListaChamada/checkbox';
+
 
 
 
@@ -45,6 +46,7 @@ function App() {
     <Route path="/" element={<Login />} />
     <Route path="/inicio" element={<PrivateRoute><Inicial /></PrivateRoute>} />
     <Route path="/Pg" element={<Celulas />} />
+    
     <Route path="/membro" element={<PrivateRoute><Membro/></PrivateRoute>} />
     <Route path="/membro/:id" element={<PrivateRoute roles={['ROLE_ADMIN']}><Detalhes /></PrivateRoute>} />
     <Route path="/membro/adicionar" element={<PrivateRoute roles={['ROLE_ADMIN']}><Formulario /></PrivateRoute>} />
@@ -57,7 +59,7 @@ function App() {
     <Route path="/alunos/:id" element={<PrivateRoute><DetalhesAlunos /></PrivateRoute>} /> 
     <Route path="/editarAlunos/:id" element={<PrivateRoute><EditarAlunos /></PrivateRoute>} /> 
     <Route path="/chamada" element={<PrivateRoute><Presenca /></PrivateRoute>} />
-    <Route path="/addlista" element={<PrivateRoute><AddLista /></PrivateRoute>} />
+   
     <Route path="/relatorio" element={<PrivateRoute><Relatorio /></PrivateRoute>} />
     <Route path="/relatorio/:id" element={<PrivateRoute><DetalhesRelatorio /></PrivateRoute>} />
     <Route path="/enviarRelatorio" element={<PrivateRoute><AddRelatorio /></PrivateRoute>} />

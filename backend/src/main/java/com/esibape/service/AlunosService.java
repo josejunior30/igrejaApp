@@ -1,6 +1,8 @@
 package com.esibape.service;
 
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esibape.DTO.AlunosDTO;
 import com.esibape.DTO.ChamadaDTO;
+import com.esibape.DTO.MembroDTO;
 import com.esibape.DTO.ProjetosDTO;
 import com.esibape.entities.Alunos;
 import com.esibape.entities.Chamada;
@@ -95,4 +98,15 @@ public class AlunosService {
 			entity.setChamada(chamada);
 			
 		}	
+	   public void atualizarIdade(AlunosDTO dto) {
+	        LocalDate dataNascimento = dto.getDataNascimento();
+	        Integer idadeAtual = dto.getIdade(); 
+	        
+	        // Calcula a idade apenas se a idade estiver vazia
+	        if (dataNascimento != null && idadeAtual == null) {
+	            LocalDate dataAtual = LocalDate.now();
+	            Period periodo = Period.between(dataNascimento, dataAtual);
+	            dto.setIdade(periodo.getYears());
+	        }
+	   }
 }

@@ -5,7 +5,25 @@ INSERT INTO tb_pequeno_Grupo (nome, apelido, lider) VALUES ('Yasmin', 'ROXO', 'D
 
 INSERT INTO tb_projetos (nome, lider , coordenador, foto_coordenador, foto_lider) VALUES ('Artesanato','Ana Clara', 'Gilson Ornelas', 'https://i.postimg.cc/8zsRnZ4h/gilson.png',  'https://i.postimg.cc/gkkD7ppc/Whats-App-Image-2024-03-21-at-10-34-03.jpg');
 INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider) VALUES ('Jiu-Jtsu','Douglas Orellha', null, null, 'https://i.postimg.cc/wjKN09td/Orelha.png');
-INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider) VALUES ('Musica','Samuel', null, null, 'https://i.postimg.cc/7L8NGg10/Samuel.png');
+INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider) VALUES ('Teclado  Violão','Samuel', null, null, 'https://i.postimg.cc/7L8NGg10/Samuel.png');
+INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider) VALUES ('Canto','Catiane Saze', null, null, 'https://i.postimg.cc/9Q8svRVK/prof-canto.jpg');
+INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider) VALUES (	'Bateria e Percursão',' Alan Sant''Ana', null, null, 'https://i.postimg.cc/YCD88SP8/prof-bateria.jpg');
+
+INSERT INTO tb_role (authority ) VALUES ( 'ROLE_ADMIN');
+INSERT INTO tb_role (authority ) VALUES ( 'ROLE_OPERADOR');
+
+
+INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Eleilson','Mendes' ,'eleison_mendes@hotmail.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
+INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Junior','Ribeiro Junior' ,'joseluizjunior@yahoo.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
+INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Jaline','Mirian Peereira' ,'jalineemirian@gmail.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
+INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Marcus','Mendes' ,'marcusmendes85@yahoo.com.br', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
+INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Rhuan','Tavares' ,'rhuan.tavares92@gmail.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
+
+
+INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 1, 1);
+INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 2, 1);
+INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 3, 1);
+INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 4, 1);
 
 INSERT INTO tb_membro (PG_id, nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil, rua, bairro, numero, cidade, complemento, cep) VALUES (2, 'José Luiz', 'Ribeiro Junior', 'junior@gmail.com', '1988-10-07', 35, 970312251, '123.789.964-67', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221');
 INSERT INTO tb_membro (PG_id, nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep) VALUES (4, 'Marcus', 'Fereira Duarte', 'marcus@gmail.com', '1987-05-11', 37, '970312251', '923.289.964-12' ,0, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221');
@@ -60,14 +78,15 @@ INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES
 INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-05-01', 0, 1, 2)
 INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-05-04', 1, 1, 2)
 
-INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-05', 1,'teste1','teste2','teste3','teste4','teste5')
+
+
+
+INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-05', 1, 'teste1','teste2','teste3','teste4','teste5')
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-05', 2, 'Sim, a aula ocorreu sem problemas.', 'Não, nenhum aluno apresentou problemas.', 'Não, o material das aulas foi suficiente e compreensível.', 'Seria útil fornecer mais exemplos práticos durante as aulas.', 'Não, nada mais a observar no momento.');
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-05', 3, 'Sim, a aula ocorreu normalmente.', 'Sim, um aluno apresentou dificuldades de aprendizagem.', 'Sim, alguns alunos tiveram dificuldade com o material das aulas.', 'A equipe de trabalho poderia disponibilizar mais recursos online para estudo.', 'Nenhuma observação adicional no momento.');
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-10', 1, 'Não, houve atraso na chegada do professor.', 'Não, todos os alunos participaram ativamente.', 'Não, o material das aulas foi bem preparado.', 'Seria útil organizar uma revisão geral antes de exames.', 'Nenhuma observação adicional no momento.');
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-10', 2, 'Sim, mas houve um problema técnico no meio da aula.', 'Não, os alunos estavam engajados.', 'Sim, alguns alunos pediram material adicional.', 'A equipe de trabalho poderia criar grupos de estudo online.', 'Nenhuma observação adicional no momento.');
-
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-10', 3, 'Não, a aula foi cancelada devido a problemas técnicos.', 'Não, nenhum problema foi relatado.', 'Sim, alguns alunos acharam o material muito avançado.', 'Seria útil disponibilizar tutoriais online.', 'Nenhuma observação adicional no momento.');
-
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-23', 1, 'Sim, mas houve uma interrupção breve.', 'Sim, um aluno precisou de ajuda extra.', 'Não, o material foi bem compreendido pela maioria.', 'Seria útil criar um fórum online para discussões.', 'Nenhuma observação adicional no momento.');
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-23', 2, 'Não, houve atraso na chegada do professor.', 'Sim, um aluno precisou de ajuda extra.', 'Não, o material foi bem compreendido pela maioria.', 'Seria útil criar um fórum online para discussões.', 'Nenhuma observação adicional no momento.');
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-23', 3, 'Sim, mas houve uma interrupção breve.', 'Sim, um aluno precisou de ajuda extra.', 'Não, o material foi bem compreendido pela maioria.', 'Seria útil criar um fórum online para discussões.', 'Nenhuma observação adicional no momento.');
@@ -76,15 +95,6 @@ INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, per
 
 
 
-INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Eleilson','da Silva' ,'leo@gmail.com', '$2a$10$eVgvAuCpK3vyj6nyXiNxX.MKxbu/kdv.8Iw0snHXTHk54MsGxQ8Au');
-INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Junior','da Silva' ,'junior@gmail.com', '$2a$10$eVgvAuCpK3vyj6nyXiNxX.MKxbu/kdv.8Iw0snHXTHk54MsGxQ8Au');
-
-INSERT INTO tb_role (authority ) VALUES ( 'ROLE_ADMIN');
-INSERT INTO tb_role (authority ) VALUES ( 'ROLE_OPERADOR');
-
-
-INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 1, 1);
-INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 2, 2);
 
 
 

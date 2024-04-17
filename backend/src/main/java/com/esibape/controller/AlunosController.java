@@ -1,4 +1,4 @@
-package com.esibape.resource;
+package com.esibape.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -21,10 +21,11 @@ import com.esibape.DTO.AlunosDTO;
 
 import com.esibape.service.AlunosService;
 
-@CrossOrigin("http://localhost:3000")
+
 @RestController
 @RequestMapping(value="/alunos")
 public class AlunosController {
+	
 	@Autowired
 private AlunosService service;
 

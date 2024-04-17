@@ -56,7 +56,7 @@ const DetalheProjetos = () => {
                 <th>Nome</th>
                 <th>Idade</th>
                 <th>Identidade</th>
-                <th>Responsável</th>
+                <th>Telefone</th>
               
               </tr>
             </thead>
@@ -87,7 +87,7 @@ const DetalheProjetos = () => {
         
                     <td>
                     <Link to={`/alunos/${aluno.id}`}  className="dados-alunos">
-                      {aluno.responsavel}
+                      {aluno.telefone}
                       </Link>
 
                   </td>

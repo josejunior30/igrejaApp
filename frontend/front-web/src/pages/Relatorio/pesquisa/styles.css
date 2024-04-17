@@ -29,19 +29,21 @@
   }
   
   .input-container-relatorio label {
-    margin-right: 10px;
+    margin-right: 2px;
+    font-size: 15px;
   }
   
   .input-container-relatorio input[type="radio"] {
-    margin-right: 3%;
+    margin-right: 1%;
   }
   
   .filtro-data-relatorio input[type="date"] {
     padding: 5px;
     border-radius: 3px;
     border: 1px solid #ccc;
-    width: 40%;
+    width: 30%;
     margin-right: 20px;
+    margin-left: 20px;
   }
   
   .btn-relatorio {
@@ -74,10 +76,11 @@
   }
   
   .page-container-relatorio {
-    width: 50%;
-    margin: 0 auto;
+    width: 60%;
+   
     margin-bottom: 10px;
     padding-top: 20px;
+    margin-left:24% ;
   }
   
   .filters-container-lista.records-actions {

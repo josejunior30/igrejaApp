@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 import javax.persistence.Table;
 
 @Entity
@@ -26,7 +26,7 @@ public class Alunos implements Serializable{
 	private Long id;
 	private String nome;
 	private LocalDate dataNascimento;
-	private String idade;
+	private Integer idade;
 	private String rg;
 	private String responsavel;
 	private String cpfResponsavel;
@@ -55,7 +55,7 @@ public class Alunos implements Serializable{
 		
 	}
 	
-	public Alunos(Long id, String nome, LocalDate dataNascimento, String idade, String rg, String responsavel,
+	public Alunos(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
 			String cpfResponsavel, String telefone, String url, String rua, String cep, String numero, String bairro,
 			String cidade, String complemento,AlunoDoenca alunoDoenca, String sangue, String pergunta, Projetos projetos, List<Chamada> chamada) {
 		super();
@@ -109,11 +109,11 @@ public class Alunos implements Serializable{
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getIdade() {
+	public Integer getIdade() {
 		return idade;
 	}
 
-	public void setIdade(String idade) {
+	public void setIdade(Integer idade) {
 		this.idade = idade;
 	}
 

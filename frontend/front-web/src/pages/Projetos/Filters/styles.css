@@ -71,4 +71,31 @@
 .barra-container.alunos-actions {
   justify-content: flex-end;
 }
+
+@media (max-width: 768px) {
+  .barra-container {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    padding: 10px 15px;
+    height: auto;
+  }
+
+  .barra-container input,
+  .barra-container select,
+  .barra-container .clean-filters,
+  .barra-container .barra-alunos {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+
+  .barra-container .barra-alunos {
+    padding: 10px;
+  }
+
+  .barra-container.alunos-actions {
+    justify-content: flex-start;
+  }
+}
  

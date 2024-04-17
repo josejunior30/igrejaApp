@@ -3,7 +3,7 @@ import { RelatorioDTO } from "../../../models/relatorio";
 import * as relatorioService from '../../../service/relatorioService';
 import { deleteRelatorio } from "../../../service/relatorioService";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'; // Importe os ícones necessários
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'; 
 import Header from "../../../components/Header";
 import './styles.css';
 import { PiPrinterFill } from "react-icons/pi";
@@ -14,10 +14,10 @@ import jsPDF from 'jspdf';
 
 
 const DetalhesRelatorio = () => {
-  const { id } = useParams<{ id: string }>() ?? { id: "" }; // Fornecendo uma string vazia como valor padrão
+  const { id } = useParams<{ id: string }>() ?? { id: "" }; 
   const navigate = useNavigate();
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [relatorioDTO, setRelatorioDTO] = useState<RelatorioDTO | null>(null); // Inicializa como null
+  const [relatorioDTO, setRelatorioDTO] = useState<RelatorioDTO | null>(null); 
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const estacao= 'https://i.postimg.cc/KjkzLLPq/Esta-o-siba-250-x-150-mm-2.png';
@@ -117,7 +117,7 @@ const DetalhesRelatorio = () => {
           <div className="relatorio-detalhes-div">
              <div className="cabeçalho-detalhes">
                 <h3>Relatório Projeto: {relatorioDTO.projetosRelatorio.nome}</h3>
-                <p>Professor: fulano</p>
+                <p>Professor(a): {relatorioDTO.projetosRelatorio.lider}</p>
                 <p className="data-relatorio">Data : {new Date(relatorioDTO.data).toLocaleDateString()}</p>
              </div>
         <div className="relatorio-detalhes-div2">

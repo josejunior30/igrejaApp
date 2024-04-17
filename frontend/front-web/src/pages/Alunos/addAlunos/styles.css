@@ -92,3 +92,68 @@
     .btn-aluno-voltar:focus {
       background-color: #004080;
     }
+    
+@media (max-width: 768px) {
+
+
+  .alunos-container {
+    max-width: 90%; 
+    width: auto;
+ 
+    padding: 10px;
+    font-size: 16px; 
+  }
+
+  /* Título */
+  .titulo-form h3 {
+    font-size: 18px;
+  }
+
+ 
+  .input-group-alunos {
+    display: block;
+    margin-top: 20px;
+  }
+
+
+  .a-nome {
+    font-weight: bold;
+  }
+
+
+  .alunos-input,
+  .form-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    font-size: 16px; 
+  }
+
+
+  .btn-alunos {
+    width: 30%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 18px; 
+  }
+
+
+  .btn-aluno-voltar {
+    width: 30%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ed7947;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 18px; 
+  }
+}

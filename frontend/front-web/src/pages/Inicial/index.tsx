@@ -1,10 +1,5 @@
 import React from "react";
-import Calendario from "../../assests/calendario.jpg";
-import Secretaria from "../../assests/secretaria.jpg";
-import Visitante from "../../assests/visitante.jpg";
-import Lideranca from "../../assests/liderenca.jpg";
-import Pg from "../../assests/pequenoGrupo.jpg";
-import Financeiro from "../../assests/financeiro.jpg";
+
 import { Link } from "react-router-dom";
 import './styles.css';
 import Header from "../../components/Header";

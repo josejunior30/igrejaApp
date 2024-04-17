@@ -86,6 +86,8 @@
     box-sizing: border-box;
     margin-right: 20px;
     padding-left: 15px;
+    
+    width: 15%;
   }
   
   .filters-container input:focus {
@@ -99,20 +101,19 @@
     
   }
   
-  .filters-container .clean-filters {
+  .clean-filters {
     background-color: var(--color-coral);
     color: #FFF;
-    margin-left: 20px;
   }
   
   .filters-container .clean-filters:hover {
     background-color: #e07243;
   }
   
-  .filters-container .add-membro{
+  .add-membro{
     background-color: var(--color-turquoise);
     color: #0E1B28;
-    margin-left: 40px;
+    text-align: center;
   }
   
   .filters-container .add-membro:hover {
@@ -172,5 +173,10 @@
   .img-print-membro{
     margin-left: 90%;
     text-align: center;
-font-size: 22px
+  font-size: 22px
+  }
+  .img-print-membro button{
+background:none;
+color: white;
+font-size: 18px;
   }

@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
-import com.esibape.entities.FileStorage;
 import com.esibape.entities.Membro;
 import com.esibape.entities.MembroEstado;
 import com.esibape.entities.PequenoGrupo;
@@ -14,9 +17,13 @@ public class MembroDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	@Size(min=3, message="O nome deve ter no minimo 3 caracteres")
+    @NotEmpty(message="campo não poe ser nulo ou vazio")
 	private String nome;
 	private String sobrenome;
+	@Email(message="Deve ser um Email Valido")
 	private String email;
+	@PastOrPresent(message="escolha uma data válida") 
 	private LocalDate dataNascimento;
 	private Integer idade;
 	private String telefone;

@@ -102,7 +102,7 @@ public class MembroService {
 
     public void atualizarIdade(MembroDTO dto) {
         LocalDate dataNascimento = dto.getDataNascimento();
-        Integer idadeAtual = dto.getIdade(); // Verifica se a idade já foi definida explicitamente
+        Integer idadeAtual = dto.getIdade(); 
         
         // Calcula a idade apenas se a idade estiver vazia
         if (dataNascimento != null && idadeAtual == null) {

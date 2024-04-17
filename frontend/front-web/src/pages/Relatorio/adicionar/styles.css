@@ -89,3 +89,71 @@
   margin-bottom: 40px;
   
   }
+
+  @media (max-width: 768px) {
+
+   
+    .quiz-container {
+      max-width: 95%; 
+      width: auto;
+      margin-left: 2.5%; 
+      padding: 10px;
+      font-size: 16px; 
+    }
+  
+   
+    .titulo-quiz {
+      background-color: cadetblue;
+      font-size: 18px; 
+    }
+  
+ 
+    .relatorio-fieldset {
+      margin-top: 20px;
+      border: none;
+    }
+  
+    .relatorio-quiz label {
+      font-weight: bold;
+      margin-top: 20px; 
+      font-size: 16px; 
+    }
+  
+  
+    .relatorio-input,
+    .alunos-input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+      font-size: 16px; 
+    }
+  
+  
+    .btn-quiz {
+      width: 30%; 
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #ed7947;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 18px; 
+    }
+  
+ 
+    .btn-quiz-voltar {
+      width: 30%; 
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 18px; 
+      margin-left: 40%;
+  }
+}

@@ -3,8 +3,7 @@ import { findAll, findByDate, findDataAndProjeto } from "../../service/presencaS
 import { PresencaDTO } from "../../models/presenca";
 import './styles.css';
 import Header from "../../components/Header";
-import AddAlunos from "../Alunos/addAlunos";
-import AddLista from "./criarLista";
+
 import { PiPrinterFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
@@ -94,8 +93,9 @@ const Presenca = () => {
             value={dataEscolhida}
             onChange={handleDataChange}
           />
+           <button onClick={buscarPresencasPorDataEProjeto}>Buscar</button>
         </div>
-      
+       
         <div className="input-container">
            
           <label htmlFor="projeto1">Artesanato</label>
@@ -114,12 +114,28 @@ const Presenca = () => {
             checked={projeto === 2}
             onChange={handleProjetoChange}
           />
-          <label htmlFor="projeto3">Musica</label>
+          <label htmlFor="projeto3">Teclado/Violão</label>
           <input
             type="radio"
             id="projeto3"
             value="3"
             checked={projeto === 3}
+            onChange={handleProjetoChange}
+          />
+             <label htmlFor="projeto4">Canto</label>
+          <input
+            type="radio"
+            id="projeto4"
+            value="4"
+            checked={projeto === 4}
+            onChange={handleProjetoChange}
+          />
+          <label htmlFor="projeto5">Bateria/Percursão</label>
+          <input
+            type="radio"
+            id="projeto"
+            value="5"
+            checked={projeto === 5}
             onChange={handleProjetoChange}
           />
 <label htmlFor="projetoTodos">Todos</label>
@@ -130,7 +146,7 @@ const Presenca = () => {
   checked={projeto === null}
   onChange={handleProjetoChange}
 />
-        <button onClick={buscarPresencasPorDataEProjeto}>Buscar</button>
+        
         </div>
       </div>
      <div className="img-print-lista">

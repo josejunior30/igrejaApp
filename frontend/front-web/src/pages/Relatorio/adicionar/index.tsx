@@ -10,6 +10,7 @@ import { BASE_URL } from "../../../ultilitarios/system";
 import './styles.css';
 
 const AddRelatorio: React.FC = () => {
+  
     const [projetos, setProjetos] = useState<projetosRelatorio[]>([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isRedirecting, setIsRedirecting] = useState(false);
@@ -24,22 +25,24 @@ const AddRelatorio: React.FC = () => {
     "Alguma sugestão para a equipe de trabalho?": "",
     "Mais alguma observação ou sugestão?": "",
 
-    
+     
       projetosRelatorio: {
         id: 0,
         nome: "",
-      }
+        lider: "",
+      },
+      
     });
   
-    
     useEffect(() => {
       const fetchGrupos = async () => {
-        try {
-          const response = await axios.get(`${BASE_URL}/projetos`);
-          setProjetos((await response).data);
-        } catch (error) {
-          console.error("Erro ao obter a lista de grupos:", error);
-        }
+          try {
+              const response = await axios.get(`${BASE_URL}/projetos`);
+              setProjetos(response.data);
+          } catch (error) {
+              console.error("Erro ao buscar projetos:", error);
+          }
+
       };
   
       fetchGrupos();
@@ -47,31 +50,34 @@ const AddRelatorio: React.FC = () => {
   
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
-  
+
       if (name === "projetosRelatorio") {
-        const projetoId = parseInt(value, 10);
-  
-        setRelatorioDTO((prevAlunosDTO) => ({
-          ...prevAlunosDTO,
-          projetosRelatorio: {
-            ...prevAlunosDTO.projetosRelatorio,
-            id: projetoId,
-          },
-        }));
+          const projetoId = parseInt(value, 10);
+
+          setRelatorioDTO(prevDTO => ({
+              ...prevDTO,
+              projetosRelatorio: {
+                  ...prevDTO.projetosRelatorio,
+                  id: projetoId,
+              },
+          }));
+      
+          
       } else if (name === "data") {
-        const data = new Date(value);
-  
-        setRelatorioDTO((prevAlunosDTO) => ({
-          ...prevAlunosDTO,
-          [name]: data,
-        }));
+          const data = new Date(value);
+
+          setRelatorioDTO(prevDTO => ({
+              ...prevDTO,
+              [name]: data,
+          }));
       } else {
-        setRelatorioDTO((prevAlunosDTO) => ({
-          ...prevAlunosDTO,
-          [name]: value,
-        }));
+          setRelatorioDTO(prevDTO => ({
+              ...prevDTO,
+              [name]: value,
+          }));
       }
-    };
+  };
+
     const handleGoBack = () => {
       navigate(-1); 
     }
@@ -80,10 +86,10 @@ const AddRelatorio: React.FC = () => {
   
       try {
         console.log("relatorio Detail antes do POST:", relatorioDTO);
-        // Utilizando a função insertMembro para adicionar o membro
+        
         await insert(relatorioDTO);
   
-        // Lógica de manipulação de sucesso, redirecionamento, etc.
+      
         setIsModalVisible(true);
         setRelatorioDTO({
             id: 0,
@@ -98,7 +104,9 @@ const AddRelatorio: React.FC = () => {
             projetosRelatorio: {
               id: 0,
               nome: "",
-            }
+              lider: "",
+            },
+            
           });
           
       
@@ -134,10 +142,29 @@ const AddRelatorio: React.FC = () => {
                         onChange={handleChange}
                         required
                         >
+                          
                         <option>Selecione</option>
                         {projetos.map((projeto) => (
                             <option key={projeto.id} value={projeto.id}>
                             {projeto.id} - {projeto.nome}
+                            </option>
+                        ))}
+                        </select>
+                    </div>
+                    <div className="header-relatorio-projetos">
+                        <label htmlFor="projetos" className="r-nome">Professor:</label>
+                        <select
+                        name="professor"
+                        className="alunos-input"
+                        value={relatorioDTO.projetosRelatorio.nome} 
+                        onChange={handleChange}
+                        required
+                        >
+                          
+                        <option>Selecione</option>
+                        {projetos.map((projetos) => (
+                            <option key={projetos.id} value={projetos.id}>
+                             {projetos.nome}
                             </option>
                         ))}
                         </select>

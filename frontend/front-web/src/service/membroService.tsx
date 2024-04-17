@@ -1,6 +1,7 @@
 
 import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
+import Membro from "../pages/Membro";
 
 
 export function findAll(){
@@ -21,4 +22,8 @@ export function updateMembro(id: number, MembroDTO:any){
 }
 export function deleteMembro(id: number) {
     return axios.delete(`${BASE_URL}/membro/${id}`);
+}
+export function findByNome(nome:string){
+
+    return axios.get(`${BASE_URL}/membro/search?nome=${nome}`);
 }

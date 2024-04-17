@@ -55,6 +55,7 @@
   transition: opacity 0.3s;
 }
 
+
 .overlay p {
   margin: 0;
   font-size: 25px;
@@ -87,3 +88,18 @@
   transform: translateY(0);
 }
 
+@media (max-width: 768px) {
+  .image-container {
+    flex-direction: column; /* Mudar para coluna */
+    align-items: center;     /* Centralizar os itens */
+  }
+
+  .image {
+    width: 100%;  /* Largura total */
+    margin: 15px 0; /* Margem superior e inferior */
+  }
+
+  .image img {
+    height: auto; /* Manter a proporção da imagem */
+  }
+}

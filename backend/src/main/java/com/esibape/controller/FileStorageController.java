@@ -1,4 +1,4 @@
-package com.esibape.resource;
+package com.esibape.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

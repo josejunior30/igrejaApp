@@ -37,23 +37,30 @@ public class Projetos implements Serializable{
 	@OneToMany(mappedBy ="projetosRelatorio" )
 	private List<Relatorio>relatorio = new ArrayList<>();
 	
+	
+	
 	public Projetos() {
 		
 	}
 
-	public Projetos(Long id, String nome, String lider, String coordenador,
-			String foto_lider, String foto_coordenador, List<Alunos> alunos, List<Chamada> chamada, List<Relatorio> relatorio) {
+
+
+	public Projetos(Long id, String nome, String lider, String coordenador, String foto_coordenador, String foto_lider,
+			List<Alunos> alunos, List<Chamada> chamada, List<Relatorio> relatorio) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.lider = lider;
-		this.alunos=alunos;
-		this.coordenador= coordenador;
-		this.foto_coordenador= foto_coordenador;
-		this.foto_lider= foto_lider;
-		this.chamada= chamada;
-		this.relatorio= relatorio;
+		this.coordenador = coordenador;
+		this.foto_coordenador = foto_coordenador;
+		this.foto_lider = foto_lider;
+		this.alunos = alunos;
+		this.chamada = chamada;
+		this.relatorio = relatorio;
+		
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -95,6 +102,7 @@ public class Projetos implements Serializable{
 	public void setRelatorio(List<Relatorio> relatorio) {
 		this.relatorio = relatorio;
 	}
+
 
 	@Override
 	public int hashCode() {

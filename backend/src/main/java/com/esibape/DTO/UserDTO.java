@@ -5,6 +5,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import org.springframework.security.core.GrantedAuthority;
 
 import com.esibape.entities.User;
@@ -15,8 +20,12 @@ public class UserDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	@Size(min=3, message="O nome deve ter no minimo 3 caracteres")
+    @NotEmpty(message="campo não poe ser nulo ou vazio")
 	private String nome;
+	@Email(message="Deve ser um email válido")
 	private String email;
+	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$", message="A senha deve ter pelo menos 4 caracteres, no máximo 8 caracteres e deve incluir pelo menos uma letra maiúscula, uma letra minúscula e um dígito numérico.")
 	private String password;
 	
 	private Set<RoleDTO> roles = new HashSet<>();

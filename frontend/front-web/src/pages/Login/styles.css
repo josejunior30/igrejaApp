@@ -54,3 +54,71 @@
     margin-left: 400px;
     padding-bottom: 50px;
 }
+.password-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.password-input-container input {
+    flex: 1;
+    width:90% ;
+    padding-right: 40px; 
+}
+.password{
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+.password-input-container .toggle-password {
+    margin-left: -23px; 
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.error-message {
+    color: red;
+    font-size: 12px;
+}
+.invalid-error-message {
+    color: red;
+    font-size: 12px; 
+    font-weight: bold;  
+    margin: 0;
+    padding: 0;
+}
+@media (max-width: 768px) {
+    .body-container {
+      margin-top: 25%;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 10%;
+    }
+
+    .form-container {
+        width: 70%;
+        
+    }
+
+    .copy {
+        margin-left: 10%;
+        text-align: center;
+        margin-top: 30%;
+      
+    }
+
+    .password-input-container {
+        position: relative;
+    }
+
+    .password-input-container .toggle-password {
+        position: absolute;
+        right: 10px;
+    }
+
+    .body-container img {
+        width: 50%; /* Ajuste o valor conforme necessário */
+        margin-bottom: 20px;
+        margin-top: 40px;
+    }
+}

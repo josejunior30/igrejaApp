@@ -20,8 +20,8 @@
 }
 
 .logo-img img{
-  width: 400px;
-  margin-right: 98%;
+  width: 250px;
+margin-left: 20px;
   object-fit: contain;
  
 }

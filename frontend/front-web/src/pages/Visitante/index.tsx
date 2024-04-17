@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './styles.css';
 import axios from "axios";
 import { VisitanteResponse } from "./types";
-import Filters from "../Filters";
+
 import Sidebar from "../../components/sidebar";
 import Header from "../../components/Header";
 
@@ -30,8 +30,7 @@ const Visitante = () => {
      <Header/>
      <Sidebar/>
       <div className="page-container">
-       
-       <Filters/>
+
         <table className="records-table" cellPadding="0" cellSpacing="0">
           <thead>
             <tr>

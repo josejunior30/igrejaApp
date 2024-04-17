@@ -23,10 +23,15 @@ public class ProjetosDTO implements Serializable{
 	private List<AlunosDTO>alunos = new ArrayList<>();
 	private List<ChamadaDTO> chamada=  new ArrayList<>();
 	private List<RelatorioDTO> relatorio = new ArrayList<>();
+
+	
+
 	public ProjetosDTO() {
 		
 	}
 
+	
+	
 	public ProjetosDTO(Long id, String nome, String lider,
 			String coordenador,String foto_lider, String foto_coordenador, List<AlunosDTO> alunos, List<RelatorioDTO>relatorio) {
 		super();
@@ -55,6 +60,7 @@ public class ProjetosDTO implements Serializable{
 		alunos.forEach(x-> this.alunos.add(new AlunosDTO(x)));
 		chamada.forEach(y-> this.chamada.add(new ChamadaDTO(y)));
 		relatorio.forEach(z-> this.relatorio.add(new RelatorioDTO(z)));
+	
 	}
 	public Long getId() {
 		return id;
@@ -130,6 +136,7 @@ public class ProjetosDTO implements Serializable{
 	public void setRelatorio(List<RelatorioDTO> relatorio) {
 		this.relatorio = relatorio;
 	}
+	
 
 	@Override
 	public int hashCode() {

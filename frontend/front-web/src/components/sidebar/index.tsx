@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
     <div className="sidebar-container">
       <ul className='sidebar'>
         <li>
-          <Link to="/">
+          <Link to="/inicio">
             <FaHome />
             <span>Home</span>
             </Link>

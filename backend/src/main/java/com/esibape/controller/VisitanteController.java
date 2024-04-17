@@ -1,4 +1,4 @@
-package com.esibape.resource;
+package com.esibape.controller;
 
 import java.net.URI;
 import java.util.List;

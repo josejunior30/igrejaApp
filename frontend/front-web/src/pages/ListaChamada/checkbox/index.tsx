@@ -110,10 +110,11 @@ const closeModal = () => {
   setShowModal(false);
   navigate(-1); // Navegar de volta para a página anterior
 };
+
     return (
       <>
    <Header/>
-   <div className="voltar-projetos-detalhes">
+   <div className="voltar-lista">
       <Link to="/projetos">
         <TiArrowBack />  Voltar
       </Link>
@@ -128,6 +129,7 @@ const closeModal = () => {
                         onChange={handleDateChange} 
                     />
          <button onClick={enviarListaDePresenca} className="enviar-chamada">Enviar</button>
+         
           </div>
 
         <div className="criar-chamanda-container">

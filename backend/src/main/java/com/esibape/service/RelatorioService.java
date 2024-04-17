@@ -8,11 +8,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import com.esibape.DTO.ProjetosDTO;
 import com.esibape.DTO.RelatorioDTO;
-
 import com.esibape.entities.Projetos;
 import com.esibape.entities.Relatorio;
 import com.esibape.repository.ProjetosRepository;
@@ -24,6 +21,7 @@ public class RelatorioService {
 	private RelatorioRepository repository;
 	@Autowired
 	private ProjetosRepository projetosRepository;
+
 	
 	@Transactional(readOnly = true)
     public List<RelatorioDTO> findAll() {
@@ -95,8 +93,11 @@ public class RelatorioService {
 		entity.setPergunta3(dto.getPergunta3());
 		entity.setPergunta4(dto.getPergunta4());
 		entity.setPergunta5(dto.getPergunta5());
+		
 		ProjetosDTO pjDTO = dto.getProjetosRelatorio();
 		Projetos projetos = projetosRepository.getReferenceById(pjDTO.getId());
+		
 		entity.setProjetosRelatorio(projetos);
+	
     }
 }

@@ -2,8 +2,9 @@ package com.esibape.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
+
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ public class Relatorio implements Serializable{
 	private Long id;
 	private LocalDate data;
 	
+	
 	@Column(columnDefinition = "TEXT")
 	private String pergunta1;
 	@Column(columnDefinition = "TEXT")
@@ -37,7 +39,6 @@ public class Relatorio implements Serializable{
     private String pergunta5;
 	
 	
-	
 	@ManyToOne()
 	@JoinColumn(name = "projeto_id")
 	private Projetos projetosRelatorio;
@@ -47,6 +48,9 @@ public class Relatorio implements Serializable{
 	}
 
 	
+
+
+
 
 	public Relatorio(Long id, LocalDate data, String pergunta1, String pergunta2, String pergunta3, String pergunta4,
 			String pergunta5, Projetos projetosRelatorio) {
@@ -140,7 +144,6 @@ public class Relatorio implements Serializable{
 	public void setPergunta5(String pergunta5) {
 		this.pergunta5 = pergunta5;
 	}
-
 
 
 	public Projetos getProjetosRelatorio() {
