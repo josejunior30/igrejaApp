@@ -1,8 +1,8 @@
 import QueryString from "qs";
 import { AccessTokenPayloadDTO, CredentialsDTO, RoleEnum } from "../models/auth";
-import { BASE_URL, CLIENT_ID, CLIENT_SECRET } from "../ultilitarios/system";
+import {  CLIENT_ID, CLIENT_SECRET } from "../ultilitarios/system";
 import *as accessTokenRepository from '../localstorage/access-token-repository'
-import { save } from "../localstorage/access-token-repository";
+
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../models/request";
 import jwtDecode from "jwt-decode";
@@ -61,7 +61,7 @@ export function hasAnyRoles(roles: RoleEnum[]): boolean{
                 return true;
             }
         }
-        //return roles.some(role => tokenData.authorities.includes(role));
+        
     }
     return false;
 }
