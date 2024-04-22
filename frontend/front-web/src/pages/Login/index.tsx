@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import './styles.css';
-import { CredentialsDTO } from "../../models/auth";
+
 import *as authService from "../../service/AuthService";
 import { useNavigate } from "react-router-dom";
 import { ContextToken } from "../../ultilitarios/context-token";
@@ -25,7 +25,7 @@ const Login = () => {
         setShowPassword(!showPassword);
     };
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
+    const onSubmit: SubmitHandler<FormValues> = (data:any) => {
         authService.loginRequest(data)
             .then(response => {
                 authService.saveAccessToken(response.data.access_token);
