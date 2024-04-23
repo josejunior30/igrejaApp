@@ -1,6 +1,7 @@
 
+require('dotenv').config()
 
-export const BASE_URL = process.env.BACKEND_URL || "http://localhost:8080";
-export const CLIENT_ID = process.env.CLIENT_ID || "client_id";
-export const CLIENT_SECRET = process.env.CLIENT_SECRET || "client_secret";
+export const BASE_URL = process.env.REACT_BASE_URL || "http://localhost:8080";
+export const CLIENT_ID = process.env.REACT_CLIENT_ID || "myclientid";
+export const CLIENT_SECRET = process.env.REACT_CLIENT_SECRET || "myclientsecret";
 export const TOKEN_KEY = "com.esibape/token";
