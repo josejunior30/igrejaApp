@@ -1,5 +1,4 @@
 
-require('dotenv').config()
 
 export const BASE_URL = process.env.REACT_BASE_URL || "http://localhost:8080";
 export const CLIENT_ID = process.env.REACT_CLIENT_ID || "myclientid";
