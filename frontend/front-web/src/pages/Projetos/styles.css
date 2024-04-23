@@ -20,8 +20,8 @@
 
 .foto-coordenador {
   margin-top: 10px; /* Reduzido o espaço entre a foto e o nome */
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #fff;
@@ -59,8 +59,8 @@ color:white;
 }
 
 .foto-projeto {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   margin-bottom: 10px;
   object-fit: cover;
@@ -74,7 +74,7 @@ color:white;
 
 .linha-container {
   margin-right: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   transition: transform 0.3s ease-in-out; 
 }
 .linha-container:hover {
