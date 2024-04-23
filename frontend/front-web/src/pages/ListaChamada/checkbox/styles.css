@@ -137,8 +137,9 @@
     margin-left: 10%;
     position: absolute;
     font-size: 20px;
+  
   }
-  .voltar-projetos-detalhes a{
+  .voltar-lista a{
     color: white;
   }
 

@@ -4,13 +4,12 @@ import * as projetosService from "../../../service/projetosService";
 import { alunos, projetosDTO } from "../../../models/projetos";
 import Header from "../../../components/Header";
 import { TiArrowBack } from "react-icons/ti";
-import { ListaChamadaDTO } from "../../../models/ListaChamada";
 import { PresencaDTO } from "../../../models/presenca";
 import *as presencaService from "../../../service/presencaService";
-import axios from "axios";
-
 import './styles.css';
 import { GiConfirmed } from "react-icons/gi";
+
+
 const PresençaBox = () => {
     const { id } = useParams<{ id: string }>() ?? { id: "" };
     const [projetosDTO, setProjetosDTO] = useState<projetosDTO>();
