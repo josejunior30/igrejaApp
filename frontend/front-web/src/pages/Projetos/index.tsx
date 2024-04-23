@@ -8,7 +8,7 @@ import *as projetosService from '../../service/projetosService';
 
 import { TiArrowBack } from "react-icons/ti";
 
-import Slider from "react-slick";
+
 
 
 const Projetos = () => {
