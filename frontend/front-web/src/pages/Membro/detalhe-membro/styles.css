@@ -10,14 +10,14 @@
   
   
   .conteudo-centralizado {
-    text-align: center; /* Centraliza o texto */
+    text-align: center; 
   }
   
   .foto-membro {
-    width: 100px; /* Ajuste o tamanho da imagem conforme necessário */
-    height: 100px; /* Ajuste o tamanho da imagem conforme necessário */
-    border-radius: 50%; /* Para criar uma imagem circular, ajuste conforme necessário */
-    margin: 0 auto; /* Adiciona margem automática para centralizar a imagem */
+    width: 100px; 
+    height: 100px;
+    border-radius: 50%; 
+    margin: 0 auto; 
     display: block;
     cursor: pointer;
   }
@@ -49,7 +49,7 @@
   .botao-deletar {
     margin: 0 10px;
     padding: 10px 20px;
-    background-color: #4CAF50; /* Cor de fundo verde, ajuste conforme necessário */
+    background-color: #4CAF50; 
     color: white;
     border: none;
     border-radius: 5px;
@@ -57,10 +57,10 @@
   }
   
   .botao-deletar {
-    background-color: #f44336; /* Cor de fundo vermelha, ajuste conforme necessário */
+    background-color: #f44336;
   }
   .btn-membro-detalhe-voltar{
-    margin-top: 250px; /* Adiciona margem no topo do botão */
+    margin-top: 250px; 
     background-color: #0056b3;
     color: white;
     border: none;
@@ -175,7 +175,7 @@
     background-color: white;
     padding: 20px;
     margin: auto;
-    margin-left: 700px;
+    margin-left: 58%;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     flex: 1;

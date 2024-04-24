@@ -101,16 +101,16 @@ const DetalhesAlunos = () => {
             <div className="conteudo-centralizado">
             <img src={alunosDTO.url} alt="Foto do Membro" className="foto-membro" />
               <span className="nome-id">{alunosDTO.nome}</span>
-              <p className="dados"> Identidade: {alunosDTO.rg}</p>
-              <p className="dados"> Idade: {alunosDTO.idade}</p>
-              <p className="dados">Data de Nascimento: {new Date(alunosDTO.dataNascimento).toLocaleDateString()}</p>
-              <p className="dados"> Email: {alunosDTO.responsavel}</p>
-              <p className="dados"> Cpf Responsavel: {alunosDTO.cpfResponsavel}</p>
+              <p className="dados"> <span>Identidade:</span> {alunosDTO.rg}</p>
+              <p className="dados"> <span>Idade:</span> {alunosDTO.idade}</p>
+              <p className="dados"><span>Data de Nascimento:</span> {new Date(alunosDTO.dataNascimento).toLocaleDateString()}</p>
+              <p className="dados"> <span>Email: </span>{alunosDTO.responsavel}</p>
+              <p className="dados"> <span>Cpf Responsavel: </span>{alunosDTO.cpfResponsavel}</p>
            
               {alunosDTO.projetos && (
                 <div >
-                  <p className="dados">
-        projetos:{" "}
+                  <p className="dados"><span> projetos:{" "}</span>
+       
         <span
           className={`pg ${getColorClassForPequenoGrupo(alunosDTO.projetos.id)}`}
         >
@@ -154,12 +154,12 @@ const DetalhesAlunos = () => {
         {alunosDTO ? (
             <div className="conteudo-centralizado-endereço">
               <p className="text-h2">Endereço</p>
-            <p className="dados"> Rua: {alunosDTO.rua}</p>
-              <p className="dados"> Bairro: {alunosDTO.bairro}</p>
-              <p className="dados">Numero: {alunosDTO.numero}</p>
-              <p className="dados">Cidade: {alunosDTO.cidade}</p>
-              <p className="dados"> Complemento: {alunosDTO.complemento}</p>
-              <p className="dados"> Cep: {alunosDTO.cep}</p>
+            <p className="dados"><span> Rua:</span> {alunosDTO.rua}</p>
+              <p className="dados"> <span>Bairro:</span> {alunosDTO.bairro}</p>
+              <p className="dados"><span>Numero:</span> {alunosDTO.numero}</p>
+              <p className="dados"><span>Cidade:</span> {alunosDTO.cidade}</p>
+              <p className="dados"> <span>Complemento:</span> {alunosDTO.complemento}</p>
+              <p className="dados"> <span>Cep:</span> {alunosDTO.cep}</p>
             </div>
           ):(
             <p>Carregando detalhes do membro...</p>
