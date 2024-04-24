@@ -1,10 +1,9 @@
 
 import { SlDocs } from "react-icons/sl";
 import React from 'react';
-import { FaHome, FaUser, FaUsers, FaFile, FaUsersCog, FaSmile, FaClipboardList, FaListAlt } from 'react-icons/fa';
+import { FaHome, FaUsers, FaUsersCog, FaListAlt } from 'react-icons/fa';
 import './styles.css';
 import { Link, Outlet } from 'react-router-dom';
-import Header from '../Header';
 import { IoMdDocument } from "react-icons/io";
 
 
