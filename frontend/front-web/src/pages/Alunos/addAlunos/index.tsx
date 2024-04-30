@@ -159,7 +159,7 @@ const AddAlunos: React.FC = () => {
                   name="rg"
                   value={alunosDTO.rg}
                   onChange={handleChange}
-                  required
+                 
                 />
               </div>
               <div className="div-group-alunos">
@@ -209,16 +209,16 @@ const AddAlunos: React.FC = () => {
                 <input 
                   type="text"
                   className="alunos-input"
-                  name="telefone"
-                  value={alunosDTO.telefone}
+                  name="sangue"
+                  value={alunosDTO.sangue}
                   onChange={handleChange}
-                  required
+                  
                 />
               </div>
               <div className="div-group-alunos">
                 <label htmlFor="projetos" className="a-nome">Doença ou alergia?:</label>
                 <select
-                  name="projetos"
+                  name="AlunoDoenca"
                   className="alunos-input"
                   value={alunosDTO.AlunoDoenca} 
                   onChange={handleChange}
@@ -235,10 +235,10 @@ const AddAlunos: React.FC = () => {
                 <input 
                   type="text"
                   className="alunos-input"
-                  name="telefone"
-                  value={alunosDTO.telefone}
+                  name="pergunta"
+                  value={alunosDTO.pergunta}
                   onChange={handleChange}
-                  required
+                  
                 />
               </div>
           
@@ -258,7 +258,7 @@ const AddAlunos: React.FC = () => {
                   className="alunos-input"
                   value={alunosDTO.responsavel}
                   onChange={handleChange}
-                  required
+                  
                 />
               </div>
               <div className="div-group-alunos">
@@ -269,23 +269,10 @@ const AddAlunos: React.FC = () => {
                   className="alunos-input"
                   value={alunosDTO.cpfResponsavel}
                   onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="div-group-alunos">
-                <label htmlFor="cpfResponsavel" className="a-nome">Grau de Parentesco:</label>
-                <input 
-                  type="text"
-                  name="cpfResponsavel"
-                  className="alunos-input"
-                  value={alunosDTO.cpfResponsavel}
-                  onChange={handleChange}
-                  required
+                  
                 />
               </div>
             </fieldset>
-    
-         
                     <div   className="titulo-form">
                       <h3 >Endereço</h3>
                     </div>
@@ -325,6 +312,17 @@ const AddAlunos: React.FC = () => {
                 />
               </div>
               <div className="div-group-alunos">
+                <label htmlFor="bairro" className="a-nome">Cep:</label>
+                <input 
+                  type="text"
+                  name="cep"
+                  className="alunos-input"
+                  value={alunosDTO.bairro}
+                  onChange={handleChange}
+                 
+                />
+              </div>
+              <div className="div-group-alunos">
                 <label htmlFor="cidade" className="a-nome">Cidade:</label>
                 <input 
                   type="text"
@@ -343,7 +341,7 @@ const AddAlunos: React.FC = () => {
                   className="alunos-input"
                   value={alunosDTO.complemento}
                   onChange={handleChange}
-                  required
+                  
                 />
               </div>
             </fieldset>
