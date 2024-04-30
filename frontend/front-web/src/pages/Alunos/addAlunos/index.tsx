@@ -317,7 +317,7 @@ const AddAlunos: React.FC = () => {
                   type="text"
                   name="cep"
                   className="alunos-input"
-                  value={alunosDTO.bairro}
+                  value={alunosDTO.cep}
                   onChange={handleChange}
                  
                 />
