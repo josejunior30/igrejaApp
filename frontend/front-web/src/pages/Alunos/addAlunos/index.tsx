@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { alunosDTO, projetos } from "../../../models/alunos";
+import { alunoDTO, projetos } from "../../../models/alunos";
 
 import axios from "axios";
 import { BASE_URL } from "../../../ultilitarios/system";
-import { insertMembro } from "../../../service/alunosService";
+import { insertAluno } from "../../../service/alunosService";
 import SuccessModal from "../../../components/Modal";
 import './styles.css';
 import Header from "../../../components/Header";
@@ -13,7 +13,7 @@ const AddAlunos: React.FC = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isRedirecting, setIsRedirecting] = useState(false);
     const navigate = useNavigate();
-    const [alunosDTO, setAlunosDTO] = useState<alunosDTO>({
+    const [alunosDTO, setAlunosDTO] = useState<alunoDTO>({
       id: 0,
       nome: "",
       dataNascimento: new Date(),
@@ -22,7 +22,7 @@ const AddAlunos: React.FC = () => {
       rg: "",
       cpfResponsavel: "",
       responsavel: "",
-      idade: "",
+   
       sangue:"",
       pergunta:"",
       AlunoDoenca:0,
@@ -33,10 +33,7 @@ const AddAlunos: React.FC = () => {
         id: 0,
         nome: "",
       },
-      chamada:{
-        id:0,
-        chamadaAluno:0,
-      }
+     
     });
   
     
@@ -89,7 +86,7 @@ const AddAlunos: React.FC = () => {
       try {
         console.log("Membro Detail antes do POST:", alunosDTO);
         // Utilizando a função insertMembro para adicionar o membro
-        await insertMembro(alunosDTO);
+        await insertAluno(alunosDTO);
   
         // Lógica de manipulação de sucesso, redirecionamento, etc.
         setIsModalVisible(true);
@@ -102,7 +99,7 @@ const AddAlunos: React.FC = () => {
       rg: "",
       cpfResponsavel: "",
       responsavel: "",
-      idade: "",
+    
       sangue:"",
       pergunta:"",
       AlunoDoenca:0,
@@ -112,11 +109,7 @@ const AddAlunos: React.FC = () => {
         id: 0,
         nome: "",
       },
-      chamada:{
-        id:0,
-        chamadaAluno:0,
-      }
-
+      
     });
           
       
@@ -205,7 +198,7 @@ const AddAlunos: React.FC = () => {
             </fieldset>
             <fieldset className="input-group-alunos">
               <div className="div-group-alunos">
-                <label htmlFor="telefone" className="a-nome">Tipo Sanguíneo:</label>
+                <label htmlFor="sangue" className="a-nome">Tipo Sanguíneo:</label>
                 <input 
                   type="text"
                   className="alunos-input"
@@ -222,7 +215,7 @@ const AddAlunos: React.FC = () => {
                   className="alunos-input"
                   value={alunosDTO.AlunoDoenca} 
                   onChange={handleChange}
-                  required
+                 
                 >
                  <option >ESCOLHA</option>
                     <option value="0">NÃO</option>
@@ -286,7 +279,7 @@ const AddAlunos: React.FC = () => {
                   className="alunos-input"
                   value={alunosDTO.rua}
                   onChange={handleChange}
-                  required
+                
                 />
               </div>
               <div className="div-group-alunos">
@@ -297,31 +290,31 @@ const AddAlunos: React.FC = () => {
                   className="alunos-input"
                   value={alunosDTO.numero}
                   onChange={handleChange}
-                  required
+                  
                 />
               </div>
               <div className="div-group-alunos">
-                <label htmlFor="bairro" className="a-nome">Bairro:</label>
-                <input 
-                  type="text"
-                  name="bairro"
-                  className="alunos-input"
-                  value={alunosDTO.bairro}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="div-group-alunos">
-                <label htmlFor="bairro" className="a-nome">Cep:</label>
-                <input 
-                  type="text"
-                  name="cep"
-                  className="alunos-input"
-                  value={alunosDTO.cep}
-                  onChange={handleChange}
-                 
-                />
-              </div>
+  <label htmlFor="bairro" className="a-nome">Bairro:</label>
+  <input 
+    type="text"
+    name="bairro"
+    className="alunos-input"
+    value={alunosDTO.bairro}
+    onChange={handleChange}
+    required
+  />
+</div>
+<div className="div-group-alunos">
+  <label htmlFor="cep" className="a-nome">Cep:</label>
+  <input 
+    type="text"
+    name="cep"
+    className="alunos-input"
+    value={alunosDTO.cep}
+    onChange={handleChange}
+    required
+  />
+</div>
               <div className="div-group-alunos">
                 <label htmlFor="cidade" className="a-nome">Cidade:</label>
                 <input 

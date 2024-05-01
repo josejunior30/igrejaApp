@@ -1,11 +1,11 @@
-import { projetosDTO } from "./projetos";
+
 
 export type alunosDTO={
   
     id:number;
     nome: string;
     dataNascimento:Date;
-    idade:string;
+    idade:number;
 	  rg: string;
     responsavel: string;
 	  cpfResponsavel: string;
@@ -18,12 +18,34 @@ export type alunosDTO={
     cidade: string;
     complemento: string;
 	projetos: projetos;
-    chamada:chamada;
+   
     AlunoDoenca:number;
     sangue: string;
     pergunta: string;
 }
-
+export type alunoDTO={
+  
+    id:number;
+    nome: string;
+    dataNascimento:Date;
+  
+	  rg: string;
+    responsavel: string;
+	  cpfResponsavel: string;
+    telefone: string;
+    url: string;
+    rua: string;
+    cep: string;
+    numero: string;
+    bairro: string;
+    cidade: string;
+    complemento: string;
+	projetos: projetos;
+   
+    AlunoDoenca:number;
+    sangue: string;
+    pergunta: string;
+}
 export type projetos = {
     
     id: number;
@@ -31,8 +53,3 @@ export type projetos = {
    
   };
   
-
- export type chamada = {
-    id: number;
-    chamadaAluno: number;
- }

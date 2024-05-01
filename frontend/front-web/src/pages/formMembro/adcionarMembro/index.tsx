@@ -3,7 +3,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import './styles.css';
 import SuccessModal from "../../../components/Modal";
 import { insertMembro } from "../../../service/membroService";
-import { MembroDTO, pequenoGrupo } from "../../../models/membro";
+import { MembrosDTO, pequenoGrupo } from "../../../models/membro";
 import { BASE_URL } from "../../../ultilitarios/system";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'; 
@@ -14,12 +14,12 @@ const Formulario: React.FC = () => {
   const [listaDeGrupos, setListaDeGrupos] = useState<pequenoGrupo[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
-  const [membroDTO, setMembroDTO] = useState<MembroDTO>({
+  const [membroDTO, setMembroDTO] = useState<MembrosDTO>({
     id: 0,
     nome: '',
     sobrenome: '',
     email: '',
-    idade: 0,
+   
     dataNascimento: new Date(),
     telefone: '',
     cpf: '',
@@ -117,7 +117,7 @@ const Formulario: React.FC = () => {
         nome: '',
         sobrenome: '',
         email: '',
-        idade: 0,
+    
         dataNascimento: new Date(),
         telefone: '',
         cpf: '',
@@ -185,14 +185,14 @@ const Formulario: React.FC = () => {
 
   <fieldset className="input-group-div">
     <div className="input-group">
-    <label htmlFor="telefone" className="f-nome">CPF:</label>
+    <label htmlFor="cpf" className="f-nome">CPF:</label>
       <input 
         type="text"
         name="cpf"
         className="form-input"
         value={membroDTO.cpf}
         onChange={handleChange}
-        required
+      
       />
       </div>
       <div className="input-group">
@@ -203,7 +203,7 @@ const Formulario: React.FC = () => {
         className="form-input"
         value={membroDTO.email}
         onChange={handleChange}
-        required
+       
       />
       </div>
      <div className="input-group">
@@ -213,7 +213,7 @@ const Formulario: React.FC = () => {
         className="form-select"
         value={membroDTO.estadoCivil} 
         onChange={handleChange}
-        required
+      
       >
       
       <option >ESCOLHA</option>
@@ -236,7 +236,7 @@ const Formulario: React.FC = () => {
         name="telefone"
         value={membroDTO.telefone}
         onChange={handleChange}
-        required
+    
       />
 </div>
 <div className="input-group">
@@ -247,7 +247,7 @@ const Formulario: React.FC = () => {
   name="dataNascimento"
   value={membroDTO.dataNascimento.toISOString().split('T')[0]}
   onChange={handleChange}
-  required
+
 />
 </div>
 
@@ -258,7 +258,7 @@ const Formulario: React.FC = () => {
         className="form-select-pg"
         value={membroDTO.pequenoGrupo.id} 
         onChange={handleChange}
-        required
+      
       >
       <option >Selecione </option>
         {listaDeGrupos.map((grupo) => (
@@ -289,7 +289,7 @@ const Formulario: React.FC = () => {
       />
       </div>
       <div className="input-group">
-          <label htmlFor="sobrenome" className="f-nome">Numero</label>
+          <label htmlFor="Numero" className="f-nome">Numero</label>
       <input 
         type="text"
         className="form-input"
@@ -342,7 +342,7 @@ const Formulario: React.FC = () => {
         name="cep"
         value={membroDTO.cep}
         onChange={handleChange}
-        required
+     
       />
       </div>
       

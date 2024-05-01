@@ -23,7 +23,7 @@ const EditarAlunos =()=>{
       rg: "",
       cpfResponsavel: "",
       responsavel: "",
-      idade: "",
+      idade: 0,
       sangue:"",
       pergunta:"",
       AlunoDoenca:0,
@@ -34,10 +34,7 @@ const EditarAlunos =()=>{
         id: 0,
         nome: "",
       },
-      chamada:{
-        id:0,
-        chamadaAluno:0,
-      }
+     
     });
   
     useEffect(() => {

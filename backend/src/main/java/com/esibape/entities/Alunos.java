@@ -48,7 +48,7 @@ public class Alunos implements Serializable{
 	
 	 @OneToMany(mappedBy = "alunos", cascade = CascadeType.ALL)
 	private List<Chamada> chamada = new ArrayList<>();
-	
+	 
 	
 	 public Alunos() {
 		

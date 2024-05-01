@@ -51,6 +51,7 @@ public class AlunosService {
 	    public AlunosDTO insert( AlunosDTO dto) {
 	    		Alunos entity =  new Alunos();
 	    		copyDtoToEntity(dto, entity);
+	    		
 	    		entity = repository.save(entity);
 	    		return new AlunosDTO(entity);
 	    	
@@ -71,6 +72,7 @@ public class AlunosService {
 	    
 	  
 	   private void copyDtoToEntity(AlunosDTO dto, Alunos entity) {
+		   atualizarIdade(dto);
 			entity.setNome(dto.getNome());
 			entity.setDataNascimento(dto.getDataNascimento());
 			entity.setIdade(dto.getIdade());

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,7 @@ public ResponseEntity <List<AlunosDTO>>findAll(){
 		AlunosDTO alunos = service.findById(id);
 		return ResponseEntity.ok().body(alunos);
 	}
-   
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping
 	public ResponseEntity<AlunosDTO> insert(@RequestBody AlunosDTO dto){
 		AlunosDTO entity = service.insert(dto);
@@ -48,7 +49,7 @@ public ResponseEntity <List<AlunosDTO>>findAll(){
 				.buildAndExpand(entity.getId()).toUri();
 		return ResponseEntity.created(uri).body(entity);
 	}
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping(value="/{id}")
 	public ResponseEntity<AlunosDTO>update (@PathVariable Long id, @RequestBody AlunosDTO dto){
 		 dto =service.update(id, dto);

@@ -49,6 +49,7 @@ public class MembroService {
     public MembroDTO insert( MembroDTO dto) {
     		Membro entity =  new Membro();
     		copyDtoToEntity(dto, entity);
+    		
     		entity = repository.save(entity);
     		return new MembroDTO(entity);
     	
@@ -58,6 +59,7 @@ public class MembroService {
     public MembroDTO update(Long id, MembroDTO dto) {
     	Membro entity=repository.getReferenceById(id);
     	copyDtoToEntity(dto, entity);
+    	
     	entity = repository.save(entity);
 		return new MembroDTO(entity);
     }
@@ -66,6 +68,7 @@ public class MembroService {
  
     }
     private void copyDtoToEntity(MembroDTO dto, Membro entity) {
+    	atualizarIdade(dto);
 		entity.setNome(dto.getNome());
 		entity.setSobrenome(dto.getSobrenome());
 		entity.setEmail(dto.getEmail());
