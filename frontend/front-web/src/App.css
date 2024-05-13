@@ -6,19 +6,23 @@
   --color-dimgray: #4c5d67;
   --color-darkslategray: #37474f;
   --color-black: #0b1f34;
+  --color-form:#0b869b;
 }
 
 body, html {
   padding: 0;
   margin: 0;
+
 }
 
 * {
   font-family: 'Play', sans-serif;
 }
 
-body {
-  background: var(--color-black);
+
+  
+html{
+ background-color:var(--color-black) ;
 }
 
 a {

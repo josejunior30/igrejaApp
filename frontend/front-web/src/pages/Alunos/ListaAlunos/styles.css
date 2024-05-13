@@ -1,0 +1,37 @@
+
+
+
+#barra-pesquisa-secretaria    {
+    background-color: var(--color-darkslategray);
+  
+  border-radius: 10px;
+  }
+  #btn-pesquisa{
+   background-color: var(--color-coral);
+   border-color: var(--color-coral);
+  }
+  
+  @media (max-width: 768px) {
+   
+    #botoes button{
+      font-size: 14px;
+    }
+    #barra-pesquisa-secretaria input{
+      font-size: 14px;
+    }
+  
+  
+    #barra-pesquisa-secretaria {
+  margin-left: 10px;  }
+    .img-print-membro button{
+      font-size: 11px;
+      
+     
+    }
+   .table a{
+    font-size: 10px;
+   }
+   .table {
+    font-size: 10px;
+   }
+  }

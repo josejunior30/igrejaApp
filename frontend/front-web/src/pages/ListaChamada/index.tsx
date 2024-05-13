@@ -8,6 +8,9 @@ import { PiPrinterFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 
+
+  
+  
 const Presenca = () => {
   
   const [dataEscolhida, setDataEscolhida] = useState("");
@@ -80,89 +83,115 @@ const Presenca = () => {
       <TiArrowBack />  Voltar
     </Link>
   </div>
-    <div className="page-container-lista">
-      </div>
-    <div className="page-container-lista">
-      <div className="filtro-data">
-        <h3>Lista de Presença</h3>
-        <div className="input-container">
-          <label htmlFor="dataEscolhida">Escolha a data:</label>
-          <input
-            type="date"
-            id="dataEscolhida"
-            value={dataEscolhida}
-            onChange={handleDataChange}
-          />
-           <button onClick={buscarPresencasPorDataEProjeto}>Buscar</button>
+
+   <div className="container-fluid mt-5 pt-5">
+
+   <div className="row" id="voltar">
+         <div className="col">
+            <Link to= "/membro">
+              <TiArrowBack />   Voltar
+          </Link>
         </div>
-       
-        <div className="input-container">
+    
+         
+    </div>
+
+    <div className="container col-11 col-md-7">
+    <div className="row  justify-content-center"  id="pesquisa-chamada">
+    <div className="col-md-4 ">
+    <h3>Lista de Presença</h3>
+    
+    <label htmlFor="dataEscolhida"  className="form-label">Escolha a data:</label>
+    <input
+      type="date"
+      id="dataEscolhida"
+      value={dataEscolhida}
+      onChange={handleDataChange}
+      className="form-control"
+    />
+      
+      </div>
+      <div className="col-md-12 p-4 ">
            
-          <label htmlFor="projeto1">Artesanato</label>
+      <label htmlFor="projeto1 " className="form-check-label me-1 "id="artesanato" >Artesanato</label>
           <input
             type="radio"
             id="projeto1"
             value="1"
             checked={projeto === 1}
             onChange={handleProjetoChange}
+        
           />
-          <label htmlFor="projeto2">Jiu-Jitsu</label>
+          <label htmlFor="projeto2" className="form-check-label me-1 " >Jiu-Jitsu</label>
           <input
             type="radio"
             id="projeto2"
             value="2"
             checked={projeto === 2}
             onChange={handleProjetoChange}
+        
           />
-          <label htmlFor="projeto3">Teclado/Violão</label>
+          <label htmlFor="projeto3" className="form-check-label me-1 " >Teclado/Violão</label>
           <input
             type="radio"
             id="projeto3"
             value="3"
             checked={projeto === 3}
             onChange={handleProjetoChange}
+          
           />
-             <label htmlFor="projeto4">Canto</label>
+             <label htmlFor="projeto4" className="form-check-label me-1 " >Canto</label>
           <input
             type="radio"
             id="projeto4"
             value="4"
             checked={projeto === 4}
             onChange={handleProjetoChange}
+        
           />
-          <label htmlFor="projeto5">Bateria/Percursão</label>
+          <label htmlFor="projeto5" className="form-check-label me-1 " >Bateria/Percursão</label>
           <input
             type="radio"
             id="projeto"
             value="5"
             checked={projeto === 5}
             onChange={handleProjetoChange}
+          
           />
-<label htmlFor="projetoTodos">Todos</label>
+<label htmlFor="projetoTodos" className="form-check-label " >Todos</label>
 <input
   type="radio"
   id="projetoTodos"
   value="null"
   checked={projeto === null}
   onChange={handleProjetoChange}
+  
 />
-        
+
         </div>
+      
+        <div className=" d-grid gap-2 col-4 mx-auto " >
+        <button className= "btn btn-primary mb-2 "  onClick={buscarPresencasPorDataEProjeto}>Buscar</button>
+          
+          </div>
       </div>
-     <div className="img-print-lista">
+
+      <div className="row justify-content-center mt-4 text-center">
+      <div className="col-md-11 col-10">
+      <div className="img-print-lista">
     <Link to="#">
         <p><PiPrinterFill /> Imprimir</p>
     </Link>
      </div>
-      <table className="lista-table">
-        <thead>
-          <tr>
-            <th>Aluno</th>
-            <th>Presença</th>
-            <th>Projeto</th>
+      <table className="table table-striped">
+      <thead className="thead">
+        <tr>
+            <th scope="col">Aluno</th>
+            <th scope="col">Presença</th>
+            <th scope="col">Projeto</th>
           </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         {presencas.length > 0 ? (
               presencas.map((presenca:any) => (
             <tr key={presenca.id}>
@@ -178,8 +207,16 @@ const Presenca = () => {
         )}
 
         </tbody>
-      </table>
-    </div>
+
+        </table>
+        </div>
+       
+        </div>
+   </div>
+
+
+</div>
+
     </>
   );
   

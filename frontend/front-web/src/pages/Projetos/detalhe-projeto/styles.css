@@ -1,223 +1,66 @@
-.alunos-pj-container {
-    width: 80%;
-    margin: 0 auto;
-    margin-bottom: 50px;
-    padding-top: 20px;
-    margin-left: 20%
-  
-  }
-  
-  .filters-container.records-actions {
-    justify-content: flex-end;
-  }
-   
-  .alunos-table {
-    width: 80%;
-    border-bottom: 10px solid var(--color-turquoise);
-    border-radius: 0 0 10px 10px;
-  }
-  
-  .alunos-table thead {
-    background-color: var(--color-turquoise);
-    text-align: left;
-    color: #0E1B28;
-    border-radius: 10px;
-  }
-  
-  .alunos-table thead tr {
-    height: 50px;
-  }
-  
-  .alunos-table thead th:first-child {
-    padding-left: 50px;
-    border-top-left-radius: 10px;
-  }
-  
-  .alunos-table thead th:last-child {
-    border-top-right-radius: 10px;
-  }
-  
-  .alunos-table tbody td:first-child {
-    padding-left: 50px;
-   
-  }
-  
-  .alunos-table tbody tr {
-    height: 45px;
-    color: #FFF;
-    font-size: 14px;
-  }
-  .dados-alunos{
-    height: 45px;
-    color: #FFF;
-    font-size: 14px;
-    
-  }
-  .dados-alunos:hover{
-    color: var(--color-turquoise); ;
-    
-  }
-  .alunos-table tbody tr:nth-child(odd) {
-    background-color: var(--color-darkslategray);
-  }
-  
-  .alunos-table tbody tr:nth-child(even) {
-    background-color: var(--color-dimgray);
-  }
-  
-  .filters-container {
-    background-color: var(--color-darkslategray);
-    display: flex;
+td a{
+  text-decoration: none;
+  color: white;
+}
 
-    padding: 13px 15px;
-    margin-bottom: 25px;
-    border-radius: 10px;
-    height: 40px;
-  }
-  
-  .filters-container input {
-    height: 35px;
-    font-weight: bold;
-    font-size: 14px;
-    color: #9E9E9E;
-    border: 1px solid #E1E1E1;
-    border-radius: 10px;
-    box-sizing: border-box;
-    margin-right: 20px;
-    padding-left: 15px;
-  }
-  
-  .filters-container input:focus {
-    outline: none;
-  }
-  
-  .add-membro {
-    font-weight: bold;
-    font-size: 14px;
-    border-radius: 10px;
-    
-  }
-  
-  .filters-container .clean-filters {
-    background-color: var(--color-coral);
-    color: #FFF;
-    margin-left: 20px;
-  }
-  
-  .filters-container .clean-filters:hover {
-    background-color: #e07243;
-  }
-  
-  .filters-container .add-membro{
-    background-color: var(--color-turquoise);
-    color: #0E1B28;
-    margin-left: 40px;
-  }
-  
-  .filters-container .add-membro:hover {
-    background-color: #04c7ef;
-  }
-  
-  .filters-container select {
-    height: 35px;
-    font-weight: bold;
-    font-size: 14px;
-    color: #9E9E9E;
-    border: 1px solid #E1E1E1;
-    border-radius: 10px;
-    box-sizing: border-box;
-    margin-right: 20px;
-    padding-left: 15px;
-  }
-  .seletor{
-    
-    color: #FFF;
-    font-size: 14px;
-    padding-right: 20px;
-    padding-top: 10px;
-    margin: 0px;
-    display: flex;
-    justify-content: center;
-  
-  }
-  .login{
-  
-    height: 44px;
-    font-weight: bold;
-    font-size: 16px;
-    color: #9E9E9E;
-  
-   
-    margin-right: 20px;
-    padding-left: 15px;
-  }
+html{
+  background-color: var(--color-black);
+}
+
+#col-tab-alunos  {
  
-  .voltar-projetos-detalhes{
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 110px;
-    margin-left: 10%;
-    position: absolute;
-    font-size: 20px;
-  }
-  .voltar-projetos-detalhes a{
-    color: white;
-  }
+ 
+  color: white;
+}
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th{
+  background-color: var( --color-darkslategray);
+  color: white;
+}
+.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th{
+color: white;
+  background-color: var(--color-dimgray);
+}
+
+.table-striped thead th:first-child {
+ 
+  border-top-left-radius: 10px;
+}
+
+.table-striped thead th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.table-striped thead th{
+background-color: #00D4FF;
+}
+.table-striped tbody:hover{
+background-color: black;
+}
+.voltar-projetos-detalhes{
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 110px;
+  margin-left: 10%;
+  position: absolute;
+  font-size: 20px;
+}
+.voltar-projetos-detalhes a{
+  color: white;
+  text-decoration: none;
+}
+@media (max-width: 768px) {
+
   
-  @media (max-width: 768px) {
-    .alunos-pj-container {
-      width: 90%;
-      margin-left: 10%;
-      margin-bottom: 30px;
-      padding-top: 2px;
-    }
-  
-    .alunos-table {
-      width: 100%;
-      border-bottom: 5px solid var(--color-turquoise);
-      border-radius: 0;
-    }
-  
-    .alunos-table thead {
-      background-color: var(--color-turquoise);
-      text-align: left;
-      color: #0E1B28;
-    }
-  
-    .alunos-table thead tr {
-      height: 40px;
-    }
-  
-    .alunos-table tbody td:first-child {
-      padding-left: 20px;
-    }
-  
-    .alunos-table tbody tr {
-      height: 40px;
-      font-size: 12px;
-    }
-  
-    .dados-alunos {
-      height: 40px;
-      font-size: 12px;
-    }
-  
-    .voltar-projetos-detalhes {
-      color: white;
-      display: block;
-      text-align: center;
-   margin-bottom: 10px;
-    
-    }
-  
-    .voltar-projetos-detalhes a {
-      color: white;
-      font-size: 14px;
-      margin-top: 100px;
-    }
-    
-  
-  }
-  
-  
+  #col-tab-alunos table{
+  font-size: 12px;
+    margin-top: 30px;
+}
+.voltar-projetos-detalhes{
+  margin-top: 130px;
+  font-size: 12px;
+}
+
+}

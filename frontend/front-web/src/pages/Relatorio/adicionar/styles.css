@@ -1,159 +1,42 @@
-.quiz-container {
-    margin-top: 20px;
-    max-width: 60%;
-    width: auto;
-    margin-left: 20%;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: grid;
-    gap: 16px;
-    background-color: white;
-    font-size: 14px;
-  }
-  
-  .titulo-quiz {
-   text-align: center;
-   background-color: cadetblue;
-  }
-  
-  .relatorio-fieldset {
-    border: none;
- 
-    
-  }
-  .relatorio-quiz{
-    font-weight: bold;
-    margin-top: 40px;
-    margin-bottom: 8px;
-  }
 
-  .header-relatorio {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 40px;
-  }
+
+html, body{
+  background-color: var(--color-black);
+
+}
+.container-fluid{
+  background-color: var(--color-black);
+
+
+}
+
+#relatorio-add{
+  background-color: var(--color-black);
+
+  padding-top: 5%;
+}
+#relatorio-add form{
+  background-color: white;
   
-  .header-relatorio-projetos,
-  .header-relatorio-data {
-    flex: 1;
-    margin-right: 20px; 
-    font-weight: bold;
-  }
-  
-  .relatorio-quiz {
-    margin-bottom: 20px;
-  }
-  
-  .relatorio-quiz label {
-    font-weight: bold;
-    margin-top: 40px;
-  }
-  
-  .relatorio-input {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-top: 5px;
-  }
-  
-  .btn-quiz {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #ed7947;;
-    color: #fff;
-    cursor: pointer;
-    width: 20%;
-    margin-left: 40%;
-  margin-top: 20px;
-  font-size: 18px;
-  }
-  
-  .btn-quiz:hover {
-    background-color: #0056b3;
-  }
-  .btn-quiz-voltar{
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    width: 10%;
-    margin-left: 46%;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  
+}
+#relatorio-add h3{
+  background-color: var(--color-form);
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+#relatorio-add form label{
+font-weight: bold;
+}
+#relatorio-add form button:hover{
+background-color: var(--color-coral);
+border: none;
   }
 
   @media (max-width: 768px) {
+    #btn-voltar-relatorio{
+      
+    }
 
-   
-    .quiz-container {
-      max-width: 95%; 
-      width: auto;
-      margin-left: 2.5%; 
-      padding: 10px;
-      font-size: 16px; 
-    }
-  
-   
-    .titulo-quiz {
-      background-color: cadetblue;
-      font-size: 18px; 
-    }
-  
- 
-    .relatorio-fieldset {
-      margin-top: 20px;
-      border: none;
-    }
-  
-    .relatorio-quiz label {
-      font-weight: bold;
-      margin-top: 20px; 
-      font-size: 16px; 
-    }
-  
-  
-    .relatorio-input,
-    .alunos-input {
-      width: 100%;
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      margin-top: 5px;
-      font-size: 16px; 
-    }
-  
-  
-    .btn-quiz {
-      width: 30%; 
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      background-color: #ed7947;
-      color: #fff;
-      cursor: pointer;
-      margin-top: 20px;
-      font-size: 18px; 
-    }
-  
- 
-    .btn-quiz-voltar {
-      width: 30%; 
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      background-color: #007bff;
-      color: #fff;
-      cursor: pointer;
-      margin-top: 20px;
-      font-size: 18px; 
-      margin-left: 40%;
   }
-}

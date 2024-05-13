@@ -27,29 +27,38 @@ const BarraAlunos = () =>{
 
   return(
 
-   <div className="barra-container alunos-actions">
+  
+    <div className="container-fluid mt-5 pt-5">
+
+    <div className="row justify-content-center ">
+      <div className="col-12 col-md-7 " id="barra-projeto">
+            <Link to= "#">
+            <button className="btn btn-primary  ">
+            Assitencia Social
+            </button>
+            </Link>
+            <Link to={`/enviarChamada/${projetosDTO?.id}`}>
+            <button className="btn btn-primary">
+            Lista Presença
+            </button>
+            </Link>
+            <Link to= "/enviarRelatorio">
+            <button className="btn btn-primary">
+            Relatórios
+            </button>
+            </Link>
+            <Link to= "/adicionarAlunos">
+            <button className="btn btn-primary">
+              Adicionar alunos
+            </button>
+            </Link>
+      </div>
+
+    </div>
      
-     <Link to= "#">
-      <button className="barra-alunos">
-      Assitencia Social
-      </button>
-      </Link>
-      <Link to={`/enviarChamada/${projetosDTO?.id}`}>
-      <button className="barra-alunos">
-      Lista Presença
-      </button>
-      </Link>
-      <Link to= "/enviarRelatorio">
-      <button className="barra-alunos">
-      Relatórios
-      </button>
-      </Link>
-      <Link to= "/adicionarAlunos">
-      <button className="barra-alunos">
-        Adicionar alunos
-      </button>
-      </Link>
+     
    </div> 
+
 
 );
 

@@ -6,9 +6,10 @@ import { getAccessTokenPayload } from '../../../service/AuthService';
 import Header from '../../../components/Header';
 import { useNavigate } from 'react-router-dom';
 import { ContextToken } from '../../../ultilitarios/context-token';
-
+import { FaEye, FaRegEyeSlash } from 'react-icons/fa';
 
 function ChangePassword() {
+    const [showPassword, setShowPassword] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -54,27 +55,72 @@ const navigate = useNavigate();
         setContextTokenPayload(undefined);
         navigate("/")
     }
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
     return (
         <>
         <Header/>
-        <div className='container-redefinir'>
-            <h2>Redefinir Senha Senha</h2>
+        <div className='container-fluid'>
+            <div className='row justify-content-center mt-5 pt-5 mb-3'>
+            <div className="col-8 col-md-4" id="login-redefinir">
+            <h3>Redefinir Senha</h3>
+           
             {errorMessage && <div>{errorMessage}</div>}
             {successMessage && <div>{successMessage}</div>}
-            <div className='div-senha'>
-                <label htmlFor="oldPassword">Senha Atual:</label>
-                <input type="password" id="oldPassword" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+            <div className='col-12' >
+                <label htmlFor="oldPassword" className='form-label'>Senha Atual:</label>
+                <div className="input-group">
+                <input    type={showPassword ? "text" : "password"} className="form-control"
+                 id="oldPassword" placeholder='Insira a senha '
+                  value={oldPassword} 
+                  onChange={(e) => setOldPassword(e.target.value)} />
+                <button type="button" className="btn btn-outline-secondary" id="olho" onClick={togglePasswordVisibility}>
+                                        {showPassword ? <FaRegEyeSlash /> : <FaEye />}
+                     </button>
+                     </div>
             </div>
-            <div className='div-senha'>
-                <label htmlFor="newPassword">Nova Senha:</label>
-                <input type="password" id="newPassword" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+          
+            <div className='col-12' >
+                <label htmlFor="newPassword" className='form-label'>Nova Senha:</label>
+                <div className="input-group">
+                <input  type={showPassword ? "text" : "password"} id="newPassword" className='form-control' placeholder='Insira a nova senha' value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                <button type="button" className="btn btn-outline-secondary" id="olho" onClick={togglePasswordVisibility}>
+                                        {showPassword ? <FaRegEyeSlash /> : <FaEye />}
+                     </button>
+                     </div>
+            
             </div>
-            <div className='div-senha'>
-                <label htmlFor="confirmNewPassword">Confirmar Nova Senha:</label>
-                <input type="password" id="confirmNewPassword" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
+            <div className='col-12'>
+                <label htmlFor="confirmNewPassword" className='form-label'>Confirmar Nova Senha:</label>
+                
+                <div className="input-group">
+                <input  type={showPassword ? "text" : "password"} id="confirmNewPassword" className='form-control' 
+                placeholder='Confirme a senha' 
+                value={confirmNewPassword}
+             onChange={(e) => setConfirmNewPassword(e.target.value)} 
+             />
+               <button type="button" className="btn btn-outline-secondary" id="olho" onClick={togglePasswordVisibility}>
+                                        {showPassword ? <FaRegEyeSlash /> : <FaEye />}
+                     </button>
+             </div>
+
             </div>
-            <button className= 'btn-redefinir' onClick={handleChangePassword}>Alterar Senha</button>
+            <div className='col-11 mt-4'>
+                <span>* A senha deve conter entre 4 a 8 caracteres e deve incluir pelo menos uma letra maiúscula e um número.</span>
+            </div>
+            
+            <div className="d-grid gap-2 col-9 mx-auto mb-3" id='alterar-senha'>
+                <button className="btn btn-primary" onClick={handleChangePassword}>Alterar Senha</button>
         </div>
+            
+           
+          
+        </div>
+                </div>
+            </div>
+     
+          
         </>
     );
 }

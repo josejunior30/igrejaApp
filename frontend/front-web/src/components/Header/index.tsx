@@ -11,14 +11,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { ContextToken } from "../../ultilitarios/context-token";
 
 
-
 const logoHeader = 'https://i.postimg.cc/rp1CWvCZ/Esta-o-siba-250-x-150-mm-250-x-50-mm.png'
-
-
-    const Header = () => {
+const navigate = useNavigate;
+   
+const Header = () => {
         
     const { contextTokenPayload, setContextTokenPayload} = useContext(ContextToken);
-        const [userName, setUserName] = useState<UsuarioDTO>(); // Estado para armazenar o nome do usuário
+        const [userName, setUserName] = useState<UsuarioDTO>(); 
         const navigate = useNavigate();
         const [showMenu, setShowMenu] = useState(false);
         useEffect(() => {
@@ -38,31 +37,34 @@ const logoHeader = 'https://i.postimg.cc/rp1CWvCZ/Esta-o-siba-250-x-150-mm-250-x
         const toggleMenu = () => {
             setShowMenu(!showMenu);
         };
-    
+function redefinirsenha(){
+    navigate("/redefinirsenha")
+}
+           
         return (
-            <header className="main-header">
-            <div className="logo-img">
-                <Link to="/inicio">
-                    <img src={logoHeader} alt="Logo da Empresa" />
-                </Link>
-            </div>
-            <div className="login-container">
-                <div className="user-profile" onClick={toggleMenu}>
-                    
-                    <h2><span className="img-perfil"><FontAwesomeIcon icon={faUser} /> </span> {userName?.nome}</h2>
+            
+            <div className="container-fluid vertical fixed-top" >
+                <div className="row align-items-center"  id="cabeçalho">
+                    <div className="col-5 col-md-7">
+                    <Link to="/inicio">
+                    <img src={logoHeader} alt="Logo da Empresa" id="logo"className="img-fluid"/>
+                  </Link>
+                    </div>
+                    <div className="col-5 col-md-4 " onClick={toggleMenu} id="usuario">
+                    <h2><i className="bi bi-person-circle"></i> {userName?.nome}</h2>
                     {showMenu && (
-                        <div className="dropdown-menu">
-                            <ul>
-                                <Link to="/redefinirsenha">
-                                <li >Redefinir Senha</li>
-                                </Link>
-                            </ul>
-                        </div>
+                      
+                        <button type="button" className="btn btn-secondary" onClick={redefinirsenha}>Redefinir Senha</button>
+                       
                     )}
                 </div>
-                <span className="sair-header" onClick={handleLogoutClick}>Sair</span>
-            </div>
-        </header>
+                <div className="col-1 " id="sair-header">
+                <span onClick={handleLogoutClick}>Sair</span>
+                </div>
+         </div>
+        </div>
+                
+
         );
     };
     

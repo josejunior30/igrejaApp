@@ -13,14 +13,12 @@ import jsPDF from 'jspdf';
 
 
 
+
 const DetalhesRelatorio = () => {
   const { id } = useParams<{ id: string }>() ?? { id: "" }; 
-  const navigate = useNavigate();
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [relatorioDTO, setRelatorioDTO] = useState<RelatorioDTO | null>(null); 
   const [loading, setLoading] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const estacao= 'https://i.postimg.cc/KjkzLLPq/Esta-o-siba-250-x-150-mm-2.png';
+  const estacao= 'https://i.postimg.cc/zX9nQ80Q/Esta-o-siba-250-x-150-mm-250-x-100-mm.png';
 
   const componentRef = useRef(null);
 
@@ -46,42 +44,8 @@ const DetalhesRelatorio = () => {
     }
   }, [id]);
 
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-    navigate('/relatorio');
-  };
 
-  const handleDeleteClick = () => {
-    setShowDeleteConfirmation(true);
-  };
 
-  const handleConfirmDelete = async () => {
-    if (id !== undefined) {
-      await deleteRelatorio(parseInt(id, 10));
-      setIsModalVisible(true);
-      setShowDeleteConfirmation(false);
-    }
-  };
-
-  const handleCancelDelete = () => {
-    setShowDeleteConfirmation(false);
-  };
-
-  const handleNextClick = () => {
-    if (id !== undefined) {
-      const nextId = parseInt(id, 10) + 1;
-      navigate(`/relatorio/${nextId}`);
-    }
-  };
-
-  const handlePreviousClick = () => {
-    if (id !== undefined) {
-      const previousId = parseInt(id, 10) - 1;
-      if (previousId > 0) {
-        navigate(`/relatorio/${previousId}`);
-      }
-    }
-  };
   const generatePdf = () => {
     if (componentRef.current) {
       html2canvas(componentRef.current).then((canvas) => {
@@ -97,56 +61,61 @@ const DetalhesRelatorio = () => {
 
   return (
     <>
-    <Header/>
-    <div className="voltar-relatorio">
-       
-     <Link to= "/relatorio">
-        <TiArrowBack />   Voltar 
-    </Link>
-       
-    </div>
- 
-      <div className="relatorio-detalhes" ref={componentRef}>
-  
-      <div className="img-print-relatorio-detalhe">
-                <Link to="#">
-                    <button onClick={generatePdf}><PiPrinterFill /> Imprimir</button>
-                </Link>
-         </div>
-        {relatorioDTO ? (
-          <div className="relatorio-detalhes-div">
-             <div className="cabeçalho-detalhes">
-                <h3>Relatório Projeto: {relatorioDTO.projetosRelatorio.nome}</h3>
-                <p>Professor(a): {relatorioDTO.projetosRelatorio.lider}</p>
-                <p className="data-relatorio">Data : {new Date(relatorioDTO.data).toLocaleDateString()}</p>
-             </div>
-        <div className="relatorio-detalhes-div2">
-                    <p className="pergunta">A aula ocorreu normalmente?</p>
-                    <p className="resposta"> {relatorioDTO["A aula ocorreu normalmente?"]}</p>
-                    <p className="pergunta">Algum(a) aluno(a) apresentou problemas de comportamento, aprendizagem, assistência social ou espiritual? Qual?</p>
-                    <p className="resposta">{relatorioDTO["Algum(a) aluno(a) apresentou problemas de comportamento, aprendizagem, assistência social ou espiritual? Qual?"]}</p>
-                    <p className="pergunta">Houve dificuldade com o material das aulas? </p>
-                    <p className="resposta">{relatorioDTO["Houve dificuldade com o material das aulas?"]}</p>
-                    <p className="pergunta">Alguma sugestão para a equipe de trabalho? </p>
-                    <p className="resposta">{relatorioDTO["Alguma sugestão para a equipe de trabalho?"]}</p>
-                    <p className="pergunta">Mais alguma observação ou sugestão? </p>
-                    <p className="resposta">{relatorioDTO["Mais alguma observação ou sugestão?"]}</p>
-            </div>
-            <div className="logo-relatorio">
-                <img src={estacao} alt="estacao" />
-            </div>
+      <Header />
+     
+      <div className="container-fluid mt-5 pt-5" >
+        <div className="row" id="voltar">
+          <div className="col">
+            <Link to="/membro">
+              <TiArrowBack /> Voltar
+            </Link>
+          </div>
+          <div className="col-4 justify-content-end" id="imprimir">
+          
+              <button onClick={generatePdf}><PiPrinterFill /> Imprimir</button>
 
-         </div>
-        ) : (
-          <p>Carregando detalhes do membro...</p>
-        )}
-      </div>
-      <div className="setas">
-        <button onClick={handlePreviousClick} className="btn-left"> <FaChevronLeft/></button>
-        <button onClick={handleNextClick} className="btn-right"><FaChevronRight /></button>
+          </div>
+        </div>
+  
+        <div className="container-fluid">
+        
+          <div className="row justify-content-center ">
+         
+            <div className="col-md-8 col-11 p-4" id="relatorio-view" ref={componentRef}>
+              {relatorioDTO ? (
+                <>
+                  <h3>Relatório Projeto: {relatorioDTO.projetosRelatorio.nome}</h3>
+                  <p>Professor(a): {relatorioDTO.projetosRelatorio.lider}</p>
+                  <p className="data-relatorio">Data : {new Date(relatorioDTO.data).toLocaleDateString()}</p>
+                  <p className="pergunta">A aula ocorreu normalmente?</p>
+                  <p className="resposta">{relatorioDTO["A aula ocorreu normalmente?"]}</p>
+                  <p className="pergunta">Algum(a) aluno(a) apresentou problemas de comportamento, aprendizagem, assistência social ou espiritual? Qual?</p>
+                  <p className="resposta">{relatorioDTO["Algum(a) aluno(a) apresentou problemas de comportamento, aprendizagem, assistência social ou espiritual? Qual?"]}</p>
+                  <p className="pergunta">Houve dificuldade com o material das aulas?</p>
+                  <p className="resposta">{relatorioDTO["Houve dificuldade com o material das aulas?"]}</p>
+                  <p className="pergunta">Alguma sugestão para a equipe de trabalho?</p>
+                  <p className="resposta">{relatorioDTO["Alguma sugestão para a equipe de trabalho?"]}</p>
+                  <p className="pergunta">Mais alguma observação ou sugestão?</p>
+                  <p className="resposta">{relatorioDTO["Mais alguma observação ou sugestão?"]}</p>
+
+                
+                <img src={estacao} alt="estacao"  className="img-fluid"/>
+               
+                </>
+              ) : (
+                <p>Carregando detalhes do membro...</p>
+              )}
+            </div>
+          
+          </div>
+
+         
+       
+        </div>
       </div>
     </>
   );
+  
 };
 
 export default DetalhesRelatorio;

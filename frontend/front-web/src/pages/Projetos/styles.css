@@ -1,118 +1,113 @@
 
-
-
-
-.projeto-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+html{
+  background-color: var(--color-black);
 }
 
-.coordenador {
-  text-align: center;
-  margin-bottom: 20px;
-  color: white;
-  display: flex;
-  flex-direction: column; /* Adicionado para exibir a foto e o nome abaixo um do outro */
-  align-items: center;
-  margin-top: 40px;
+#conteiner-projetos{
+  background-color: var(--color-black);
+  margin-top: 8%;
+
 }
 
-.foto-coordenador {
-  margin-top: 10px; /* Reduzido o espaço entre a foto e o nome */
+#img-coordenador img{
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #fff;
+  margin-left: 12%;
 }
 
 .text-coordenador {
   margin-top: 10px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
+margin-bottom: 2px;
   color:#ed7947;
+  text-align: center;
+ 
 }
 .nome-coordenador {
-  margin-top: 10px;
-  
-}
-.projetos-linha {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  
-}
-
-.pj-container {
-  display: flex;
-  flex-direction: column; /* Modificado para exibir o nome e professor abaixo um do outro */
-  align-items: center;
-  list-style-type: none;
-  margin: 10px;
-  padding: 10px;
-  
-  width: 200px;
-  border-radius: 10px;
-color:white;
   text-align: center;
-}
-
-.foto-projeto {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  object-fit: cover;
-  border: 3px solid #fff;
-  
-}
-.foto-projeto:hover{
-  background-color: rgba(0, 0, 0, 0.5); 
-  transition: background-color 0.3s;
-}
-
-.linha-container {
-  margin-right: 10px;
-  margin-bottom: 30px;
-  transition: transform 0.3s ease-in-out; 
-}
-.linha-container:hover {
-  transform: scale(1.7);
-
-}
-.btn-celula-voltar {
-  margin-top: 40px;
-  background-color: #0056b3;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    bottom: 20px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    transition: background-color 0.3s ease-in-out;
-    position: relative; 
-margin-bottom: 30px;
-}
-.text-lider-projeto{
-  margin-bottom: 20px;
   color: white;
   font-size: 14px;
 }
 
-@media (max-width: 768px) {
-  .projetos-linha {
-    display: block;
+.nome-professor{
+color: white;
+}
+.nome-projeto{
+  color: var(--color-coral);
+}
+
+#col-projetos img {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  width: 80px;
+  height: 80px;
+  margin-left: 26%;
+ 
+}
+
+#col-projetos{
+  transition: transform 0.9s ;
+}
+#col-projetos:hover{
+  
+  transform: scale(1.7);
+  transition: transform 0.3s ease-in-out; 
+}
+
+
+#col-projetos h3{
+  margin-top: 10px;
+  font-size: 14px;
+
+}
+#col-projetos a{
+ text-decoration: none;
+ text-align: center;
+ margin-left: 0;
+ 
+
+  }
+  .voltar-projetos-menu{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 110px;
+    margin-left: 20%;
+    position: absolute;
+    font-size: 20px;
+  }
+  .voltar-projetos-menu a{
+    color: white;
+    text-decoration: none;
   }
 
-  .pj-container {
-    width: 100%;
-    margin: 10px 0;
-  }
-  .linha-container:hover {
-    transform: scale(1.4);
-  }
+  @media (max-width: 768px) {
+    #col-projetos img {
+      margin-left: 32%;
+      margin-top: 30px;
+   
+    }
+    #conteiner-projetos {
+   margin-top: 18%;
+    }
+ 
+    #col-projetos:hover{
+      transform: scale(1.4);
+    }
+    
+#img-coordenador img{
+ 
+  margin-left: 20%;
 }
+
+.voltar-projetos-menu{
+
+  margin-left: 10%;
+
+}
+  }

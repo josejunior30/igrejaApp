@@ -152,113 +152,107 @@ const Formulario: React.FC = () => {
     <>
      <Header/>
      <Sidebar/>
-    <form onSubmit={handleSubmit} className="fm-container" encType="multipart/form-data">
-      <div className="titulo-form">
-      <h3 >Dados pessoais </h3>
-      </div>
-      
-   <fieldset className="input-group-alunos">
-    <div className="input-group">
-      <label htmlFor="nome" className="f-nome">Nome:</label>
-      <input 
-        type="text"
-       className="form-input"
-        name="nome"
-        value={membroDTO.nome}
-        onChange={handleChange}
-        required
-      />
-      </div>
-      <div className="input-group">
-          <label htmlFor="sobrenome" className="f-nome">Sobrenome:</label>
-      <input 
-        type="text"
-        className="form-input"
-        name="sobrenome"
-        value={membroDTO.sobrenome}
-        onChange={handleChange}
-        required
-      />
-      </div>
-      
-      </fieldset>
-
-  <fieldset className="input-group-div">
-    <div className="input-group">
-    <label htmlFor="cpf" className="f-nome">CPF:</label>
-      <input 
-        type="text"
-        name="cpf"
-        className="form-input"
-        value={membroDTO.cpf}
-        onChange={handleChange}
-      
-      />
-      </div>
-      <div className="input-group">
-      <label htmlFor="email" className="f-nome">Email:</label>
+     <div className="container-fluid mt-5 pt-5">
+     <div className="container col-md-8 pt-5 mb-5 col-11" >
+    <form onSubmit={handleSubmit} className="row g-4 px-4 pb-4" id="add-alunos">
+       <div className="col-md-12">
+          <h3 >Dados pessoais </h3>
+          </div>
+          <div className="col-md-6" >
+              <label htmlFor="nome" className="form-label">Nome:</label>
+                <input 
+                  type="text"
+                className="form-control"
+                  name="nome"
+                  value={membroDTO.nome}
+                  onChange={handleChange}
+                  required
+                />
+           </div>
+           <div className="col-md-6">
+              <label htmlFor="sobrenome" className="form-label">Sobrenome:</label>
+                  <input 
+                    type="text"
+                    className="form-control"
+                    name="sobrenome"
+                    value={membroDTO.sobrenome}
+                    onChange={handleChange}
+                    required
+                  />
+                      
+            </div>
+            <div className="col-md-4">
+                    <label htmlFor="telefone" className="form-label">CPF:</label>
+              <input 
+                type="text"
+                name="cpf"
+                className="form-control"
+                value={membroDTO.cpf}
+                onChange={handleChange}
+                required
+              />
+            </div>
+        
+    
+            <div className="col-md-4">
+            <label htmlFor="email" className="form-label">Email:</label>
       <input 
         type="email"
         name="email"
-        className="form-input"
+        className="form-control"
         value={membroDTO.email}
         onChange={handleChange}
-       
+        required
       />
-      </div>
-     <div className="input-group">
-      <label htmlFor="estado Civil" className="f-nome">Estado Civil:</label>
-      <select
-      name="estadoCivil"
-        className="form-select"
-        value={membroDTO.estadoCivil} 
-        onChange={handleChange}
-      
-      >
-      
-      <option >ESCOLHA</option>
-        <option value="0">Solteiro</option>
-        <option value="1">Casado</option>
-        <option value="2">Divorciado</option>
-        <option value="3">Viuvo(a)</option>
-    </select>
-    </div>
+            </div>
 
-</fieldset>
-
-
-  <fieldset className="input-group-div">
-    <div className="input-group">
-    <label htmlFor="telefone" className="f-nome">Telefone:</label>
+        <div className="col-md-4">
+            <label htmlFor="estado Civil" className="form-label">Estado Civil:</label>
+                <select
+                name="estadoCivil"
+                  className="form-select"
+                  value={membroDTO.estadoCivil} 
+                  onChange={handleChange}
+                  required
+                >
+                  <option >ESCOLHA</option>
+                  <option value="0">Solteiro</option>
+                  <option value="1">Casado</option>
+                  <option value="2">Divorciado</option>
+                  <option value="3">Viuvo(a)</option>
+              </select>
+            </div>
+            <div className="col-md-4">
+            <label htmlFor="telefone" className="form-label">Telefone:</label>
       <input placeholder="(21) 9 9999-9999"
         type="tel"
-        className="form-input"
+        className="form-control"
         name="telefone"
         value={membroDTO.telefone}
         onChange={handleChange}
-    
+        required
       />
-</div>
-<div className="input-group">
-      <label htmlFor="data" className="f-nome">Nascimento</label>
-<input
-  type="date"
-  className="form-input"
-  name="dataNascimento"
-  value={membroDTO.dataNascimento.toISOString().split('T')[0]}
-  onChange={handleChange}
+              </div>
 
-/>
-</div>
-
-<div className="input-group">
-      <label htmlFor="grupo" className="f-nome">Pequeno Grupo:</label>
+      <div className="col-md-4">
+              <label htmlFor="data" className="form-label">Nascimento</label>
+            <input
+              type="date"
+              className="form-control"
+              name="dataNascimento"
+              value={membroDTO.dataNascimento.toISOString().split('T')[0]}
+              onChange={handleChange}
+              required
+            />
+              </div>
+              <div className="col-md-4">
+              <label htmlFor="grupo" className="form-label">Pequeno Grupo:</label>
       <select
       name="pequenoGrupo"
-        className="form-select-pg"
+        className="form-select"
         value={membroDTO.pequenoGrupo.id} 
         onChange={handleChange}
-      
+        required
       >
       <option >Selecione </option>
         {listaDeGrupos.map((grupo) => (
@@ -268,95 +262,93 @@ const Formulario: React.FC = () => {
           </option>
         ))}
     </select>
- </div>
-
- </fieldset>
- 
-      <div className="titulo-form">
-      <h3 >Endereço </h3>
-      </div>
-    
-  <fieldset className="input-group-div">
-    <div className="input-group">
-      <label htmlFor="nome" className="f-nome">Rua</label>
+              </div>
+              <div className="col-12">
+              <h3 >Endereço </h3>
+              </div>
+        <div className="col-md-4">
+              <label htmlFor="nome" className="form-label">Rua:</label>
+              <input 
+                type="text"
+              className="form-control"
+                name="rua"
+                value={membroDTO.rua}
+                onChange={handleChange}
+                required
+              />
+    </div>
+    <div className="col-md-4">
+    <label htmlFor="nome" className="form-label">Cidade:</label>
       <input 
         type="text"
-       className="form-input"
-        name="rua"
-        value={membroDTO.rua}
-        onChange={handleChange}
-        required
-      />
-      </div>
-      <div className="input-group">
-          <label htmlFor="Numero" className="f-nome">Numero</label>
-      <input 
-        type="text"
-        className="form-input"
-        name="numero"
-        value={membroDTO.numero}
-        onChange={handleChange}
-        required
-      />
-      </div>
-      <div className="input-group">
-          <label htmlFor="bairro" className="f-nome">Bairro</label>
-      <input 
-        type="text"
-        className="form-input"
-        name="bairro"
-        value={membroDTO.bairro}
-        onChange={handleChange}
-        required
-      />
-      </div>
-      
-      
-    <div className="input-group">
-      <label htmlFor="nome" className="f-nome">Cidade</label>
-      <input 
-        type="text"
-       className="form-input"
+       className="form-control"
         name="cidade"
         value={membroDTO.cidade}
         onChange={handleChange}
         required
       />
-      </div>
-      <div className="input-group">
-          <label htmlFor="sobrenome" className="f-nome">Complemento</label>
+    </div>
+   
+    <div className="col-md-4">
+    <label htmlFor="bairro" className="form-label">Bairro:</label>
       <input 
         type="text"
-        className="form-input"
+        className="form-control"
+        name="bairro"
+        value={membroDTO.bairro}
+        onChange={handleChange}
+        required
+      />
+    </div>
+    <div className="col-md-2">
+    <label htmlFor="sobrenome" className="form-label">Numero:</label>
+      <input 
+        type="text"
+        className="form-control"
+        name="numero"
+        value={membroDTO.numero}
+        onChange={handleChange}
+        required
+      />
+    </div>
+    <div className="col-md-6">
+    <label htmlFor="sobrenome" className="form-label">Complemento:</label>
+      <input 
+        type="text"
+        className="form-control"
         name="complemento"
         value={membroDTO.complemento}
         onChange={handleChange}
         required
       />
-      </div>
-      <div className="input-group">
-          <label htmlFor="sobrenome" className="f-nome">cep:</label>
+    </div>
+    <div className="col-md-4">
+    <label htmlFor="sobrenome" className="form-label">cep:</label>
       <input 
-        type="number"
-        className="form-input"
+        type="text"
+        className="form-control"
         name="cep"
         value={membroDTO.cep}
         onChange={handleChange}
-     
+        required
       />
-      </div>
-      
-      </fieldset>
+    </div>
 
-      <button className="btn-add" type="submit">Adicionar</button>
-    </form>
-    {isModalVisible && (
+    <div className="d-grid gap-2 col-6 mx-auto mt-5">
+            <button className="btn btn-primary" type="submit">Adicionar</button>
+      </div>
+      </form>
+      {isModalVisible && (
         <SuccessModal
           onClose={handleModalClose}
           onRedirect={() => setIsRedirecting(true)} 
           operation="adicionar"
         />
       )}
+      </div>
+     </div>
+
+   
     </>
   );
 };

@@ -1,43 +1,40 @@
-.alunos-container {
-    margin-top: 20px;
-    max-width: 60%;
-    width: auto;
-    margin-left: 20%;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: grid;
-    gap: 16px;
-    background-color: white;
-    font-size: 14px;
-  }
-  .input-group-alunos {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(3, 1fr) ; 
-    align-items: center;
-  }
-  .a-nome {
-    margin-bottom:4px;
-    padding-left: 10px;
-    font-weight: bold;
-  
-  }
-   
-  .alunos-input {
-    padding: 6px;
-    box-sizing: border-box;
-    width: 100%; 
-    margin-top: 2px;
-    
-  }
- 
 
-  .titulo-form h3{
-    background-color: rgb(205, 205, 205);
-    padding: 10px;
+
+
+#add-alunos{
+
+  background-color: white;
+}
+#add-alunos label{
+
+ font-weight: bold;
+}
+
+#add-alunos h3{
+
+text-align: center;
+font-size: 16px;
+font-weight: bold;
+background-color: var(--color-form);
+padding: 10px;
+
+}
+
+
+#add-alunos button:hover{
+  background-color: var(--color-coral);
+border: none;
   }
+  
+  
+#voltar-alunos button{
+    margin-top: 5%;
+    margin-left: 47%;
+    margin-bottom: 5%;
+}
+
+
+
   
   .btn-alunos {
    
@@ -61,19 +58,8 @@
   
 
  
-  .form-select{
-  
-    box-sizing: border-box;
-    margin-top: 2px;
-    width: 40%;
-  }
-  .form-select-pg{
-    width: 60%;
-  }
-  .titulo-form{
-    text-align: center;
-  }
 
+ 
   .btn-aluno-voltar {
    
     padding:10px;
@@ -95,65 +81,8 @@
     
 @media (max-width: 768px) {
 
-
-  .alunos-container {
-    max-width: 90%; 
-    width: auto;
- 
-    padding: 10px;
-    font-size: 16px; 
-  }
-
-  /* Título */
-  .titulo-form h3 {
-    font-size: 18px;
-  }
-
- 
-  .input-group-alunos {
-    display: block;
-    margin-top: 20px;
-  }
-
-
-  .a-nome {
-    font-weight: bold;
-  }
-
-
-  .alunos-input,
-  .form-select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-top: 5px;
-    font-size: 16px; 
-  }
-
-
-  .btn-alunos {
-    width: 30%;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    margin-top: 20px;
-    font-size: 18px; 
-  }
-
-
-  .btn-aluno-voltar {
-    width: 30%;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #ed7947;
-    color: #fff;
-    cursor: pointer;
-    margin-top: 20px;
-    font-size: 18px; 
+  #col-tab-alunos-2 table{
+    font-size: 14px;
+      margin-top: 30px;
   }
 }

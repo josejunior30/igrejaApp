@@ -1,4 +1,33 @@
-/* Adapte os estilos conforme necessário para o seu layout específico */
+
+#endereço{
+  background-color: white;
+  border-radius: 10px;
+
+}
+
+
+
+#dados{
+  background-color: white;
+  border-radius: 10px;
+
+}
+
+@media (max-width: 768px) {
+
+  #dados{
+    margin-top: 10px;
+  
+  }
+  
+}
+
+
+
+
+
+
+
 
 .membro-container {
   margin-top: 40px;
@@ -9,14 +38,14 @@
   
   
   .conteudo-centralizado {
-    text-align: center; /* Centraliza o texto */
+    text-align: center; 
   }
   
   .foto-membro {
-    width: 100px; /* Ajuste o tamanho da imagem conforme necessário */
-    height: 100px; /* Ajuste o tamanho da imagem conforme necessário */
-    border-radius: 50%; /* Para criar uma imagem circular, ajuste conforme necessário */
-    margin: 0 auto; /* Adiciona margem automática para centralizar a imagem */
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    margin: 0 auto;
     display: block;
   }
   
@@ -43,7 +72,7 @@
   .botao-deletar {
     margin: 0 10px;
     padding: 10px 20px;
-    background-color: #4CAF50; /* Cor de fundo verde, ajuste conforme necessário */
+    background-color: #4CAF50; 
     color: white;
     border: none;
     border-radius: 5px;
@@ -51,7 +80,7 @@
   }
   
   .botao-deletar {
-    background-color: #f44336; /* Cor de fundo vermelha, ajuste conforme necessário */
+    background-color: #f44336; 
   }
   .btn-aluno-detalhe-voltar {
     margin-top: 350px; /* Adiciona margem no topo do botão */
@@ -93,6 +122,7 @@
     border: none;
     color: inherit;
     cursor: pointer;
+    color: white;
   }
   .pg-id1 {
     color: blue;
@@ -174,7 +204,7 @@
     
   
   .conteudo-centralizado-endereço {
-    text-align: center; /* Centraliza o texto */
+    text-align: center; 
   }
 
   .membro-container-endereço {

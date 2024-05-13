@@ -61,45 +61,56 @@ const Membro = () => {
     doc.save('membros.pdf');
   };
   
- 
-  
   return (
     <>
     <Header/>
-    <Sidebar/>
-    <div className="page-container" >
-   
-    <div className="filters-container records-actions">
-      
-       <input
-        value={searchTerm}
-        placeholder="nome"
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-     
-    
-      <button type="submit" className="clean-filters" onClick={handleSearch}>Pesquisar</button>
-    <div> 
-      <Link to= "/membro/adicionar">
-          <button className="add-membro"> Adicionar </button>
-           
-      </Link>
-      </div>
-     
-   </div> 
-      <div className="img-print-membro">
-        <Link to="#">
-            <button onClick={handlePrint}><PiPrinterFill /> Imprimir</button>
-          </Link>
-        </div>
-      <table className="records-table" cellPadding="0" cellSpacing="0" ref={componentRef} >
-        <thead>
+<Sidebar/>
+<div className="container-fluid">
+
+  <div className="row  justify-content-center">
+
+    <div className="col-md-10 col-11 mt-5 pt-5 offset-1">
+
+    <div className="row pt-3">
+            <div className="container col-11 col-md-6 mt-5 ">
+            
+                  <div className="row justify-content-center p-3" id="barra-pesquisa-secretaria">
+                      <div className="col-md-5 col-4">
+                      <input
+                          value={searchTerm}
+                          placeholder="Digite um nome"
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="form-control"
+                        />
+                              </div>
+                        <div className="col-md-7 col-8" id="botoes">
+                            <button type="submit"  className="btn btn-primary me-2 " id="btn-pesquisa" onClick={handleSearch}>Pesquisar</button>
+                                  <Link to= "/membro/adicionar">
+                                      <button className="btn btn-primary"> Adicionar </button>
+                                      
+                                  </Link>
+                        </div>
+                        
+                  </div>
+            </div>
+
+          </div>
+
+      <div className="row pt-2 justify-content-center">
+          <div className="col-11 col-md-11  " >
+              <div className="img-print-membro">
+            <Link to="#">
+                <button onClick={handlePrint}><PiPrinterFill /> Imprimir</button>
+              </Link>
+            </div>
+      <table className="table table-striped text-center " id="col-tab-alunos-2" ref={componentRef} >
+        <thead className="thead">
           <tr>
-            <th>Data de Nascimento</th>
-            <th>Nome</th>
-            <th>Idade</th>
-            <th>Email</th>
-            <th>Telefone</th>
+            <th scope="col">Data de Nascimento</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Idade</th>
+            <th scope="col">Email</th>
+            <th scope="col">Telefone</th>
           </tr>
         </thead>
 
@@ -138,8 +149,24 @@ const Membro = () => {
         </tbody>
       </table>
     </div>
+  </div>
+    </div>
+
+</div>
+
+
+
+
+</div>
+
+   
+   
+ 
+      
     </>
   );
+  
+ 
 };
 
 export default Membro;

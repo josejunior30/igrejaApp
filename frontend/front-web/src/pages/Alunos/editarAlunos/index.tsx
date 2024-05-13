@@ -5,7 +5,8 @@ import *as alunosService from '../../../service/alunosService';
 import axios from "axios";
 import { BASE_URL } from "../../../ultilitarios/system";
 import SuccessModal from "../../../components/Modal";
-
+import './styles.css';
+import Header from "../../../components/Header";
 const EditarAlunos =()=>{
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -92,190 +93,238 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
   }
 
   return(
+
 <>
-    <form onSubmit={handleUpdateClick} className="fm-container">
-    <h3 className="titulo-form">Dados pessoais </h3>
-    <fieldset className="dados-pessoais">
- <fieldset className="input-group-div">
-  <div className="input-group">
-    <label htmlFor="nome" className="f-nome">Nome:</label>
-    <input 
-      type="text"
-     className="form-input"
-      name="nome"
-      value={alunosDTO.nome}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, nome: e.target.value })}
-      required
-    />
+<Header/>
+<div className="container-fluid pt-5">
+               
+               <div className="container col-md-8 mt-5 pt-5 " >
+                <form onSubmit={handleUpdateClick} className="row  g-4 px-4 pb-4" id="edit-alunos" >
+                  <div className="col-md-12">
+                  <h3 className="titulo-form">Dados pessoais </h3>
+                  </div>
+               
+                  <div className="col-md-6">
+                  <label htmlFor="nome" className="form-label">Nome:</label>
+                  <input 
+                    type="text"
+                    className="form-control"
+                    name="nome"
+                    value={alunosDTO.nome}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, nome: e.target.value })}
+                 
+                  />
+                  </div>
+              
+                    <div className="col-md-6">
+                    <label htmlFor="sobrenome" className="form-label">identidade:</label>
+                                  <input 
+                                    type="text"
+                                    className="form-control"
+                                    name="rg"
+                                    value={alunosDTO.rg}
+                                 
+                                  />
+                    </div>
+                  <div className="col-md-4">
+                  <label htmlFor="data" className="form-label">Nascimento</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    name="dataNascimento"
+                    value={alunosDTO.dataNascimento instanceof Date ? alunosDTO.dataNascimento.toISOString().split('T')[0] : ''}
+                      onChange={(e) => setAlunosDTO({ ...alunosDTO, dataNascimento: new Date(e.target.value) })}
+                 
+                    />
+                  </div>
+                  <div className="col-md-4">
+                  <label htmlFor="telefone"className="form-label">Telefone:</label>
+                  <input 
+                    type="text"
+                    name="telefone"
+                    className="form-control"
+                    value={alunosDTO.telefone}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, telefone: e.target.value })}
+                  
+                  />
+                  </div>
+    
+                  <div className="col-md-4">
+                   <label htmlFor="projetos" className="form-label">Projeto:</label>
+                            <select
+                            name="projetos"
+                            className="form-select"
+                              value={alunosDTO.projetos.id} 
+                              onChange={(e) => setAlunosDTO({ ...alunosDTO, projetos: { id: Number(e.target.value), nome: "placeholder" } })}
+                           
+                            >
+                            <option selected >Selecione </option>
+                              {listaDeGrupos.map((projeto) => (
+                              
+                                <option key={projeto.id} value={projeto.id}>
+                                  {projeto.id} - {projeto.nome}
+                                </option>
+                              ))}
+                          </select>
+              </div>
+    
+    
+              <div className="col-md-4">
+            <label htmlFor="telefone" className="form-label">Tipo Sanguíneo:</label>
+                  <input 
+                    type="text"
+                    className="form-control"
+                    name="sangue"
+                    value={alunosDTO.sangue}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, projetos: { id: Number(e.target.value), nome: "placeholder" } })}
+                 
+                  />
     </div>
-    <div className="input-group">
-        <label htmlFor="sobrenome" className="f-nome">identidade:</label>
-    <input 
-      type="text"
-      className="form-input"
-      name="sobrenome"
-      value={alunosDTO.rg}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, rg: e.target.value })}
-      required
-    />
+        
+    <div className="col-md-4">
+    <label htmlFor="projetos" className="form-label">Doença ou alergia?:</label>
+                  <select
+                    name="AlunoDoenca"
+                    className="form-select"
+                    value={alunosDTO.AlunoDoenca} 
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, projetos: { id: Number(e.target.value), nome: "placeholder" } })}
+                   
+                  >
+                   <option selected>ESCOLHA</option>
+                      <option value="0">NÃO</option>
+                      <option value="1">SIM</option>
+                    
+                  </select>
     </div>
-    <div className="input-group">
-    <label htmlFor="data" className="f-nome">Nascimento</label>
-  <input
-      type="date"
-      className="form-input"
-      name="dataNascimento"
-      value={alunosDTO.dataNascimento instanceof Date ? alunosDTO.dataNascimento.toISOString().split('T')[0] : ''}
-        onChange={(e) => setAlunosDTO({ ...alunosDTO, dataNascimento: new Date(e.target.value) })}
-      required
-      />
-  </div>
-    </fieldset>
-
-<fieldset className="input-group-div">
-  <div className="input-group">
-  <label htmlFor="telefone" className="f-nome">telefone:</label>
-    <input 
-      type="text"
-      name="telefone"
-      className="form-input"
-      value={alunosDTO.telefone}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, telefone: e.target.value })}
-      required
-    />
+    <div className="col-md-4">
+    <label htmlFor="telefone" className="form-label">Qual?</label>
+                  <input 
+                    type="text"
+                    className="form-control"
+                    name="pergunta"
+                    value={alunosDTO.pergunta}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, projetos: { id: Number(e.target.value), nome: "placeholder" } })}
+                 
+                  />
+    
     </div>
-    <div className="input-group">
-    <label htmlFor="email" className="f-nome">responsavel:</label>
-    <input 
-      type="text"
-      name="responsavel"
-      className="form-input"
-      value={alunosDTO.responsavel}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, responsavel: e.target.value })}
-      required
-    />
-    </div>
-    <div className="input-group">
-  <label htmlFor="telefone" className="f-nome">Cpf do Responsavel:</label>
-    <input placeholder="(21) 9 9999-9999"
-      type="text"
-      className="form-input"
-      name="telefone"
-      value={alunosDTO.telefone}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, telefone: e.target.value })}
-      required
-    />
-</div>
-  
-</fieldset>
-
-
-<fieldset className="input-group-div">
-
-<div className="input-group">
-    <label htmlFor="grupo" className="f-nome">Projeto:</label>
-    <select
-    name="pequenoGrupo"
-      className="form-select-pg"
-      value={alunosDTO.projetos.id} 
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, projetos: { id: Number(e.target.value), nome: "placeholder" } })}
-      required
-    >
-    <option >Selecione </option>
-      {listaDeGrupos.map((projeto) => (
+              <div className="col-md-12">
+                  <h3 className="titulo-form">Dados do Responsável </h3>
+              </div>
+    
+                  <div className="col-md-6">
+                  <label htmlFor="responsavel" className="form-label">Nome:</label>
+                  <input 
+                    type="text"
+                    name="responsavel"
+                    className="form-control"
+                    value={alunosDTO.responsavel}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, responsavel: e.target.value })}
+                 
+                  />
+                  </div>
+                  
+                <div className="col-md-6">
+                <label htmlFor="telefone" className="form-label">Rg ou Cpf do Responsavel:</label>
+                  <input placeholder="(21) 9 9999-9999"
+                    type="text"
+                    className="form-control"
+                    name="cpfResponsavel"
+                    value={alunosDTO.cpfResponsavel}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, telefone: e.target.value })}
+                 
+                  />
+                  </div>
+                 
+              <div className="col-md-12">
+              <h3 className="titulo-form">Endereço</h3>
+              </div>
+                      
+              <div className="col-md-4">
+              <label htmlFor="nome" className="form-label">Rua</label>
+                            <input 
+                              type="text"
+                              className="form-control"
+                              name="rua"
+                              value={alunosDTO.rua}
+                              onChange={(e) => setAlunosDTO({ ...alunosDTO, rua: e.target.value })}
+                          
+                            />
+              </div>
+                        <div className="col-md-4">
+                        <label htmlFor="sobrenome"className="form-label">Numero</label>
+                                      <input 
+                                        type="text"
+                                        className="form-control"
+                                        name="numero"
+                                        value={alunosDTO.numero}
+                                        onChange={(e) => setAlunosDTO({ ...alunosDTO, numero: (e.target.value) })}
+                                   
+                                      />
+              </div>
+            <div className="col-md-4">
+            <label htmlFor="bairro"className="form-label">Bairro</label>
+                          <input 
+                            type="text"
+                            className="form-control"
+                            name="bairro"
+                            value={alunosDTO.bairro}
+                            onChange={(e) => setAlunosDTO({ ...alunosDTO, bairro: e.target.value })}
+                        
+                          />
+              </div>
+              <div className="col-md-4">
+              <label htmlFor="nome" className="form-label">Cidade</label>
+                            <input 
+                              type="text"
+                              className="form-control"
+                              name="cidade"
+                              value={alunosDTO.cidade}
+                              onChange={(e) => setAlunosDTO({ ...alunosDTO, cidade: e.target.value })}
+                          
+                            />
+              </div>
+    
+          <div className="col-md-4">
+          <label htmlFor="sobrenome"className="form-label">Complemento</label>
+                  <input 
+                    type="text"
+                    className="form-control"
+                    name="complemento"
+                    value={alunosDTO.complemento}
+                   
+                  />
+          </div>
+         
+          <div className="col-md-4">
+              <label htmlFor="sobrenome" className="form-label">cep:</label>
+                            <input 
+                              type="text"
+                              className="form-control"
+                              name="cep"
+                              value={alunosDTO.cep}
+                              onChange={(e) => setAlunosDTO({ ...alunosDTO, cep:( e.target.value) })}
+                          
+                            />
+              </div>
+            <div className="d-grid gap-2 col-6 mx-auto">
+                  <button className="btn btn-primary" type="submit">Atualizar</button>
+                  </div>
+             </form>
+           
+            </div>
+            
+          </div>
       
-        <option key={projeto.id} value={projeto.id}>
-          {projeto.id} - {projeto.nome}
-        </option>
-      ))}
-  </select>
-</div>
-</fieldset>
- </fieldset>
-    <h3 className="titulo-form">Endereço</h3>
-  <fieldset>
-    <fieldset className="input-group-div">
-  <div className="input-group">
-    <label htmlFor="nome" className="f-nome">Rua</label>
-    <input 
-      type="text"
-     className="form-input"
-      name="rua"
-      value={alunosDTO.rua}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, rua: e.target.value })}
-      required
-    />
-    </div>
-    <div className="input-group">
-        <label htmlFor="sobrenome" className="f-nome">Numero</label>
-    <input 
-      type="text"
-      className="form-input"
-      name="numero"
-      value={alunosDTO.numero}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, numero: (e.target.value) })}
-      required
-    />
-    </div>
-    <div className="input-group">
-        <label htmlFor="bairro" className="f-nome">Bairro</label>
-    <input 
-      type="text"
-      className="form-input"
-      name="bairro"
-      value={alunosDTO.bairro}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, bairro: e.target.value })}
-      required
-    />
-    </div>
-    </fieldset>
-    <fieldset className="input-group-div">
-  <div className="input-group">
-    <label htmlFor="nome" className="f-nome">Cidade</label>
-    <input 
-      type="text"
-     className="form-input"
-      name="cidade"
-      value={alunosDTO.cidade}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, cidade: e.target.value })}
-      required
-    />
-    </div>
-    <div className="input-group">
-        <label htmlFor="sobrenome" className="f-nome">Complemento</label>
-    <input 
-      type="text"
-      className="form-input"
-      name="complemento"
-      value={alunosDTO.complemento}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, complemento: e.target.value })}
-      required
-    />
-    </div>
-    <div className="input-group">
-        <label htmlFor="sobrenome" className="f-nome">cep:</label>
-    <input 
-      type="number"
-      className="form-input"
-      name="cep"
-      value={alunosDTO.cep}
-      onChange={(e) => setAlunosDTO({ ...alunosDTO, cep:( e.target.value) })}
-      required
-    />
-    </div>
-    </fieldset>
-    </fieldset>
-
-    <button className="btn-add" type="submit">Atualizar</button>
-  </form>
-     {/* ... (restante do código) */}
-     {isModalVisible && (
-        <SuccessModal
-          onClose={handleModalClose}
-          onRedirect={() => setIsRedirecting(true)} // Ajuste conforme necessário
-          operation="atualizar"
-        />
-      )}
+        
+         {/* ... (restante do código) */}
+         {isModalVisible && (
+            <SuccessModal
+              onClose={handleModalClose}
+              onRedirect={() => setIsRedirecting(true)} // Ajuste conforme necessário
+              operation="atualizar"
+            />
+          )}
   </>
   
   )

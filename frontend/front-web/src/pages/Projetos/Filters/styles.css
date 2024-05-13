@@ -1,102 +1,36 @@
 
-.barra-container {
-  margin-top: 30px;
-    background-color: var(--color-darkslategray);
-    display: flex;
-    width: 77%;
-    padding: 13px 15px;
-    margin-bottom: 25px;
-    border-radius: 10px;
-    height: 40px;
-  }
-  
 
-  .barra-container input:focus {
-    outline: none;
-  }
-  
-  .barra-alunos {
-    font-weight: bold;
-    font-size: 13px;
-    height: 92%;
-    border-radius: 10px;
-   margin-right: 25px;
-   padding: 4px 40px;
-   margin-left: 5px;
-  }
-  
-  .barra-container .clean-filters {
-    background-color: var(--color-coral);
-    color: #FFF;
-    margin-left: 20px;
-  }
-  
-  .barra-container .clean-filters:hover {
-    background-color: #e07243;
-  }
-  
-  .barra-container .barra-alunos{
-    background-color:  #e07243;
-    color: white;
-   
-  }
-  
-  .barra-container .barra-alunos:hover {
-    background-color: #04c7ef;
-  }
-  
-  .barra-container select {
-    height: 35px;
-    font-weight: bold;
-    font-size: 14px;
-    color: #9E9E9E;
-    border: 1px solid #E1E1E1;
-    border-radius: 10px;
-    box-sizing: border-box;
-    margin-right: 20px;
-    padding-left: 15px;
-  }
-  .seletor{
-    
-    color: #FFF;
-    font-size: 14px;
-    padding-right: 20px;
-    padding-top: 10px;
-    margin: 0px;
-    display: flex;
-    justify-content: center;
-  
-  }
-   
-  
-.barra-container.alunos-actions {
-  justify-content: flex-end;
+
+#barra-projeto{
+  background-color: var(--color-darkslategray);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+}
+#barra-projeto button{
+  margin-left: 8%;
+  border-radius: 10px;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+ background-color: var(--color-coral);
+
+}
+#barra-projeto button:hover {
+ 
+ background-color: var(--color-turquoise);
+
 }
 
 @media (max-width: 768px) {
-  .barra-container {
-    width: 95%;
-    margin: 0 auto;
-    margin-top: 20px;
-    margin-bottom: 50px;
-    padding: 10px 15px;
-    height: auto;
+  #barra-projeto button{
+    margin-left: 2%;
+    font-size: 11px;
+  
   }
 
-  .barra-container input,
-  .barra-container select,
-  .barra-container .clean-filters,
-  .barra-container .barra-alunos {
-    width: 80%;
-    margin-bottom: 10px;
-  }
+ 
 
-  .barra-container .barra-alunos {
-    padding: 10px;
-  }
-
-  .barra-container.alunos-actions {
-    justify-content: flex-start;
-  }
+  
 }
  

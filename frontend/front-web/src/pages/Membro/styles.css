@@ -1,175 +1,39 @@
-.page-container {
-    width: 60%;
-  
-    margin-bottom: 50px;
-    padding-top: 20px;
-   margin-left: 10%;
-  
-  }
-  
-  .filters-container.records-actions {
-    justify-content: flex-end;
-  }
-   
-  .records-table {
-    width: 80%;
-    border-bottom: 10px solid var(--color-turquoise);
-    border-radius: 0 0 10px 10px;
-    
-  }
-  
-  .records-table thead {
-    background-color: var(--color-turquoise);
-    text-align: left;
-    color: #0E1B28;
-    border-radius: 10px;
-  }
-  
-  .records-table thead tr {
-    height: 50px;
-  }
-  
-  .records-table thead th:first-child {
-    padding-left: 50px;
-    border-top-left-radius: 10px;
-  }
-  
-  .records-table thead th:last-child {
-    border-top-right-radius: 10px;
-  }
-  
-  .records-table tbody td:first-child {
-    padding-left: 50px;
-   
-  }
-  
-  .records-table tbody tr {
-    height: 45px;
-    color: #FFF;
-    font-size: 14px;
-  }
-  .name-link{
-    height: 45px;
-    color: #FFF;
-    font-size: 14px;
-    
-  }
-  .name-link:hover{
-    color: var(--color-turquoise); ;
-    
-  }
-  .records-table tbody tr:nth-child(odd) {
-    background-color: var(--color-darkslategray);
-  }
-  
-  .records-table tbody tr:nth-child(even) {
-    background-color: var(--color-dimgray);
-  }
-  
-  .filters-container {
-    background-color: var(--color-darkslategray);
-    display: flex;
 
-    padding: 13px 15px;
-    margin-bottom: 25px;
-    border-radius: 10px;
-    height: 40px;
-  }
-  
-  .filters-container input {
-    height: 35px;
-    font-weight: bold;
-    font-size: 14px;
-    color: #9E9E9E;
-    border: 1px solid #E1E1E1;
-    border-radius: 10px;
-    box-sizing: border-box;
-    margin-right: 20px;
-    padding-left: 15px;
-    
-    width: 15%;
-  }
-  
-  .filters-container input:focus {
-    outline: none;
-  }
-  
-  .add-membro {
-    font-weight: bold;
-    font-size: 14px;
-    border-radius: 10px;
-    
-  }
-  
-  .clean-filters {
-    background-color: var(--color-coral);
-    color: #FFF;
-  }
-  
-  .filters-container .clean-filters:hover {
-    background-color: #e07243;
-  }
-  
-  .add-membro{
-    background-color: var(--color-turquoise);
-    color: #0E1B28;
-    text-align: center;
-  }
-  
-  .filters-container .add-membro:hover {
-    background-color: #04c7ef;
-  }
-  
-  .filters-container select {
-    height: 35px;
-    font-weight: bold;
-    font-size: 14px;
-    color: #9E9E9E;
-    border: 1px solid #E1E1E1;
-    border-radius: 10px;
-    box-sizing: border-box;
-    margin-right: 20px;
-    padding-left: 15px;
-  }
-  .seletor{
-    
-    color: #FFF;
-    font-size: 14px;
-    padding-right: 20px;
-    padding-top: 10px;
-    margin: 0px;
-    display: flex;
-    justify-content: center;
-  
-  }
-  .login{
-  
-    height: 44px;
-    font-weight: bold;
-    font-size: 16px;
-    color: #9E9E9E;
-  
-   
-    margin-right: 20px;
-    padding-left: 15px;
-  }
- /* Estilos para impressão */
+
+
 @media print {
-  body {
-    margin: 20px;
-    width: 70%;
-  }
+ 
 
-  .records-table {
-    width: 100%;
-  }
+
 
   .img-print-membro {
-    display: none; /* Oculta o botão de impressão ao imprimir */
+    display: none; 
   }
+
+  #botoes button{
+    font-size: 14px;
+  }
+  #barra-pesquisa-secretaria input{
+    font-size: 14px;
+  }
+
+
+  #barra-pesquisa-secretaria {
+margin-left: 10px;  }
+  .img-print-membro button{
+    font-size: 11px;
+    
+   
+  }
+ .table a{
+  font-size: 10px;
+ }
+ .table {
+  font-size: 10px;
+ }
 }
 
-  
+
   .img-print-membro{
     margin-left: 90%;
     text-align: center;
@@ -179,4 +43,6 @@
 background:none;
 color: white;
 font-size: 18px;
+
+
   }

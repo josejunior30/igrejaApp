@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './styles.css';
 
 import *as authService from "../../service/AuthService";
@@ -18,9 +18,10 @@ const Login = () => {
     const navigate = useNavigate();
     const { setContextTokenPayload } = useContext(ContextToken);
     const { register, handleSubmit, formState: { errors }, setError } = useForm<FormValues>();
-
+    const [isMobile, setIsMobile] = useState(false);
     const loginImagem = 'https://i.postimg.cc/zDy9k0jx/Ama.png';
-
+    const logoPequeno= 'https://i.postimg.cc/nL176G6s/Ama-1.png';
+    
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -37,40 +38,78 @@ const Login = () => {
                 setError("username", { message: "Usuário ou senha inválidos." });
             });
     };
+    useEffect(() => {
+        const checkScreenWidth = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
 
+        checkScreenWidth();
+
+        const handleResize = () => {
+            checkScreenWidth();
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
     return (
         <>
-            <div className="body-container">
-                <img src={loginImagem} alt="imagem-login"/>
-                <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
-                    <h2>Login</h2>
-                    <label>Usuário:</label>
-                    <input 
-                        type="text" 
-                        id="username" 
-                        placeholder="Email" 
-                        {...register("username", { required: true })}
-                    />
-                
-                    <div className="password-input-container">
-                        <input 
-                            type={showPassword ? "text" : "password"} 
-                            id="password" 
-                       
-                            placeholder="Senha" 
-                            {...register("password", { required: true })}
-                        />
-                        
-                        <button type="button" className="toggle-password" onClick={togglePasswordVisibility}>
-                            {showPassword ? <FaRegEyeSlash /> : <FaEye />}
-                        </button>
+<div className="container-fluid" id="conteiner-login">
+                <div className="row" id="row-login">
+                <div className="col-md-3 offset-md-2" >
+                        <img src={isMobile ? logoPequeno : loginImagem} alt="imagem-login" className="img-fluid" />
                     </div>
-                    {errors.username && <p className="invalid-error-message">{errors.username.message}</p>}
-                    
-                    <button type="submit" className="btn-entrar">Entrar</button>
-                </form>
+                    <div className="col-8 col-md-3" id="login">
+                    <h2 >Login</h2>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <div className="mb-4 col-11" >
+                                <label className="form-label">Email:</label>
+                                <div className="input-group">
+                                <input
+                                 type="text"
+                                 id="username"
+                                    className="form-control"
+                                    placeholder="Insira seu e-mail"
+                                    {...register("username", { required: true })}
+                                />
+                                </div>
+                            </div>
+                            <div className="mb-4">
+                                <label className="form-label">Senha:</label>
+                                <div className="input-group">
+                                    <input
+                                        className="form-control"
+                                        type={showPassword ? "text" : "password"}
+                                        id="password"
+                                        placeholder="Insira sua senha"
+                                        {...register("password", { required: true })}
+                                    />
+                                    <button type="button" className="btn btn-outline-secondary" id="olho" onClick={togglePasswordVisibility}>
+                                        {showPassword ? <FaRegEyeSlash /> : <FaEye />}
+                                    </button>
+                                </div>
+                                {errors.username && <p className="invalid-error-message">{errors.username.message}</p>}
+
+                                <div className="d-grid gap-2 col-9 mx-auto">
+                                <button type="submit" className="btn btn-primary" id="btn-logar">Entrar</button>
+                                 </div>
+                               
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
             </div>
+            <div className="row">
+                <div className="col-md-12">
             <p className="copy">&copy; Segunda Igreja Batista de Pendotiba 1966-2024. Todos os direitos reservados</p>
+                </div>
+
+            </div>
+
         </>
     );
 };

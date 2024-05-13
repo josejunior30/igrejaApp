@@ -1,48 +1,37 @@
-.container-redefinir {
-    max-width: 25%;
-    margin-top: 5%;
-    margin-left: 33%;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: white;
-}
-
-.container-redefinir h2 {
-    margin-bottom: 20px;
+#login-redefinir{
+    margin-top: 4%;
+        background-color: white;
+        border-radius: 10px;
+        padding: 10px;
+      
+    }
+    #login-redefinir h3{
     text-align: center;
-}
-
-.div-senha {
-    margin-bottom: 10px;
-}
-
-.div-senha label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.div-senha input[type="password"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    box-sizing: border-box;
-}
-
-.btn-redefinir {
-    margin-top: 30px;
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color:  #0b1f34;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-redefinir:hover {
-    background-color:#ed7947;
-}
+     font-weight: bold;
+    }
+    #login-redefinir label{
+       margin-top: 20px;
+      
+        }
+    
+        #login-redefinir span{
+           font-weight: bold;
+          font-size: 12px;
+           
+     }
+         
+    
+    #alterar-senha button{
+        margin-top: 20px;
+        background-color:var(--color-black);
+        border: none;
+      
+     }    
+     #alterar-senha button:hover{
+       background-color: var(--color-coral);
+      
+     }   
+     #login-redefinir input{
+     
+      
+     }    

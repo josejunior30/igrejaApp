@@ -46,28 +46,34 @@ const DetalheProjetos = () => {
       <TiArrowBack />  Voltar
     </Link>
   </div>
-      <div className="alunos-pj-container">
+      
       <BarraAlunos/>
-        {projetosDTO && (
-          <table className="alunos-table" cellPadding="0" cellSpacing="0">
-            <thead>
+      <div className="container-fluid">
+        <div className="row justify-content-center pt-4 " id="row-alunos">
+          <div className="col-11 col-md-7"   id="col-tab-alunos" >
+          {projetosDTO && (
+          <table className="table  table-striped  text-center " >
+            <thead className="thead">
               <tr>
-                <th>Nascimento</th>
-                <th>Nome</th>
-                <th>Idade</th>
-                <th>Identidade</th>
-                <th>Telefone</th>
+                <th scope="col">Nascimento</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Idade</th>
+                <th scope="col">Telefone</th>
+          
               
               </tr>
             </thead>
             <tbody>
               {projetosDTO.alunos && (
                 projetosDTO.alunos.map((aluno) => (
-                  <tr key={aluno.id}>
+                  <tr key={aluno.id} >
+
                     <td>
+                    <Link to={`/alunos/${aluno.id}`}  className="dados-alunos">
                   {aluno.dataNascimento
                     ? new Date(aluno.dataNascimento).toLocaleDateString()
                     : "Data de Nascimento Não Disponível"}
+                    </Link>
                 </td>
                     <td >
                     <Link to={`/alunos/${aluno.id}`} className="dados-alunos">
@@ -80,23 +86,22 @@ const DetalheProjetos = () => {
                       </Link>
                       </td>
                     <td>
-                    <Link to={`/alunos/${aluno.id}`} className="dados-alunos">
-                      {aluno.rg}
-                      </Link>
-                    </td>
-        
-                    <td>
                     <Link to={`/alunos/${aluno.id}`}  className="dados-alunos">
                       {aluno.telefone}
                       </Link>
 
                   </td>
+            
                 </tr>
                 ))
               )}
             </tbody>
           </table>
         )}
+          </div>
+
+        </div>
+        
       </div>
     </>
   );

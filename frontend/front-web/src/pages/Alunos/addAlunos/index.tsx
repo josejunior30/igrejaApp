@@ -127,230 +127,240 @@ const AddAlunos: React.FC = () => {
       <>
 
     <Header/>
-        <form onSubmit={handleSubmit} className="alunos-container">
         
-          <div   className="titulo-form">
-          <h3 >Dados pessoais </h3>
-             </div>
-            <fieldset className="input-group-alunos">
-              <div className="div-group-alunos">
-                <label htmlFor="nome" className="a-nome">Nome:</label>
-                <input 
-                  type="text"
-                  className="alunos-input"
-                  name="nome"
-                  value={alunosDTO.nome}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="div-group-alunos">
-                <label htmlFor="sobrenome" className="a-nome">Identidade:</label>
-                <input 
-                  type="text"
-                  className="alunos-input"
-                  name="rg"
-                  value={alunosDTO.rg}
-                  onChange={handleChange}
-                 
-                />
-              </div>
-              <div className="div-group-alunos">
-                <label htmlFor="data" className="a-nome">Nascimento</label>
-                <input
-                  type="date"
-                  className="alunos-input"
-                  name="dataNascimento"
-                  value={alunosDTO.dataNascimento.toISOString().split('T')[0]}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="div-group-alunos">
-                <label htmlFor="telefone" className="a-nome">Telefone:</label>
-                <input 
-                  type="text"
-                  className="alunos-input"
-                  name="telefone"
-                  value={alunosDTO.telefone}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-          
-              <div className="div-group-alunos">
-                <label htmlFor="projetos" className="a-nome">Projeto:</label>
-                <select
-                  name="projetos"
-                  className="alunos-input"
-                  value={alunosDTO.projetos.id} 
-                  onChange={handleChange}
-                  required
-                >
-                  <option>Selecione</option>
-                  {projetos.map((projeto) => (
-                    <option key={projeto.id} value={projeto.id}>
-                      {projeto.id} - {projeto.nome}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </fieldset>
-            <fieldset className="input-group-alunos">
-              <div className="div-group-alunos">
-                <label htmlFor="sangue" className="a-nome">Tipo Sanguíneo:</label>
-                <input 
-                  type="text"
-                  className="alunos-input"
-                  name="sangue"
-                  value={alunosDTO.sangue}
-                  onChange={handleChange}
-                  
-                />
-              </div>
-              <div className="div-group-alunos">
-                <label htmlFor="projetos" className="a-nome">Doença ou alergia?:</label>
-                <select
-                  name="AlunoDoenca"
-                  className="alunos-input"
-                  value={alunosDTO.AlunoDoenca} 
-                  onChange={handleChange}
-                 
-                >
-                 <option >ESCOLHA</option>
-                    <option value="0">NÃO</option>
-                    <option value="1">SIM</option>
-                  
-                </select>
-              </div>
-              <div className="div-group-alunos">
-                <label htmlFor="telefone" className="a-nome">Qual?</label>
-                <input 
-                  type="text"
-                  className="alunos-input"
-                  name="pergunta"
-                  value={alunosDTO.pergunta}
-                  onChange={handleChange}
-                  
-                />
-              </div>
-          
-              </fieldset>
+    <div className="container-fluid mt-5 pt-5">
     
-         <div   className="titulo-form">
-            <h3 >Dados do Responsável </h3>
-          </div>
-            <fieldset className="input-group-alunos">
+    <div className="container col-md-8 pt-5" >
+ 
+      <form onSubmit={handleSubmit} className="row g-4 px-4 pb-4" id="add-alunos">
+        <div className="col-md-12">
+        <h3 >Dados pessoais </h3>
+        </div>
+    
+        <div className="col-md-6" >
+        <label htmlFor="nome" className="form-label">Nome:</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="nome"
+              value={alunosDTO.nome}
+              onChange={handleChange}
+              required
+            />
+        </div>
+        <div className="col-md-6">
+        <label htmlFor="sobrenome" className="form-label">Identidade:</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="rg"
+              value={alunosDTO.rg}
+              onChange={handleChange}
+              required
+            />
+        </div>
+        <div className="col-md-4">
+        <label htmlFor="data"className="form-label">Nascimento</label>
+            <input
+              type="date"
+              className="form-control"
+              name="dataNascimento"
+              value={alunosDTO.dataNascimento.toISOString().split('T')[0]}
+              onChange={handleChange}
+              required
+            />
+
+        </div>
+        <div className="col-md-4">
+        <label htmlFor="telefone" className="form-label">Telefone:</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="telefone"
+              value={alunosDTO.telefone}
+              onChange={handleChange}
+              required
+            />
+
+        </div>
+<div className="col-md-4">
+<label htmlFor="projetos" className="form-label">Projeto: </label>
+            <select
+              name="projetos"
+              className="form-select"
+              value={alunosDTO.projetos.id} 
+              onChange={handleChange}
+              required
+            >
+              <option selected >Selecione</option>
+              {projetos.map((projeto) => (
+                <option key={projeto.id} value={projeto.id}>
+                  {projeto.id} - {projeto.nome}
+                </option>
+              ))}
+            </select>
+
+</div>
+<div className="col-md-4">
+<label htmlFor="telefone" className="form-label">Tipo Sanguíneo:</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="sangue"
+              value={alunosDTO.sangue}
+              onChange={handleChange}
+              required
+            />
+</div>
+  
+<div className="col-md-4">
+<label htmlFor="projetos" className="form-label">Doença ou alergia?:</label>
+            <select
+              name="AlunoDoenca"
+              className="form-select"
+              value={alunosDTO.AlunoDoenca} 
+              onChange={handleChange}
+              required
+            >
+             <option selected>ESCOLHA</option>
+                <option value="0">NÃO</option>
+                <option value="1">SIM</option>
               
-          
-              <div className="div-group-alunos">
-                <label htmlFor="responsavel" className="a-nome">Nome:</label>
-                <input 
-                  type="text"
-                  name="responsavel"
-                  className="alunos-input"
-                  value={alunosDTO.responsavel}
-                  onChange={handleChange}
-                  
-                />
-              </div>
-              <div className="div-group-alunos">
-                <label htmlFor="cpfResponsavel" className="a-nome">CPF:</label>
-                <input 
-                  type="text"
-                  name="cpfResponsavel"
-                  className="alunos-input"
-                  value={alunosDTO.cpfResponsavel}
-                  onChange={handleChange}
-                  
-                />
-              </div>
-            </fieldset>
-                    <div   className="titulo-form">
-                      <h3 >Endereço</h3>
-                    </div>
-            
-            <fieldset className="input-group-alunos">
-              <div className="div-group-alunos">
-                <label htmlFor="rua" className="a-nome">Rua:</label>
-                <input 
-                  type="text"
-                  name="rua"
-                  className="alunos-input"
-                  value={alunosDTO.rua}
-                  onChange={handleChange}
-                
-                />
-              </div>
-              <div className="div-group-alunos">
-                <label htmlFor="numero" className="a-nome">Número:</label>
-                <input 
-                  type="text"
-                  name="numero"
-                  className="alunos-input"
-                  value={alunosDTO.numero}
-                  onChange={handleChange}
-                  
-                />
-              </div>
-              <div className="div-group-alunos">
-  <label htmlFor="bairro" className="a-nome">Bairro:</label>
-  <input 
-    type="text"
-    name="bairro"
-    className="alunos-input"
-    value={alunosDTO.bairro}
-    onChange={handleChange}
-    required
-  />
+            </select>
 </div>
-<div className="div-group-alunos">
-  <label htmlFor="cep" className="a-nome">Cep:</label>
-  <input 
-    type="text"
-    name="cep"
-    className="alunos-input"
-    value={alunosDTO.cep}
-    onChange={handleChange}
-    required
-  />
+<div className="col-md-4">
+<label htmlFor="telefone" className="form-label">Qual?</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="pergunta"
+              value={alunosDTO.pergunta}
+              onChange={handleChange}
+              required
+            />
+
 </div>
-              <div className="div-group-alunos">
-                <label htmlFor="cidade" className="a-nome">Cidade:</label>
-                <input 
-                  type="text"
-                  name="cidade"
-                  className="alunos-input"
-                  value={alunosDTO.cidade}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="div-group-alunos">
-                <label htmlFor="complemento" className="a-nome">Complemento:</label>
-                <input 
-                  type="text"
-                  name="complemento"
-                  className="alunos-input"
-                  value={alunosDTO.complemento}
-                  onChange={handleChange}
-                  
-                />
-              </div>
-            </fieldset>
-            
-            <button className="btn-alunos" type="submit">Adicionar</button>
+      <div className="col-md-12">
+      <h3 >Dados do Responsável </h3>
+      </div>
+
+<div className="col-md-6">
+<label htmlFor="responsavel" className="form-label">Nome:</label>
+            <input 
+              type="text"
+              name="responsavel"
+              className="form-control"
+              value={alunosDTO.responsavel}
+              onChange={handleChange}
+              required
+            />
+</div>
+  
+  
+<div className="col-md-6">
+<label htmlFor="cpfResponsavel" className="form-label">CPF ou RG do Responsável:</label>
+            <input 
+              type="text"
+              name="cpfResponsavel"
+              className="form-control"
+              value={alunosDTO.cpfResponsavel}
+              onChange={handleChange}
+              required
+            />
+</div>
+    <div className="col-md-12">
+    <h3 >Endereço</h3>
+    </div>
+
+
+       
+<div className="col-md-4">
+
+<label htmlFor="rua" className="form-label">Rua:</label>
+            <input 
+              type="text"
+              name="rua"
+              className="form-control"
+              value={alunosDTO.rua}
+              onChange={handleChange}
+              required
+            />
+</div>
+
+
+<div className="col-md-4">
+<label htmlFor="numero" className="form-label">Número:</label>
+            <input 
+              type="text"
+              name="numero"
+              className="form-control"
+              value={alunosDTO.numero}
+              onChange={handleChange}
+              required
+            />
+
+</div>
+
+
+<div className="col-md-4">
+<label htmlFor="bairro" className="form-label">Bairro:</label>
+            <input 
+              type="text"
+              name="bairro"
+              className="form-control"
+              value={alunosDTO.bairro}
+              onChange={handleChange}
+              required
+            />
+
+</div>
+<div className="col-md-4">
+<label htmlFor="cidade" className="form-label">Cidade:</label>
+            <input 
+              type="text"
+              name="cidade"
+              className="form-control"
+              value={alunosDTO.cidade}
+              onChange={handleChange}
+              required
+            />
+
+</div>
+<div className="col-md-4">
+<label htmlFor="complemento" className="form-label">Complemento:</label>
+            <input 
+              type="text"
+              name="complemento"
+              className="form-control"
+              value={alunosDTO.complemento}
+              onChange={handleChange}
+              required
+            />
+
+       </div>   
+          <div className="d-grid gap-2 col-6 mx-auto">
+          <button className="btn btn-primary" type="submit">Adicionar</button>
           
-        </form>
-        <button className="btn-aluno-voltar" onClick={handleGoBack}>Voltar</button>
+        </div>
       
-        {isModalVisible && (
-          <SuccessModal
-            onClose={handleModalClose}
-            onRedirect={() => setIsRedirecting(true)} 
-            operation="adicionar"
-          />
-        )}
+    </form>
+
+    </div>
+    <div className="col-md-12 col-11"  id="voltar-alunos">
+    <button className="btn btn-primary " onClick={handleGoBack}>Voltar</button>
+      </div>
+   
+  </div>
+     
+    
+    
+      {isModalVisible && (
+        <SuccessModal
+          onClose={handleModalClose}
+          onRedirect={() => setIsRedirecting(true)} 
+          operation="adicionar"
+        />
+      )}
       </>
     );
     

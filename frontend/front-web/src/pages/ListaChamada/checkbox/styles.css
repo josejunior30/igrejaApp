@@ -1,4 +1,23 @@
 
+#pesquisa-lista{
+
+  background-color: white;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+#pesquisa-lista button{
+background-color: var(--color-coral);
+border-color: var(--color-coral);
+
+}
+#pesquisa-lista button:hover{
+  background-color: var(--color-turquoise);
+  border-color: var(--color-turquoise) ;
+  }
+  
+
+
 
 .modal-chamada-content {
     position: fixed;
@@ -133,7 +152,7 @@
     color: white;
     display: flex;
     justify-content: space-between;
-    margin-top: 110px;
+    margin-top: 200px;
     margin-left: 10%;
     position: absolute;
     font-size: 20px;
@@ -141,49 +160,15 @@
   }
   .voltar-lista a{
     color: white;
+    text-decoration: none;
   }
 
 
 @media (max-width: 768px) {
-  
-  
-  .date-picker-container {
-    width: 78%; 
-    margin-left: 5%; 
-    font-size: 16px; 
-  margin-top: 100px;
-  
-  }
-
-
-  .enviar-chamada {
-    width: 15%; 
-    margin-left: 2.5%; 
-    font-size: 14px; 
-  }
-
-  /* Tabela */
-  .alunos-chamada-table {
-    width: 85%; 
-    margin-left: 5%; 
-  }
-
-  /* Tabela cabeçalho */
-  .alunos-chamada-table thead th {
-    font-size: 14px; 
-  }
-
-  /* Tabela corpo */
-  .alunos-chamada-table tbody tr {
-    font-size: 14px; 
+  #tabela-lista table{
+    font-size: 12px;
   }
   
-  /* Links */
-  .chamada-alunos {
-    font-size: 14px; 
-  }
-
-
   .voltar-lista {
     margin-top: 1%;
     margin-bottom: 1%;
