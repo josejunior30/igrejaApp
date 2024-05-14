@@ -72,7 +72,7 @@ const Membro = () => {
     <div className="col-md-10 col-11 mt-5 pt-5 offset-1">
 
     <div className="row pt-3">
-            <div className="container col-11 col-md-6 mt-5 ">
+            <div className="container col-11 col-md-7 mt-5 ">
             
                   <div className="row justify-content-center p-3" id="barra-pesquisa-secretaria">
                       <div className="col-md-5 col-4">
@@ -83,7 +83,7 @@ const Membro = () => {
                           className="form-control"
                         />
                               </div>
-                        <div className="col-md-10 col-8" id="botoes">
+                        <div className="col-md-7 col-8" id="botoes">
                             <button type="submit"  className="btn btn-primary me-2 " id="btn-pesquisa" onClick={handleSearch}>Pesquisar</button>
                                   <Link to= "/adicionarAlunos">
                                       <button className="btn btn-primary"> Adicionar </button>
