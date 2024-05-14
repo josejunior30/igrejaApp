@@ -105,7 +105,6 @@ const Alunos = () => {
                                                                 <th scope="col">Data de Nascimento</th>
                                                                 <th scope="col">Nome</th>
                                                                 <th scope="col">Idade</th>
-                                                                <th scope="col">Identidade</th>
                                                                 <th scope="col">Telefone</th>
                                                                 <th scope="col">Projeto</th>
                                                             
@@ -130,11 +129,7 @@ const Alunos = () => {
                                                                       {aluno.idade}
                                                                       </Link>
                                                                     </td>
-                                                                    <td>
-                                                                      <Link to={`${aluno.id}`} className="name-link">
-                                                                        {aluno.rg}
-                                                                    </Link>
-                                                                    </td>
+                                              
                                                                     <td>
                                                                       <Link to={`${aluno.id}`} className="name-link">
                                                                         {aluno.telefone}

@@ -51,6 +51,7 @@ color: red;
 @media (max-width: 768px){
 
     #login{
+        margin-top: 20px;
        margin-left: 16%;
        margin-bottom:50px;;
     }
@@ -67,5 +68,9 @@ color: red;
     .copy{
         margin-top: 1%;
         font-size: 12px;
+    }
+    #conteiner-login{
+        margin-top: 20%;
+      
     }
 }

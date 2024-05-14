@@ -6,14 +6,11 @@ import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.esibape.DTO.AlunosDTO;
 import com.esibape.DTO.ChamadaDTO;
-import com.esibape.DTO.MembroDTO;
 import com.esibape.DTO.ProjetosDTO;
 import com.esibape.entities.Alunos;
 import com.esibape.entities.Chamada;

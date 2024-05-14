@@ -8,6 +8,7 @@ import SuccessModal from "../../../components/Modal";
 import './styles.css';
 import Header from "../../../components/Header";
 import { useNavigate } from "react-router-dom";
+
 const AddAlunos: React.FC = () => {
     const [projetos, setProjetos] = useState<projetos[]>([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -156,7 +157,7 @@ const AddAlunos: React.FC = () => {
               name="rg"
               value={alunosDTO.rg}
               onChange={handleChange}
-              required
+             
             />
         </div>
         <div className="col-md-4">
@@ -167,7 +168,7 @@ const AddAlunos: React.FC = () => {
               name="dataNascimento"
               value={alunosDTO.dataNascimento.toISOString().split('T')[0]}
               onChange={handleChange}
-              required
+       
             />
 
         </div>
@@ -179,7 +180,7 @@ const AddAlunos: React.FC = () => {
               name="telefone"
               value={alunosDTO.telefone}
               onChange={handleChange}
-              required
+          
             />
 
         </div>
@@ -209,7 +210,7 @@ const AddAlunos: React.FC = () => {
               name="sangue"
               value={alunosDTO.sangue}
               onChange={handleChange}
-              required
+          
             />
 </div>
   
@@ -220,7 +221,7 @@ const AddAlunos: React.FC = () => {
               className="form-select"
               value={alunosDTO.AlunoDoenca} 
               onChange={handleChange}
-              required
+          
             >
              <option selected>ESCOLHA</option>
                 <option value="0">NÃO</option>
@@ -236,7 +237,7 @@ const AddAlunos: React.FC = () => {
               name="pergunta"
               value={alunosDTO.pergunta}
               onChange={handleChange}
-              required
+          
             />
 
 </div>
@@ -252,7 +253,7 @@ const AddAlunos: React.FC = () => {
               className="form-control"
               value={alunosDTO.responsavel}
               onChange={handleChange}
-              required
+          
             />
 </div>
   
@@ -265,7 +266,7 @@ const AddAlunos: React.FC = () => {
               className="form-control"
               value={alunosDTO.cpfResponsavel}
               onChange={handleChange}
-              required
+           
             />
 </div>
     <div className="col-md-12">
@@ -283,7 +284,7 @@ const AddAlunos: React.FC = () => {
               className="form-control"
               value={alunosDTO.rua}
               onChange={handleChange}
-              required
+         
             />
 </div>
 
@@ -296,7 +297,7 @@ const AddAlunos: React.FC = () => {
               className="form-control"
               value={alunosDTO.numero}
               onChange={handleChange}
-              required
+          
             />
 
 </div>
@@ -310,7 +311,7 @@ const AddAlunos: React.FC = () => {
               className="form-control"
               value={alunosDTO.bairro}
               onChange={handleChange}
-              required
+           
             />
 
 </div>
@@ -322,7 +323,7 @@ const AddAlunos: React.FC = () => {
               className="form-control"
               value={alunosDTO.cidade}
               onChange={handleChange}
-              required
+          
             />
 
 </div>
@@ -334,7 +335,7 @@ const AddAlunos: React.FC = () => {
               className="form-control"
               value={alunosDTO.complemento}
               onChange={handleChange}
-              required
+    
             />
 
        </div>   

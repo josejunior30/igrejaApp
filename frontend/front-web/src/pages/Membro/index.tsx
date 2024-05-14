@@ -83,9 +83,9 @@ const Membro = () => {
                           className="form-control"
                         />
                               </div>
-                        <div className="col-md-7 col-8" id="botoes">
+                        <div className="col-md-10 col-8" id="botoes">
                             <button type="submit"  className="btn btn-primary me-2 " id="btn-pesquisa" onClick={handleSearch}>Pesquisar</button>
-                                  <Link to= "/membro/adicionar">
+                                  <Link to= "/adicionarAlunos">
                                       <button className="btn btn-primary"> Adicionar </button>
                                       
                                   </Link>
@@ -108,7 +108,6 @@ const Membro = () => {
           <tr>
             <th scope="col">Data de Nascimento</th>
             <th scope="col">Nome</th>
-            <th scope="col">Idade</th>
             <th scope="col">Email</th>
             <th scope="col">Telefone</th>
           </tr>
@@ -126,11 +125,6 @@ const Membro = () => {
                 <td>
                   <Link to={`${membro.id}`} className="name-link">
                     {membro.nome} {membro.sobrenome}
-                  </Link>
-                </td>
-                <td>
-                <Link to={`${membro.id}`} className="name-link">
-                  {membro.idade}
                   </Link>
                 </td>
                 <td>

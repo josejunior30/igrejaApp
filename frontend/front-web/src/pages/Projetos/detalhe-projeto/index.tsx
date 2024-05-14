@@ -41,7 +41,7 @@ const DetalheProjetos = () => {
   return (
     <>
  <Header/>
- <div className="voltar-projetos-detalhes">
+ <div className="voltar-projetos-detalhes pt-3">
     <Link to="/projetos">
       <TiArrowBack />  Voltar
     </Link>

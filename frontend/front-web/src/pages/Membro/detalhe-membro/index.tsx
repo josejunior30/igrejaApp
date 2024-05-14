@@ -12,6 +12,7 @@ import { Foto } from "../../../models/foto";
 import { uploadImagem } from "../../../service/imagemService";
 
 
+
 const Detalhes = () => {
   const { id } = useParams<{ id: string }>() ?? { id: "" }; // Fornecendo uma string vazia como valor padrão
   const navigate = useNavigate();
@@ -134,91 +135,100 @@ const Detalhes = () => {
   return (
     <>
       <Header/>
-      <div className="membro-container">
-        {MembroDTO ? (
-          <div className="detalhe-container">
-            <div className="conteudo-centralizado">
-            <img 
-      src={Foto?.fileDownloadUri} 
-      alt="Foto do Membro" 
-      className="foto-membro" 
-      onClick={() => inputRef.current?.click()} 
-    />
-    <input 
-      type="file" 
-      accept="image/*" 
-      onChange={handleImageChange} 
-      ref={inputRef} 
-      style={{ display: 'none' }} 
-    />
-             
-              <span className="nome-id">{MembroDTO.nome} {MembroDTO.sobrenome}</span>
-              <p className="dados"><span>CPF: </span> {MembroDTO.cpf}</p>
-              <p className="dados"> <span>Idade: </span>{MembroDTO.idade}</p>
-              <p className="dados"> <span>Estado Civil:</span> {MembroDTO.estadoCivil}</p>
-              <p className="dados"><span>Data de Nascimento:</span> {new Date(MembroDTO.dataNascimento).toLocaleDateString()}</p>
-              <p className="dados"><span>Email: </span> {MembroDTO.email}</p>
-              <p className="dados"> <span> Telefone:</span> {MembroDTO.telefone}</p>
-              {MembroDTO.pequenoGrupo && (
-                <div >
-                  <p className="dados">
-                    <span>  Pequeno Grupo:{" "}:</span>
-                    <span className={`pg ${getColorClassForPequenoGrupo(MembroDTO.pequenoGrupo.id)}`}>
-                      {MembroDTO.pequenoGrupo.apelido}
-                    </span>
-                  </p>
-                </div>
-              )}
+      <div className="container-fluid mt-5 pt-5">
+  <div className="row justify-content-center">
+   
+
+
+    <div className="col-md-3 col-7 m-5 md-5 pb-3 text-center" id="dados">
+      {MembroDTO ? (
+        <>
+          <img
+            src={Foto?.fileDownloadUri}
+            alt="Foto do Membro"
+            className="foto-membro"
+            onClick={() => inputRef.current?.click()}
+          />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            ref={inputRef}
+            style={{ display: 'none' }}
+          />
+
+          <span className="nome-id">{MembroDTO.nome} {MembroDTO.sobrenome}</span>
+          <p className="dados"><span>CPF:</span> {MembroDTO.cpf}</p>
+          <p className="dados"><span>Idade:</span> {MembroDTO.idade}</p>
+          <p className="dados"><span>Estado Civil:</span> {MembroDTO.estadoCivil}</p>
+          <p className="dados"><span>Data de Nascimento:</span> {new Date(MembroDTO.dataNascimento).toLocaleDateString()}</p>
+          <p className="dados"><span>Email:</span> {MembroDTO.email}</p>
+          <p className="dados"><span>Telefone:</span> {MembroDTO.telefone}</p>
+          {MembroDTO.pequenoGrupo && (
+            <div>
+              <p className="dados">
+                <span>Pequeno Grupo:</span>
+                <span className={`pg ${getColorClassForPequenoGrupo(MembroDTO.pequenoGrupo.id)}`}>
+                  {MembroDTO.pequenoGrupo.apelido}
+                </span>
+              </p>
             </div>
-            <div className="botoes-container">
-              <Link to={`/membro/atualizar/${id}`}>
-                <button className="botao-editar">Editar</button>
-              </Link>
-              <button onClick={handleDeleteClick} className="botao-deletar">Deletar</button>
-            </div>
-            {showDeleteConfirmation && (
-              <div className="modal-confirm" >
-                <span className="icone-confirm"><CgDanger /></span>
-                <p className="msg-confirm" >Tem certeza disso?</p>
-                <button onClick={handleConfirmDelete} className="btn-confirma">Confirmar</button>
-                <button onClick={handleCancelDelete} className="btn-confirma">Cancelar</button>
-              </div>
-            )}
-            {isModalVisible && (
-              <SuccessModal
-                onClose={handleModalClose}
-                onRedirect={() => navigate('/membro')}
-                operation={'deletar'}
-              />
-            )}
-          </div>
-        ) : (
-          <p>Carregando detalhes do membro...</p>
-        )}
-      </div>
-      <div className="setas">
-        <button onClick={handlePreviousClick} className="btn-left"> <FaChevronLeft /></button>
-        <button onClick={handleNextClick} className="btn-right"><FaChevronRight /></button>
-      </div>
-      <div className="membro-container-endereço">
-        <div className="detalhe-container-endereço">
-          {MembroDTO ? (
-            <div className="conteudo-centralizado-endereço">
-              <p className="text-h2">Endereço</p>
-              <p className="dados"><span> Rua:</span> {MembroDTO.rua}</p>
-              <p className="dados"><span>Bairro: </span> {MembroDTO.bairro}</p>
-              <p className="dados"><span>Numero: </span>{MembroDTO.numero}</p>
-              <p className="dados"><span>Cidade:</span> {MembroDTO.cidade}</p>
-              <p className="dados"><span>Complemento:</span>  {MembroDTO.complemento}</p>
-              <p className="dados"><span>Cep:</span>  {MembroDTO.cep}</p>
-            </div>
-          ) : (
-            <p>Carregando detalhes do membro...</p>
           )}
+          <div className="botoes-container">
+            <Link to={`/membro/atualizar/${id}`}>
+              <button className="botao-editar">Editar</button>
+            </Link>
+            <button onClick={handleDeleteClick} className="botao-deletar">Deletar</button>
+          </div>
+        </>
+      ) : (
+        <p>Carregando detalhes do membro...</p>
+      )}
+    </div>
+
+    <div className="col-md-3 col-7 m-5 md-5 text-center align-content-center" id="endereço">
+      {MembroDTO ? (
+        <div className="conteudo-centralizado-endereço">
+          <p className="text-h2">Endereço</p>
+          <p className="dados"><span>Rua:</span> {MembroDTO.rua}</p>
+          <p className="dados"><span>Bairro:</span> {MembroDTO.bairro}</p>
+          <p className="dados"><span>Número:</span> {MembroDTO.numero}</p>
+          <p className="dados"><span>Cidade:</span> {MembroDTO.cidade}</p>
+          <p className="dados"><span>Complemento:</span> {MembroDTO.complemento}</p>
+          <p className="dados"><span>CEP:</span> {MembroDTO.cep}</p>
         </div>
+      ) : (
+        <p>Carregando detalhes do membro...</p>
+      )}
+    </div>
+
+    {showDeleteConfirmation && (
+      <div className="modal-confirm">
+        <span className="icone-confirm"><CgDanger /></span>
+        <p className="msg-confirm">Tem certeza disso?</p>
+        <button onClick={handleConfirmDelete} className="btn-confirma">Confirmar</button>
+        <button onClick={handleCancelDelete} className="btn-confirma">Cancelar</button>
       </div>
-      <button className="btn-membro-detalhe-voltar" onClick={handleGoBack}>Voltar</button>
-    </>
+    )}
+    {isModalVisible && (
+      <SuccessModal
+        onClose={handleModalClose}
+        onRedirect={() => navigate('/membro')}
+        operation={'deletar'}
+      />
+    )}
+  </div>
+  <div className="row justify-content-center">
+    <div className="col-1 mb-5"> 
+    <button className="btn btn-primary" onClick={handleGoBack}>Voltar</button>
+    </div>
+
+  </div>
+
+
+</div>
+   
+      </>
   );
 };
 

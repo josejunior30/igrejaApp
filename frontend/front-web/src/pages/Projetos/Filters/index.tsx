@@ -31,7 +31,7 @@ const BarraAlunos = () =>{
     <div className="container-fluid mt-5 pt-5">
 
     <div className="row justify-content-center ">
-      <div className="col-12 col-md-7 " id="barra-projeto">
+      <div className="col-11 col-md-7 " id="barra-projeto">
             <Link to= "#">
             <button className="btn btn-primary  ">
             Assitencia Social
