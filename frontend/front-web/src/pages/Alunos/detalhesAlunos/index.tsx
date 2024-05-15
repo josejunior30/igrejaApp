@@ -142,8 +142,8 @@ return (
         )}
 
       </div>
-<div className="row justify-content-center">
-  <div className="col-1 mb-5"> 
+<div className="row ">
+  <div className="col-12 mb-5" id="voltar-alunos"> 
   <button className="btn btn-primary" onClick={handleGoBack}>Voltar</button>
   </div>
 

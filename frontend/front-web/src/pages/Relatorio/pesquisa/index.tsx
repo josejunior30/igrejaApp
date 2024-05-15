@@ -127,7 +127,7 @@ const Relatorio = () => {
   
     <div className="container col-11 col-md-7">
       <div className="row  justify-content-center" id="pesquisa-relatorio" >
-        <div className="col-md-4  ">
+        <div className="col-md-4 col-7 ">
             <h3>Relatórios</h3>
             <label htmlFor="dataEscolhida " className="form-label">Escolha a data:</label>
                 <input
@@ -197,7 +197,7 @@ const Relatorio = () => {
             
             />
         </div>
-        <div className="col-md-12 "  id="btn-pesquisa-rel">
+        <div className="col-md-12 text-center"  id="btn-pesquisa-rel">
             <button className="btn btn-primary " id="btn-pesquisa-limpar" onClick={handleLimparData}>Limpar</button>
               <button className= "btn btn-primary " onClick={buscarRelatorio}>Buscar</button>
           </div>

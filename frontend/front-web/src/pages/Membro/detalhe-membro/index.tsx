@@ -218,8 +218,8 @@ const Detalhes = () => {
       />
     )}
   </div>
-  <div className="row justify-content-center">
-    <div className="col-1 mb-5"> 
+  <div className="row  text-center">
+    <div className="col-2 offset-4 mb-5" id="voltar-membro"> 
     <button className="btn btn-primary" onClick={handleGoBack}>Voltar</button>
     </div>
 

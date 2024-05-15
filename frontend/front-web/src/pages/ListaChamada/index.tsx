@@ -78,11 +78,7 @@ const Presenca = () => {
     <>
     <Header/>
  
-    <div className="voltar-relatorio-pesquisa">
-    <Link to="/membro">
-      <TiArrowBack />  Voltar
-    </Link>
-  </div>
+  
 
    <div className="container-fluid mt-5 pt-5">
 
@@ -98,7 +94,7 @@ const Presenca = () => {
 
     <div className="container col-11 col-md-7">
     <div className="row  justify-content-center"  id="pesquisa-chamada">
-    <div className="col-md-4 ">
+    <div className="col-md-4 col-8">
     <h3>Lista de Presença</h3>
     
     <label htmlFor="dataEscolhida"  className="form-label">Escolha a data:</label>
@@ -177,7 +173,7 @@ const Presenca = () => {
       </div>
 
       <div className="row justify-content-center mt-4 text-center">
-      <div className="col-md-11 col-10">
+      <div className="col-md-11 col-11">
       <div className="img-print-lista">
     <Link to="#">
         <p><PiPrinterFill /> Imprimir</p>

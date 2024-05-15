@@ -46,6 +46,17 @@ width: 180px;
 margin-left: 2%;
 
 }
+@media (max-width: 768px) {
+  #pesquisa-chamada label{
+   font-size: 12px;
+          
+        }
+        .img-print-lista{
+       
+          font-size: 12px;
+         
+          }
+}
 
 
 
