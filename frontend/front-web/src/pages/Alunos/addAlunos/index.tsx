@@ -23,7 +23,7 @@ const AddAlunos: React.FC = () => {
       rg: "",
       cpfResponsavel: "",
       responsavel: "",
-   
+      email: "",
       sangue:"",
       pergunta:"",
       AlunoDoenca:0,
@@ -100,7 +100,7 @@ const AddAlunos: React.FC = () => {
       rg: "",
       cpfResponsavel: "",
       responsavel: "",
-    
+    email: "",
       sangue:"",
       pergunta:"",
       AlunoDoenca:0,
@@ -160,7 +160,18 @@ const AddAlunos: React.FC = () => {
              
             />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-5">
+        <label htmlFor="sobrenome" className="form-label">E-mail:</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="email"
+              value={alunosDTO.email}
+              onChange={handleChange}
+             
+            />
+        </div>
+        <div className="col-md-3">
         <label htmlFor="data"className="form-label">Nascimento</label>
             <input
               type="date"
@@ -229,7 +240,7 @@ const AddAlunos: React.FC = () => {
               
             </select>
 </div>
-<div className="col-md-4">
+<div className="col-md-6">
 <label htmlFor="telefone" className="form-label">Qual?</label>
             <input 
               type="text"

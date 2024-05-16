@@ -12,6 +12,7 @@ import 'jspdf-autotable';
 
 
 const Alunos = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const componentRef = useRef(null);
     const [alunosDTO, setAlunosDTO] = useState<alunosDTO[]>([]);
     const [alunos, setAlunos] = useState<alunosDTO[]>([]);
@@ -19,7 +20,6 @@ const Alunos = () => {
     useEffect(() => {
      alunosService.findAll()
         .then(response => {
-          console.log("Dados recebidos:", response.data);
           setAlunosDTO(response.data);
         })
         .catch(error => {
@@ -27,7 +27,19 @@ const Alunos = () => {
           // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
         });
     }, []);
-      
+    const handleSearch = async () => {
+      try {
+        const response = await alunosService.findByNome(searchTerm)
+        setAlunosDTO(response.data);
+       
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+        // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
+      }
+    };
+
+   
+  
     const handlePrint = () => {
       const doc = new jsPDF();
     
@@ -50,6 +62,7 @@ const Alunos = () => {
     };
     
   
+
     return (
 
         <>
@@ -70,14 +83,17 @@ const Alunos = () => {
           
                 <div className="row justify-content-center p-3" id="barra-pesquisa-secretaria">
                     <div className="col-md-5 col-4">
-                        <input value=""
+                        <input 
+                          value={searchTerm}
                             placeholder="Digite um nome"
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             className="form-control"
                           />
+                       
                             </div>
                           <div className="col-md-7 col-8" id="botoes">
-                          <button type="submit" className="btn btn-primary me-2" id="btn-pesquisa">Pesquisar</button>
-                          <Link to= "/membro/adicionar">
+                          <button type="submit" className="btn btn-primary me-2" id="btn-pesquisa" onClick={handleSearch}>Pesquisar</button>
+                          <Link to= "/adicionarAlunos">
                                 <button className="btn btn-primary"> Adicionar </button>
                                   
                             </Link>

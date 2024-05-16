@@ -2,15 +2,44 @@
 #endereço{
   background-color: white;
   border-radius: 10px;
-
+  border: solid 5px;
+  border-color: var(--color-form);
 }
 
+#dados img{
+border-radius: 20px;
+display: block;
+height: 100px;
+width: 100px;
+align-items: center;
+justify-self: center;
+margin-left: 30%;
+margin-top: 5%;
+border: solid 5px;
 
-
+  border-color: var( --color-form);
+}
+.dados-Projeto{
+font-size: 18px;
+font-weight: bold;
+background-color: var(--color-form);
+border-radius: 10px;
+padding: 5px;
+}
+.text-h2{
+  background-color: var(--color-form);
+  font-size: 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 5px;
+  
+}
 #dados{
   background-color: white;
   border-radius: 10px;
-
+  border: solid 5px;
+  border-color: var(--color-form);
+  
 }
 
 @media (max-width: 768px) {
@@ -22,7 +51,9 @@
   #voltar-alunos button{
    margin-left: 40%;
   }
-  
+  .text-h2{
+ margin-top: 20px;
+  }
 }
 
 

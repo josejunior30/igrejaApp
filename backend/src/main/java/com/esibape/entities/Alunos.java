@@ -31,6 +31,7 @@ public class Alunos implements Serializable{
 	private String responsavel;
 	private String cpfResponsavel;
 	private String telefone;
+	private String email;
 	private String url;
 	private String rua;
 	private String cep;
@@ -56,7 +57,7 @@ public class Alunos implements Serializable{
 	}
 	
 	public Alunos(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
-			String cpfResponsavel, String telefone, String url, String rua, String cep, String numero, String bairro,
+			String cpfResponsavel, String telefone, String url, String email,String rua, String cep, String numero, String bairro,
 			String cidade, String complemento,AlunoDoenca alunoDoenca, String sangue, String pergunta, Projetos projetos, List<Chamada> chamada) {
 		super();
 		this.id = id;
@@ -68,6 +69,7 @@ public class Alunos implements Serializable{
 		this.cpfResponsavel = cpfResponsavel;
 		this.telefone = telefone;
 		this.url = url;
+		this.email= email;
 		this.rua = rua;
 		this.cep = cep;
 		this.numero = numero;
@@ -141,6 +143,14 @@ public class Alunos implements Serializable{
 		this.cpfResponsavel = cpfResponsavel;
 	}
 	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String getTelefone() {
 		return telefone;

@@ -5,7 +5,7 @@ export type alunosDTO={
     id:number;
     nome: string;
     dataNascimento:Date;
-    idade:number;
+    idade: number;
 	  rg: string;
     responsavel: string;
 	  cpfResponsavel: string;
@@ -18,7 +18,7 @@ export type alunosDTO={
     cidade: string;
     complemento: string;
 	projetos: projetos;
-   
+   email: string;
     AlunoDoenca:number;
     sangue: string;
     pergunta: string;
@@ -28,7 +28,7 @@ export type alunoDTO={
     id:number;
     nome: string;
     dataNascimento:Date;
-  
+  email:string;
 	  rg: string;
     responsavel: string;
 	  cpfResponsavel: string;

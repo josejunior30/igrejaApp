@@ -5,7 +5,7 @@ import *as alunosService from '../../../service/alunosService';
 import { deleteAluno } from "../excluirAlunos";
 import { CgDanger } from "react-icons/cg";
 import SuccessModal from "../../../components/Modal";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
 import Header from "../../../components/Header";
 import './styles.css';
 
@@ -89,24 +89,19 @@ return (
           
 
             <div className="col-md-3 col-7 m-5 md-5 pb-3 text-center" id="dados">
-              <img src={alunosDTO.url} alt="Foto do Membro" className="foto-membro" />
+              <img src={alunosDTO.url} alt="Foto do Membro" className="img-fluid " />
               <span className="nome-id">{alunosDTO.nome}</span>
               <p className="dados"><span>Identidade:</span> {alunosDTO.rg}</p>
               <p className="dados"><span>Idade:</span> {alunosDTO.idade}</p>
               <p className="dados"><span>Data de Nascimento:</span> {new Date(alunosDTO.dataNascimento).toLocaleDateString()}</p>
-              <p className="dados"><span>Email: </span>{alunosDTO.nome}</p>
+              <p className="dados"><span>Email: </span>{alunosDTO.email}</p>
               <p className="dados"><span>Cpf Responsavel: </span>{alunosDTO.cpfResponsavel}</p>
 
               {alunosDTO.projetos && (
-                <p className="dados"><span> projeto:{alunosDTO.projetos.nome} </span> </p>
+                <p className="dados-Projeto"><span> Projeto:{alunosDTO.projetos.nome} </span> </p>
               )}
 
-              <div className="botoes-container">
-                <Link to={`/editarAlunos/${id}`}>
-                  <button className="botao-editar">Editar</button>
-                </Link>
-                <button onClick={handleDeleteClick} className="botao-deletar">Deletar</button>
-              </div>
+            
             </div>
 
             <div className="col-md-3 col-7 m-5 md-5 text-center align-content-center" id="endereço">
@@ -117,6 +112,12 @@ return (
               <p className="dados"><span>Cidade:</span> {alunosDTO.cidade}</p>
               <p className="dados"><span>Complemento:</span> {alunosDTO.complemento}</p>
               <p className="dados"><span>Cep:</span> {alunosDTO.cep}</p>
+              <div className="botoes-container">
+                <Link to={`/editarAlunos/${id}`}>
+                  <button className="botao-editar">Editar</button>
+                </Link>
+                <button onClick={handleDeleteClick} className="botao-deletar">Deletar</button>
+              </div>
             </div>
 
 

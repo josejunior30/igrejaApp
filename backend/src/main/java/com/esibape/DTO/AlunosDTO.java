@@ -31,6 +31,7 @@ public class AlunosDTO implements Serializable{
 	private String cpfResponsavel;
 	private String telefone;
 	private String url;
+	private String email;
 	private String rua;
 	private String cep;
 	private String numero;
@@ -50,7 +51,7 @@ public class AlunosDTO implements Serializable{
 	
 
 	public AlunosDTO(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
-			String cpfResponsavel, String telefone, String url, String rua, String cep, String numero, String bairro,
+			String cpfResponsavel, String telefone, String url,String email ,String rua, String cep, String numero, String bairro,
 			String cidade, String complemento, String pergunta, String sangue, AlunoDoenca alunoDoenca,
 			ProjetosDTO projetos, List<ChamadaDTO> chamada) {
 		super();
@@ -63,6 +64,7 @@ public class AlunosDTO implements Serializable{
 		this.cpfResponsavel = cpfResponsavel;
 		this.telefone = telefone;
 		this.url = url;
+		this.email= email;
 		this.rua = rua;
 		this.cep = cep;
 		this.numero = numero;
@@ -88,6 +90,7 @@ public class AlunosDTO implements Serializable{
 		this.cpfResponsavel = entity.getCpfResponsavel();
 		this.url= entity.getUrl();
 		this.telefone= entity.getTelefone();
+		this.email = entity.getEmail();
 		this.rua= entity.getRua();
 		this.bairro = entity.getBairro();
 		this.cidade = entity.getCidade();
@@ -141,6 +144,18 @@ public class AlunosDTO implements Serializable{
 	public void setIdade(Integer idade) {
 		this.idade = idade;
 	}
+	
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 
 	public String getRg() {
 		return rg;

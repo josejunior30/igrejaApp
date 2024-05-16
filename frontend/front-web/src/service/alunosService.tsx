@@ -19,3 +19,7 @@ export function updateMembro(id: number, alunosDTO:any){
 export function deleteMembro(id: number) {
     return axios.delete(`${BASE_URL}/alunos/${id}`);
 }
+export function findByNome(nome:string){
+
+    return axios.get(`${BASE_URL}/alunos/search?nome=${nome}`);
+}

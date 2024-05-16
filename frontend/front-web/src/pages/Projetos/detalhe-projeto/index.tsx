@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { projetosDTO } from "../../../models/projetos";
 import { Link, useParams } from "react-router-dom";
 import * as projetosService from '../../../service/projetosService';
-import Sidebar from "../../../components/sidebar";
 
 import './styles.css';
 
@@ -11,10 +10,12 @@ import Header from "../../../components/Header";
 import { TiArrowBack } from "react-icons/ti";
 
 const DetalheProjetos = () => {
+
   const { id } = useParams<{ id: string }>() ?? { id: "" };
   const [projetosDTO, setProjetosDTO] = useState<projetosDTO>();
   const [loading, setLoading] = useState(true);
-
+ 
+  
   const loadProjetosDTO = (id: string) => {
     projetosService.findById(Number(id))
       .then(response => {
@@ -37,6 +38,8 @@ const DetalheProjetos = () => {
   useEffect(() => {
     console.log("Dados de projetosDTO:", projetosDTO);
   }, [projetosDTO]);
+
+
 
   return (
     <>

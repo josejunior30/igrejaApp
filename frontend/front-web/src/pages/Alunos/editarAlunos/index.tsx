@@ -23,6 +23,7 @@ const EditarAlunos =()=>{
       url: "",
       rg: "",
       cpfResponsavel: "",
+      email: "",
       responsavel: "",
       idade: 0,
       sangue:"",
@@ -123,10 +124,22 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
                                     className="form-control"
                                     name="rg"
                                     value={alunosDTO.rg}
+                                    onChange={(e) => setAlunosDTO({ ...alunosDTO, rg: e.target.value })}
                                  
                                   />
                     </div>
-                  <div className="col-md-4">
+                    <div className="col-md-5">
+                    <label htmlFor="email" className="form-label">E-mail:</label>
+                                  <input 
+                                    type="text"
+                                    className="form-control"
+                                    name="email"
+                                    value={alunosDTO.email}
+                                    onChange={(e) => setAlunosDTO({ ...alunosDTO, email: e.target.value })}
+                                 
+                                  />
+                    </div>
+                  <div className="col-md-3">
                   <label htmlFor="data" className="form-label">Nascimento</label>
                   <input
                     type="date"

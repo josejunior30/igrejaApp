@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.AlunosDTO;
 import com.esibape.DTO.ChamadaDTO;
+import com.esibape.DTO.MembroDTO;
 import com.esibape.DTO.ProjetosDTO;
 import com.esibape.entities.Alunos;
 import com.esibape.entities.Chamada;
+import com.esibape.entities.Membro;
 import com.esibape.entities.Projetos;
 import com.esibape.repository.AlunosRepository;
 import com.esibape.repository.ChamadaRepository;
@@ -67,12 +69,19 @@ public class AlunosService {
 	 
 	    }
 	    
+	    @Transactional(readOnly = true)
+		public List<AlunosDTO> findByNomeIgnoreCaseContaining(String nome) {
+			List<Alunos> result = repository.findByNomeIgnoreCaseContaining(nome);
+			 return  result.stream().map(x -> new AlunosDTO(x)).toList();
+			
+		}
 	  
 	   private void copyDtoToEntity(AlunosDTO dto, Alunos entity) {
 		   atualizarIdade(dto);
 			entity.setNome(dto.getNome());
 			entity.setDataNascimento(dto.getDataNascimento());
 			entity.setIdade(dto.getIdade());
+			entity.setEmail(dto.getEmail());
 			entity.setResponsavel(dto.getResponsavel());
 			entity.setRg(dto.getRg());
 			entity.setCpfResponsavel(dto.getCpfResponsavel());
@@ -83,6 +92,7 @@ public class AlunosService {
 			entity.setNumero(dto.getNumero());
 			entity.setTelefone(dto.getTelefone());
 			entity.setUrl(dto.getUrl());
+			entity.setRua(dto.getRua());
 			entity.setAlunoDoenca(dto.getAlunoDoenca());
 			entity.setSangue(dto.getSangue());
 			entity.setPergunta(dto.getPergunta());
