@@ -53,7 +53,7 @@ const DetalheProjetos = () => {
       <BarraAlunos/>
       <div className="container-fluid">
         <div className="row justify-content-center pt-4 " id="row-alunos">
-          <div className="col-11 col-md-7"   id="col-tab-alunos" >
+          <div className="col-11 col-md-8"   id="col-tab-alunos" >
           {projetosDTO && (
           <table className="table  table-striped  text-center " >
             <thead className="thead">

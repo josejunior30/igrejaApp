@@ -4,6 +4,7 @@
   border-radius: 10px;
   border: solid 5px;
   border-color: var(--color-form);
+  font-size: 12px;
 }
 
 #dados img{
@@ -13,7 +14,7 @@ height: 100px;
 width: 100px;
 align-items: center;
 justify-self: center;
-margin-left: 30%;
+margin-left: 33%;
 margin-top: 5%;
 border: solid 5px;
 
@@ -28,7 +29,7 @@ padding: 5px;
 }
 .text-h2{
   background-color: var(--color-form);
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 10px;
   font-weight: bold;
   padding: 5px;
@@ -39,6 +40,7 @@ padding: 5px;
   border-radius: 10px;
   border: solid 5px;
   border-color: var(--color-form);
+  font-size: 12px;
   
 }
 
@@ -48,12 +50,24 @@ padding: 5px;
     margin-top: 10px;
   
   }
+  #dados span{
+   font-size: 14px;
+  
+  }
+  #dados img{
+margin-bottom: 10px;
+  }
+  
   #voltar-alunos button{
    margin-left: 40%;
   }
   .text-h2{
  margin-top: 20px;
   }
+#endereço span{
+  font-size: 14px;
+}
+
 }
 
 

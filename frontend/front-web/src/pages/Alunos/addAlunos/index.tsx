@@ -225,7 +225,7 @@ const AddAlunos: React.FC = () => {
             />
 </div>
   
-<div className="col-md-4">
+<div className="col-md-6">
 <label htmlFor="projetos" className="form-label">Doença ou alergia?:</label>
             <select
               name="AlunoDoenca"
@@ -345,6 +345,18 @@ const AddAlunos: React.FC = () => {
               name="complemento"
               className="form-control"
               value={alunosDTO.complemento}
+              onChange={handleChange}
+    
+            />
+
+       </div>   
+       <div className="col-md-4">
+<label htmlFor="complemento" className="form-label">Cep:</label>
+            <input 
+              type="text"
+              name="cep"
+              className="form-control"
+              value={alunosDTO.cep}
               onChange={handleChange}
     
             />

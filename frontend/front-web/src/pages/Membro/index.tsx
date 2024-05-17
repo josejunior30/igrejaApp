@@ -85,7 +85,7 @@ const Membro = () => {
                               </div>
                         <div className="col-md-7 col-8" id="botoes">
                             <button type="submit"  className="btn btn-primary me-2 " id="btn-pesquisa" onClick={handleSearch}>Pesquisar</button>
-                                  <Link to= "/adicionarAlunos">
+                                  <Link to= "/membro/adicionar">
                                       <button className="btn btn-primary"> Adicionar </button>
                                       
                                   </Link>

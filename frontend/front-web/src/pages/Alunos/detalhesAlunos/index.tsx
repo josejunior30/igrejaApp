@@ -88,7 +88,7 @@ return (
           <>
           
 
-            <div className="col-md-3 col-7 m-5 md-5 pb-3 text-center" id="dados">
+            <div className="col-md-4 col-9 m-5 md-5 pb-3 text-center" id="dados">
               <img src={alunosDTO.url} alt="Foto do Membro" className="img-fluid " />
               <span className="nome-id">{alunosDTO.nome}</span>
               <p className="dados"><span>Identidade:</span> {alunosDTO.rg}</p>
@@ -104,7 +104,7 @@ return (
             
             </div>
 
-            <div className="col-md-3 col-7 m-5 md-5 text-center align-content-center" id="endereço">
+            <div className="col-md-4 col-9 m-5 md-5 text-center align-content-center" id="endereço">
               <p className="text-h2">Endereço</p>
               <p className="dados"><span>Rua:</span> {alunosDTO.rua}</p>
               <p className="dados"><span>Bairro:</span> {alunosDTO.bairro}</p>
@@ -112,7 +112,7 @@ return (
               <p className="dados"><span>Cidade:</span> {alunosDTO.cidade}</p>
               <p className="dados"><span>Complemento:</span> {alunosDTO.complemento}</p>
               <p className="dados"><span>Cep:</span> {alunosDTO.cep}</p>
-              <div className="botoes-container">
+              <div className="botoes-container mb-1">
                 <Link to={`/editarAlunos/${id}`}>
                   <button className="botao-editar">Editar</button>
                 </Link>
