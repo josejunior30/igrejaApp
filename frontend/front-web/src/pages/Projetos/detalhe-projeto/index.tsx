@@ -53,11 +53,12 @@ const DetalheProjetos = () => {
       <BarraAlunos/>
       <div className="container-fluid">
         <div className="row justify-content-center pt-4 " id="row-alunos">
-          <div className="col-11 col-md-8"   id="col-tab-alunos" >
+          <div className="col-12 col-md-8"   id="col-tab-alunos" >
           {projetosDTO && (
           <table className="table  table-striped  text-center " >
             <thead className="thead">
               <tr>
+              <th scope="col">#</th>
                 <th scope="col">Nascimento</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Idade</th>
@@ -68,9 +69,9 @@ const DetalheProjetos = () => {
             </thead>
             <tbody>
               {projetosDTO.alunos && (
-                projetosDTO.alunos.map((aluno) => (
+                projetosDTO.alunos.map((aluno, index) => (
                   <tr key={aluno.id} >
-
+             <td>{index + 1}</td>
                     <td>
                     <Link to={`/alunos/${aluno.id}`}  className="dados-alunos">
                   {aluno.dataNascimento

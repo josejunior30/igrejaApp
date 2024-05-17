@@ -118,6 +118,7 @@ const Alunos = () => {
                                                 <table className="table table-striped " ref={componentRef} id="col-tab-alunos-2">
                                                         <thead className="thead">
                                                               <tr>
+                                                              <th scope="col">#</th>
                                                                 <th scope="col">Data de Nascimento</th>
                                                                 <th scope="col">Nome</th>
                                                                 <th scope="col">Idade</th>
@@ -128,8 +129,9 @@ const Alunos = () => {
                                                             </thead>
                                                             <tbody>
                                                               {alunosDTO.length > 0 ? (
-                                                                alunosDTO.map((aluno) => (
+                                                                alunosDTO.map((aluno, index) => (
                                                                   <tr key={aluno.id}>
+                                                                     <td>{index + 1}</td>
                                                                     <td>
                                                                       {aluno.dataNascimento
                                                                         ? new Date(aluno.dataNascimento).toLocaleDateString()
