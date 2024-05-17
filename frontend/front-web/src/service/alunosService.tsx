@@ -1,9 +1,9 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
-import { alunosDTO } from "../models/alunos";
 
 
-export function findAll():Promise<AxiosResponse<alunosDTO[]>>{
+
+export function findAll(){
     return axios.get(`${BASE_URL}/alunos`);
 }
 

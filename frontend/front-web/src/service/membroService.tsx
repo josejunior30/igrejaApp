@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
-import Membro from "../pages/Membro";
+
 
 
 export function findAll(){
