@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.AlunosDTO;
 import com.esibape.DTO.ChamadaDTO;
-import com.esibape.DTO.MembroDTO;
+
 import com.esibape.DTO.ProjetosDTO;
 import com.esibape.entities.Alunos;
 import com.esibape.entities.Chamada;
-import com.esibape.entities.Membro;
+
 import com.esibape.entities.Projetos;
 import com.esibape.repository.AlunosRepository;
 import com.esibape.repository.ChamadaRepository;
