@@ -12,6 +12,7 @@ html{
  
   color: white;
 }
+
 .table-striped>tbody>tr:nth-child(odd)>td, 
 .table-striped>tbody>tr:nth-child(odd)>th{
   background-color: var( --color-darkslategray);
@@ -27,6 +28,16 @@ color: white;
  
   border-top-left-radius: 10px;
 }
+.table-striped>tbody>tr:nth-child(odd)>td:hover, 
+.table-striped>tbody>tr:nth-child(odd)>th:hover{
+  background-color: var(--color-turquoise);
+  
+}
+.table-striped>tbody>tr:nth-child(even)>td:hover, 
+.table-striped>tbody>tr:nth-child(even)>th:hover{
+  background-color:var(--color-turquoise);
+}
+
 
 .table-striped thead th:last-child {
   border-top-right-radius: 10px;
@@ -35,9 +46,7 @@ color: white;
 .table-striped thead th{
 background-color: #00D4FF;
 }
-.table-striped tbody:hover{
-background-color: black;
-}
+
 .voltar-projetos-detalhes{
   color: white;
   display: flex;

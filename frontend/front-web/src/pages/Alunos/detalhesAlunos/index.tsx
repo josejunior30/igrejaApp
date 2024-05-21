@@ -47,12 +47,14 @@ const DetalhesAlunos = () => {
  
   const handleDeleteClick = () => {
     setShowDeleteConfirmation(true);
+   
   };
   const handleConfirmDelete = async () => {
     if (id !== undefined) {
       await deleteAluno(parseInt(id, 10));
       setIsModalVisible(true);
       setShowDeleteConfirmation(false);
+      navigate(-1)
     }
   };
   const handleCancelDelete = () => {
@@ -63,19 +65,9 @@ const DetalhesAlunos = () => {
   const handleGoBack = () => {
     navigate(-1);
   }
-  const handleNextClick = () => {
-    if (id !== undefined) {
-      const nextId = parseInt(id, 10) + 1;
-      navigate(`/alunos/${nextId}`);
-    }
-  };
 
-  const handlePreviousClick = () => {
-    if (id !== undefined) {
-        const previousId = parseInt(id, 10) - 1;
-        navigate(`/alunos/${previousId}`);
-    }
-};
+
+
 return (
   <>
     <Header />
@@ -89,19 +81,21 @@ return (
           
 
             <div className="col-md-4 col-9 m-5 md-5 pb-3 text-center" id="dados">
-              <img src={alunosDTO.url} alt="Foto do Membro" className="img-fluid " />
+              <img src={alunosDTO.url} alt="Foto do Membro" className="img-fluid mb-3" />
               <span className="nome-id">{alunosDTO.nome}</span>
+          
+            
               <p className="dados"><span>Identidade:</span> {alunosDTO.rg}</p>
               <p className="dados"><span>Idade:</span> {alunosDTO.idade}</p>
               <p className="dados"><span>Data de Nascimento:</span> {new Date(alunosDTO.dataNascimento).toLocaleDateString()}</p>
               <p className="dados"><span>Email: </span>{alunosDTO.email}</p>
               <p className="dados"><span>Cpf Responsavel: </span>{alunosDTO.cpfResponsavel}</p>
-
+        
               {alunosDTO.projetos && (
-                <p className="dados-Projeto"><span> Projeto:{alunosDTO.projetos.nome} </span> </p>
+                <p className="dados-Projeto"><span> Projeto: {alunosDTO.projetos.nome} </span> </p>
               )}
 
-            
+
             </div>
 
             <div className="col-md-4 col-9 m-5 md-5 text-center align-content-center" id="endereço">

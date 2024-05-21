@@ -56,7 +56,6 @@ const AddAlunos: React.FC = () => {
   
       if (name === "projetos") {
         const projetoId = parseInt(value, 10);
-  
         setAlunosDTO((prevAlunosDTO) => ({
           ...prevAlunosDTO,
           projetos: {
@@ -66,11 +65,14 @@ const AddAlunos: React.FC = () => {
         }));
       } else if (name === "dataNascimento") {
         const dataNascimento = new Date(value);
-  
-        setAlunosDTO((prevAlunosDTO) => ({
-          ...prevAlunosDTO,
-          [name]: dataNascimento,
-        }));
+        if (!isNaN(dataNascimento.getTime())) {
+          setAlunosDTO((prevAlunosDTO) => ({
+            ...prevAlunosDTO,
+            [name]: dataNascimento,
+          }));
+        } else {
+          console.error("Data inválida:", value);
+        }
       } else {
         setAlunosDTO((prevAlunosDTO) => ({
           ...prevAlunosDTO,
@@ -86,10 +88,7 @@ const AddAlunos: React.FC = () => {
   
       try {
         console.log("Membro Detail antes do POST:", alunosDTO);
-        // Utilizando a função insertMembro para adicionar o membro
         await insertAluno(alunosDTO);
-  
-        // Lógica de manipulação de sucesso, redirecionamento, etc.
         setIsModalVisible(true);
         setAlunosDTO({
           id: 0,
@@ -116,7 +115,7 @@ const AddAlunos: React.FC = () => {
       
       } catch (error) {
         console.error("Erro ao adicionar aluno:", error);
-        // Lógica de manipulação de erro
+      
       }
     };
     const handleModalClose = () => {
@@ -130,9 +129,7 @@ const AddAlunos: React.FC = () => {
     <Header/>
         
     <div className="container-fluid mt-5 pt-5">
-    
     <div className="container col-md-8 pt-5" >
- 
       <form onSubmit={handleSubmit} className="row g-4 px-4 pb-4" id="add-alunos">
         <div className="col-md-12">
         <h3 >Dados pessoais </h3>
@@ -364,8 +361,15 @@ const AddAlunos: React.FC = () => {
        </div>   
           <div className="d-grid gap-2 col-6 mx-auto">
           <button className="btn btn-primary" type="submit">Adicionar</button>
-          
+          {isModalVisible && (
+        <SuccessModal
+          onClose={handleModalClose}
+          onRedirect={() => setIsRedirecting(true)} 
+          operation="adicionar"
+        />
+      )}
         </div>
+       
       
     </form>
 
@@ -378,13 +382,7 @@ const AddAlunos: React.FC = () => {
      
     
     
-      {isModalVisible && (
-        <SuccessModal
-          onClose={handleModalClose}
-          onRedirect={() => setIsRedirecting(true)} 
-          operation="adicionar"
-        />
-      )}
+
       </>
     );
     

@@ -330,11 +330,11 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
           </div>
       
         
-         {/* ... (restante do código) */}
+    
          {isModalVisible && (
             <SuccessModal
               onClose={handleModalClose}
-              onRedirect={() => setIsRedirecting(true)} // Ajuste conforme necessário
+              onRedirect={() => setIsRedirecting(true)} 
               operation="atualizar"
             />
           )}
