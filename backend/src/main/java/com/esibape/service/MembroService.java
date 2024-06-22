@@ -27,8 +27,7 @@ public class MembroService {
     @Autowired
     private PequenoGrupoRepository pequenoGrupoRepository;
    
-    @Autowired
-    private FileStorageService fileStorageService;
+
    
     @Transactional(readOnly = true)
     public List<MembroDTO> findAll() {

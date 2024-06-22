@@ -1,6 +1,6 @@
 package com.esibape.service;
 
-import java.util.HashSet;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,10 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.esibape.DTO.ChamadaDTO;
+
 import com.esibape.DTO.RoleDTO;
 import com.esibape.DTO.UserDTO;
-import com.esibape.entities.Chamada;
+
 import com.esibape.entities.Role;
 import com.esibape.entities.User;
 import com.esibape.repository.RoleRepository;

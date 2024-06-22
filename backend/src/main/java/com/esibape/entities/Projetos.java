@@ -27,6 +27,7 @@ public class Projetos implements Serializable{
 	private String coordenador;
 	private String foto_coordenador;
 	private String foto_lider;
+	private String foto_fundo;
 	
 	@OneToMany(mappedBy ="projetos" )
 	private List<Alunos>alunos = new ArrayList<>();
@@ -45,7 +46,7 @@ public class Projetos implements Serializable{
 
 
 
-	public Projetos(Long id, String nome, String lider, String coordenador, String foto_coordenador, String foto_lider,
+	public Projetos(Long id, String nome, String lider, String coordenador, String foto_coordenador, String foto_lider, String foto_fundo,
 			List<Alunos> alunos, List<Chamada> chamada, List<Relatorio> relatorio) {
 		super();
 		this.id = id;
@@ -54,6 +55,7 @@ public class Projetos implements Serializable{
 		this.coordenador = coordenador;
 		this.foto_coordenador = foto_coordenador;
 		this.foto_lider = foto_lider;
+		this.foto_fundo = foto_fundo;
 		this.alunos = alunos;
 		this.chamada = chamada;
 		this.relatorio = relatorio;
@@ -87,6 +89,18 @@ public class Projetos implements Serializable{
 	}
 	
 	
+	public String getFoto_fundo() {
+		return foto_fundo;
+	}
+
+
+
+	public void setFoto_fundo(String foto_fundo) {
+		this.foto_fundo = foto_fundo;
+	}
+
+
+
 	public List<Chamada> getChamada() {
 		return chamada;
 	}

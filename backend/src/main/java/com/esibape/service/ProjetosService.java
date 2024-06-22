@@ -59,7 +59,7 @@ public class ProjetosService {
 		entity.setCoordenador(dto.getCoordenador());
 		entity.setFoto_coordenador(dto.getFoto_coordenador());
 		entity.setFoto_lider(dto.getFoto_lider());
-		
+		entity.setFoto_fundo(dto.getFoto_fundo());
 	}
 
 	

@@ -25,7 +25,9 @@ public class RelatorioDTO implements Serializable {
 	
 	private ProjetosDTO projetosRelatorio;
 	
-	
+	public RelatorioDTO() {
+		
+	}
 	
 	public RelatorioDTO(Long id, LocalDate data, String pergunta1, String pergunta2, String pergunta3, String pergunta4,
 			String pergunta5, ProjetosDTO projetosRelatorio) {

@@ -20,6 +20,7 @@ public class ProjetosDTO implements Serializable{
 	private String coordenador;
 	private String foto_coordenador;
 	private String foto_lider;
+	private String foto_fundo;
 	private List<AlunosDTO>alunos = new ArrayList<>();
 	private List<ChamadaDTO> chamada=  new ArrayList<>();
 	private List<RelatorioDTO> relatorio = new ArrayList<>();
@@ -33,7 +34,7 @@ public class ProjetosDTO implements Serializable{
 	
 	
 	public ProjetosDTO(Long id, String nome, String lider,
-			String coordenador,String foto_lider, String foto_coordenador, List<AlunosDTO> alunos, List<RelatorioDTO>relatorio) {
+			String coordenador,String foto_lider, String foto_coordenador, String foto_fundo, List<AlunosDTO> alunos, List<RelatorioDTO>relatorio) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -41,6 +42,7 @@ public class ProjetosDTO implements Serializable{
 		this.alunos = alunos;
 		this.foto_coordenador= foto_coordenador;
 		this.foto_lider= foto_lider;
+		this.foto_fundo = foto_fundo;
 	}
 	
 	public ProjetosDTO(Projetos entity) {
@@ -50,6 +52,7 @@ public class ProjetosDTO implements Serializable{
 		this.coordenador= entity.getCoordenador();
 		this.foto_coordenador= entity.getFoto_coordenador();
 		this.foto_lider = entity.getFoto_lider();
+		this.foto_fundo = entity.getFoto_fundo();
 		
 		
 	}
@@ -86,6 +89,18 @@ public class ProjetosDTO implements Serializable{
 		this.lider = lider;
 	}
 	
+
+	public String getFoto_fundo() {
+		return foto_fundo;
+	}
+
+
+
+	public void setFoto_fundo(String foto_fundo) {
+		this.foto_fundo = foto_fundo;
+	}
+
+
 
 	public List<AlunosDTO> getAlunos() {
 		return alunos;
