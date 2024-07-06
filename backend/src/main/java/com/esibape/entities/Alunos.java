@@ -42,6 +42,9 @@ public class Alunos implements Serializable{
 	private String pergunta;
 	private String sangue;
 	private AlunoDoenca alunoDoenca;
+	@ManyToOne()
+	@JoinColumn(name= "status_id")
+	private AlunoStatus alunoStatus;
 	
 	@ManyToOne()
 	@JoinColumn(name= "projeto_id")
@@ -58,7 +61,7 @@ public class Alunos implements Serializable{
 	
 	public Alunos(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
 			String cpfResponsavel, String telefone, String url, String email,String rua, String cep, String numero, String bairro,
-			String cidade, String complemento,AlunoDoenca alunoDoenca, String sangue, String pergunta, Projetos projetos, List<Chamada> chamada) {
+			String cidade, String complemento,AlunoDoenca alunoDoenca, AlunoStatus alunoStatus ,String sangue, String pergunta, Projetos projetos, List<Chamada> chamada) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -81,6 +84,7 @@ public class Alunos implements Serializable{
 		this.alunoDoenca =alunoDoenca;
 		this.sangue = sangue;
 		this.pergunta = pergunta;
+		this.alunoStatus= alunoStatus;
 		
 	}
 
@@ -258,6 +262,14 @@ public class Alunos implements Serializable{
 
 	public void setAlunoDoenca(AlunoDoenca alunoDoenca) {
 		this.alunoDoenca = alunoDoenca;
+	}
+	
+	public AlunoStatus getAlunoStatus() {
+		return alunoStatus;
+	}
+
+	public void setAlunoStatus(AlunoStatus alunoStatus) {
+		this.alunoStatus = alunoStatus;
 	}
 
 	@Override
