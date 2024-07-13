@@ -195,12 +195,12 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
     </div>
         
     <div className="col-md-4">
-    <label htmlFor="projetos" className="form-label">Doença ou alergia?:</label>
+    <label htmlFor="AlunoDoenca" className="form-label">Doença ou alergia?:</label>
                   <select
                     name="AlunoDoenca"
                     className="form-select"
                     value={alunosDTO.AlunoDoenca} 
-                    onChange={(e) => setAlunosDTO({ ...alunosDTO, projetos: { id: Number(e.target.value), nome: "placeholder" } })}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, AlunoDoenca:Number( e.target.value) })}
                    
                   >
                    <option selected>ESCOLHA</option>
@@ -216,11 +216,12 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
                     className="form-control"
                     name="pergunta"
                     value={alunosDTO.pergunta}
-                    onChange={(e) => setAlunosDTO({ ...alunosDTO, projetos: { id: Number(e.target.value), nome: "placeholder" } })}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, pergunta: e.target.value  })}
                  
                   />
     
     </div>
+  
               <div className="col-md-12">
                   <h3 className="titulo-form">Dados do Responsável </h3>
               </div>

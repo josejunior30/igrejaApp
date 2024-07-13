@@ -4,7 +4,7 @@
   border-radius: 10px;
   border: solid 5px;
   border-color: var(--color-form);
-  font-size: 14px;
+  font-size: 16px;
 }
 
 #dados img{
@@ -14,9 +14,11 @@ height: 100px;
 width: 100px;
 align-items: center;
 justify-self: center;
-margin-left: 33%;
+margin-left: 40%;
+margin-right: 40%;
 margin-top: 5%;
 border: solid 5px;
+
 
   border-color: var( --color-form);
 }
@@ -48,6 +50,15 @@ color: white;
   
 }
 
+.botao-gerar-pdf{
+  margin-left: 2%;
+  background-color: #0b1f34;;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+ 
+}
 
 #dados .nome-id{
   background-color: var(--color-form);
@@ -69,6 +80,8 @@ color: white;
   }
   #dados img{
 margin-bottom: 10px;
+margin-left: 35%;
+margin-right: 35%;
   }
   
   #voltar-alunos button{
