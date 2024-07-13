@@ -120,7 +120,7 @@ return (
                 <span className="icone-confirm"><CgDanger /></span>
                 <p className="msg-confirm" >Tem certeza disso?</p>
                 <button onClick={handleConfirmDelete} className="btn-confirma">Confirmar</button>
-                <button onClick={handleCancelDelete} className="btn-confirma">Cancelar</button>
+                <button onClick={handleCancelDelete} className="btn-cancel">Cancelar</button>
               </div>
             )}
 

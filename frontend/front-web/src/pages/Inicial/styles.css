@@ -14,7 +14,7 @@
 
 
 #col-img{
-  transition: transform 0.3s;
+  transition: transform 0.6s;
   overflow: hidden;
   color: white;
  justify-items: center;
@@ -31,7 +31,7 @@ html{
 
 }
 #col-img img {
-  transition: filter 0.3s; 
+  transition: filter 0.6s; 
 }
 
 #col-img:hover img {
@@ -50,12 +50,12 @@ color: white;
 
 #col-img:hover button {
   transform: translateY(-350%);
-  transition: transform 0.5s;
+  transition: transform 0.7s;
   opacity: 1;
 }
 #col-img:hover h3{
   transform: translateY(-420%);
-  transition: transform 0.5s;
+  transition: transform 0.9s;
   opacity: 1;
 }
 
