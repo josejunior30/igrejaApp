@@ -17,7 +17,7 @@ const AddAlunos: React.FC = () => {
         id: 0,
         nome: "",
         dataNascimento: new Date(),
-        telefone: "",
+        telefone: "21",
         url: "",
         rg: "",
         cpfResponsavel: "",
@@ -69,7 +69,13 @@ const AddAlunos: React.FC = () => {
             } else {
                 console.error("Data inválida:", value);
             }
-        } else {
+            } else if (name === "telefone") {
+                let telefone = value;
+                if (!telefone.startsWith("21")) {
+                    telefone = "21" + telefone.replace(/^21/, '');
+                }
+
+        
             setAlunosDTO((prevAlunosDTO) => ({
                 ...prevAlunosDTO,
                 [name]: value,
@@ -92,7 +98,7 @@ const AddAlunos: React.FC = () => {
                 id: 0,
                 nome: "",
                 dataNascimento: new Date(),
-                telefone: "",
+                telefone: "21",
                 url: "",
                 rg: "",
                 cpfResponsavel: "",
