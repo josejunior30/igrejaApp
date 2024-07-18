@@ -158,7 +158,7 @@ fornecer o apoio necessário para sua participação. `, 14, 150);
           {alunosDTO ? (
             <>
               <div className="col-md-4 col-9 m-5 md-5 pb-3 text-center" id="dados">
-                <img src={alunosDTO.url ?? "-----"} alt="Foto do Membro" className="img-fluid mb-3" />
+                <img src={alunosDTO.url ?? "-----"} alt="Foto do Membro" className="img-fluid mb-3 offset-4" />
                 <span className="nome-id">{alunosDTO.nome ?? "-----"}</span>
                 <p className="dados"><span>Identidade:</span> {alunosDTO.rg ?? "-----"}</p>
                 <p className="dados"><span>Idade:</span> {alunosDTO.idade ?? "-----"}</p>

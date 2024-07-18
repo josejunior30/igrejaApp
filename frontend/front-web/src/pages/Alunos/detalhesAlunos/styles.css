@@ -12,12 +12,9 @@ border-radius: 20px;
 display: block;
 height: 100px;
 width: 100px;
-align-items: center;
-justify-self: center;
-margin-left: 40%;
-margin-right: 40%;
 margin-top: 5%;
 border: solid 5px;
+
 
 
   border-color: var( --color-form);
@@ -51,10 +48,6 @@ color: white;
 }
 td i{
 color: #4CAF50;
-}
-.btn-add-aluno{
-
-
 }
 
 .botao-gerar-pdf{

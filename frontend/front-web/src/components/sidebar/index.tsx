@@ -33,13 +33,6 @@ return (
       <span>Membro</span>
       </Link>
     </li>
-   
-    <li>
-    <Link to="#">
-    <i className="bi bi-heart-pulse-fill"></i>
-      <span>Voluntario</span>
-      </Link>
-    </li>
     <li onClick={handleItemClick}>
 <Link to="#">
     <FaTrainSubway />
@@ -55,6 +48,13 @@ return (
     </ul>
 )}
 </li>
+    <li>
+    <Link to="#">
+    <i className="bi bi-heart-pulse-fill"></i>
+      <span>Voluntario</span>
+      </Link>
+    </li>
+
 
     <li>
     <Link to="#">
