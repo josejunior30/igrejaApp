@@ -25,6 +25,7 @@ const AddAlunos: React.FC = () => {
         email: "",
         sangue: "",
         pergunta: "",
+        horario: "",
         AlunoDoenca: 0,
         rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",
         projetos: {
@@ -98,6 +99,7 @@ const AddAlunos: React.FC = () => {
                 responsavel: "",
                 email: "",
                 sangue: "",
+                horario: "",
                 pergunta: "",
                 AlunoDoenca: 0,
                 rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",
@@ -193,12 +195,12 @@ const AddAlunos: React.FC = () => {
                             </select>
                         </div>
                         <div className="col-md-4">
-                            <label htmlFor="telefone" className="form-label">Tipo Sanguíneo:</label>
+                            <label htmlFor="horario" className="form-label">Horário:</label>
                             <input
-                                type="text"
+                                type="time"
                                 className="form-control"
-                                name="sangue"
-                                value={alunosDTO.sangue}
+                                name="horario"
+                                value={alunosDTO.horario}
                                 onChange={handleChange}
                             />
                         </div>

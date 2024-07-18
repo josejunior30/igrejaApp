@@ -23,3 +23,12 @@ export function findByNome(nome:string){
 
     return axios.get(`${BASE_URL}/alunos/search?nome=${nome}`);
 }
+export function findByHorario(horario: string) {
+    return axios.get(`${BASE_URL}/alunos/searchByHorario?horario=${horario}`);
+}
+export function findByProjeto(projetoId: number) {
+    return axios.get(`${BASE_URL}/alunos/searchByProjeto?projetoId=${projetoId}`);
+}
+export function findByProjetoAndHorario(projetoId: number, horario: string) {
+    return axios.get(`${BASE_URL}/alunos/searchByProjetoAndHorario?projetoId=${projetoId}&horario=${horario}`);
+}

@@ -10,6 +10,7 @@ export type alunosDTO={
     responsavel: string;
 	  cpfResponsavel: string;
     telefone: string;
+    horario: string;
     url: string;
     rua: string;
     cep: string;
@@ -41,6 +42,7 @@ export type alunoDTO={
     cidade: string;
     complemento: string;
 	projetos: projetos;
+    horario: string;
    
     AlunoDoenca:number;
     sangue: string;

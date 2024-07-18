@@ -1,6 +1,7 @@
 package com.esibape.controller;
 
 import java.net.URI;
+import java.time.LocalTime;
 import java.util.List;
 
 
@@ -68,5 +69,23 @@ public ResponseEntity <List<AlunosDTO>>findAll(){
 		List<AlunosDTO> result= service.findByNomeIgnoreCaseContaining(nome);
 		return ResponseEntity.ok(result);
 	}
-	
+    @GetMapping(value = "/searchByHorario")
+    public ResponseEntity<List<AlunosDTO>> findByHorario(@RequestParam(name = "horario") String horario) {
+        LocalTime localTime = LocalTime.parse(horario);
+        List<AlunosDTO> result = service.findByHorario(localTime);
+        return ResponseEntity.ok(result);
+    }
+    @GetMapping(value = "/searchByProjeto")
+    public ResponseEntity<List<AlunosDTO>> findByProjetoId(@RequestParam(name = "projetoId") Long projetoId) {
+        List<AlunosDTO> result = service.findByProjetoId(projetoId);
+        return ResponseEntity.ok(result);
+    }
+    @GetMapping(value = "/searchByProjetoAndHorario")
+    public ResponseEntity<List<AlunosDTO>> findByProjetoIdAndHorario(@RequestParam(name = "projetoId") Long projetoId,
+                                                                    @RequestParam(name = "horario") String horario) {
+        LocalTime localTime = LocalTime.parse(horario);
+        List<AlunosDTO> result = service.findByProjetoIdAndHorario(projetoId, localTime);
+        return ResponseEntity.ok(result);
+    }
+
 }

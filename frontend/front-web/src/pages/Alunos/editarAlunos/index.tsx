@@ -28,6 +28,7 @@ const EditarAlunos =()=>{
       idade: 0,
       sangue:"",
       pergunta:"",
+      horario:"",
       AlunoDoenca:0,
 
       rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",

@@ -49,6 +49,13 @@ color: white;
  
   
 }
+td i{
+color: #4CAF50;
+}
+.btn-add-aluno{
+
+
+}
 
 .botao-gerar-pdf{
   margin-left: 2%;

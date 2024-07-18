@@ -2,6 +2,7 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -41,6 +42,7 @@ public class AlunosDTO implements Serializable {
     private String complemento;
     private String pergunta;
     private String sangue;
+    private LocalTime horario;
     private AlunoDoenca alunoDoenca;
     private AlunoStatusDTO alunoStatus;
     private ProjetosDTO projetos;
@@ -50,7 +52,7 @@ public class AlunosDTO implements Serializable {
 
     public AlunosDTO(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
                      String cpfResponsavel, String telefone, String url, String email, String rua, String cep, 
-                     String numero, String bairro, String cidade, String complemento, String pergunta, String sangue, 
+                     String numero, String bairro, String cidade, String complemento, String pergunta, String sangue, LocalTime horario,
                      AlunoDoenca alunoDoenca, AlunoStatusDTO alunoStatus, ProjetosDTO projetos, List<ChamadaDTO> chamada) {
         this.id = id;
         this.nome = nome;
@@ -70,10 +72,12 @@ public class AlunosDTO implements Serializable {
         this.complemento = complemento;
         this.pergunta = pergunta;
         this.sangue = sangue;
+        this.horario = horario;
         this.alunoDoenca = alunoDoenca;
         this.alunoStatus = alunoStatus;
         this.projetos = projetos;
         this.chamada = chamada;
+        
     }
     public AlunosDTO(Alunos entity) {
         this.id = entity.getId();
@@ -94,6 +98,7 @@ public class AlunosDTO implements Serializable {
         this.numero = entity.getNumero();
         this.alunoDoenca = entity.getAlunoDoenca();
         this.sangue = entity.getSangue();
+        this.horario = entity.getHorario();
         this.pergunta = entity.getPergunta();
         if (entity.getAlunoStatus() != null) {
             this.alunoStatus = new AlunoStatusDTO(entity.getAlunoStatus());
@@ -185,7 +190,15 @@ public class AlunosDTO implements Serializable {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public LocalTime getHorario() {
+		return horario;
+	}
+
+	public void setHorario(LocalTime horario) {
+		this.horario = horario;
+	}
+
+	public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 

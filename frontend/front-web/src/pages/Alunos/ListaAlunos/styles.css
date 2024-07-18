@@ -1,5 +1,11 @@
 
 
+#barra-pesquisa-secretaria-radio    {
+  background-color: var(--color-darkslategray);
+color:white;
+border-radius: 10px;
+margin-bottom: 10px;
+}
 
 #barra-pesquisa-secretaria    {
     background-color: var(--color-darkslategray);

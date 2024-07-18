@@ -2,6 +2,7 @@ package com.esibape.service;
 
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
@@ -81,7 +82,23 @@ public class AlunosService {
 			 return  result.stream().map(x -> new AlunosDTO(x)).toList();
 			
 		}
-	  
+	    @Transactional(readOnly = true)
+	    public List<AlunosDTO> findByHorario(LocalTime horario) {
+	        List<Alunos> result = repository.findByHorario(horario);
+	        return result.stream().map(x -> new AlunosDTO(x)).collect(Collectors.toList());
+	    }
+	    @Transactional(readOnly = true)
+	    public List<AlunosDTO> findByProjetoId(Long projetoId) {
+	        List<Alunos> result = repository.findByProjetosId(projetoId);
+	        return result.stream().map(x -> new AlunosDTO(x)).collect(Collectors.toList());
+	    }
+
+	    @Transactional(readOnly = true)
+	    public List<AlunosDTO> findByProjetoIdAndHorario(Long projetoId, LocalTime horario) {
+	        List<Alunos> result = repository.findByProjetosIdAndHorario(projetoId, horario);
+	        return result.stream().map(x -> new AlunosDTO(x)).collect(Collectors.toList());
+	    }
+	    
 	    private void copyDtoToEntity(AlunosDTO dto, Alunos entity) {
 	        atualizarIdade(dto);
 	        // Atributos básicos
@@ -102,6 +119,7 @@ public class AlunosService {
 	        entity.setRua(dto.getRua());
 	        entity.setAlunoDoenca(dto.getAlunoDoenca());
 	        entity.setSangue(dto.getSangue());
+	        entity.setHorario(dto.getHorario());
 	        entity.setPergunta(dto.getPergunta());
 
 	        // Configuração de Projetos

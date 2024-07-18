@@ -2,6 +2,7 @@ package com.esibape.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -41,6 +42,7 @@ public class Alunos implements Serializable{
 	private String complemento;
 	private String pergunta;
 	private String sangue;
+	private LocalTime horario;
 	private AlunoDoenca alunoDoenca;
 	@ManyToOne()
 	@JoinColumn(name= "status_id")
@@ -61,7 +63,7 @@ public class Alunos implements Serializable{
 	
 	public Alunos(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
 			String cpfResponsavel, String telefone, String url, String email,String rua, String cep, String numero, String bairro,
-			String cidade, String complemento,AlunoDoenca alunoDoenca, AlunoStatus alunoStatus ,String sangue, String pergunta, Projetos projetos, List<Chamada> chamada) {
+			String cidade, String complemento,AlunoDoenca alunoDoenca, AlunoStatus alunoStatus ,String sangue, LocalTime horario,String pergunta, Projetos projetos, List<Chamada> chamada) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -85,6 +87,7 @@ public class Alunos implements Serializable{
 		this.sangue = sangue;
 		this.pergunta = pergunta;
 		this.alunoStatus= alunoStatus;
+		this.horario= horario;
 		
 	}
 
@@ -234,6 +237,14 @@ public class Alunos implements Serializable{
 	}
 
 
+
+	public LocalTime getHorario() {
+		return horario;
+	}
+
+	public void setHorario(LocalTime horario) {
+		this.horario = horario;
+	}
 
 	public void setChamada(List<Chamada> chamada) {
 		this.chamada = chamada;
