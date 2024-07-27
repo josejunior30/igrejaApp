@@ -47,13 +47,13 @@ public class AlunosDTO implements Serializable {
     private AlunoStatusDTO alunoStatus;
     private ProjetosDTO projetos;
     private List<ChamadaDTO> chamada = new ArrayList<>();
-
+    private List<PagamentoDTO> pagamentos = new ArrayList<>();
     public AlunosDTO() {}
 
     public AlunosDTO(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
                      String cpfResponsavel, String telefone, String url, String email, String rua, String cep, 
                      String numero, String bairro, String cidade, String complemento, String pergunta, String sangue, LocalTime horario,
-                     AlunoDoenca alunoDoenca, AlunoStatusDTO alunoStatus, ProjetosDTO projetos, List<ChamadaDTO> chamada) {
+                     AlunoDoenca alunoDoenca, AlunoStatusDTO alunoStatus, ProjetosDTO projetos, List<ChamadaDTO> chamada, List<PagamentoDTO>pagamentos) {
         this.id = id;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
@@ -77,6 +77,7 @@ public class AlunosDTO implements Serializable {
         this.alunoStatus = alunoStatus;
         this.projetos = projetos;
         this.chamada = chamada;
+        this.pagamentos = pagamentos;
         
     }
     public AlunosDTO(Alunos entity) {

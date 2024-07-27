@@ -56,6 +56,7 @@ INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (2, 'Assinatura')
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (3, 'Horários')
 
 
+
 INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep, url, email, status_id, aluno_Doenca, horario) VALUES (2 , 'Thiago Pereira Fonseca','2010-05-11', 13, 234567899,'Joao Carlos', 1234567-78, '21970312251',  'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221, 'https://i.postimg.cc/85qrHB69/Design-sem-nome.png', 'ricardo@gmail.com', 1, 0, '17:00:00' );
 INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep, url, email, status_id, aluno_Doenca, horario)  VALUES (1 , 'Joana Lopez Marques','1977-05-11', 13, 234567899, null, null, '21970312251', 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221, 'https://i.postimg.cc/85qrHB69/Design-sem-nome.png', 'claudio@gmail.com', 1 , 0, '17:00:00');
 INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep, url, email, status_id, aluno_Doenca, horario) VALUES (3 , 'Lucas Soares Fonseca','2005-05-15', 14, 23435432,'Lucia Helenar', 1234567-78, '978956732', 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221, 'https://i.postimg.cc/85qrHB69/Design-sem-nome.png', 'tereza@gmail.com', 2, 0, '17:00:00');
@@ -67,6 +68,12 @@ INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel
 INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep, url, email, status_id, aluno_Doenca, horario) VALUES (1 , 'Carla Moreno da Silva  ','1955-05-11', 57, 23435432, null, null, '978956732' , 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221, null, 'ricardo@gmail.com', 1, 1, '18:00:00');
 INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep, url, email, status_id, aluno_Doenca, horario) VALUES (1 , 'Lucia kaiser da Costa  ','1955-05-11', 57, 23435432, null, null, '978956732',' rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221, null, 'lucas@gmail.com', 3, 1, '19:00:00' );
 
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-10', 1, 5, 1 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-10', 2, 5, 2 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-01', 3, 5, 3 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-05', 2, 5, 4 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-05', 1, 7, 5 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-05', 1, 7 , 6)
 
 
 INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-05', 0, 1, 2)

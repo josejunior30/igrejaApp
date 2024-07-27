@@ -24,6 +24,7 @@ import javax.persistence.Table;
 		@OneToMany(mappedBy ="alunoStatus" )
 		private List<Alunos>alunos = new ArrayList<>();
 		
+		
 		public AlunoStatus() {
 			
 		}

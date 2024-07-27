@@ -17,8 +17,7 @@ public class AlunoStatusService {
 
 	@Autowired
 	private AlunoStatusRepository repository;
-	@Autowired
-	private AlunosRepository alunosRepository;
+	
 	
 	@Transactional(readOnly = true)
 	    public List<AlunoStatusDTO> findAll() {

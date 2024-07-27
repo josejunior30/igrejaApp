@@ -44,6 +44,8 @@ public class Alunos implements Serializable{
 	private String sangue;
 	private LocalTime horario;
 	private AlunoDoenca alunoDoenca;
+	@OneToMany(mappedBy ="alunosPG"  )
+    private List<Pagamento> pagamentos = new ArrayList<>();
 	@ManyToOne()
 	@JoinColumn(name= "status_id")
 	private AlunoStatus alunoStatus;
@@ -61,9 +63,15 @@ public class Alunos implements Serializable{
 		
 	}
 	
+	
+
+
+
 	public Alunos(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
-			String cpfResponsavel, String telefone, String url, String email,String rua, String cep, String numero, String bairro,
-			String cidade, String complemento,AlunoDoenca alunoDoenca, AlunoStatus alunoStatus ,String sangue, LocalTime horario,String pergunta, Projetos projetos, List<Chamada> chamada) {
+			String cpfResponsavel, String telefone, String email, String url, String rua, String cep, String numero,
+			String bairro, String cidade, String complemento, String pergunta, String sangue, LocalTime horario,
+			AlunoDoenca alunoDoenca, List<Pagamento> pagamentos, AlunoStatus alunoStatus, Projetos projetos,
+			List<Chamada> chamada) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -73,23 +81,24 @@ public class Alunos implements Serializable{
 		this.responsavel = responsavel;
 		this.cpfResponsavel = cpfResponsavel;
 		this.telefone = telefone;
+		this.email = email;
 		this.url = url;
-		this.email= email;
 		this.rua = rua;
 		this.cep = cep;
 		this.numero = numero;
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.complemento = complemento;
+		this.pergunta = pergunta;
+		this.sangue = sangue;
+		this.horario = horario;
+		this.alunoDoenca = alunoDoenca;
+		this.pagamentos = pagamentos;
+		this.alunoStatus = alunoStatus;
 		this.projetos = projetos;
 		this.chamada = chamada;
-		this.alunoDoenca =alunoDoenca;
-		this.sangue = sangue;
-		this.pergunta = pergunta;
-		this.alunoStatus= alunoStatus;
-		this.horario= horario;
-		
 	}
+
 
 
 
@@ -235,6 +244,27 @@ public class Alunos implements Serializable{
 	public List<Chamada> getChamada() {
 		return chamada;
 	}
+
+
+
+
+
+
+
+
+	public List<Pagamento> getPagamentos() {
+		return pagamentos;
+	}
+
+
+
+
+
+	public void setPagamentos(List<Pagamento> pagamentos) {
+		this.pagamentos = pagamentos;
+	}
+
+
 
 
 
