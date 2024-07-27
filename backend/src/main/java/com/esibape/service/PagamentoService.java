@@ -129,18 +129,35 @@ public class PagamentoService {
             repository.save(pagamento);
         }
     }
-    
-    
     @Transactional(readOnly = true)
-    public List<PagamentoDTO> findPagamentosByMesAtual() {
-        int mesAtual = LocalDate.now().getMonthValue();
-        MesReferencia mesReferenciaAtual = MesReferencia.values()[mesAtual - 1]; // Enum é 0-indexado
-        List<Pagamento> list = repository.findByMesReferencia(mesReferenciaAtual);
-        return list.stream()
-                   .map(x -> new PagamentoDTO(x, x.getAlunosPG()))
-                   .collect(Collectors.toList());
+    public List<PagamentoDTO> findPagamentosMesAtual() {
+        LocalDate hoje = LocalDate.now();
+        int mesAtual = hoje.getMonthValue();
+        
+        MesReferencia mesReferenciaAtual = MesReferencia.fromNumero(mesAtual);
+        List<Pagamento> pagamentosMesAtual = repository.findByMesReferencia(mesReferenciaAtual);
+        updateTotalMesForAllPagamentos();
+        updateTotalForAllPagamentos();
+        return pagamentosMesAtual.stream()
+                                 .map(x -> new PagamentoDTO(x, x.getAlunosPG()))
+                                 .collect(Collectors.toList());
     }
-    
+    @Transactional(readOnly = true)
+    public List<PagamentoDTO> findPagamentosByMesReferencia(MesReferencia mesReferencia) {
+        // Busca todos os pagamentos para o mesReferencia fornecido
+        List<Pagamento> pagamentos = repository.findByMesReferencia(mesReferencia);
+
+        // Se necessário, atualize os totais. 
+        // Avalie se é necessário chamar esses métodos toda vez ou apenas quando a lista de pagamentos muda.
+        updateTotalMesForAllPagamentos();
+        updateTotalForAllPagamentos();
+
+        // Converte a lista de pagamentos para a lista de DTOs
+        return pagamentos.stream()
+                         .map(pagamento -> new PagamentoDTO(pagamento, pagamento.getAlunosPG()))
+                         .collect(Collectors.toList());
+    }
+
 }
 
 

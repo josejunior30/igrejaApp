@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name="tb_pagamento")
 public class Pagamento implements Serializable{
@@ -26,7 +27,7 @@ private LocalDate dataPagamento;
 private Integer totalMes;
 private Integer total;	
 private FormaPagamento formaPagamento;
-
+@Enumerated(EnumType.STRING)
 private MesReferencia mesReferencia;
 
 @ManyToOne()

@@ -19,9 +19,9 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long>{
 
 	    @Query("SELECT p FROM Pagamento p WHERE p.mesReferencia = :mesReferencia")
 	    List<Pagamento> findByMesReferencia(@Param("mesReferencia") MesReferencia mesReferencia);
-
+	    
 		List<Pagamento> findByAlunosPG(Alunos aluno);
 		
-		
+	
 	
 }

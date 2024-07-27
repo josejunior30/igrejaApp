@@ -68,12 +68,16 @@ INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel
 INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep, url, email, status_id, aluno_Doenca, horario) VALUES (1 , 'Carla Moreno da Silva  ','1955-05-11', 57, 23435432, null, null, '978956732' , 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221, null, 'ricardo@gmail.com', 1, 1, '18:00:00');
 INSERT INTO tb_alunos (projeto_id, nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep, url, email, status_id, aluno_Doenca, horario) VALUES (1 , 'Lucia kaiser da Costa  ','1955-05-11', 57, 23435432, null, null, '978956732',' rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221, null, 'lucas@gmail.com', 3, 1, '19:00:00' );
 
-INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-10', 1, 5, 1 )
-INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-10', 2, 5, 2 )
-INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-01', 3, 5, 3 )
-INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-05', 2, 5, 4 )
-INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-05', 1, 7, 5 )
-INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-05', 1, 7 , 6)
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-10', 1, 'JUNHO', 1 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-10', 2, 'ABRIL', 2 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-01', 3, 'JULHO', 3 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-05', 2, 'JULHO', 4 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-05', 1, 'JULHO', 5 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-05', 1, 'JULHO' , 6)
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-04', 0, 'JULHO' , 7)
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-08', 0, 'JULHO' , 8)
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, aluno_id) VALUES (50,'2024-07-09', 1, 'JULHO' , 9)
+
 
 
 INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-04-05', 0, 1, 2)

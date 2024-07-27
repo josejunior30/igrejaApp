@@ -1,6 +1,7 @@
 package com.esibape.entities;
 
 public enum MesReferencia {
+	
     JANEIRO(1, "janeiro"),
     FEVEREIRO(2, "fevereiro"),
     MARCO(3, "março"),
@@ -29,4 +30,14 @@ public enum MesReferencia {
     public String getNome() {
         return nome;
     }
+
+    public static MesReferencia fromNumero(int numero) {
+        for (MesReferencia mes : values()) {
+            if (mes.getNumero() == numero) {
+                return mes;
+            }
+        }
+        throw new IllegalArgumentException("Número de mês inválido: " + numero);
+    }
 }
+

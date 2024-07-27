@@ -1,6 +1,7 @@
 package com.esibape.controller;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.esibape.DTO.PagamentoDTO;
+import com.esibape.entities.MesReferencia;
 import com.esibape.service.PagamentoService;
 
 @RestController
@@ -44,8 +46,21 @@ public class PagamentoController {
 		return ResponseEntity.noContent().build();
 	}
 	@GetMapping(value = "/mes")
-    public ResponseEntity<List<PagamentoDTO>> findPagamentosByMesAtual() {
-        List<PagamentoDTO> pagamentos = service.findPagamentosByMesAtual();
-        return ResponseEntity.ok().body(pagamentos);
+    public ResponseEntity<List<PagamentoDTO>> findPagamentosMesAtual() {
+        List<PagamentoDTO> pagamentosMesAtual = service.findPagamentosMesAtual();
+        return ResponseEntity.ok().body(pagamentosMesAtual);
     }
+	@GetMapping("/mes/{mesReferencia}")
+	public ResponseEntity<List<PagamentoDTO>> getPagamentosByMesReferencia(@PathVariable String mesReferencia) {
+	    MesReferencia mesReferenciaEnum;
+	    try {
+	        mesReferenciaEnum = MesReferencia.valueOf(mesReferencia.toUpperCase());
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.badRequest().body(Collections.emptyList());
+	    }
+
+	    List<PagamentoDTO> pagamentos = service.findPagamentosByMesReferencia(mesReferenciaEnum);
+	    return ResponseEntity.ok().body(pagamentos);
+	}
+
 }
