@@ -43,6 +43,7 @@ public class Alunos implements Serializable{
 	private String pergunta;
 	private String sangue;
 	private LocalTime horario;
+	private String statusPagamento;
 	private AlunoDoenca alunoDoenca;
 	@OneToMany(mappedBy ="alunosPG"  )
     private List<Pagamento> pagamentos = new ArrayList<>();
@@ -70,7 +71,7 @@ public class Alunos implements Serializable{
 	public Alunos(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
 			String cpfResponsavel, String telefone, String email, String url, String rua, String cep, String numero,
 			String bairro, String cidade, String complemento, String pergunta, String sangue, LocalTime horario,
-			AlunoDoenca alunoDoenca, List<Pagamento> pagamentos, AlunoStatus alunoStatus, Projetos projetos,
+			AlunoDoenca alunoDoenca, List<Pagamento> pagamentos, AlunoStatus alunoStatus, Projetos projetos, String statusPagamento,
 			List<Chamada> chamada) {
 		super();
 		this.id = id;
@@ -92,6 +93,7 @@ public class Alunos implements Serializable{
 		this.pergunta = pergunta;
 		this.sangue = sangue;
 		this.horario = horario;
+		this.statusPagamento= statusPagamento;
 		this.alunoDoenca = alunoDoenca;
 		this.pagamentos = pagamentos;
 		this.alunoStatus = alunoStatus;
@@ -240,6 +242,22 @@ public class Alunos implements Serializable{
 		this.projetos = projetos;
 	}
 	
+
+	public String getStatusPagamento() {
+		return statusPagamento;
+	}
+
+
+
+
+
+	public void setStatusPagamento(String statusPagamento) {
+		this.statusPagamento = statusPagamento;
+	}
+
+
+
+
 
 	public List<Chamada> getChamada() {
 		return chamada;

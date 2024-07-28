@@ -2,6 +2,18 @@
 color:white;
     
 }
- .titulo-pagamento{
+ .titulo-alunos{
     color:white;
  }
+
+
+
+.status-pendente {
+   color: rgb(249, 89, 89) !important;
+   font-weight: bold;
+}
+
+.status-default {
+   color: black;
+   font-weight: normal;
+}

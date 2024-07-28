@@ -15,6 +15,7 @@ import com.esibape.entities.AlunoDoenca;
 import com.esibape.entities.AlunoStatus;
 import com.esibape.entities.Alunos;
 import com.esibape.entities.Chamada;
+import com.esibape.entities.Pagamento;
 import com.esibape.entities.Projetos;
 
 public class AlunosDTO implements Serializable {
@@ -42,6 +43,7 @@ public class AlunosDTO implements Serializable {
     private String complemento;
     private String pergunta;
     private String sangue;
+    private String statusPagamento;
     private LocalTime horario;
     private AlunoDoenca alunoDoenca;
     private AlunoStatusDTO alunoStatus;
@@ -52,7 +54,7 @@ public class AlunosDTO implements Serializable {
 
     public AlunosDTO(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
                      String cpfResponsavel, String telefone, String url, String email, String rua, String cep, 
-                     String numero, String bairro, String cidade, String complemento, String pergunta, String sangue, LocalTime horario,
+                     String numero, String bairro, String cidade, String complemento, String pergunta, String statusPagamento,String sangue, LocalTime horario,
                      AlunoDoenca alunoDoenca, AlunoStatusDTO alunoStatus, ProjetosDTO projetos, List<ChamadaDTO> chamada, List<PagamentoDTO>pagamentos) {
         this.id = id;
         this.nome = nome;
@@ -73,6 +75,7 @@ public class AlunosDTO implements Serializable {
         this.pergunta = pergunta;
         this.sangue = sangue;
         this.horario = horario;
+        this.statusPagamento =statusPagamento;
         this.alunoDoenca = alunoDoenca;
         this.alunoStatus = alunoStatus;
         this.projetos = projetos;
@@ -98,9 +101,11 @@ public class AlunosDTO implements Serializable {
         this.complemento = entity.getComplemento();
         this.numero = entity.getNumero();
         this.alunoDoenca = entity.getAlunoDoenca();
+        this.statusPagamento=entity.getStatusPagamento();
         this.sangue = entity.getSangue();
         this.horario = entity.getHorario();
         this.pergunta = entity.getPergunta();
+       
         if (entity.getAlunoStatus() != null) {
             this.alunoStatus = new AlunoStatusDTO(entity.getAlunoStatus());
         } else {
@@ -115,7 +120,7 @@ public class AlunosDTO implements Serializable {
     }
 
 
-    public AlunosDTO(Alunos entity, Projetos projetos, AlunoStatus alunoStatus, List<Chamada> chamada) {
+    public AlunosDTO(Alunos entity, Projetos projetos, AlunoStatus alunoStatus, List<Chamada> chamada, List<Pagamento> pagamentos) {
         this(entity);
         if (projetos != null) {
             this.projetos = new ProjetosDTO(projetos);
@@ -125,6 +130,9 @@ public class AlunosDTO implements Serializable {
         }
         if (chamada != null) {
             chamada.forEach(cha -> this.chamada.add(new ChamadaDTO(cha)));
+        }
+        if (pagamentos !=null) {
+        	pagamentos.forEach(pg-> this.pagamentos.add(new PagamentoDTO(pg)));
         }
     }
 
@@ -193,6 +201,14 @@ public class AlunosDTO implements Serializable {
 
     public LocalTime getHorario() {
 		return horario;
+	}
+
+	public String getStatusPagamento() {
+		return statusPagamento;
+	}
+
+	public void setStatusPagamento(String statusPagamento) {
+		this.statusPagamento = statusPagamento;
 	}
 
 	public void setHorario(LocalTime horario) {
@@ -299,7 +315,15 @@ public class AlunosDTO implements Serializable {
         this.alunoDoenca = alunoDoenca;
     }
 
-    public AlunoStatusDTO getAlunoStatus() {
+    public List<PagamentoDTO> getPagamentos() {
+		return pagamentos;
+	}
+
+	public void setPagamentos(List<PagamentoDTO> pagamentos) {
+		this.pagamentos = pagamentos;
+	}
+
+	public AlunoStatusDTO getAlunoStatus() {
         return alunoStatus;
     }
 
