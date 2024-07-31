@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
+import { Pagamento } from "../models/pagamento";
 
 export function findAll(){
     return axios.get(`${BASE_URL}/pagamento`);
@@ -8,8 +9,8 @@ export function findAll(){
 export function findById(id:number){
     return axios.get(`${BASE_URL}/pagamento/${id}`);
 }
-export function insertPagamento(alunosDTO:any){
-    return axios.post(`${BASE_URL}/pagamento`, alunosDTO);
+export function insertPagamento(pagamento: Pagamento) {
+    return axios.post(`${BASE_URL}/pagamento`, pagamento);
 }
 export function updatePagamento(id: number, alunosDTO:any){
     return axios.put(`${BASE_URL}/pagamento/${id}`, alunosDTO);

@@ -25,15 +25,18 @@ public class PagamentoService {
     @Autowired
     private AlunosRepository alunosRepository;
     
-   
-
     @Transactional(readOnly = true)
     public List<PagamentoDTO> findAll() {
         List<Pagamento> list = repository.findAll();
         updateTotalMesForAllPagamentos();
         updateTotalForAllPagamentos();
+        
         return list.stream()
-                   .map(x -> new PagamentoDTO(x, x.getAlunosPG()))
+                   .map(x -> {
+                       PagamentoDTO dto = new PagamentoDTO(x, x.getAlunosPG());
+                       verificarStatusPagamento(dto.getAlunosPG());
+                       return dto;
+                   })
                    .collect(Collectors.toList());
     }
 
@@ -44,7 +47,9 @@ public class PagamentoService {
             throw new EntityNotFoundException("Pagamento não encontrado.");
         }
         Pagamento entity = pagamento.get();
-        return new PagamentoDTO(entity); // O construtor já configura totalMes
+        PagamentoDTO dto = new PagamentoDTO(entity);
+        verificarStatusPagamento(dto.getAlunosPG());
+        return dto;
     }
 
     @Transactional
@@ -54,6 +59,7 @@ public class PagamentoService {
         entity = repository.save(entity);
         updateTotalMesForPagamentos(entity.getMesReferencia());
         updateTotalForAllPagamentos();
+        verificarStatusPagamento(dto.getAlunosPG());
         return new PagamentoDTO(entity);
     }
 
@@ -68,6 +74,7 @@ public class PagamentoService {
         entity = repository.save(entity);
         updateTotalMesForPagamentos(entity.getMesReferencia());
         updateTotalForAllPagamentos();
+        verificarStatusPagamento(dto.getAlunosPG());
         return new PagamentoDTO(entity);
     }
 
@@ -80,6 +87,7 @@ public class PagamentoService {
         repository.deleteById(id);
         updateTotalMesForPagamentos(entity.getMesReferencia());
         updateTotalForAllPagamentos();
+        verificarStatusPagamento(new AlunosDTO(entity.getAlunosPG()));
     }
 
     private void copyDtoToEntity(PagamentoDTO dto, Pagamento entity) {
@@ -129,6 +137,7 @@ public class PagamentoService {
             repository.save(pagamento);
         }
     }
+
     @Transactional(readOnly = true)
     public List<PagamentoDTO> findPagamentosMesAtual() {
         LocalDate hoje = LocalDate.now();
@@ -139,9 +148,14 @@ public class PagamentoService {
         updateTotalMesForAllPagamentos();
         updateTotalForAllPagamentos();
         return pagamentosMesAtual.stream()
-                                 .map(x -> new PagamentoDTO(x, x.getAlunosPG()))
+                                 .map(x -> {
+                                     PagamentoDTO dto = new PagamentoDTO(x, x.getAlunosPG());
+                                     verificarStatusPagamento(dto.getAlunosPG());
+                                     return dto;
+                                 })
                                  .collect(Collectors.toList());
     }
+
     @Transactional(readOnly = true)
     public List<PagamentoDTO> findPagamentosByMesReferencia(MesReferencia mesReferencia) {
         // Busca todos os pagamentos para o mesReferencia fornecido
@@ -154,10 +168,40 @@ public class PagamentoService {
 
         // Converte a lista de pagamentos para a lista de DTOs
         return pagamentos.stream()
-                         .map(pagamento -> new PagamentoDTO(pagamento, pagamento.getAlunosPG()))
+                         .map(pagamento -> {
+                             PagamentoDTO dto = new PagamentoDTO(pagamento, pagamento.getAlunosPG());
+                             verificarStatusPagamento(dto.getAlunosPG());
+                             return dto;
+                         })
                          .collect(Collectors.toList());
     }
 
+    public void verificarStatusPagamento(AlunosDTO dto) {
+        LocalDate hoje = LocalDate.now();
+        LocalDate dia10DoMes = LocalDate.of(hoje.getYear(), hoje.getMonth(), 10);
+        
+        // Verifica se há pelo menos um pagamento registrado
+        boolean temPagamento = !dto.getPagamentos().isEmpty();
+
+        // Verifica se há pelo menos um pagamento para cada mês até o mês atual
+        boolean todosMesesPagos = true;
+        for (int i = 1; i <= hoje.getMonthValue(); i++) {
+            MesReferencia mesReferencia = MesReferencia.fromNumero(i);
+            boolean mesPago = dto.getPagamentos().stream()
+                .anyMatch(pagamento -> pagamento.getMesReferencia().equals(mesReferencia));
+            if (!mesPago) {
+                todosMesesPagos = false;
+                break;
+            }
+        }
+        
+        // Determina o status de acordo com a data e a presença de pagamentos
+        if (todosMesesPagos && temPagamento) {
+            dto.setStatusPagamento("Pago");
+        } else if (hoje.isBefore(dia10DoMes)) {
+            dto.setStatusPagamento("Em Dia");
+        } else {
+            dto.setStatusPagamento("Pendente");
+        }
+    }
 }
-
-

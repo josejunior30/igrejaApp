@@ -1,42 +1,43 @@
 
 
-export type AlunoPG={
-    id:number;
-    nome:string;
-    statusPagamento:string;
-    pagamentos: Pagamento
-}
-
-
 export type Pagamento= {
-    [x: string]: any;
+    pagamento: any;
     id: number;
     valor: number;
     dataPagamento: Date;
     totalMes: number;
     total: number;	
-    formaPagamento:number;
+    formaPagamento:FormaPagamento;
  mesReferencia: MesReferencia;
+ alunosPG: AlunoPG;
 
 
 }
+
+export type AlunoPG={
+    id:number;
+    nome:string;
+  
+}
+
+
 export enum FormaPagamento {
-    PIX = 'pix',
-    DINHEIRO = 'dinheiro',
-    PENDENTE = 'pendente',
-    GRATIS = 'gratis'
+    PIX = 'PIX',
+    DINHEIRO = 'DINHEIRO',
+    PENDENTE = 'PENDENTE',
+    GRATIS = 'GRATIS'
 }
 export enum MesReferencia {
-    JANEIRO = 'janeiro',
-    FEVEREIRO = 'fevereiro',
-    MARCO = 'março',
-    ABRIL = 'abril',
-    MAIO = 'maio',
-    JUNHO = 'junho',
-    JULHO = 'julho',
-    AGOSTO = 'agosto',
-    SETEMBRO = 'setembro',
-    OUTUBRO = 'outubro',
-    NOVEMBRO = 'novembro',
-    DEZEMBRO = 'dezembro'
+    JANEIRO = 'JANEIRO',
+    FEVEREIRO = 'FEVEREIRO',
+    MARCO = 'MARÇO',
+    ABRIL = 'ABRIL',
+    MAIO = 'MAIO',
+    JUNHO = 'JUNHO',
+    JULHO = 'JULHO',
+    AGOSTO = 'AGOSTO',
+    SETEMBRO = 'SETEMBRO',
+    OUTUBRO = 'OUTUBRO',
+    NOVEMBRO = 'NOVEMBRO',
+    DEZEMBRO = 'DEZEMBRO'
 }

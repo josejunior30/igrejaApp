@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { AlunoPG, MesReferencia, Pagamento } from "../../../models/pagamento";
-import { findByMesAtual } from "../../../service/pagamentoService"; 
+import { AlunoPG, FormaPagamento, MesReferencia, Pagamento } from "../../../models/pagamento";
+import { findByMes, findByMesAtual, insertPagamento } from "../../../service/pagamentoService"; 
 import Header from "../../../components/Header";
 import './styles.css';
 import { findAll } from "../../../service/alunosService";
@@ -12,17 +12,29 @@ const ListaPagamento: React.FC = () => {
     const [total, setTotal] = useState<number | null>(null);
     const [totalMes, setTotalMes] = useState<number | null>(null);
     const [alunos, setAlunos] = useState<AlunoPG[]>([]);
+    const [selectedMonth, setSelectedMonth] = useState<MesReferencia | ''>('');
+    const [selectedAluno, setSelectedAluno] = useState<number | ''>('');
+    const [paymentValue, setPaymentValue] = useState<number | ''>('');
+    const [paymentDate, setPaymentDate] = useState<string>('');
+    const [paymentMethod, setPaymentMethod] = useState<FormaPagamento | ''>('');
+    const [paymentMonth, setPaymentMonth] = useState<MesReferencia | ''>('');
 
     useEffect(() => {
         const fetchPagamentos = async () => {
             try {
                 const response = await findByMesAtual();
                 console.log('Dados dos pagamentos:', response.data);
-                setPagamentos(response.data);
 
-                if (response.data.length > 0) {
-                    setTotal(response.data[0].total || 0);
-                    setTotalMes(response.data[0].totalMes || 0);
+                const pagamentosComData: Pagamento[] = response.data.map((pagamento: Pagamento) => ({
+                    ...pagamento,
+                    dataPagamento: new Date(pagamento.dataPagamento)
+                }));
+
+                setPagamentos(pagamentosComData);
+
+                if (pagamentosComData.length > 0) {
+                    setTotal(pagamentosComData[0].total || 0);
+                    setTotalMes(pagamentosComData[0].totalMes || 0);
                 }
             } catch (error) {
                 setError("Erro ao carregar pagamentos");
@@ -44,6 +56,87 @@ const ListaPagamento: React.FC = () => {
         fetchAlunos();
     }, []);
 
+    const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedMonth(e.target.value as MesReferencia);
+    };
+
+    const fetchPagamentosForMonth = async () => {
+        if (selectedMonth === '') return;
+
+        try {
+            const response = await findByMes(selectedMonth);
+
+            const pagamentosComData: Pagamento[] = response.data.map((pagamento: Pagamento) => ({
+                ...pagamento,
+                dataPagamento: new Date(pagamento.dataPagamento)
+            }));
+
+            console.log('Pagamentos para o mês selecionado:', pagamentosComData);
+            setPagamentos(pagamentosComData);
+            
+            if (pagamentosComData.length > 0) {
+                setTotal(pagamentosComData[0].total || 0);
+                setTotalMes(pagamentosComData[0].totalMes || 0);
+            } else {
+                setTotal(0);
+                setTotalMes(0);
+            }
+        } catch (error) {
+            console.error('Erro ao carregar pagamentos para o mês selecionado:', error);
+            setError("Erro ao carregar pagamentos");
+        }
+    };
+
+    const handleAddPayment = async () => {
+        if (selectedAluno === '' || paymentValue === '' || paymentDate === '' || !paymentMethod || paymentMonth === '') return;
+
+        const newPayment: Pagamento = {
+            id: 0, // ID será gerado pelo backend
+            valor: Number(paymentValue),
+            dataPagamento: new Date(paymentDate),
+            totalMes: totalMes || 0,
+            total: total || 0,
+            formaPagamento: paymentMethod as FormaPagamento,
+            mesReferencia: paymentMonth as MesReferencia,
+            pagamento: '', // Ajustar conforme necessário
+            alunosPG:  {id: Number(selectedAluno), nome:"" } // Associando o aluno
+        };
+
+        console.log('Novo pagamento:', newPayment);
+
+        try {
+            await insertPagamento(newPayment);
+            alert('Pagamento adicionado com sucesso!');
+            setSelectedAluno('');
+            setPaymentValue('');
+            setPaymentDate('');
+            setPaymentMethod('');
+            setPaymentMonth('');
+            fetchPagamentosForMonth();
+        } catch (error) {
+            console.error('Erro ao adicionar pagamento:', error);
+            setError("Erro ao adicionar pagamento");
+        }
+    };
+
+    const getStatus = (pagamentoDoAluno: Pagamento | undefined, currentDate: Date, month: MesReferencia) => {
+        if (pagamentoDoAluno) {
+            return 'PAGO';
+        }
+
+        const selectedMonthIndex = Object.values(MesReferencia).indexOf(month);
+        const tenthOfSelectedMonth = new Date(currentDate.getFullYear(), selectedMonthIndex, 10);
+        const twentiethOfSelectedMonth = new Date(currentDate.getFullYear(), selectedMonthIndex, 20);
+
+        if (currentDate <= tenthOfSelectedMonth) {
+            return 'EM DIA';
+        } else if (currentDate > twentiethOfSelectedMonth) {
+            return 'PENDENTE';
+        } else {
+            return 'PENDENTE';
+        }
+    };
+
     if (loading) {
         return <div>Carregando...</div>;
     }
@@ -51,22 +144,42 @@ const ListaPagamento: React.FC = () => {
     if (error) {
         return <div>{error}</div>;
     }
+
     const getStatusClass = (status: string) => {
-        return status === 'Pendente' ? 'status-pendente' : 'status-default';
+        switch (status) {
+            case 'PAGO':
+                return 'status-pago';
+            case 'EM DIA':
+                return 'status-em-dia';
+            case 'PENDENTE':
+                return 'status-pendente';
+            default:
+                return 'status-default';
+        }
     };
+
+    const currentDate = new Date();
 
     return (
         <>
             <Header />
             <div className="container-fluid">
                 <div className="row justify-content-center mt-5">
-                    <div className="col-9 col-md-4 mt-5 pt-5">
-                        <select className="form-control">
-                            <option value="">Selecione o mês</option>
-                            {Object.values(MesReferencia).map(mes => (
-                                <option key={mes} value={mes}>{mes.charAt(0).toUpperCase() + mes.slice(1)}</option>
-                            ))}
-                        </select>
+                    <div className="col-9 col-md-4 mt-5 pt-5 ">
+                        <div className="d-flex">
+                            <select className="form-control me-3" onChange={handleMonthChange} value={selectedMonth}>
+                                <option value="">Selecione o mês</option>
+                                {Object.values(MesReferencia).map(mes => (
+                                    <option key={mes} value={mes}>{mes.charAt(0).toUpperCase() + mes.slice(1)}</option>
+                                ))}
+                            </select>
+                            <button 
+                                className="btn btn-primary ml-2" 
+                                onClick={fetchPagamentosForMonth}
+                            >
+                                Buscar
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
@@ -100,32 +213,80 @@ const ListaPagamento: React.FC = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {alunos.map(aluno => (
-                                        aluno.pagamentos.length > 0 ? (
-                                            aluno.pagamentos.map((pagamento: { id: React.Key | null | undefined; valor: any; dataPagamento: string | number | Date; formaPagamento: any; }) => (
-                                                <tr key={pagamento.id}>
-                                                    <td>{aluno.id}</td>
-                                                    <td>{aluno.nome}</td>
-                                                    <td>{aluno.statusPagamento}</td>
-                                                    <td>{pagamento.valor || '---'}</td>
-                                                    <td>{pagamento.dataPagamento ? new Date(pagamento.dataPagamento).toLocaleDateString() : '---'}</td>
-                                                    <td>{pagamento.formaPagamento || '---'}</td>
-                                                </tr>
-                                            ))
-                                        ) : (
+                                    {alunos.map(aluno => {
+                                        const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.id === aluno.id);
+                                        const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
+                                        return (
                                             <tr key={aluno.id}>
                                                 <td>{aluno.id}</td>
                                                 <td>{aluno.nome}</td>
-                                                <td className={getStatusClass(aluno.statusPagamento)}>{aluno.statusPagamento}</td>
-                                                <td>---</td>
-                                                <td>---</td>
-                                                <td>---</td>
+                                                <td className={getStatusClass(status)}>{status}</td>
+                                                <td>{pagamentoDoAluno?.valor || '-'}</td>
+                                                <td>{pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}</td>
+                                                <td>{pagamentoDoAluno?.formaPagamento || '-'}</td>
                                             </tr>
-                                        )
-                                    ))}
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         )}
+                    </div>
+                </div>
+                
+                <div className="row justify-content-center mt-5">
+                    <div className="col-9 col-md-4">
+                        <h4>Adicionar Pagamento</h4>
+                        <div className="form-group mt-3">
+                            <label>Aluno:</label>
+                            <select className="form-control" onChange={(e) => setSelectedAluno(Number(e.target.value))} value={selectedAluno}>
+                                <option value="">Selecione o aluno</option>
+                                {alunos.map(aluno => (
+                                    <option key={aluno.id} value={aluno.id}>{aluno.nome}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="form-group mt-3">
+                            <label>Valor:</label>
+                            <input 
+                                type="number" 
+                                className="form-control" 
+                                value={paymentValue} 
+                                onChange={(e) => setPaymentValue(Number(e.target.value))}
+                            />
+                        </div>
+                        <div className="form-group mt-3">
+                            <label>Data do Pagamento:</label>
+                            <input 
+                                type="date" 
+                                className="form-control" 
+                                value={paymentDate} 
+                                onChange={(e) => setPaymentDate(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group mt-3">
+                            <label>Forma de Pagamento:</label>
+                            <select className="form-control" onChange={(e) => setPaymentMethod(e.target.value as FormaPagamento)} value={paymentMethod}>
+                                <option value="">Selecione a forma de pagamento</option>
+                                {Object.values(FormaPagamento).map(forma => (
+                                    <option key={forma} value={forma}>{forma.charAt(0).toUpperCase() + forma.slice(1)}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="form-group mt-3">
+                            <label>Mês Referência:</label>
+                            <select className="form-control" onChange={(e) => setPaymentMonth(e.target.value as MesReferencia)} value={paymentMonth}>
+                                <option value="">Selecione o mês de referência</option>
+                                {Object.values(MesReferencia).map(mes => (
+                                    <option key={mes} value={mes}>{mes.charAt(0).toUpperCase() + mes.slice(1)}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <button 
+                            className="btn btn-success mt-3"
+                            onClick={handleAddPayment}
+                        >
+                            Adicionar Pagamento
+                        </button>
                     </div>
                 </div>
             </div>

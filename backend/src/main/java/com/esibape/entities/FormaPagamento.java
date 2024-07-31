@@ -2,9 +2,8 @@ package com.esibape.entities;
 
 public enum FormaPagamento {
     PIX(1, "pix"),
-    DINHEIRO(2, "dinheiro"),
-    PENDENTE(3, "pendente"),
-    GRATIS(4, "gratis");
+    DINHEIRO(2, "dinheiro");
+  
 
     private int codigo;
     private String descricao;
