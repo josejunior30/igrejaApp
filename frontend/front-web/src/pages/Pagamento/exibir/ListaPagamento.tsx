@@ -90,6 +90,12 @@ const ListaPagamento: React.FC = () => {
     const handleAddPayment = async () => {
         if (selectedAluno === '' || paymentValue === '' || paymentDate === '' || !paymentMethod || paymentMonth === '') return;
 
+        const alunoSelecionado = alunos.find(aluno => aluno.id === Number(selectedAluno));
+        if (!alunoSelecionado) {
+            setError("Aluno não encontrado");
+            return;
+        }
+
         const newPayment: Pagamento = {
             id: 0, // ID será gerado pelo backend
             valor: Number(paymentValue),
@@ -98,8 +104,9 @@ const ListaPagamento: React.FC = () => {
             total: total || 0,
             formaPagamento: paymentMethod as FormaPagamento,
             mesReferencia: paymentMonth as MesReferencia,
-            pagamento: '', // Ajustar conforme necessário
-            alunosPG:  {id: Number(selectedAluno), nome:"" } // Associando o aluno
+            alunosPG: alunoSelecionado // Associando o aluno completo
+            ,
+            pagamento: undefined
         };
 
         console.log('Novo pagamento:', newPayment);
@@ -160,12 +167,82 @@ const ListaPagamento: React.FC = () => {
 
     const currentDate = new Date();
 
+    
     return (
         <>
             <Header />
-            <div className="container-fluid">
-                <div className="row justify-content-center mt-5">
-                    <div className="col-9 col-md-4 mt-5 pt-5 ">
+            <div className="container-fluid pt-4">
+              
+                <div className="row justify-content-center mt-5 pt-5">
+                    <div className="col-10 col-md-9 align-items-center text-center">
+                        <div className="container-white p-3">
+                            <div className="row mt-3" id="inserirPG">
+                                <div className="col-4">
+                                    <div className="form-group">
+                                        <label>Aluno</label>
+                                        <select className="form-control" value={selectedAluno} onChange={(e) => setSelectedAluno(Number(e.target.value))}>
+                                            <option value="" className="text-center">Selecione</option>
+                                            {alunos.map(aluno => (
+                                                <option key={aluno.id} value={aluno.id}>{aluno.nome}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="col-3">
+                                    <div className="form-group">
+                                        <label>Data de Pagamento</label>
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            value={paymentDate}
+                                            onChange={(e) => setPaymentDate(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-2">
+                                    <div className="form-group">
+                                        <label>Valor Pago</label>
+                                        <input
+                                            type="number"
+                                            className="form-control "
+                                            value={paymentValue}
+                                            onChange={(e) => setPaymentValue(Number(e.target.value))}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row mt-3" id="inserirPG">
+                                <div className="col-4">
+                                    <div className="form-group">
+                                        <label>Forma de Pagamento</label>
+                                        <select className="form-control" value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value as FormaPagamento)}>
+                                            <option value="" className="text-center">Selecione</option>
+                                            {Object.values(FormaPagamento).map(forma => (
+                                                <option key={forma} value={forma}>{forma}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="col-3">
+                                    <div className="form-group">
+                                        <label>Mês de Referência</label>
+                                        <select className="form-control" value={paymentMonth} onChange={(e) => setPaymentMonth(e.target.value as MesReferencia)}>
+                                            <option value="">Selecione o mês</option>
+                                            {Object.values(MesReferencia).map(mes => (
+                                                <option key={mes} value={mes}>{mes.charAt(0).toUpperCase() + mes.slice(1)}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="col-4 mt-4 pe-5">
+                                    <button className="btn btn-primary" onClick={handleAddPayment}>Adicionar Pagamento</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row justify-content-center mt-1">
+                    <div className="col-9 col-md-4 mt-3">
                         <div className="d-flex">
                             <select className="form-control me-3" onChange={handleMonthChange} value={selectedMonth}>
                                 <option value="">Selecione o mês</option>
@@ -173,31 +250,27 @@ const ListaPagamento: React.FC = () => {
                                     <option key={mes} value={mes}>{mes.charAt(0).toUpperCase() + mes.slice(1)}</option>
                                 ))}
                             </select>
-                            <button 
-                                className="btn btn-primary ml-2" 
-                                onClick={fetchPagamentosForMonth}
-                            >
+                            <button className="btn btn-primary ml-2" onClick={fetchPagamentosForMonth}>
                                 Buscar
                             </button>
                         </div>
                     </div>
                 </div>
-                
                 <div className="row justify-content-center" id="valor">
                     <div className="col-9 col-md-4 mt-5 offset-">
                         {totalMes !== null && (
                             <h3 className="valor">Total do Mês: R${totalMes}</h3>
                         )}
                     </div>
-                    <div className="col-9 col-md-4 mt-5 ">
+                    <div className="col-9 col-md-4 mt-5">
                         {total !== null && (
                             <h3>Todos os meses: R$ {total}</h3>
                         )}
                     </div>
                 </div>
-
+    
                 <div className="row justify-content-center mt-3">
-                    <div className="col-9 col-md-10 ">
+                    <div className="col-9 col-md-10">
                         {alunos.length === 0 ? (
                             <p>Nenhum aluno encontrado.</p>
                         ) : (
@@ -214,7 +287,7 @@ const ListaPagamento: React.FC = () => {
                                 </thead>
                                 <tbody>
                                     {alunos.map(aluno => {
-                                        const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.id === aluno.id);
+                                        const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
                                         const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
                                         return (
                                             <tr key={aluno.id}>
@@ -232,66 +305,12 @@ const ListaPagamento: React.FC = () => {
                         )}
                     </div>
                 </div>
-                
-                <div className="row justify-content-center mt-5">
-                    <div className="col-9 col-md-4">
-                        <h4>Adicionar Pagamento</h4>
-                        <div className="form-group mt-3">
-                            <label>Aluno:</label>
-                            <select className="form-control" onChange={(e) => setSelectedAluno(Number(e.target.value))} value={selectedAluno}>
-                                <option value="">Selecione o aluno</option>
-                                {alunos.map(aluno => (
-                                    <option key={aluno.id} value={aluno.id}>{aluno.nome}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="form-group mt-3">
-                            <label>Valor:</label>
-                            <input 
-                                type="number" 
-                                className="form-control" 
-                                value={paymentValue} 
-                                onChange={(e) => setPaymentValue(Number(e.target.value))}
-                            />
-                        </div>
-                        <div className="form-group mt-3">
-                            <label>Data do Pagamento:</label>
-                            <input 
-                                type="date" 
-                                className="form-control" 
-                                value={paymentDate} 
-                                onChange={(e) => setPaymentDate(e.target.value)}
-                            />
-                        </div>
-                        <div className="form-group mt-3">
-                            <label>Forma de Pagamento:</label>
-                            <select className="form-control" onChange={(e) => setPaymentMethod(e.target.value as FormaPagamento)} value={paymentMethod}>
-                                <option value="">Selecione a forma de pagamento</option>
-                                {Object.values(FormaPagamento).map(forma => (
-                                    <option key={forma} value={forma}>{forma.charAt(0).toUpperCase() + forma.slice(1)}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="form-group mt-3">
-                            <label>Mês Referência:</label>
-                            <select className="form-control" onChange={(e) => setPaymentMonth(e.target.value as MesReferencia)} value={paymentMonth}>
-                                <option value="">Selecione o mês de referência</option>
-                                {Object.values(MesReferencia).map(mes => (
-                                    <option key={mes} value={mes}>{mes.charAt(0).toUpperCase() + mes.slice(1)}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <button 
-                            className="btn btn-success mt-3"
-                            onClick={handleAddPayment}
-                        >
-                            Adicionar Pagamento
-                        </button>
-                    </div>
-                </div>
             </div>
         </>
     );
+    
+    
+    
 };
 
 export default ListaPagamento;

@@ -43,6 +43,7 @@ return (
 {showSubmenu && (
     <ul className="submenu">
         <li><Link to="/alunos">Alunos</Link></li>
+        <li><Link to="/pagamento">Pagamentos</Link></li>
         <li><Link to="/relatorio">Relatórios</Link></li>
         <li><Link to="/chamada">Lista de Presença</Link></li>
     </ul>

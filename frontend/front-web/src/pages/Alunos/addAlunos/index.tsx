@@ -3,15 +3,13 @@ import { alunoDTO, projetos } from "../../../models/alunos";
 import axios from "axios";
 import { BASE_URL } from "../../../ultilitarios/system";
 import { insertAluno } from "../../../service/alunosService";
-import SuccessModal from "../../../components/Modal";
+
 import './styles.css';
 import Header from "../../../components/Header";
 import { useNavigate } from "react-router-dom";
 
 const AddAlunos: React.FC = () => {
     const [projetos, setProjetos] = useState<projetos[]>([]);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [isRedirecting, setIsRedirecting] = useState(false);
     const navigate = useNavigate();
     const [alunosDTO, setAlunosDTO] = useState<alunoDTO>({
         id: 0,
@@ -38,7 +36,7 @@ const AddAlunos: React.FC = () => {
         const fetchGrupos = async () => {
             try {
                 const response = await axios.get(`${BASE_URL}/projetos`);
-                setProjetos((await response).data);
+                setProjetos(response.data);
             } catch (error) {
                 console.error("Erro ao obter a lista de grupos:", error);
             }
@@ -66,16 +64,17 @@ const AddAlunos: React.FC = () => {
                     ...prevAlunosDTO,
                     [name]: dataNascimento,
                 }));
-            } else {
-                console.error("Data inválida:", value);
             }
-            } else if (name === "telefone") {
-                let telefone = value;
-                if (!telefone.startsWith("21")) {
-                    telefone = "21" + telefone.replace(/^21/, '');
-                }
-
-        
+        } else if (name === "telefone") {
+            let telefone = value;
+            if (!telefone.startsWith("21")) {
+                telefone = "21" + telefone.replace(/^21/, '');
+            }
+            setAlunosDTO((prevAlunosDTO) => ({
+                ...prevAlunosDTO,
+                [name]: telefone,
+            }));
+        } else {
             setAlunosDTO((prevAlunosDTO) => ({
                 ...prevAlunosDTO,
                 [name]: value,
@@ -93,7 +92,7 @@ const AddAlunos: React.FC = () => {
         try {
             console.log("Membro Detail antes do POST:", alunosDTO);
             await insertAluno(alunosDTO);
-            setIsModalVisible(true);
+
             setAlunosDTO({
                 id: 0,
                 nome: "",
@@ -119,10 +118,6 @@ const AddAlunos: React.FC = () => {
         }
     };
 
-    const handleModalClose = () => {
-        setIsModalVisible(false);
-    };
-
     return (
         <>
             <Header />
@@ -144,7 +139,7 @@ const AddAlunos: React.FC = () => {
                             />
                         </div>
                         <div className="col-md-6">
-                            <label htmlFor="sobrenome" className="form-label">Identidade:</label>
+                            <label htmlFor="rg" className="form-label">Identidade:</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -154,9 +149,9 @@ const AddAlunos: React.FC = () => {
                             />
                         </div>
                         <div className="col-md-5">
-                            <label htmlFor="sobrenome" className="form-label">E-mail:</label>
+                            <label htmlFor="email" className="form-label">E-mail:</label>
                             <input
-                                type="text"
+                                type="email"
                                 className="form-control"
                                 name="email"
                                 value={alunosDTO.email}
@@ -164,7 +159,7 @@ const AddAlunos: React.FC = () => {
                             />
                         </div>
                         <div className="col-md-3">
-                            <label htmlFor="data" className="form-label">Nascimento</label>
+                            <label htmlFor="dataNascimento" className="form-label">Nascimento</label>
                             <input
                                 type="date"
                                 className="form-control"
@@ -192,7 +187,7 @@ const AddAlunos: React.FC = () => {
                                 onChange={handleChange}
                                 required
                             >
-                                <option selected>Selecione</option>
+                                <option value="" selected>Selecione</option>
                                 {projetos.map((projeto) => (
                                     <option key={projeto.id} value={projeto.id}>
                                         {projeto.id} - {projeto.nome}
@@ -211,20 +206,20 @@ const AddAlunos: React.FC = () => {
                             />
                         </div>
                         <div className="col-md-6">
-                            <label htmlFor="projetos" className="form-label">Doença ou alergia?:</label>
+                            <label htmlFor="AlunoDoenca" className="form-label">Doença ou alergia?:</label>
                             <select
                                 name="AlunoDoenca"
                                 className="form-select"
                                 value={alunosDTO.AlunoDoenca}
                                 onChange={handleChange}
                             >
-                                <option selected>ESCOLHA</option>
+                                <option value="" selected>ESCOLHA</option>
                                 <option value="0">NÃO</option>
                                 <option value="1">SIM</option>
                             </select>
                         </div>
                         <div className="col-md-6">
-                            <label htmlFor="telefone" className="form-label">Qual?</label>
+                            <label htmlFor="pergunta" className="form-label">Qual?</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -310,7 +305,7 @@ const AddAlunos: React.FC = () => {
                             />
                         </div>
                         <div className="col-md-4">
-                            <label htmlFor="complemento" className="form-label">Cep:</label>
+                            <label htmlFor="cep" className="form-label">Cep:</label>
                             <input
                                 type="text"
                                 name="cep"
@@ -321,13 +316,6 @@ const AddAlunos: React.FC = () => {
                         </div>
                         <div className="d-grid gap-2 col-6 mx-auto">
                             <button className="btn btn-primary" type="submit">Adicionar</button>
-                            {isModalVisible && (
-                                <SuccessModal
-                                    onClose={handleModalClose}
-                                    onRedirect={() => {}}
-                                    operation="adicionar"
-                                />
-                            )}
                         </div>
                     </form>
                 </div>
