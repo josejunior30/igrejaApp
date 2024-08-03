@@ -95,6 +95,8 @@ public class PagamentoService {
         entity.setDataPagamento(dto.getDataPagamento());
         entity.setFormaPagamento(dto.getFormaPagamento());
         entity.setMesReferencia(dto.getMesReferencia());
+        entity.setAtrasado(dto.getAtrasado());
+       
 
         AlunosDTO pgDTO = dto.getAlunosPG();
         Alunos alunos = alunosRepository.getReferenceById(pgDTO.getId());
@@ -107,7 +109,7 @@ public class PagamentoService {
         List<Pagamento> pagamentos = repository.findByMesReferencia(mesReferencia);
 
         for (Pagamento pagamento : pagamentos) {
-            pagamento.setTotalMes(totalMes);
+            pagamento.setTotalMensalidade(totalMes);
             repository.save(pagamento);
         }
     }

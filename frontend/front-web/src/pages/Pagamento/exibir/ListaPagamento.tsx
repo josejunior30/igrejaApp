@@ -179,7 +179,7 @@ const ListaPagamento: React.FC = () => {
                             <div className="row mt-3" id="inserirPG">
                                 <div className="col-4">
                                     <div className="form-group">
-                                        <label>Aluno</label>
+                                        <label className="pagamento">Aluno</label>
                                         <select className="form-control" value={selectedAluno} onChange={(e) => setSelectedAluno(Number(e.target.value))}>
                                             <option value="" className="text-center">Selecione</option>
                                             {alunos.map(aluno => (
@@ -190,7 +190,7 @@ const ListaPagamento: React.FC = () => {
                                 </div>
                                 <div className="col-3">
                                     <div className="form-group">
-                                        <label>Data de Pagamento</label>
+                                        <label className="pagamento">Data de Pagamento</label>
                                         <input
                                             type="date"
                                             className="form-control"
@@ -201,7 +201,7 @@ const ListaPagamento: React.FC = () => {
                                 </div>
                                 <div className="col-2">
                                     <div className="form-group">
-                                        <label>Valor Pago</label>
+                                        <label className="pagamento">Valor Pago</label>
                                         <input
                                             type="number"
                                             className="form-control "
@@ -214,7 +214,7 @@ const ListaPagamento: React.FC = () => {
                             <div className="row mt-3" id="inserirPG">
                                 <div className="col-4">
                                     <div className="form-group">
-                                        <label>Forma de Pagamento</label>
+                                        <label className="pagamento">Forma de Pagamento</label>
                                         <select className="form-control" value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value as FormaPagamento)}>
                                             <option value="" className="text-center">Selecione</option>
                                             {Object.values(FormaPagamento).map(forma => (
@@ -225,7 +225,7 @@ const ListaPagamento: React.FC = () => {
                                 </div>
                                 <div className="col-3">
                                     <div className="form-group">
-                                        <label>Mês de Referência</label>
+                                        <label className="pagamento">Mês de Referência</label>
                                         <select className="form-control" value={paymentMonth} onChange={(e) => setPaymentMonth(e.target.value as MesReferencia)}>
                                             <option value="">Selecione o mês</option>
                                             {Object.values(MesReferencia).map(mes => (
@@ -259,7 +259,7 @@ const ListaPagamento: React.FC = () => {
                 <div className="row justify-content-center" id="valor">
                     <div className="col-9 col-md-4 mt-5 offset-">
                         {totalMes !== null && (
-                            <h3 className="valor">Total do Mês: R${totalMes}</h3>
+                            <h3 className="valor">Mensalidades: R${totalMes}</h3>
                         )}
                     </div>
                     <div className="col-9 col-md-4 mt-5">

@@ -24,7 +24,9 @@ public class Pagamento implements Serializable{
 private Long id;
 private Integer valor;
 private LocalDate dataPagamento;
-private Integer totalMes;
+private Integer totalMensalidade;
+private Integer atrasado;
+private Integer totalmes; 
 private Integer total;	
 private FormaPagamento formaPagamento;
 @Enumerated(EnumType.STRING)
@@ -42,18 +44,28 @@ public Pagamento() {
 
 
 
-public Pagamento(Long id, Integer valor, LocalDate dataPagamento, Integer totalMes, Integer total,
-		FormaPagamento formaPagamento, MesReferencia mesReferencia, Alunos alunosPG) {
+
+
+
+
+public Pagamento(Long id, Integer valor, LocalDate dataPagamento, Integer totalMensalidade, Integer atrasado,
+		Integer totalmes, Integer total, FormaPagamento formaPagamento, MesReferencia mesReferencia, Alunos alunosPG) {
 	super();
 	this.id = id;
 	this.valor = valor;
 	this.dataPagamento = dataPagamento;
-	this.totalMes = totalMes;
+	this.totalMensalidade = totalMensalidade;
+	this.atrasado = atrasado;
+	this.totalmes = totalmes;
 	this.total = total;
 	this.formaPagamento = formaPagamento;
 	this.mesReferencia = mesReferencia;
 	this.alunosPG = alunosPG;
 }
+
+
+
+
 
 
 
@@ -88,14 +100,6 @@ public void setDataPagamento(LocalDate dataPagamento) {
 }
 
 
-public Integer getTotalMes() {
-	return totalMes;
-}
-
-
-public void setTotalMes(Integer totalMes) {
-	this.totalMes = totalMes;
-}
 
 
 public Integer getTotal() {
@@ -118,6 +122,72 @@ public Alunos getAlunosPG() {
 public void setAlunosPG(Alunos alunosPG) {
 	this.alunosPG = alunosPG;
 }
+
+
+
+
+public Integer getTotalMensalidade() {
+	return totalMensalidade;
+}
+
+
+
+
+
+
+
+
+public void setTotalMensalidade(Integer totalMensalidade) {
+	this.totalMensalidade = totalMensalidade;
+}
+
+
+
+
+
+
+
+
+public Integer getAtrasado() {
+	return atrasado;
+}
+
+
+
+
+
+
+
+
+public void setAtrasado(Integer atrasado) {
+	this.atrasado = atrasado;
+}
+
+
+
+
+
+
+
+
+public Integer getTotalmes() {
+	return totalmes;
+}
+
+
+
+
+
+
+
+
+public void setTotalmes(Integer totalmes) {
+	this.totalmes = totalmes;
+}
+
+
+
+
 
 
 

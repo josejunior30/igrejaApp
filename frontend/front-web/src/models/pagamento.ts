@@ -5,7 +5,7 @@ export type Pagamento= {
     id: number;
     valor: number;
     dataPagamento: Date;
-    totalMes: number;
+    totalMensalidade: number;
     total: number;	
     formaPagamento:FormaPagamento;
  mesReferencia: MesReferencia;
