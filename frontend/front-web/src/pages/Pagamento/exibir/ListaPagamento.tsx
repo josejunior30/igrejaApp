@@ -10,6 +10,8 @@ const ListaPagamento: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [total, setTotal] = useState<number | null>(null);
+    const [totalPix, setTotalPix] = useState<number | null>(null);
+    const [totalDinheiro, setTotalDinheiro] = useState<number | null>(null);
     const [totalMes, setTotalMes] = useState<number | null>(null);
     const [alunos, setAlunos] = useState<AlunoPG[]>([]);
     const [selectedMonth, setSelectedMonth] = useState<MesReferencia | ''>('');
@@ -34,7 +36,9 @@ const ListaPagamento: React.FC = () => {
 
                 if (pagamentosComData.length > 0) {
                     setTotal(pagamentosComData[0].total || 0);
-                    setTotalMes(pagamentosComData[0].totalMes || 0);
+                    setTotalMes(pagamentosComData[0].totalMensalidade || 0);
+                    setTotalPix(pagamentosComData[0].totalPix || 0);
+                    setTotalDinheiro(pagamentosComData[0].totalDinheiro ||0);
                 }
             } catch (error) {
                 setError("Erro ao carregar pagamentos");
@@ -76,10 +80,14 @@ const ListaPagamento: React.FC = () => {
             
             if (pagamentosComData.length > 0) {
                 setTotal(pagamentosComData[0].total || 0);
-                setTotalMes(pagamentosComData[0].totalMes || 0);
+                setTotalMes(pagamentosComData[0].totalMensalidade || 0);
+                setTotalPix(pagamentosComData[0].totalPix || 0);
+                setTotalDinheiro(pagamentosComData[0].totalDinheiro || 0);
             } else {
                 setTotal(0);
                 setTotalMes(0);
+                setTotalPix(0);
+                setTotalDinheiro(0);
             }
         } catch (error) {
             console.error('Erro ao carregar pagamentos para o mês selecionado:', error);
@@ -100,8 +108,10 @@ const ListaPagamento: React.FC = () => {
             id: 0, // ID será gerado pelo backend
             valor: Number(paymentValue),
             dataPagamento: new Date(paymentDate),
-            totalMes: totalMes || 0,
+            totalMensalidade: totalMes || 0,
             total: total || 0,
+            totalPix: totalPix || 0,
+            totalDinheiro: totalDinheiro ||0,
             formaPagamento: paymentMethod as FormaPagamento,
             mesReferencia: paymentMonth as MesReferencia,
             alunosPG: alunoSelecionado // Associando o aluno completo
@@ -256,18 +266,37 @@ const ListaPagamento: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="row justify-content-center" id="valor">
-                    <div className="col-9 col-md-4 mt-5 offset-">
+                
+                <div className="row offset-1" id="valor" >
+                    <div className="col-9 col-md-12 " >
                         {totalMes !== null && (
                             <h3 className="valor">Mensalidades: R${totalMes}</h3>
                         )}
                     </div>
-                    <div className="col-9 col-md-4 mt-5">
-                        {total !== null && (
-                            <h3>Todos os meses: R$ {total}</h3>
+                
+
+                
+                    <div className="col-9 col-md-9">
+                        {totalPix !== null && (
+                            <h3 className="valor">Pix: R${totalPix}</h3>
                         )}
                     </div>
-                </div>
+                
+                
+                    <div className="col-9 col-md-9 ">
+                        {totalDinheiro !== null && (
+                            <h3 className="valor">Dinheiro: R${totalDinheiro}</h3>
+                        )}
+                    </div>
+                  
+                    <div className="col-9 col-md-4 ">
+                        {totalDinheiro !== null && (
+                        
+                            <h2 className="totalMes">TOTAL RCEBIDO: R${totalDinheiro}</h2>
+                        )}
+                    </div>
+                   </div>
+                
     
                 <div className="row justify-content-center mt-3">
                     <div className="col-9 col-md-10">

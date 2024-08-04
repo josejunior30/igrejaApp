@@ -27,7 +27,10 @@ private LocalDate dataPagamento;
 private Integer totalMensalidade;
 private Integer atrasado;
 private Integer totalmes; 
-private Integer total;	
+private Integer total;
+private Integer totalPix;
+private Integer totalDinheiro;
+@Enumerated(EnumType.STRING)
 private FormaPagamento formaPagamento;
 @Enumerated(EnumType.STRING)
 private MesReferencia mesReferencia;
@@ -43,13 +46,9 @@ public Pagamento() {
 
 
 
-
-
-
-
-
 public Pagamento(Long id, Integer valor, LocalDate dataPagamento, Integer totalMensalidade, Integer atrasado,
-		Integer totalmes, Integer total, FormaPagamento formaPagamento, MesReferencia mesReferencia, Alunos alunosPG) {
+		Integer totalmes, Integer total, Integer totalPix, Integer totalDinheiro, FormaPagamento formaPagamento,
+		MesReferencia mesReferencia, Alunos alunosPG) {
 	super();
 	this.id = id;
 	this.valor = valor;
@@ -58,10 +57,20 @@ public Pagamento(Long id, Integer valor, LocalDate dataPagamento, Integer totalM
 	this.atrasado = atrasado;
 	this.totalmes = totalmes;
 	this.total = total;
+	this.totalPix = totalPix;
+	this.totalDinheiro = totalDinheiro;
 	this.formaPagamento = formaPagamento;
 	this.mesReferencia = mesReferencia;
 	this.alunosPG = alunosPG;
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -132,18 +141,9 @@ public Integer getTotalMensalidade() {
 
 
 
-
-
-
-
-
 public void setTotalMensalidade(Integer totalMensalidade) {
 	this.totalMensalidade = totalMensalidade;
 }
-
-
-
-
 
 
 
@@ -154,8 +154,27 @@ public Integer getAtrasado() {
 
 
 
+public Integer getTotalPix() {
+	return totalPix;
+}
 
 
+
+public void setTotalPix(Integer totalPix) {
+	this.totalPix = totalPix;
+}
+
+
+
+public Integer getTotalDinheiro() {
+	return totalDinheiro;
+}
+
+
+
+public void setTotalDinheiro(Integer totalDinheiro) {
+	this.totalDinheiro = totalDinheiro;
+}
 
 
 

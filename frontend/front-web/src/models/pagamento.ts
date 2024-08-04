@@ -6,6 +6,8 @@ export type Pagamento= {
     valor: number;
     dataPagamento: Date;
     totalMensalidade: number;
+    totalPix: number;
+    totalDinheiro:number;
     total: number;	
     formaPagamento:FormaPagamento;
  mesReferencia: MesReferencia;

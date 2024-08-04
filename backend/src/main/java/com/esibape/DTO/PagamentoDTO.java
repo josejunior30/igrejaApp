@@ -2,9 +2,6 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.esibape.entities.Alunos;
 import com.esibape.entities.FormaPagamento;
 import com.esibape.entities.MesReferencia;
@@ -21,18 +18,21 @@ public class PagamentoDTO implements Serializable {
     private Integer atrasado;
     private Integer totalmes; 
     private Integer total;
+    private Integer totalPix;
+    private Integer totalDinheiro;
     private FormaPagamento formaPagamento;
     private MesReferencia mesReferencia;
     private AlunosDTO alunosPG;
-
+  
+    
     public PagamentoDTO() {
     }
 
     
 
-    public PagamentoDTO(Long id, Integer valor, LocalDate dataPagamento, Integer totalMensalidade, Integer atrasado,
+	public PagamentoDTO(Long id, Integer valor, LocalDate dataPagamento, Integer totalMensalidade, Integer atrasado,
 			Integer totalmes, Integer total, FormaPagamento formaPagamento, MesReferencia mesReferencia,
-			AlunosDTO alunosPG) {
+			AlunosDTO alunosPG, Integer totalPix, Integer totalDinheiro) {
 		super();
 		this.id = id;
 		this.valor = valor;
@@ -44,7 +44,11 @@ public class PagamentoDTO implements Serializable {
 		this.formaPagamento = formaPagamento;
 		this.mesReferencia = mesReferencia;
 		this.alunosPG = alunosPG;
+		this.totalPix = totalPix;
+		this.totalDinheiro = totalDinheiro;
 	}
+
+
 
 
 
@@ -58,6 +62,9 @@ public class PagamentoDTO implements Serializable {
         this.mesReferencia = entity.getMesReferencia();
         this.atrasado = entity.getAtrasado();
         this.totalMensalidade = entity.getTotalMensalidade();
+        this.totalPix = entity.getTotalPix();
+        this.totalDinheiro = entity.getTotalDinheiro();
+        
        
        
     }
@@ -108,6 +115,38 @@ public class PagamentoDTO implements Serializable {
 	public Integer getAtrasado() {
 		return atrasado;
 	}
+
+
+
+	public Integer getTotalPix() {
+		return totalPix;
+	}
+
+
+
+
+
+	public void setTotalPix(Integer totalPix) {
+		this.totalPix = totalPix;
+	}
+
+
+
+
+
+	public Integer getTotalDinheiro() {
+		return totalDinheiro;
+	}
+
+
+
+
+
+	public void setTotalDinheiro(Integer totalDinheiro) {
+		this.totalDinheiro = totalDinheiro;
+	}
+
+
 
 
 
