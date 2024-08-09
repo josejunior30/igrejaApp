@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { AlunoPG, FormaPagamento, MesReferencia, Pagamento } from "../../../models/pagamento";
-import { findByMes, findByMesAtual, insertPagamento } from "../../../service/pagamentoService"; 
+import { AlunoPG, FormaPagamento, MesReferencia, Pagamento, EntradaPG } from "../../../models/pagamento";
+import { findByMes as findPagamentoByMes, findByMesAtual, insertPagamento } from "../../../service/pagamentoService"; 
+import { findByMes as findEntradaByMes, insertEntradaPG } from "../../../service/entradaService"; 
 import Header from "../../../components/Header";
 import './styles.css';
 import { findAll } from "../../../service/alunosService";
-
+import { jsPDF } from "jspdf";
 const ListaPagamento: React.FC = () => {
     const [pagamentos, setPagamentos] = useState<Pagamento[]>([]);
+    const [entradas, setEntradas] = useState<EntradaPG[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [total, setTotal] = useState<number | null>(null);
     const [totalPix, setTotalPix] = useState<number | null>(null);
     const [totalDinheiro, setTotalDinheiro] = useState<number | null>(null);
     const [totalMes, setTotalMes] = useState<number | null>(null);
+    const [totalEntradas, setTotalEntradas] = useState<{ entrada: string, valor: number, formaPagamento: FormaPagamento }[]>([]);
     const [alunos, setAlunos] = useState<AlunoPG[]>([]);
     const [selectedMonth, setSelectedMonth] = useState<MesReferencia | ''>('');
     const [selectedAluno, setSelectedAluno] = useState<number | ''>('');
@@ -20,6 +23,12 @@ const ListaPagamento: React.FC = () => {
     const [paymentDate, setPaymentDate] = useState<string>('');
     const [paymentMethod, setPaymentMethod] = useState<FormaPagamento | ''>('');
     const [paymentMonth, setPaymentMonth] = useState<MesReferencia | ''>('');
+
+    // States for EntradaPG form
+    const [entradaValue, setEntradaValue] = useState<number | ''>('');
+    const [entradaDescription, setEntradaDescription] = useState<string>('');
+    const [entradaPaymentMethod, setEntradaPaymentMethod] = useState<FormaPagamento | ''>('');
+    const [entradaMonth, setEntradaMonth] = useState<MesReferencia | ''>('');
 
     useEffect(() => {
         const fetchPagamentos = async () => {
@@ -38,7 +47,7 @@ const ListaPagamento: React.FC = () => {
                     setTotal(pagamentosComData[0].total || 0);
                     setTotalMes(pagamentosComData[0].totalMensalidade || 0);
                     setTotalPix(pagamentosComData[0].totalPix || 0);
-                    setTotalDinheiro(pagamentosComData[0].totalDinheiro ||0);
+                    setTotalDinheiro(pagamentosComData[0].totalDinheiro || 0);
                 }
             } catch (error) {
                 setError("Erro ao carregar pagamentos");
@@ -56,9 +65,30 @@ const ListaPagamento: React.FC = () => {
             }
         };
 
+        const fetchEntradas = async () => {
+            if (selectedMonth === '') return;
+
+            try {
+                const response = await findEntradaByMes(selectedMonth as MesReferencia);
+                setEntradas(response.data);
+
+                const entradasComValores = response.data.map((entrada: EntradaPG) => ({
+                    entrada: entrada.entrada,
+                    valor: entrada.valor,
+                    formaPagamento: entrada.formaPagamento
+                }));
+
+                setTotalEntradas(entradasComValores);
+            } catch (error) {
+                console.error('Erro ao carregar entradas:', error);
+                setError("Erro ao carregar entradas");
+            }
+        };
+
         fetchPagamentos();
         fetchAlunos();
-    }, []);
+        fetchEntradas();
+    }, [selectedMonth]);
 
     const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedMonth(e.target.value as MesReferencia);
@@ -68,7 +98,7 @@ const ListaPagamento: React.FC = () => {
         if (selectedMonth === '') return;
 
         try {
-            const response = await findByMes(selectedMonth);
+            const response = await findPagamentoByMes(selectedMonth as MesReferencia);
 
             const pagamentosComData: Pagamento[] = response.data.map((pagamento: Pagamento) => ({
                 ...pagamento,
@@ -89,9 +119,21 @@ const ListaPagamento: React.FC = () => {
                 setTotalPix(0);
                 setTotalDinheiro(0);
             }
+
+            // Fetch entradas for the selected month
+            const entradaResponse = await findEntradaByMes(selectedMonth as MesReferencia);
+            setEntradas(entradaResponse.data);
+
+            const entradasComValores = entradaResponse.data.map((entrada: EntradaPG) => ({
+                entrada: entrada.entrada,
+                valor: entrada.valor,
+                formaPagamento: entrada.formaPagamento
+            }));
+
+            setTotalEntradas(entradasComValores);
         } catch (error) {
-            console.error('Erro ao carregar pagamentos para o mês selecionado:', error);
-            setError("Erro ao carregar pagamentos");
+            console.error('Erro ao carregar pagamentos e entradas para o mês selecionado:', error);
+            setError("Erro ao carregar pagamentos e entradas");
         }
     };
 
@@ -111,7 +153,7 @@ const ListaPagamento: React.FC = () => {
             totalMensalidade: totalMes || 0,
             total: total || 0,
             totalPix: totalPix || 0,
-            totalDinheiro: totalDinheiro ||0,
+            totalDinheiro: totalDinheiro || 0,
             formaPagamento: paymentMethod as FormaPagamento,
             mesReferencia: paymentMonth as MesReferencia,
             alunosPG: alunoSelecionado // Associando o aluno completo
@@ -133,6 +175,33 @@ const ListaPagamento: React.FC = () => {
         } catch (error) {
             console.error('Erro ao adicionar pagamento:', error);
             setError("Erro ao adicionar pagamento");
+        }
+    };
+
+    const handleAddEntrada = async () => {
+        if (entradaValue === '' || entradaDescription === '' || !entradaPaymentMethod || entradaMonth === '') return;
+
+        const newEntrada: EntradaPG = {
+            id: 0, // ID será gerado pelo backend
+            valor: Number(entradaValue),
+            entrada: entradaDescription,
+            formaPagamento: entradaPaymentMethod as FormaPagamento,
+            mesReferencia: entradaMonth as MesReferencia,
+        };
+
+        console.log('Nova entrada:', newEntrada);
+
+        try {
+            await insertEntradaPG(newEntrada);
+            alert('Entrada adicionada com sucesso!');
+            setEntradaValue('');
+            setEntradaDescription('');
+            setEntradaPaymentMethod('');
+            setEntradaMonth('');
+            fetchPagamentosForMonth();
+        } catch (error) {
+            console.error('Erro ao adicionar entrada:', error);
+            setError("Erro ao adicionar entrada");
         }
     };
 
@@ -177,6 +246,81 @@ const ListaPagamento: React.FC = () => {
 
     const currentDate = new Date();
 
+    const handlePrint = () => {
+        const doc = new jsPDF();
+        
+        let y = 15;
+        
+        // Cabeçalho
+        doc.setFontSize(18);
+        doc.text("Relatório de Pagamentos", 65, y);
+        y += 10;
+        
+        // Adicionando o Mês de Referência abaixo do título
+        doc.setFontSize(14);
+        doc.text(`Mês de Referência: ${selectedMonth ? selectedMonth.charAt(0).toUpperCase() + selectedMonth.slice(1) : ''}`, 70, y);
+        y += 15;
+        
+        // Dados gerais com fonte 12 e negrito para Sub-Total
+        doc.setFontSize(12);
+        if (totalPix !== null) {
+            doc.setFont('helvetica', 'normal'); // Fonte normal para Pix
+            doc.text(`Pix: R$${totalPix}`, 10, y);
+            y += 7;
+        }
+        if (totalDinheiro !== null) {
+            doc.setFont('helvetica', 'normal'); // Fonte normal para Dinheiro
+            doc.text(`Dinheiro: R$${totalDinheiro}`, 10, y);
+            y += 7;
+        }
+        if (totalMes !== null) {
+            doc.setFont('helvetica', 'bold'); // Negrito para Sub-Total
+            doc.text(`Sub-Total: R$${totalMes}`, 10, y);
+            y += 7;
+        }
+        totalEntradas.forEach((entrada) => {
+            doc.setFont('helvetica', 'normal'); // Fonte normal para as entradas
+            doc.text(`${entrada.entrada} - R$${entrada.valor} (${entrada.formaPagamento})`, 10, y);
+            y += 7;
+        });
+        
+        // TOTAL RECEBIDO com fonte 18, negrito e sublinhado
+        if (total !== null) {
+            y += 5; // adicionar um espaço extra antes do total
+            doc.setFontSize(18);
+            doc.setFont('helvetica', 'bold'); // Negrito para Total Recebido
+            doc.textWithLink(`TOTAL RECEBIDO: R$${total}`, 10, y, { underline: true }); // Texto com sublinhado
+            y += 6;
+        }
+        
+        // Tabela de alunos e pagamentos
+        y += 10;
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold'); 
+        doc.text("ID", 10, y);
+        doc.text("Nome", 20, y);
+        doc.text("Status", 85, y);
+        doc.text("Valor", 115, y);
+        doc.text("Data", 140, y);
+        doc.text("Forma", 180, y);
+        y += 10;
+        
+        alunos.forEach(aluno => {
+            const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
+            const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
+            doc.setFont('helvetica', 'normal'); 
+            doc.text(`${aluno.id}`, 10, y);
+            doc.text(`${aluno.nome}`, 20, y);
+            doc.text(`${status}`, 85, y);
+            doc.text(`${pagamentoDoAluno?.valor || '-'}`, 115, y);
+            doc.text(`${pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}`, 140, y);
+            doc.text(`${pagamentoDoAluno?.formaPagamento || '-'}`, 180, y);
+            y += 10;
+        });
+        
+        doc.save("relatorio_pagamentos.pdf");
+    };
+    
     
     return (
         <>
@@ -251,8 +395,66 @@ const ListaPagamento: React.FC = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="row justify-content-center mt-5 pt-5">
+                    <div className="col-10 col-md-8 align-items-center text-center">
+                        <div className="container-white p-3">
+                            <div className="row mt-3" id="inserirPG">
+                                <div className="col-5">
+                                    <div className="form-group">
+                                        <label className="entrada">Descrição da Entrada</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={entradaDescription}
+                                            onChange={(e) => setEntradaDescription(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-2">
+                                    <div className="form-group">
+                                        <label className="entrada">Valor</label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            value={entradaValue}
+                                            onChange={(e) => setEntradaValue(Number(e.target.value))}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-4">
+                                    <div className="form-group">
+                                        <label className="entrada">Forma de Pagamento</label>
+                                        <select className="form-control" value={entradaPaymentMethod} onChange={(e) => setEntradaPaymentMethod(e.target.value as FormaPagamento)}>
+                                            <option value="" className="text-center">Selecione</option>
+                                            {Object.values(FormaPagamento).map(forma => (
+                                                <option key={forma} value={forma}>{forma}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="col-4">
+                                    <div className="form-group">
+                                        <label className="entrada">Mês de Referência</label>
+                                        <select className="form-control" value={entradaMonth} onChange={(e) => setEntradaMonth(e.target.value as MesReferencia)}>
+                                            <option value="">Selecione o mês</option>
+                                            {Object.values(MesReferencia).map(mes => (
+                                                <option key={mes} value={mes}>{mes.charAt(0).toUpperCase() + mes.slice(1)}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="col-4 mt-4 pe-5">
+                                    <button className="btn btn-primary" onClick={handleAddEntrada}>Adicionar Entrada</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+
                 <div className="row justify-content-center mt-1">
-                    <div className="col-9 col-md-4 mt-3">
+                <div className="col-9 col-md-4 mt-3">
                         <div className="d-flex">
                             <select className="form-control me-3" onChange={handleMonthChange} value={selectedMonth}>
                                 <option value="">Selecione o mês</option>
@@ -265,81 +467,78 @@ const ListaPagamento: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                </div>
-                
-                <div className="row offset-1" id="valor" >
-                    <div className="col-9 col-md-12 " >
-                        {totalMes !== null && (
-                            <h3 className="valor">Mensalidades: R${totalMes}</h3>
-                        )}
-                    </div>
-                
-
-                
-                    <div className="col-9 col-md-9">
+            
+                    <div className="col-9 col-md-9 mt-3">
                         {totalPix !== null && (
                             <h3 className="valor">Pix: R${totalPix}</h3>
                         )}
                     </div>
-                
-                
                     <div className="col-9 col-md-9 ">
                         {totalDinheiro !== null && (
                             <h3 className="valor">Dinheiro: R${totalDinheiro}</h3>
                         )}
                     </div>
-                  
-                    <div className="col-9 col-md-4 ">
-                        {totalDinheiro !== null && (
-                        
-                            <h2 className="totalMes">TOTAL RCEBIDO: R${totalDinheiro}</h2>
+                    <div className="col-9 col-md-9 " >
+                        {totalMes !== null && (
+                            <h3 className="sub-total">Sub-Total: R${totalMes}</h3>
                         )}
                     </div>
-                   </div>
-                
-    
-                <div className="row justify-content-center mt-3">
-                    <div className="col-9 col-md-10">
-                        {alunos.length === 0 ? (
-                            <p>Nenhum aluno encontrado.</p>
-                        ) : (
-                            <table className="table table-striped text-center">
-                                <thead className="thead">
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Nome</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Valor</th>
-                                        <th scope="col">Data de Pagamento</th>
-                                        <th scope="col">Forma de Pagamento</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {alunos.map(aluno => {
-                                        const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
-                                        const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
-                                        return (
-                                            <tr key={aluno.id}>
-                                                <td>{aluno.id}</td>
-                                                <td>{aluno.nome}</td>
-                                                <td className={getStatusClass(status)}>{status}</td>
-                                                <td>{pagamentoDoAluno?.valor || '-'}</td>
-                                                <td>{pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}</td>
-                                                <td>{pagamentoDoAluno?.formaPagamento || '-'}</td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
+                    <div className="col-9 col-md-9 ">
+                        {totalEntradas.length > 0 && totalEntradas.map((entrada, index) => (
+                            <h3 key={index} className="valor">{entrada.entrada} - R${entrada.valor} ({entrada.formaPagamento})</h3>
+                        ))}
+                    </div>
+                    <div className="col-9 col-md-9 ">
+                        {total !== null && (
+                            <h2 className="totalMes">TOTAL RECEBIDO: R${total}</h2>
                         )}
                     </div>
                 </div>
+                <div className="row justify-content-center mt-3">
+                    <div className="col-9 col-md-10">
+                        <button className="btn btn-secondary" onClick={handlePrint}>Imprimir Relatório</button>
+                    </div>
+                    </div>
+                    <div className="row justify-content-center mt-3">
+    <div className="col-9 col-md-10">
+        {alunos.length === 0 ? (
+            <p>Nenhum aluno encontrado.</p>
+        ) : (
+            <table className="table table-striped text-center">
+                <thead className="thead">
+                    <tr>
+                        <th scope="col">#</th> {/* Altere o cabeçalho de ID para # ou Numeração */}
+                        <th scope="col">Nome</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Data de Pagamento</th>
+                        <th scope="col">Forma de Pagamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {alunos.map((aluno, index) => {
+                        const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
+                        const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
+                        return (
+                            <tr key={aluno.id}>
+                                <td>{index + 1}</td> {/* Aqui, em vez de aluno.id, usamos o índice + 1 */}
+                                <td>{aluno.nome}</td>
+                                <td className={getStatusClass(status)}>{status}</td>
+                                <td>{pagamentoDoAluno?.valor || '-'}</td>
+                                <td>{pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}</td>
+                                <td>{pagamentoDoAluno?.formaPagamento || '-'}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        )}
+    </div>
+</div>
+
             </div>
         </>
     );
-    
-    
-    
 };
 
 export default ListaPagamento;

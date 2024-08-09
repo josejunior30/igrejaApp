@@ -2,7 +2,11 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.esibape.entities.Alunos;
+import com.esibape.entities.OutrosPG;
 import com.esibape.entities.FormaPagamento;
 import com.esibape.entities.MesReferencia;
 import com.esibape.entities.Pagamento;
@@ -16,13 +20,14 @@ public class PagamentoDTO implements Serializable {
     private LocalDate dataPagamento;
     private Integer totalMensalidade;
     private Integer atrasado;
-    private Integer totalmes; 
+    private Integer totalMes; 
     private Integer total;
     private Integer totalPix;
     private Integer totalDinheiro;
     private FormaPagamento formaPagamento;
     private MesReferencia mesReferencia;
     private AlunosDTO alunosPG;
+ 
   
     
     public PagamentoDTO() {
@@ -31,7 +36,7 @@ public class PagamentoDTO implements Serializable {
     
 
 	public PagamentoDTO(Long id, Integer valor, LocalDate dataPagamento, Integer totalMensalidade, Integer atrasado,
-			Integer totalmes, Integer total, FormaPagamento formaPagamento, MesReferencia mesReferencia,
+			Integer totalMes, Integer total, FormaPagamento formaPagamento, MesReferencia mesReferencia,
 			AlunosDTO alunosPG, Integer totalPix, Integer totalDinheiro) {
 		super();
 		this.id = id;
@@ -39,13 +44,14 @@ public class PagamentoDTO implements Serializable {
 		this.dataPagamento = dataPagamento;
 		this.totalMensalidade = totalMensalidade;
 		this.atrasado = atrasado;
-		this.totalmes = totalmes;
+		this.totalMes = totalMes;
 		this.total = total;
 		this.formaPagamento = formaPagamento;
 		this.mesReferencia = mesReferencia;
 		this.alunosPG = alunosPG;
 		this.totalPix = totalPix;
 		this.totalDinheiro = totalDinheiro;
+	
 	}
 
 
@@ -56,7 +62,7 @@ public class PagamentoDTO implements Serializable {
         this.id = entity.getId();
         this.valor = entity.getValor();
         this.dataPagamento = entity.getDataPagamento();
-        this.totalmes = entity.getTotalmes();
+        this.totalMes = entity.getTotalMes();
         this.total = entity.getTotal();
         this.formaPagamento = entity.getFormaPagamento();
         this.mesReferencia = entity.getMesReferencia();
@@ -72,6 +78,7 @@ public class PagamentoDTO implements Serializable {
     public PagamentoDTO(Pagamento entity, Alunos alunosPG) {
         this(entity);
         this.alunosPG = new AlunosDTO(entity.getAlunosPG());
+    
     }
 
     public Long getId() {
@@ -156,14 +163,16 @@ public class PagamentoDTO implements Serializable {
 
 
 
-	public Integer getTotalmes() {
-		return totalmes;
+
+
+	public Integer getTotalMes() {
+		return totalMes;
 	}
 
 
 
-	public void setTotalmes(Integer totalmes) {
-		this.totalmes = totalmes;
+	public void setTotalMes(Integer totalMes) {
+		this.totalMes = totalMes;
 	}
 
 
@@ -199,5 +208,8 @@ public class PagamentoDTO implements Serializable {
 	public void setAlunosPG(AlunosDTO alunosPG) {
 		this.alunosPG = alunosPG;
 	}
+
+
+
 
 }

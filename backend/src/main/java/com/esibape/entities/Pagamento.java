@@ -26,7 +26,7 @@ private Integer valor;
 private LocalDate dataPagamento;
 private Integer totalMensalidade;
 private Integer atrasado;
-private Integer totalmes; 
+private Integer totalMes; 
 private Integer total;
 private Integer totalPix;
 private Integer totalDinheiro;
@@ -34,6 +34,7 @@ private Integer totalDinheiro;
 private FormaPagamento formaPagamento;
 @Enumerated(EnumType.STRING)
 private MesReferencia mesReferencia;
+
 
 @ManyToOne()
 @JoinColumn(name= "aluno_id")
@@ -47,7 +48,7 @@ public Pagamento() {
 
 
 public Pagamento(Long id, Integer valor, LocalDate dataPagamento, Integer totalMensalidade, Integer atrasado,
-		Integer totalmes, Integer total, Integer totalPix, Integer totalDinheiro, FormaPagamento formaPagamento,
+		Integer totalMes, Integer total, Integer totalPix, Integer totalDinheiro, FormaPagamento formaPagamento,
 		MesReferencia mesReferencia, Alunos alunosPG) {
 	super();
 	this.id = id;
@@ -55,26 +56,15 @@ public Pagamento(Long id, Integer valor, LocalDate dataPagamento, Integer totalM
 	this.dataPagamento = dataPagamento;
 	this.totalMensalidade = totalMensalidade;
 	this.atrasado = atrasado;
-	this.totalmes = totalmes;
+	this.totalMes = totalMes;
 	this.total = total;
 	this.totalPix = totalPix;
 	this.totalDinheiro = totalDinheiro;
 	this.formaPagamento = formaPagamento;
 	this.mesReferencia = mesReferencia;
 	this.alunosPG = alunosPG;
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -184,30 +174,15 @@ public void setAtrasado(Integer atrasado) {
 
 
 
-
-
-
-
-
-public Integer getTotalmes() {
-	return totalmes;
+public Integer getTotalMes() {
+	return totalMes;
 }
 
 
 
-
-
-
-
-
-public void setTotalmes(Integer totalmes) {
-	this.totalmes = totalmes;
+public void setTotalMes(Integer totalMes) {
+	this.totalMes = totalMes;
 }
-
-
-
-
-
 
 
 
@@ -229,6 +204,8 @@ public MesReferencia getMesReferencia() {
 public void setMesReferencia(MesReferencia mesReferencia) {
 	this.mesReferencia = mesReferencia;
 }
+
+
 
 
 @Override

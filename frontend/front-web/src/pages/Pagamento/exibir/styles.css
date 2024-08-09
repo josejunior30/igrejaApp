@@ -1,9 +1,10 @@
-#valor h3{
+.valor {
 color:white;
 font-size: 14px;
 
     
 }
+
  .titulo-alunos{
     color:white;
  }
@@ -11,6 +12,7 @@ font-size: 14px;
 .totalMes{
    color: white;
    font-size: 20px;
+   font-weight: bold;
 }
 
 .status-pendente {
@@ -24,6 +26,7 @@ font-size: 14px;
 }
 #inserirPG{
    background-color: white;
+   font-weight: bold;
 }
 .container-white {
    background-color: white;
@@ -32,4 +35,9 @@ font-size: 14px;
 }
 .pagamento{
    font-weight: bold;
+}
+
+.sub-total{
+   font-size: 20px;
+   color: white;
 }
