@@ -6,6 +6,7 @@ import Header from "../../../components/Header";
 import './styles.css';
 import { findAll } from "../../../service/alunosService";
 import { jsPDF } from "jspdf";
+import { PiPrinterFill } from "react-icons/pi";
 const ListaPagamento: React.FC = () => {
     const [pagamentos, setPagamentos] = useState<Pagamento[]>([]);
     const [entradas, setEntradas] = useState<EntradaPG[]>([]);
@@ -35,14 +36,14 @@ const ListaPagamento: React.FC = () => {
             try {
                 const response = await findByMesAtual();
                 console.log('Dados dos pagamentos:', response.data);
-
+    
                 const pagamentosComData: Pagamento[] = response.data.map((pagamento: Pagamento) => ({
                     ...pagamento,
                     dataPagamento: new Date(pagamento.dataPagamento)
                 }));
-
+    
                 setPagamentos(pagamentosComData);
-
+    
                 if (pagamentosComData.length > 0) {
                     setTotal(pagamentosComData[0].total || 0);
                     setTotalMes(pagamentosComData[0].totalMensalidade || 0);
@@ -55,7 +56,7 @@ const ListaPagamento: React.FC = () => {
                 setLoading(false);
             }
         };
-
+    
         const fetchAlunos = async () => {
             try {
                 const response = await findAll();
@@ -64,31 +65,12 @@ const ListaPagamento: React.FC = () => {
                 console.error('Erro ao carregar alunos:', error);
             }
         };
-
-        const fetchEntradas = async () => {
-            if (selectedMonth === '') return;
-
-            try {
-                const response = await findEntradaByMes(selectedMonth as MesReferencia);
-                setEntradas(response.data);
-
-                const entradasComValores = response.data.map((entrada: EntradaPG) => ({
-                    entrada: entrada.entrada,
-                    valor: entrada.valor,
-                    formaPagamento: entrada.formaPagamento
-                }));
-
-                setTotalEntradas(entradasComValores);
-            } catch (error) {
-                console.error('Erro ao carregar entradas:', error);
-                setError("Erro ao carregar entradas");
-            }
-        };
-
+    
         fetchPagamentos();
         fetchAlunos();
-        fetchEntradas();
-    }, [selectedMonth]);
+        // Remover fetchEntradas() daqui
+    }, []);
+    
 
     const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedMonth(e.target.value as MesReferencia);
@@ -96,15 +78,15 @@ const ListaPagamento: React.FC = () => {
 
     const fetchPagamentosForMonth = async () => {
         if (selectedMonth === '') return;
-
+    
         try {
             const response = await findPagamentoByMes(selectedMonth as MesReferencia);
-
+    
             const pagamentosComData: Pagamento[] = response.data.map((pagamento: Pagamento) => ({
                 ...pagamento,
                 dataPagamento: new Date(pagamento.dataPagamento)
             }));
-
+    
             console.log('Pagamentos para o mês selecionado:', pagamentosComData);
             setPagamentos(pagamentosComData);
             
@@ -119,23 +101,25 @@ const ListaPagamento: React.FC = () => {
                 setTotalPix(0);
                 setTotalDinheiro(0);
             }
-
-            // Fetch entradas for the selected month
+    
+            // Fetch entradas for the selected month only after clicking "Buscar"
             const entradaResponse = await findEntradaByMes(selectedMonth as MesReferencia);
             setEntradas(entradaResponse.data);
-
+    
             const entradasComValores = entradaResponse.data.map((entrada: EntradaPG) => ({
                 entrada: entrada.entrada,
                 valor: entrada.valor,
                 formaPagamento: entrada.formaPagamento
             }));
-
-            setTotalEntradas(entradasComValores);
+    
+            setTotalEntradas(entradasComValores); // Atualiza o estado das entradas
         } catch (error) {
             console.error('Erro ao carregar pagamentos e entradas para o mês selecionado:', error);
             setError("Erro ao carregar pagamentos e entradas");
         }
     };
+    
+    
 
     const handleAddPayment = async () => {
         if (selectedAluno === '' || paymentValue === '' || paymentDate === '' || !paymentMethod || paymentMonth === '') return;
@@ -284,11 +268,11 @@ const ListaPagamento: React.FC = () => {
             y += 7;
         });
         
-        // TOTAL RECEBIDO com fonte 18, negrito e sublinhado
+       
         if (total !== null) {
-            y += 5; // adicionar um espaço extra antes do total
+            y += 4; 
             doc.setFontSize(18);
-            doc.setFont('helvetica', 'bold'); // Negrito para Total Recebido
+            doc.setFont('helvetica', 'bold'); 
             doc.textWithLink(`TOTAL RECEBIDO: R$${total}`, 10, y, { underline: true }); // Texto com sublinhado
             y += 6;
         }
@@ -451,52 +435,57 @@ const ListaPagamento: React.FC = () => {
                         </div>
                     </div>
                 </div>
-               
-
                 <div className="row justify-content-center mt-1">
-                <div className="col-9 col-md-4 mt-3">
-                        <div className="d-flex">
-                            <select className="form-control me-3" onChange={handleMonthChange} value={selectedMonth}>
-                                <option value="">Selecione o mês</option>
-                                {Object.values(MesReferencia).map(mes => (
-                                    <option key={mes} value={mes}>{mes.charAt(0).toUpperCase() + mes.slice(1)}</option>
-                                ))}
-                            </select>
-                            <button className="btn btn-primary ml-2" onClick={fetchPagamentosForMonth}>
-                                Buscar
-                            </button>
-                        </div>
-                    </div>
-            
-                    <div className="col-9 col-md-9 mt-3">
-                        {totalPix !== null && (
-                            <h3 className="valor">Pix: R${totalPix}</h3>
-                        )}
-                    </div>
-                    <div className="col-9 col-md-9 ">
-                        {totalDinheiro !== null && (
-                            <h3 className="valor">Dinheiro: R${totalDinheiro}</h3>
-                        )}
-                    </div>
-                    <div className="col-9 col-md-9 " >
-                        {totalMes !== null && (
-                            <h3 className="sub-total">Sub-Total: R${totalMes}</h3>
-                        )}
-                    </div>
-                    <div className="col-9 col-md-9 ">
-                        {totalEntradas.length > 0 && totalEntradas.map((entrada, index) => (
-                            <h3 key={index} className="valor">{entrada.entrada} - R${entrada.valor} ({entrada.formaPagamento})</h3>
-                        ))}
-                    </div>
-                    <div className="col-9 col-md-9 ">
-                        {total !== null && (
-                            <h2 className="totalMes">TOTAL RECEBIDO: R${total}</h2>
-                        )}
-                    </div>
-                </div>
+    <div className="col-9 col-md-4 mt-3">
+        <div className="d-flex">
+            <select className="form-control me-3" onChange={handleMonthChange} value={selectedMonth}>
+                <option value="">Selecione o mês</option>
+                {Object.values(MesReferencia).map(mes => (
+                    <option key={mes} value={mes}>{mes.charAt(0).toUpperCase() + mes.slice(1)}</option>
+                ))}
+            </select>
+            <button className="btn btn-primary ml-2" onClick={fetchPagamentosForMonth}>
+                Buscar
+            </button>
+        </div>
+    </div>
+
+    <div className="col-9 col-md-9 mt-3">
+        {totalPix !== null && (
+            <h3 className="valor">Pix: R${totalPix}</h3>
+        )}
+    </div>
+    <div className="col-9 col-md-9 ">
+        {totalDinheiro !== null && (
+            <h3 className="valor">Dinheiro: R${totalDinheiro}</h3>
+        )}
+    </div>
+    <div className="col-9 col-md-9 ">
+        {totalMes !== null && (
+            <h3 className="sub-total">Sub-Total: R${totalMes}</h3>
+        )}
+    </div>
+
+    {/* Exibindo as entradas junto com os outros dados financeiros apenas após buscar */}
+    <div className="col-9 col-md-9 ">
+        {totalEntradas.length > 0 && totalEntradas.map((entrada, index) => (
+            <h3 key={index} className="valor">{entrada.entrada} - R${entrada.valor} ({entrada.formaPagamento})</h3>
+        ))}
+    </div>
+
+    <div className="col-9 col-md-9 d-flex align-items-center justify-content-between">
+        {total !== null && (
+            <h2 className="totalMes">TOTAL RECEBIDO: R${total}</h2>
+        )}
+        <button onClick={handlePrint} className="mr-2" id="print-pagamnto"><PiPrinterFill /> Imprimir</button>
+    </div>
+</div>
+
+
                 <div className="row justify-content-center mt-3">
+                    
                     <div className="col-9 col-md-10">
-                        <button className="btn btn-secondary" onClick={handlePrint}>Imprimir Relatório</button>
+                  
                     </div>
                     </div>
                     <div className="row justify-content-center mt-3">
