@@ -48,7 +48,7 @@ public class Alunos implements Serializable{
 	@OneToMany(mappedBy ="alunosPG"  )
     private List<Pagamento> pagamentos = new ArrayList<>();
 	@ManyToOne()
-	@JoinColumn(name= "status_id")
+	@JoinColumn(name= "status_id", nullable = true)
 	private AlunoStatus alunoStatus;
 	
 	@ManyToOne()

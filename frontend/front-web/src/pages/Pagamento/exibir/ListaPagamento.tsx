@@ -7,6 +7,8 @@ import './styles.css';
 import { findAll } from "../../../service/alunosService";
 import { jsPDF } from "jspdf";
 import { PiPrinterFill } from "react-icons/pi";
+
+
 const ListaPagamento: React.FC = () => {
     const [pagamentos, setPagamentos] = useState<Pagamento[]>([]);
     const [entradas, setEntradas] = useState<EntradaPG[]>([]);
@@ -234,36 +236,35 @@ const ListaPagamento: React.FC = () => {
         const doc = new jsPDF();
         
         let y = 15;
-        
-        // Cabeçalho
+  
         doc.setFontSize(18);
         doc.text("Relatório de Pagamentos", 65, y);
         y += 10;
         
-        // Adicionando o Mês de Referência abaixo do título
+
         doc.setFontSize(14);
         doc.text(`Mês de Referência: ${selectedMonth ? selectedMonth.charAt(0).toUpperCase() + selectedMonth.slice(1) : ''}`, 70, y);
         y += 15;
         
-        // Dados gerais com fonte 12 e negrito para Sub-Total
+    
         doc.setFontSize(12);
         if (totalPix !== null) {
-            doc.setFont('helvetica', 'normal'); // Fonte normal para Pix
+            doc.setFont('helvetica', 'normal'); 
             doc.text(`Pix: R$${totalPix}`, 10, y);
             y += 7;
         }
         if (totalDinheiro !== null) {
-            doc.setFont('helvetica', 'normal'); // Fonte normal para Dinheiro
+            doc.setFont('helvetica', 'normal'); 
             doc.text(`Dinheiro: R$${totalDinheiro}`, 10, y);
             y += 7;
         }
         if (totalMes !== null) {
-            doc.setFont('helvetica', 'bold'); // Negrito para Sub-Total
+            doc.setFont('helvetica', 'bold'); 
             doc.text(`Sub-Total: R$${totalMes}`, 10, y);
             y += 7;
         }
         totalEntradas.forEach((entrada) => {
-            doc.setFont('helvetica', 'normal'); // Fonte normal para as entradas
+            doc.setFont('helvetica', 'normal'); 
             doc.text(`${entrada.entrada} - R$${entrada.valor} (${entrada.formaPagamento})`, 10, y);
             y += 7;
         });
@@ -273,11 +274,11 @@ const ListaPagamento: React.FC = () => {
             y += 4; 
             doc.setFontSize(18);
             doc.setFont('helvetica', 'bold'); 
-            doc.textWithLink(`TOTAL RECEBIDO: R$${total}`, 10, y, { underline: true }); // Texto com sublinhado
+            doc.textWithLink(`TOTAL RECEBIDO: R$${total}`, 10, y, { underline: true }); 
             y += 6;
         }
         
-        // Tabela de alunos e pagamentos
+       
         y += 10;
         doc.setFontSize(10);
         doc.setFont('helvetica', 'bold'); 
