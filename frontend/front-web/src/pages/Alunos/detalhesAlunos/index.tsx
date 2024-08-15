@@ -164,12 +164,17 @@ fornecer o apoio necessário para sua participação. `, 14, 150);
                 <p className="dados"><span>Idade:</span> {alunosDTO.idade ?? "-----"}</p>
                 <p className="dados"><span>Data de Nascimento:</span> {alunosDTO.dataNascimento ? new Date(alunosDTO.dataNascimento).toLocaleDateString() : "-----"}</p>
                 <p className="dados"><span>Email: </span>{alunosDTO.email ?? "-----"}</p>
+                <p className="dados"><span>Responsável: </span>{alunosDTO.responsavel ?? "-----"}</p>
+                <p className="dados"><span>Doença: </span>{alunosDTO.pergunta ?? "-----"}</p>
                 <p className="dados"><span>CPF Responsável: </span>{alunosDTO.cpfResponsavel ?? "-----"}</p>
+                <p className="dados"><span>Doença: </span><span className="dados-doença">{alunosDTO.pergunta ?? "-----"}</span></p>
                 {alunosDTO.projetos && (
                   <p className="dados-Projeto"><span> Projeto: {alunosDTO.projetos.nome} </span> </p>
                 )}
               </div>
-              <div className="col-md-4 col-9 m-5 md-5 text-center align-content-center" id="endereço">
+             
+             
+              <div className="col-md-4 col-9 m-5 md-5 mb-5 -5 text-center align-content-center " id="endereço">
                 <p className="text-h2">Endereço</p>
                 <p className="dados"><span>Rua:</span> {alunosDTO.rua ?? "-----"}</p>
                 <p className="dados"><span>Bairro:</span> {alunosDTO.bairro ?? "-----"}</p>
@@ -177,7 +182,7 @@ fornecer o apoio necessário para sua participação. `, 14, 150);
                 <p className="dados"><span>Cidade:</span> {alunosDTO.cidade ?? "-----"}</p>
                 <p className="dados"><span>Complemento:</span> {alunosDTO.complemento ?? "-----"}</p>
                 <p className="dados"><span>Cep:</span> {alunosDTO.cep ?? "-----"}</p>
-                <div className="botoes-container mb-1">
+                <div className="botoes-container ">
                   <Link to={`/editarAlunos/${id}`}>
                     <button className="botao-editar">Editar</button>
                   </Link>
@@ -185,6 +190,7 @@ fornecer o apoio necessário para sua participação. `, 14, 150);
                   <button onClick={generatePDF} className="botao-gerar-pdf">Imprimir</button>
                 </div>
               </div>
+            
               {showDeleteConfirmation && (
                 <div className="modal-confirm">
                   <span className="icone-confirm"><CgDanger /></span>

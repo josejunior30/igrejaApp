@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { AlunoPG, FormaPagamento, MesReferencia, Pagamento, EntradaPG } from "../../../models/pagamento";
+import { AlunoPG, FormaPagamento, MesReferencia, Pagamento, EntradaPG, projetos } from "../../../models/pagamento";
 import { findByMes as findPagamentoByMes, findByMesAtual, insertPagamento } from "../../../service/pagamentoService"; 
 import { findByMes as findEntradaByMes, insertEntradaPG } from "../../../service/entradaService"; 
 import Header from "../../../components/Header";
 import './styles.css';
-import { findAll } from "../../../service/alunosService";
+import { findAllAlunos } from "../../../service/alunosService";
 import { jsPDF } from "jspdf";
 import { PiPrinterFill } from "react-icons/pi";
 
@@ -12,6 +12,7 @@ import { PiPrinterFill } from "react-icons/pi";
 const ListaPagamento: React.FC = () => {
     const [pagamentos, setPagamentos] = useState<Pagamento[]>([]);
     const [entradas, setEntradas] = useState<EntradaPG[]>([]);
+    const [projetos, setProjetos] = useState<projetos[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [total, setTotal] = useState<number | null>(null);
@@ -26,7 +27,8 @@ const ListaPagamento: React.FC = () => {
     const [paymentDate, setPaymentDate] = useState<string>('');
     const [paymentMethod, setPaymentMethod] = useState<FormaPagamento | ''>('');
     const [paymentMonth, setPaymentMonth] = useState<MesReferencia | ''>('');
-
+    const [showInactive, setShowInactive] = useState<boolean>(false); // Exibir inativos por padrão
+    
     // States for EntradaPG form
     const [entradaValue, setEntradaValue] = useState<number | ''>('');
     const [entradaDescription, setEntradaDescription] = useState<string>('');
@@ -61,7 +63,7 @@ const ListaPagamento: React.FC = () => {
     
         const fetchAlunos = async () => {
             try {
-                const response = await findAll();
+                const response = await findAllAlunos();
                 setAlunos(response.data);
             } catch (error) {
                 console.error('Erro ao carregar alunos:', error);
@@ -91,14 +93,12 @@ const ListaPagamento: React.FC = () => {
     
             console.log('Pagamentos para o mês selecionado:', pagamentosComData);
             setPagamentos(pagamentosComData);
-            
+    
             if (pagamentosComData.length > 0) {
-                setTotal(pagamentosComData[0].total || 0);
                 setTotalMes(pagamentosComData[0].totalMensalidade || 0);
                 setTotalPix(pagamentosComData[0].totalPix || 0);
                 setTotalDinheiro(pagamentosComData[0].totalDinheiro || 0);
             } else {
-                setTotal(0);
                 setTotalMes(0);
                 setTotalPix(0);
                 setTotalDinheiro(0);
@@ -114,12 +114,21 @@ const ListaPagamento: React.FC = () => {
                 formaPagamento: entrada.formaPagamento
             }));
     
-            setTotalEntradas(entradasComValores); // Atualiza o estado das entradas
+            setTotalEntradas(entradasComValores);
+    
+            // Calcular o total de entradas
+            const totalEntradas = entradasComValores.reduce((acc: any, entrada: { valor: any; }) => acc + entrada.valor, 0);
+    
+            // Atualiza o total com a soma de totalMensalidade e total de entradas
+            const novoTotal = (pagamentosComData[0]?.totalMensalidade || 0) + totalEntradas;
+            setTotal(novoTotal);
+    
         } catch (error) {
             console.error('Erro ao carregar pagamentos e entradas para o mês selecionado:', error);
             setError("Erro ao carregar pagamentos e entradas");
         }
     };
+    
     
     
 
@@ -234,18 +243,15 @@ const ListaPagamento: React.FC = () => {
 
     const handlePrint = () => {
         const doc = new jsPDF();
-        
         let y = 15;
-  
+    
         doc.setFontSize(18);
         doc.text("Relatório de Pagamentos", 65, y);
         y += 10;
-        
-
+    
         doc.setFontSize(14);
         doc.text(`Mês de Referência: ${selectedMonth ? selectedMonth.charAt(0).toUpperCase() + selectedMonth.slice(1) : ''}`, 70, y);
         y += 15;
-        
     
         doc.setFontSize(12);
         if (totalPix !== null) {
@@ -268,8 +274,7 @@ const ListaPagamento: React.FC = () => {
             doc.text(`${entrada.entrada} - R$${entrada.valor} (${entrada.formaPagamento})`, 10, y);
             y += 7;
         });
-        
-       
+    
         if (total !== null) {
             y += 4; 
             doc.setFontSize(18);
@@ -277,8 +282,7 @@ const ListaPagamento: React.FC = () => {
             doc.textWithLink(`TOTAL RECEBIDO: R$${total}`, 10, y, { underline: true }); 
             y += 6;
         }
-        
-       
+    
         y += 10;
         doc.setFontSize(10);
         doc.setFont('helvetica', 'bold'); 
@@ -289,22 +293,26 @@ const ListaPagamento: React.FC = () => {
         doc.text("Data", 140, y);
         doc.text("Forma", 180, y);
         y += 10;
-        
-        alunos.forEach(aluno => {
-            const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
-            const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
-            doc.setFont('helvetica', 'normal'); 
-            doc.text(`${aluno.id}`, 10, y);
-            doc.text(`${aluno.nome}`, 20, y);
-            doc.text(`${status}`, 85, y);
-            doc.text(`${pagamentoDoAluno?.valor || '-'}`, 115, y);
-            doc.text(`${pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}`, 140, y);
-            doc.text(`${pagamentoDoAluno?.formaPagamento || '-'}`, 180, y);
-            y += 10;
-        });
-        
+    
+        alunos
+            .filter(aluno => showInactive || aluno.ativo) // Filtra os alunos com base na opção selecionada
+            .forEach(aluno => {
+                const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
+                const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
+    
+                doc.setFont('helvetica', aluno.ativo ? 'normal' : 'italic'); // Estiliza o texto para inativos (opcional)
+                doc.text(`${aluno.id}`, 10, y);
+                doc.text(`${aluno.nome}`, 20, y);
+                doc.text(`${status}`, 85, y);
+                doc.text(`${pagamentoDoAluno?.valor || '-'}`, 115, y);
+                doc.text(`${pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}`, 140, y);
+                doc.text(`${pagamentoDoAluno?.formaPagamento || '-'}`, 180, y);
+                y += 10;
+            });
+    
         doc.save("relatorio_pagamentos.pdf");
     };
+    
     
     
     return (
@@ -373,7 +381,7 @@ const ListaPagamento: React.FC = () => {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="col-4 mt-4 pe-5">
+                                <div className="col-5 mt-4 pe-5">
                                     <button className="btn btn-primary" onClick={handleAddPayment}>Adicionar Pagamento</button>
                                 </div>
                             </div>
@@ -429,13 +437,15 @@ const ListaPagamento: React.FC = () => {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="col-4 mt-4 pe-5">
+                                <div className="col-5 mt-4 pe-5">
                                     <button className="btn btn-primary" onClick={handleAddEntrada}>Adicionar Entrada</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
                 <div className="row justify-content-center mt-1">
     <div className="col-9 col-md-4 mt-3">
         <div className="d-flex">
@@ -449,6 +459,7 @@ const ListaPagamento: React.FC = () => {
                 Buscar
             </button>
         </div>
+
     </div>
 
     <div className="col-9 col-md-9 mt-3">
@@ -479,17 +490,24 @@ const ListaPagamento: React.FC = () => {
             <h2 className="totalMes">TOTAL RECEBIDO: R${total}</h2>
         )}
         <button onClick={handlePrint} className="mr-2" id="print-pagamnto"><PiPrinterFill /> Imprimir</button>
+ <div className="form-check">
+    <input 
+        className="form-check-input" 
+        type="checkbox" 
+        id="showInactive" 
+        checked={showInactive} 
+        onChange={() => setShowInactive(!showInactive)} 
+    />
+    <label className="form-inativos" htmlFor="showInactive">
+        Mostrar alunos inativos
+    </label>
+</div>
     </div>
 </div>
 
 
-                <div className="row justify-content-center mt-3">
-                    
-                    <div className="col-9 col-md-10">
-                  
-                    </div>
-                    </div>
-                    <div className="row justify-content-center mt-3">
+        
+<div className="row justify-content-center mt-3">
     <div className="col-9 col-md-10">
         {alunos.length === 0 ? (
             <p>Nenhum aluno encontrado.</p>
@@ -499,6 +517,7 @@ const ListaPagamento: React.FC = () => {
                     <tr>
                         <th scope="col">#</th> {/* Altere o cabeçalho de ID para # ou Numeração */}
                         <th scope="col">Nome</th>
+                        <th scope="col">Projeto</th> {/* Nova coluna para Projetos */}
                         <th scope="col">Status</th>
                         <th scope="col">Valor</th>
                         <th scope="col">Data de Pagamento</th>
@@ -506,25 +525,33 @@ const ListaPagamento: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {alunos.map((aluno, index) => {
-                        const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
-                        const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
-                        return (
-                            <tr key={aluno.id}>
-                                <td>{index + 1}</td> {/* Aqui, em vez de aluno.id, usamos o índice + 1 */}
-                                <td>{aluno.nome}</td>
-                                <td className={getStatusClass(status)}>{status}</td>
-                                <td>{pagamentoDoAluno?.valor || '-'}</td>
-                                <td>{pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}</td>
-                                <td>{pagamentoDoAluno?.formaPagamento || '-'}</td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
+    {alunos
+        .filter(aluno => showInactive || aluno.ativo) // Filtra a lista de acordo com o estado `showInactive`
+        .filter(aluno => aluno.projetos.nome.toLowerCase() !== 'jiu-jtsu') // Filtra alunos de jiu-jitsu
+        .map((aluno, index) => {
+            const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
+            const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
+            const rowClass = aluno.ativo ? '' : 'inativo'; // Adiciona a classe 'inativo' se o aluno não for ativo
+
+            return (
+                <tr key={aluno.id} className={rowClass}> {/* Aplica a classe à linha */}
+                    <td>{index + 1}</td>
+                    <td>{aluno.nome}</td>
+                    <td>{aluno.projetos.nome || '-'}</td> {/* Exibe o nome do projeto */}
+                    <td className={getStatusClass(status)}>{status}</td>
+                    <td>{pagamentoDoAluno?.valor || '-'}</td>
+                    <td>{pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}</td>
+                    <td>{pagamentoDoAluno?.formaPagamento || '-'}</td>
+                </tr>
+            );
+        })}
+</tbody>
+
             </table>
         )}
     </div>
 </div>
+
 
             </div>
         </>

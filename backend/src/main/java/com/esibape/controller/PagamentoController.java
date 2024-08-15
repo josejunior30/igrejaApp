@@ -62,5 +62,24 @@ public class PagamentoController {
 	    List<PagamentoDTO> pagamentos = service.findPagamentosByMesReferencia(mesReferenciaEnum);
 	    return ResponseEntity.ok().body(pagamentos);
 	}
+	
+	@GetMapping("/mes/{mesReferencia}/projeto/{projetoId}")
+	public ResponseEntity<List<PagamentoDTO>> getPagamentosByMesReferenciaAndProjeto(
+	        @PathVariable String mesReferencia, 
+	        @PathVariable Long projetoId) {
+	    
+	    MesReferencia mesReferenciaEnum;
+	    try {
+	        mesReferenciaEnum = MesReferencia.valueOf(mesReferencia.toUpperCase());
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.badRequest().body(Collections.emptyList());
+	    }
+	    
+	    List<PagamentoDTO> pagamentos = service.findPagamentosByMesReferenciaAndProjetos(mesReferenciaEnum, projetoId);
+	    
+	    return ResponseEntity.ok().body(pagamentos);
+	}
+
+
 
 }

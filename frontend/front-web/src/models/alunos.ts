@@ -23,6 +23,9 @@ export type alunosDTO={
     AlunoDoenca:number;
     sangue: string;
     pergunta: string;
+    grauParentesco:string;
+    ativo: string;
+    
 }
 export type alunoDTO={
   
@@ -43,7 +46,7 @@ export type alunoDTO={
     complemento: string;
 	projetos: projetos;
     horario: string;
-   
+    grauParentesco:string;
     AlunoDoenca:number;
     sangue: string;
     pergunta: string;

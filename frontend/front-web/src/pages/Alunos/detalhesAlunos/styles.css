@@ -5,6 +5,9 @@
   border: solid 5px;
   border-color: var(--color-form);
   font-size: 16px;
+  margin-bottom: 50px;
+  height: 400px;
+  margin-top: 20%;
 }
 
 #dados img{
@@ -30,11 +33,12 @@ color: white;
 
 .text-h2{
   background-color: var(--color-form);
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 10px;
   font-weight: bold;
   padding: 5px;
   color: white;
+  margin-top: 1px;
   
 }
 #dados{
@@ -46,6 +50,7 @@ color: white;
  
   
 }
+
 td i{
 color: #4CAF50;
 }
@@ -67,7 +72,9 @@ color: #4CAF50;
   padding: 7px;
   text-decoration: none;
 }
-
+.dados-doença {
+color: #f44336;
+}
 @media (max-width: 768px) {
 
   #dados{

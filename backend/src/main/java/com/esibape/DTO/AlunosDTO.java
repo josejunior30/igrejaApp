@@ -43,6 +43,8 @@ public class AlunosDTO implements Serializable {
     private String complemento;
     private String pergunta;
     private String sangue;
+    private String grauParentesco;
+    private boolean ativo = true;
     private String statusPagamento;
     private LocalTime horario;
     private AlunoDoenca alunoDoenca;
@@ -54,7 +56,7 @@ public class AlunosDTO implements Serializable {
 
     public AlunosDTO(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
                      String cpfResponsavel, String telefone, String url, String email, String rua, String cep, 
-                     String numero, String bairro, String cidade, String complemento, String pergunta, String statusPagamento,String sangue, LocalTime horario,
+                     String numero, String bairro, String cidade, String complemento, boolean ativo ,String pergunta, String grauParentesco,String statusPagamento,String sangue, LocalTime horario,
                      AlunoDoenca alunoDoenca, AlunoStatusDTO alunoStatus, ProjetosDTO projetos, List<ChamadaDTO> chamada, List<PagamentoDTO>pagamentos) {
         this.id = id;
         this.nome = nome;
@@ -75,12 +77,14 @@ public class AlunosDTO implements Serializable {
         this.pergunta = pergunta;
         this.sangue = sangue;
         this.horario = horario;
+        this.grauParentesco = grauParentesco;
         this.statusPagamento =statusPagamento;
         this.alunoDoenca = alunoDoenca;
         this.alunoStatus = alunoStatus;
         this.projetos = projetos;
         this.chamada = chamada;
         this.pagamentos = pagamentos;
+        this.ativo = ativo;
         
     }
     public AlunosDTO(Alunos entity) {
@@ -105,6 +109,8 @@ public class AlunosDTO implements Serializable {
         this.sangue = entity.getSangue();
         this.horario = entity.getHorario();
         this.pergunta = entity.getPergunta();
+        this.ativo = entity.isAtivo();
+        this.grauParentesco = entity.getGrauParentesco();
        
         if (entity.getAlunoStatus() != null) {
             this.alunoStatus = new AlunoStatusDTO(entity.getAlunoStatus());
@@ -170,8 +176,25 @@ public class AlunosDTO implements Serializable {
     public void setIdade(Integer idade) {
         this.idade = idade;
     }
+    
 
-    public String getRg() {
+    public boolean isAtivo() {
+		return ativo;
+	}
+
+	public String getGrauParentesco() {
+		return grauParentesco;
+	}
+
+	public void setGrauParentesco(String grauParentesco) {
+		this.grauParentesco = grauParentesco;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public String getRg() {
         return rg;
     }
 

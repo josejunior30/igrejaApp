@@ -24,6 +24,7 @@ const AddAlunos: React.FC = () => {
         sangue: "",
         pergunta: "",
         horario: "",
+        grauParentesco: "",
         AlunoDoenca: 0,
         rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",
         projetos: {
@@ -106,6 +107,7 @@ const AddAlunos: React.FC = () => {
                 sangue: "",
                 horario: "",
                 pergunta: "",
+                grauParentesco: "",
                 AlunoDoenca: 0,
                 rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",
                 projetos: {
@@ -231,7 +233,7 @@ const AddAlunos: React.FC = () => {
                         <div className="col-md-12">
                             <h3>Dados do Responsável</h3>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-4">
                             <label htmlFor="responsavel" className="form-label">Nome:</label>
                             <input
                                 type="text"
@@ -241,13 +243,23 @@ const AddAlunos: React.FC = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="col-md-6">
-                            <label htmlFor="cpfResponsavel" className="form-label">CPF ou RG do Responsável:</label>
+                        <div className="col-md-4">
+                            <label htmlFor="cpfResponsavel" className="form-label">Doc. Responsável:</label>
                             <input
                                 type="text"
                                 name="cpfResponsavel"
                                 className="form-control"
                                 value={alunosDTO.cpfResponsavel}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <label htmlFor="grauParentesco" className="form-label">Grau de Parentesco:</label>
+                            <input
+                                type="text"
+                                name="grauParentesco"
+                                className="form-control"
+                                value={alunosDTO.grauParentesco}
                                 onChange={handleChange}
                             />
                         </div>

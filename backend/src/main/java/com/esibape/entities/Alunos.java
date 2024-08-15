@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,9 @@ public class Alunos implements Serializable{
 	private String complemento;
 	private String pergunta;
 	private String sangue;
+	private String grauParentesco;
 	private LocalTime horario;
+	private boolean ativo = true;
 	private String statusPagamento;
 	private AlunoDoenca alunoDoenca;
 	@OneToMany(mappedBy ="alunosPG"  )
@@ -55,7 +58,7 @@ public class Alunos implements Serializable{
 	@JoinColumn(name= "projeto_id")
 	private Projetos projetos;
 	
-	 @OneToMany(mappedBy = "alunos", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "alunos", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Chamada> chamada = new ArrayList<>();
 	 
 	
@@ -70,7 +73,7 @@ public class Alunos implements Serializable{
 
 	public Alunos(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
 			String cpfResponsavel, String telefone, String email, String url, String rua, String cep, String numero,
-			String bairro, String cidade, String complemento, String pergunta, String sangue, LocalTime horario,
+			String bairro, String cidade, String complemento, String pergunta, String sangue, boolean ativo ,LocalTime horario, String grauParentesco,
 			AlunoDoenca alunoDoenca, List<Pagamento> pagamentos, AlunoStatus alunoStatus, Projetos projetos, String statusPagamento,
 			List<Chamada> chamada) {
 		super();
@@ -93,8 +96,10 @@ public class Alunos implements Serializable{
 		this.pergunta = pergunta;
 		this.sangue = sangue;
 		this.horario = horario;
+		this.ativo = ativo;
 		this.statusPagamento= statusPagamento;
 		this.alunoDoenca = alunoDoenca;
+		this.grauParentesco = grauParentesco;
 		this.pagamentos = pagamentos;
 		this.alunoStatus = alunoStatus;
 		this.projetos = projetos;
@@ -136,6 +141,38 @@ public class Alunos implements Serializable{
 	public void setIdade(Integer idade) {
 		this.idade = idade;
 	}
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+
+
+
+
+	public String getGrauParentesco() {
+		return grauParentesco;
+	}
+
+
+
+
+
+	public void setGrauParentesco(String grauParentesco) {
+		this.grauParentesco = grauParentesco;
+	}
+
+
+
+
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+
+
+
 
 	public String getRg() {
 		return rg;

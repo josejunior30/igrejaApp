@@ -15,8 +15,7 @@ const EditarAlunos =()=>{
     const [listaDeGrupos, setListaDeGrupos] = useState<projetos[]>([]);
     
     const [alunosDTO, setAlunosDTO] = useState<alunosDTO>({
-      
-        id: 0,
+      id: 0,
       nome: "",
       dataNascimento: new Date(),
       telefone: "",
@@ -26,74 +25,69 @@ const EditarAlunos =()=>{
       email: "",
       responsavel: "",
       idade: 0,
-      sangue:"",
-      pergunta:"",
-      horario:"",
-      AlunoDoenca:0,
-
-      rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",
-      
+      sangue: "",
+      pergunta: "",
+      horario: "",
+      grauParentesco: "",
+      ativo: "true",
+      AlunoDoenca: 0,
+      rua: "",
+      bairro: "",
+      cep: "",
+      numero: "",
+      cidade: "",
+      complemento: "",
       projetos: {
         id: 0,
         nome: "",
       },
-     
     });
   
     useEffect(() => {
       const fetchData = async () => {
         try {
-          // Carregar os detalhes do membro ao montar o componente
           if (id) {
             const response = await alunosService.findById(Number(id));
-            setAlunosDTO(response.data || {}); // Inicialize com os dados do ID escolhido
+            setAlunosDTO(response.data || {});
           }
         } catch (error) {
-          console.error('Erro ao carregar detalhes do membro:', error);
+          console.error("Erro ao carregar detalhes do membro:", error);
         }
       };
   
       fetchData();
-
+  
       const fetchGrupos = async () => {
         try {
           const response = await axios.get(`${BASE_URL}/projetos`);
           setListaDeGrupos(response.data);
         } catch (error) {
-          console.error('Erro ao obter a lista de grupos:', error);
+          console.error("Erro ao obter a lista de grupos:", error);
         }
       };
   
       fetchGrupos();
     }, [id]);
   
-    
-const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-    if (id && alunosDTO) {
-      alunosService
-      .updateMembro(Number(id), alunosDTO)
-        .then(response => {
-          console.log("Membro atualizado com sucesso:", response.data);
-          setIsModalVisible(true);
-        })
-        .catch(error => {
-          console.error("Erro ao atualizar membro:", error);
-          // Adicione algum feedback de erro, se necessário
-        });
+    const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (id && alunosDTO) {
+        alunosService
+          .updateMembro(Number(id), alunosDTO)
+          .then(response => {
+            alert("Aluno atualizado com sucesso!");
+            navigate('/alunos');
+          })
+          .catch(error => {
+            console.error("Erro ao atualizar membro:", error);
+          });
+      }
+    };
+  
+    if (!alunosDTO) {
+      return <p>Carregando detalhes do membro...</p>;
     }
-  };
-  if (!alunosDTO) {
-    return <p>Carregando detalhes do membro...</p>;
-  }
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-    setIsRedirecting(true);
-  };
-  if (isRedirecting) {
-    navigate('/secretaria/alunos');
-  }
-
+  
   return(
 
 <>
@@ -102,6 +96,20 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
                
                <div className="container col-md-8 mt-5 pt-5 " >
                 <form onSubmit={handleUpdateClick} className="row  g-4 px-4 pb-4" id="edit-alunos" >
+                <div className="col-md-6">
+                  <label htmlFor="ativo" className="form-label">Ativo:</label>
+                  <select
+                    className="form-select"
+                    name="ativo"
+                    value={alunosDTO.ativo}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, ativo: e.target.value })}
+                  >
+                    <option value="true">Ativo</option>
+                    <option value="false">Inativo</option>
+                  </select>
+                </div>
+
+                 
                   <div className="col-md-12">
                   <h3 className="titulo-form">Dados pessoais </h3>
                   </div>
@@ -182,20 +190,20 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
                           </select>
               </div>
     
-    
               <div className="col-md-4">
-            <label htmlFor="telefone" className="form-label">Tipo Sanguíneo:</label>
+    <label htmlFor="horario" className="form-label">Horario</label>
                   <input 
-                    type="text"
+                    type="time"
                     className="form-control"
-                    name="sangue"
-                    value={alunosDTO.sangue}
-                    onChange={(e) => setAlunosDTO({ ...alunosDTO, projetos: { id: Number(e.target.value), nome: "placeholder" } })}
+                    name="horario"
+                    value={alunosDTO.horario}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, horario: e.target.value  })}
                  
                   />
+    
     </div>
         
-    <div className="col-md-4">
+    <div className="col-md-6">
     <label htmlFor="AlunoDoenca" className="form-label">Doença ou alergia?:</label>
                   <select
                     name="AlunoDoenca"
@@ -210,7 +218,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
                     
                   </select>
     </div>
-    <div className="col-md-4">
+    <div className="col-md-6">
     <label htmlFor="telefone" className="form-label">Qual?</label>
                   <input 
                     type="text"
@@ -227,7 +235,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
                   <h3 className="titulo-form">Dados do Responsável </h3>
               </div>
     
-                  <div className="col-md-6">
+                  <div className="col-md-4">
                   <label htmlFor="responsavel" className="form-label">Nome:</label>
                   <input 
                     type="text"
@@ -239,8 +247,8 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
                   />
                   </div>
                   
-                <div className="col-md-6">
-                <label htmlFor="telefone" className="form-label">Rg ou Cpf do Responsavel:</label>
+                <div className="col-md-4">
+                <label htmlFor="telefone" className="form-label">Doc do Responsavel:</label>
                   <input placeholder="(21) 9 9999-9999"
                     type="text"
                     className="form-control"
@@ -249,7 +257,18 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
                     onChange={(e) => setAlunosDTO({ ...alunosDTO, telefone: e.target.value })}
                  
                   />
-                  </div>
+               </div>
+               <div className="col-md-4">
+                <label htmlFor="telefone" className="form-label">Grau Parentesco:</label>
+                  <input placeholder="(21) 9 9999-9999"
+                    type="text"
+                    className="form-control"
+                    name="cpfResponsavel"
+                    value={alunosDTO.cpfResponsavel}
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, telefone: e.target.value })}
+                 
+                  />
+               </div>
                  
               <div className="col-md-12">
               <h3 className="titulo-form">Endereço</h3>
@@ -333,13 +352,6 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
       
         
     
-         {isModalVisible && (
-            <SuccessModal
-              onClose={handleModalClose}
-              onRedirect={() => setIsRedirecting(true)} 
-              operation="atualizar"
-            />
-          )}
   </>
   
   )

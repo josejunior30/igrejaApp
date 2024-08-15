@@ -27,14 +27,20 @@ export type EntradaPG={
 export type AlunoPG={
     id:number;
     nome:string;
+    ativo: boolean;
+    projetos: projetos;
   
+}
+
+export type projetos={
+    id: number;
+    nome: string;
 }
 
 
 export enum FormaPagamento {
     PIX = 'PIX',
     DINHEIRO = 'DINHEIRO',
-    PENDENTE = 'PENDENTE',
     GRATIS = 'GRATIS'
 }
 export enum MesReferencia {

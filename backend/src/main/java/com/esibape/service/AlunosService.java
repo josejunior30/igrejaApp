@@ -5,7 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Period;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
+
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,12 @@ public class AlunosService {
     private AlunoStatusRepository alunoStatusRepository;
     @Autowired
     private PagamentoRepository pagamentoRepository;
+    
+    
 
     @Transactional(readOnly = true)
     public List<AlunosDTO> findAll() {
-        List<Alunos> list = repository.findAll();
+        List<Alunos> list = repository.findByAtivoTrue(); // Modificado para buscar apenas alunos ativos
         return list.stream()
             .map(x -> {
                 AlunosDTO dto = new AlunosDTO(x, x.getProjetos(), x.getAlunoStatus(), x.getChamada(), x.getPagamentos());
@@ -54,8 +57,8 @@ public class AlunosService {
 
     @Transactional(readOnly = true)
     public AlunosDTO findById(Long id) {
-        Optional<Alunos> alunos = repository.findById(id);
-        Alunos entity = alunos.get();
+        Alunos entity = repository.findByIdAndAtivoTrue(id)
+                .orElseThrow(() -> new NoSuchElementException("Aluno não encontrado ou inativo"));
         AlunosDTO dto = new AlunosDTO(entity, entity.getProjetos(), entity.getAlunoStatus(), entity.getChamada(), entity.getPagamentos());
         verificarStatusPagamento(dto);
         return dto;
@@ -65,49 +68,67 @@ public class AlunosService {
     public AlunosDTO insert(AlunosDTO dto) {
         Alunos entity = new Alunos();
         copyDtoToEntity(dto, entity);
+        entity.setAtivo(true); 
         entity = repository.save(entity);
         return new AlunosDTO(entity);
     }
 
     @Transactional
     public AlunosDTO update(Long id, AlunosDTO dto) {
-        Alunos entity = repository.getReferenceById(id);
+        Alunos entity = repository.findByIdAndAtivoTrue(id)
+                .orElseThrow(() -> new NoSuchElementException("Aluno não encontrado ou inativo"));
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
         return new AlunosDTO(entity);
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        Alunos entity = repository.findByIdAndAtivoTrue(id)
+                .orElseThrow(() -> new NoSuchElementException("Aluno não encontrado ou inativo"));
+        entity.setAtivo(false); // Marca o aluno como inativo em vez de deletá-lo
+        repository.save(entity);
     }
-
+    
     @Transactional(readOnly = true)
     public List<AlunosDTO> findByNomeIgnoreCaseContaining(String nome) {
-        List<Alunos> result = repository.findByNomeIgnoreCaseContaining(nome);
+        List<Alunos> result = repository.findByNomeIgnoreCaseContainingAndAtivoTrue(nome); // Modificado para buscar apenas alunos ativos
         return result.stream().map(x -> new AlunosDTO(x)).toList();
     }
 
     @Transactional(readOnly = true)
     public List<AlunosDTO> findByHorario(LocalTime horario) {
-        List<Alunos> result = repository.findByHorario(horario);
+        List<Alunos> result = repository.findByHorarioAndAtivoTrue(horario); // Modificado para buscar apenas alunos ativos
         return result.stream().map(x -> new AlunosDTO(x)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<AlunosDTO> findByProjetoId(Long projetoId) {
-        List<Alunos> result = repository.findByProjetosId(projetoId);
+        List<Alunos> result = repository.findByProjetosIdAndAtivoTrue(projetoId); // Modificado para buscar apenas alunos ativos
         return result.stream().map(x -> new AlunosDTO(x)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<AlunosDTO> findByProjetoIdAndHorario(Long projetoId, LocalTime horario) {
-        List<Alunos> result = repository.findByProjetosIdAndHorario(projetoId, horario);
+        List<Alunos> result = repository.findByProjetosIdAndHorarioAndAtivoTrue(projetoId, horario); // Modificado para buscar apenas alunos ativos
         return result.stream().map(x -> new AlunosDTO(x)).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<AlunosDTO> findAllAlunos() {
+        List<Alunos> list = repository.findAll(); // Busca todos os alunos, ativos e inativos
+        return list.stream()
+            .map(x -> {
+                AlunosDTO dto = new AlunosDTO(x, x.getProjetos(), x.getAlunoStatus(), x.getChamada(), x.getPagamentos());
+                verificarStatusPagamento(dto);
+                return dto;
+            })
+            .collect(Collectors.toList());
+    }
+
+    
+    
     private void copyDtoToEntity(AlunosDTO dto, Alunos entity) {
         atualizarIdade(dto);
-        // Atributos básicos
         entity.setNome(dto.getNome());
         entity.setDataNascimento(dto.getDataNascimento());
         entity.setIdade(dto.getIdade());
@@ -125,7 +146,9 @@ public class AlunosService {
         entity.setRua(dto.getRua());
         entity.setAlunoDoenca(dto.getAlunoDoenca());
         entity.setSangue(dto.getSangue());
+        entity.setAtivo(dto.isAtivo()); 
         entity.setHorario(dto.getHorario());
+        entity.setGrauParentesco(dto.getGrauParentesco());
         entity.setPergunta(dto.getPergunta());
 
         // Configuração de Projetos
@@ -168,6 +191,7 @@ public class AlunosService {
             dto.setIdade(periodo.getYears());
         }
     }
+
     private void verificarStatusPagamento(AlunosDTO dto) {
         LocalDate hoje = LocalDate.now();
         LocalDate dia10DoMes = LocalDate.of(hoje.getYear(), hoje.getMonth(), 10);
@@ -184,6 +208,8 @@ public class AlunosService {
             dto.setStatusPagamento("Pendente");
         }
     }
-
 }
+
+
+
 

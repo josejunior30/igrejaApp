@@ -11,6 +11,7 @@ import com.esibape.entities.Alunos;
 import com.esibape.entities.FormaPagamento;
 import com.esibape.entities.MesReferencia;
 import com.esibape.entities.Pagamento;
+import com.esibape.entities.Projetos;
 
 public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
 
@@ -26,5 +27,8 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
     List<Pagamento> findByAlunosPG(Alunos aluno);
 
     @Query("SELECT SUM(p.valor) FROM Pagamento p WHERE p.formaPagamento = :formaPagamento AND p.mesReferencia = :mesReferencia")
-    Integer sumValoresByFormaPagamentoAndMesReferencia(@Param("formaPagamento") FormaPagamento formaPagamento, @Param("mesReferencia") MesReferencia mesReferencia);
+   Integer sumValoresByFormaPagamentoAndMesReferencia(@Param("formaPagamento") FormaPagamento formaPagamento, @Param("mesReferencia") MesReferencia mesReferencia);
+
+
+    List<Pagamento> findByMesReferenciaAndAlunosPG_Projetos(MesReferencia mesReferencia, Projetos projetos);
 }

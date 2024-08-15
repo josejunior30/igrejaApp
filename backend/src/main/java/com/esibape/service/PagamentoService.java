@@ -1,6 +1,7 @@
 package com.esibape.service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,8 +14,11 @@ import com.esibape.entities.Alunos;
 import com.esibape.entities.FormaPagamento;
 import com.esibape.entities.MesReferencia;
 import com.esibape.entities.Pagamento;
+import com.esibape.entities.Projetos;
 import com.esibape.repository.AlunosRepository;
+
 import com.esibape.repository.PagamentoRepository;
+import com.esibape.repository.ProjetosRepository;
 import com.esibape.service.exception.EntityNotFoundException;
 
 @Service
@@ -24,12 +28,15 @@ public class PagamentoService {
     private PagamentoRepository repository;
     @Autowired
     private AlunosRepository alunosRepository;
-
+    @Autowired
+private ProjetosRepository projetosRepository;
+ 
+    
     @Transactional(readOnly = true)
     public List<PagamentoDTO> findAll() {
         List<Pagamento> list = repository.findAll();
         updateTotalMesForAllPagamentos();
-        updateTotalForAllPagamentos();
+       
         updateTotalPixForAllPagamentos();
         return list.stream()
                    .map(x -> {
@@ -55,14 +62,21 @@ public class PagamentoService {
     @Transactional
     public PagamentoDTO insert(PagamentoDTO dto) {
         Pagamento entity = new Pagamento();
+
+        // Verifica se a forma de pagamento é GRATIS e ajusta o valor
+        if (dto.getFormaPagamento() == FormaPagamento.GRATIS) {
+            dto.setValor(0);
+        }
+
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
         updateTotalMesForPagamentos(entity.getMesReferencia());
-        updateTotalForAllPagamentos();
         updateTotalPixForPagamentos(entity.getMesReferencia());
         verificarStatusPagamento(dto.getAlunosPG());
         return new PagamentoDTO(entity);
     }
+
+
 
     @Transactional
     public PagamentoDTO update(Long id, PagamentoDTO dto) {
@@ -71,14 +85,20 @@ public class PagamentoService {
             throw new EntityNotFoundException("Pagamento não encontrado.");
         }
         Pagamento entity = pagamentoOptional.get();
+
+        // Verifica se a forma de pagamento é GRATIS e ajusta o valor
+        if (dto.getFormaPagamento() == FormaPagamento.GRATIS) {
+            dto.setValor(0);
+        }
+
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
         updateTotalMesForPagamentos(entity.getMesReferencia());
-        updateTotalForAllPagamentos();
         updateTotalPixForPagamentos(entity.getMesReferencia());
         verificarStatusPagamento(dto.getAlunosPG());
         return new PagamentoDTO(entity);
     }
+
 
     public void delete(Long id) {
         Optional<Pagamento> pagamentoOptional = repository.findById(id);
@@ -88,7 +108,7 @@ public class PagamentoService {
         Pagamento entity = pagamentoOptional.get();
         repository.deleteById(id);
         updateTotalMesForPagamentos(entity.getMesReferencia());
-        updateTotalForAllPagamentos();
+   
         updateTotalPixForPagamentos(entity.getMesReferencia());
         verificarStatusPagamento(new AlunosDTO(entity.getAlunosPG()));
     }
@@ -130,21 +150,8 @@ public class PagamentoService {
         }
     }
 
-    @Transactional
-    private void updateTotalForAllPagamentos() {
-        Integer total = repository.findAll().stream()
-                                  .mapToInt(Pagamento::getValor)
-                                  .sum();
-        System.out.println("Total for all pagamentos: " + total);
+    
 
-        List<Pagamento> pagamentos = repository.findAll();
-
-        for (Pagamento pagamento : pagamentos) {
-            pagamento.setTotal(total);
-            System.out.println("Setting total for pagamento " + pagamento.getId() + ": " + total);
-            repository.save(pagamento);
-        }
-    }
 
     @Transactional
     private void updateTotalPixForPagamentos(MesReferencia mesReferencia) {
@@ -183,7 +190,7 @@ public class PagamentoService {
         MesReferencia mesReferenciaAtual = MesReferencia.fromNumero(mesAtual);
         List<Pagamento> pagamentosMesAtual = repository.findByMesReferencia(mesReferenciaAtual);
         updateTotalMesForAllPagamentos();
-        updateTotalForAllPagamentos();
+     
         updateTotalPixForAllPagamentos();
         updateTotalDinheiroForAllPagamentos(); 
         return pagamentosMesAtual.stream()
@@ -199,7 +206,7 @@ public class PagamentoService {
     public List<PagamentoDTO> findPagamentosByMesReferencia(MesReferencia mesReferencia) {
         List<Pagamento> pagamentos = repository.findByMesReferencia(mesReferencia);
         updateTotalMesForAllPagamentos();
-        updateTotalForAllPagamentos();
+    
         updateTotalPixForAllPagamentos();
         updateTotalDinheiroForAllPagamentos(); 
         return pagamentos.stream()
@@ -263,6 +270,36 @@ public class PagamentoService {
 
         for (MesReferencia mes : meses) {
             updateTotalDinheiroForPagamentos(mes);
+        }
+    }
+    
+    public List<PagamentoDTO> findPagamentosByMesReferenciaAndProjetos(MesReferencia mesReferencia, Long projetoId) {
+        try {
+            // Recupera o projeto pelo ID
+            Projetos projeto = projetosRepository.findById(projetoId).orElse(null);
+
+            // Se o projeto não for encontrado, retorna uma lista vazia
+            if (projeto == null) {
+                System.err.println("Projeto not found for this id :: " + projetoId);
+                return Collections.emptyList();
+            }
+
+            // Recupera os pagamentos filtrados por mês de referência e projeto
+            List<Pagamento> pagamentos = repository.findByMesReferenciaAndAlunosPG_Projetos(mesReferencia, projeto);
+
+            // Converte a lista de Pagamento para PagamentoDTO e verifica o status dos pagamentos
+            return pagamentos.stream()
+                    .map(pagamento -> {
+                        PagamentoDTO dto = new PagamentoDTO(pagamento, pagamento.getAlunosPG());
+                        verificarStatusPagamento(dto.getAlunosPG());
+                        return dto;
+                    })
+                    .collect(Collectors.toList());
+
+        } catch (Exception e) {
+            // Tratamento genérico de exceção
+            System.err.println("An error occurred while processing the request: " + e.getMessage());
+            return Collections.emptyList();
         }
     }
 

@@ -26,3 +26,6 @@ export function findByMes(mesReferencia: string) {
     
     return axios.get(`${BASE_URL}/pagamento/mes/${mesReferencia}`);
 }
+export function findPagamentosByMesReferenciaAndProjeto(projetoId: number,mesReferencia:string){
+    return axios.get(`${BASE_URL}/pagamento/mes/${mesReferencia}/projeto/${projetoId}`);
+}

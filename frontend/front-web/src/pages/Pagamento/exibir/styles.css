@@ -44,3 +44,50 @@ font-size: 14px;
    font-size: 20px;
    color: white;
 }
+
+.form-inativos{
+   color: white;
+}
+.form-check label{
+   color: white;
+}
+
+.modal-content {
+   background-color: #f8f9fa; /* Cor de fundo customizada */
+   border-radius: 0.5rem; /* Bordas arredondadas */
+   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Sombra suave */
+}
+
+.modal-header {
+   background-color: #343a40; /* Cor de fundo do header */
+   color: white; /* Cor do texto */
+   border-bottom: 1px solid #dee2e6; /* Borda inferior */
+}
+
+.modal-title {
+   font-weight: bold; /* Negrito no título */
+}
+
+.btn-close {
+   color: white; /* Cor do botão de fechar */
+   opacity: 1;
+}
+
+.modal-body {
+   font-size: 16px; /* Tamanho da fonte */
+   color: #495057; /* Cor do texto */
+}
+
+.modal-footer {
+   border-top: 1px solid #dee2e6; /* Borda superior */
+}
+
+.btn-secondary {
+   background-color: #6c757d; /* Cor do botão "Cancelar" */
+   border-color: #6c757d;
+}
+
+.btn-danger {
+   background-color: #dc3545; /* Cor do botão "Deletar" */
+   border-color: #dc3545;
+}

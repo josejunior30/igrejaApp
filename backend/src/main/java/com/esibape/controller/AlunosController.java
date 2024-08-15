@@ -38,6 +38,12 @@ public ResponseEntity <List<AlunosDTO>>findAll(){
 	return ResponseEntity.ok().body(alunos);
 }
 
+	@GetMapping("/todos")
+public ResponseEntity<List<AlunosDTO>> getTodosOsAlunos() {
+    return ResponseEntity.ok(service.findAllAlunos());
+}
+
+
 	@GetMapping(value="/{id}")
 	public ResponseEntity<AlunosDTO>findById(@PathVariable Long id){
 		AlunosDTO alunos = service.findById(id);
