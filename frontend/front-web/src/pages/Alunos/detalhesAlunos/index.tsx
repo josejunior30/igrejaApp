@@ -165,7 +165,6 @@ fornecer o apoio necessário para sua participação. `, 14, 150);
                 <p className="dados"><span>Data de Nascimento:</span> {alunosDTO.dataNascimento ? new Date(alunosDTO.dataNascimento).toLocaleDateString() : "-----"}</p>
                 <p className="dados"><span>Email: </span>{alunosDTO.email ?? "-----"}</p>
                 <p className="dados"><span>Responsável: </span>{alunosDTO.responsavel ?? "-----"}</p>
-                <p className="dados"><span>Doença: </span>{alunosDTO.pergunta ?? "-----"}</p>
                 <p className="dados"><span>CPF Responsável: </span>{alunosDTO.cpfResponsavel ?? "-----"}</p>
                 <p className="dados"><span>Doença: </span><span className="dados-doença">{alunosDTO.pergunta ?? "-----"}</span></p>
                 {alunosDTO.projetos && (

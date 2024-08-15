@@ -28,7 +28,9 @@ const ListaPagamento: React.FC = () => {
     const [paymentMethod, setPaymentMethod] = useState<FormaPagamento | ''>('');
     const [paymentMonth, setPaymentMonth] = useState<MesReferencia | ''>('');
     const [showInactive, setShowInactive] = useState<boolean>(false); // Exibir inativos por padrão
-    
+    const [filterPaidOnly, setFilterPaidOnly] = useState<boolean>(false);
+
+
     // States for EntradaPG form
     const [entradaValue, setEntradaValue] = useState<number | ''>('');
     const [entradaDescription, setEntradaDescription] = useState<string>('');
@@ -244,35 +246,43 @@ const ListaPagamento: React.FC = () => {
     const handlePrint = () => {
         const doc = new jsPDF();
         let y = 15;
+        const lineHeight = 10;
+        const pageHeight = doc.internal.pageSize.height;
+        let counter = 1; // Inicia o contador para numerar os alunos
+    
+        const addPage = () => {
+            doc.addPage();
+            y = 15; // Reinicia a posição `y` no topo da nova página
+        };
     
         doc.setFontSize(18);
         doc.text("Relatório de Pagamentos", 65, y);
-        y += 10;
+        y += lineHeight + 5;
     
         doc.setFontSize(14);
         doc.text(`Mês de Referência: ${selectedMonth ? selectedMonth.charAt(0).toUpperCase() + selectedMonth.slice(1) : ''}`, 70, y);
-        y += 15;
+        y += lineHeight + 5;
     
         doc.setFontSize(12);
         if (totalPix !== null) {
             doc.setFont('helvetica', 'normal'); 
             doc.text(`Pix: R$${totalPix}`, 10, y);
-            y += 7;
+            y += lineHeight;
         }
         if (totalDinheiro !== null) {
             doc.setFont('helvetica', 'normal'); 
             doc.text(`Dinheiro: R$${totalDinheiro}`, 10, y);
-            y += 7;
+            y += lineHeight;
         }
         if (totalMes !== null) {
             doc.setFont('helvetica', 'bold'); 
             doc.text(`Sub-Total: R$${totalMes}`, 10, y);
-            y += 7;
+            y += lineHeight;
         }
         totalEntradas.forEach((entrada) => {
             doc.setFont('helvetica', 'normal'); 
             doc.text(`${entrada.entrada} - R$${entrada.valor} (${entrada.formaPagamento})`, 10, y);
-            y += 7;
+            y += lineHeight;
         });
     
         if (total !== null) {
@@ -280,38 +290,48 @@ const ListaPagamento: React.FC = () => {
             doc.setFontSize(18);
             doc.setFont('helvetica', 'bold'); 
             doc.textWithLink(`TOTAL RECEBIDO: R$${total}`, 10, y, { underline: true }); 
-            y += 6;
+            y += lineHeight;
         }
     
-        y += 10;
+        y += lineHeight;
         doc.setFontSize(10);
         doc.setFont('helvetica', 'bold'); 
-        doc.text("ID", 10, y);
+        doc.text("Nº", 10, y);  // Cabeçalho "Nº" para a numeração dos alunos
         doc.text("Nome", 20, y);
         doc.text("Status", 85, y);
         doc.text("Valor", 115, y);
         doc.text("Data", 140, y);
         doc.text("Forma", 180, y);
-        y += 10;
+        y += lineHeight;
     
         alunos
             .filter(aluno => showInactive || aluno.ativo) // Filtra os alunos com base na opção selecionada
-            .forEach(aluno => {
+            .filter(aluno => aluno.projetos.nome.toLowerCase() !== 'jiu-jtsu') // Filtra alunos de jiu-jitsu
+            .map(aluno => {
                 const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
                 const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
-    
+                return { aluno, status, pagamentoDoAluno }; // Retorna o aluno junto com o status e pagamento para o próximo filtro
+            })
+            .filter(({ status }) => !filterPaidOnly || status === 'PAGO') // Aplica o filtro baseado no checkbox "Mostrar somente status PAGO"
+            .forEach(({ aluno, status, pagamentoDoAluno }) => {
+                if (y + lineHeight > pageHeight - 10) { // Verifica se precisa adicionar uma nova página
+                    addPage();
+                }
                 doc.setFont('helvetica', aluno.ativo ? 'normal' : 'italic'); // Estiliza o texto para inativos (opcional)
-                doc.text(`${aluno.id}`, 10, y);
+                doc.text(`${counter}`, 10, y); // Usando o contador para numerar os alunos
                 doc.text(`${aluno.nome}`, 20, y);
                 doc.text(`${status}`, 85, y);
                 doc.text(`${pagamentoDoAluno?.valor || '-'}`, 115, y);
                 doc.text(`${pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}`, 140, y);
                 doc.text(`${pagamentoDoAluno?.formaPagamento || '-'}`, 180, y);
-                y += 10;
+                y += lineHeight;
+                counter++; // Incrementa o contador para o próximo aluno
             });
     
         doc.save("relatorio_pagamentos.pdf");
     };
+    ;
+    
     
     
     
@@ -327,12 +347,14 @@ const ListaPagamento: React.FC = () => {
                                 <div className="col-4">
                                     <div className="form-group">
                                         <label className="pagamento">Aluno</label>
-                                        <select className="form-control" value={selectedAluno} onChange={(e) => setSelectedAluno(Number(e.target.value))}>
-                                            <option value="" className="text-center">Selecione</option>
-                                            {alunos.map(aluno => (
-                                                <option key={aluno.id} value={aluno.id}>{aluno.nome}</option>
-                                            ))}
-                                        </select>
+                         <select className="form-control" value={selectedAluno} onChange={(e) => setSelectedAluno(Number(e.target.value))}>
+                            <option value="" className="text-center">Selecione</option>
+                            {alunos
+                                .sort((a, b) => a.nome.localeCompare(b.nome)) 
+                                .map(aluno => (
+                                    <option key={aluno.id} value={aluno.id}>{aluno.nome}</option>
+                                ))}
+                        </select>
                                     </div>
                                 </div>
                                 <div className="col-3">
@@ -462,62 +484,78 @@ const ListaPagamento: React.FC = () => {
 
     </div>
 
-    <div className="col-9 col-md-9 mt-3">
+    <div className="col-9 col-md-11 mt-3">
         {totalPix !== null && (
             <h3 className="valor">Pix: R${totalPix}</h3>
         )}
     </div>
-    <div className="col-9 col-md-9 ">
+    <div className="col-9 col-md-11 ">
         {totalDinheiro !== null && (
             <h3 className="valor">Dinheiro: R${totalDinheiro}</h3>
         )}
     </div>
-    <div className="col-9 col-md-9 ">
+    <div className="col-9 col-md-11 ">
         {totalMes !== null && (
             <h3 className="sub-total">Sub-Total: R${totalMes}</h3>
         )}
     </div>
 
-    {/* Exibindo as entradas junto com os outros dados financeiros apenas após buscar */}
-    <div className="col-9 col-md-9 ">
+    
+    <div className="col-9 col-md-11 ">
         {totalEntradas.length > 0 && totalEntradas.map((entrada, index) => (
             <h3 key={index} className="valor">{entrada.entrada} - R${entrada.valor} ({entrada.formaPagamento})</h3>
         ))}
     </div>
 
-    <div className="col-9 col-md-9 d-flex align-items-center justify-content-between">
+    <div className="col-9 col-md-11 d-flex align-items-center justify-content-between">
         {total !== null && (
             <h2 className="totalMes">TOTAL RECEBIDO: R${total}</h2>
         )}
         <button onClick={handlePrint} className="mr-2" id="print-pagamnto"><PiPrinterFill /> Imprimir</button>
- <div className="form-check">
-    <input 
-        className="form-check-input" 
-        type="checkbox" 
-        id="showInactive" 
-        checked={showInactive} 
-        onChange={() => setShowInactive(!showInactive)} 
-    />
-    <label className="form-inativos" htmlFor="showInactive">
-        Mostrar alunos inativos
-    </label>
+        <div className="d-flex align-items-center">
+    <div className="form-check">
+        <input 
+            className="form-check-input" 
+            type="checkbox" 
+            id="showInactive" 
+            checked={showInactive} 
+            onChange={() => setShowInactive(!showInactive)} 
+        />
+        <label className="form-inativos" htmlFor="showInactive">
+            Mostrar alunos inativos
+        </label>
+    </div>
+    <div className="form-check ms-4">
+        <input
+            className="form-check-input"
+            type="checkbox"
+            id="filterPaidOnly"
+            checked={filterPaidOnly}
+            onChange={() => setFilterPaidOnly(!filterPaidOnly)}
+        />
+        <label className="form-inativos" htmlFor="filterPaidOnly">
+            Mostrar PAGO
+        </label>
+    </div>
 </div>
+
+
     </div>
 </div>
 
 
         
 <div className="row justify-content-center mt-3">
-    <div className="col-9 col-md-10">
+    <div className="col-9 col-md-11 ">
         {alunos.length === 0 ? (
             <p>Nenhum aluno encontrado.</p>
         ) : (
             <table className="table table-striped text-center">
                 <thead className="thead">
                     <tr>
-                        <th scope="col">#</th> {/* Altere o cabeçalho de ID para # ou Numeração */}
+                        <th scope="col">#</th> 
                         <th scope="col">Nome</th>
-                        <th scope="col">Projeto</th> {/* Nova coluna para Projetos */}
+                        <th scope="col">Projeto</th>
                         <th scope="col">Status</th>
                         <th scope="col">Valor</th>
                         <th scope="col">Data de Pagamento</th>
@@ -526,11 +564,15 @@ const ListaPagamento: React.FC = () => {
                 </thead>
                 <tbody>
     {alunos
-        .filter(aluno => showInactive || aluno.ativo) // Filtra a lista de acordo com o estado `showInactive`
-        .filter(aluno => aluno.projetos.nome.toLowerCase() !== 'jiu-jtsu') // Filtra alunos de jiu-jitsu
-        .map((aluno, index) => {
+        .filter(aluno => showInactive || aluno.ativo) 
+        .filter(aluno => aluno.projetos.nome.toLowerCase() !== 'jiu-jtsu') 
+        .map(aluno => {
             const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
             const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
+            return { aluno, status, pagamentoDoAluno }; // Retorna o aluno junto com o status e pagamento para o próximo filtro
+        })
+        .filter(({ status }) => !filterPaidOnly || status === 'PAGO') // Aplica o filtro baseado no checkbox "Mostrar somente status PAGO"
+        .map(({ aluno, status, pagamentoDoAluno }, index) => {
             const rowClass = aluno.ativo ? '' : 'inativo'; // Adiciona a classe 'inativo' se o aluno não for ativo
 
             return (
@@ -546,6 +588,8 @@ const ListaPagamento: React.FC = () => {
             );
         })}
 </tbody>
+
+
 
             </table>
         )}
