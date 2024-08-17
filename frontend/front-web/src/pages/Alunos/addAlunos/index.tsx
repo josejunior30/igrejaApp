@@ -89,7 +89,7 @@ const AddAlunos: React.FC = () => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
+        alert("Adicionado com sucesso!");
         try {
             console.log("Membro Detail antes do POST:", alunosDTO);
             await insertAluno(alunosDTO);

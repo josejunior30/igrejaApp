@@ -13,11 +13,10 @@ const handleItemClick = () => {
 setShowSubmenu(prevState => !prevState);
 };
 console.log('showSubmenu:', showSubmenu);
+
+
 return (
 <>
-
-
-
 
 <div className="sidebar-container">
   <ul className='sidebar'>

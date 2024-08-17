@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ public class PagamentoController {
 		PagamentoDTO pagamento = service.findById(id);
 		return ResponseEntity.ok().body(pagamento);
 	}
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping
 	public ResponseEntity<PagamentoDTO> insert(@RequestBody PagamentoDTO dto){
 		PagamentoDTO entity = service.insert(dto);
@@ -40,6 +42,7 @@ public class PagamentoController {
 				.buildAndExpand(entity.getId()).toUri();
 		return ResponseEntity.created(uri).body(entity);
 	}
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<PagamentoDTO>delete(@PathVariable Long id){
 		 service.delete(id);

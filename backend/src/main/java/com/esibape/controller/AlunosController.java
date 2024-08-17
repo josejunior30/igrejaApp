@@ -49,7 +49,7 @@ public ResponseEntity<List<AlunosDTO>> getTodosOsAlunos() {
 		AlunosDTO alunos = service.findById(id);
 		return ResponseEntity.ok().body(alunos);
 	}
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	
 	@PostMapping
 	public ResponseEntity<AlunosDTO> insert(@RequestBody AlunosDTO dto){
 		AlunosDTO entity = service.insert(dto);
@@ -57,13 +57,13 @@ public ResponseEntity<List<AlunosDTO>> getTodosOsAlunos() {
 				.buildAndExpand(entity.getId()).toUri();
 		return ResponseEntity.created(uri).body(entity);
 	}
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+
 	@PutMapping(value="/{id}")
 	public ResponseEntity<AlunosDTO>update (@PathVariable Long id, @RequestBody AlunosDTO dto){
 		 dto =service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<AlunosDTO>delete(@PathVariable Long id){
 		 service.delete(id);

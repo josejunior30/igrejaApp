@@ -4,9 +4,11 @@ import { findByMes as findPagamentoByMes, findByMesAtual, insertPagamento } from
 import { findByMes as findEntradaByMes, insertEntradaPG } from "../../../service/entradaService"; 
 import Header from "../../../components/Header";
 import './styles.css';
-import { findAllAlunos } from "../../../service/alunosService";
+import { findAllAlunos, findByProjeto } from "../../../service/alunosService";
 import { jsPDF } from "jspdf";
 import { PiPrinterFill } from "react-icons/pi";
+import axios from "axios";
+import { BASE_URL } from "../../../ultilitarios/system";
 
 
 const ListaPagamento: React.FC = () => {
@@ -30,7 +32,8 @@ const ListaPagamento: React.FC = () => {
     const [showInactive, setShowInactive] = useState<boolean>(false); // Exibir inativos por padrão
     const [filterPaidOnly, setFilterPaidOnly] = useState<boolean>(false);
 
-
+    const [selectedProjeto, setSelectedProjeto] = useState<number | ''>(''); // Estado para o projeto selecionado
+    
     // States for EntradaPG form
     const [entradaValue, setEntradaValue] = useState<number | ''>('');
     const [entradaDescription, setEntradaDescription] = useState<string>('');
@@ -41,8 +44,6 @@ const ListaPagamento: React.FC = () => {
         const fetchPagamentos = async () => {
             try {
                 const response = await findByMesAtual();
-                console.log('Dados dos pagamentos:', response.data);
-    
                 const pagamentosComData: Pagamento[] = response.data.map((pagamento: Pagamento) => ({
                     ...pagamento,
                     dataPagamento: new Date(pagamento.dataPagamento)
@@ -71,12 +72,21 @@ const ListaPagamento: React.FC = () => {
                 console.error('Erro ao carregar alunos:', error);
             }
         };
+
+        const fetchProjetos = async () => {
+            try {
+                const response = await axios.get(`${BASE_URL}/projetos`);
+                setProjetos(response.data);
+            } catch (error) {
+                console.error('Erro ao carregar projetos:', error);
+            }
+        };
     
         fetchPagamentos();
         fetchAlunos();
-        // Remover fetchEntradas() daqui
+        fetchProjetos();
     }, []);
-    
+
 
     const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedMonth(e.target.value as MesReferencia);
@@ -241,6 +251,7 @@ const ListaPagamento: React.FC = () => {
         }
     };
 
+    
     const currentDate = new Date();
 
     const handlePrint = () => {
@@ -296,7 +307,7 @@ const ListaPagamento: React.FC = () => {
         y += lineHeight;
         doc.setFontSize(10);
         doc.setFont('helvetica', 'bold'); 
-        doc.text("Nº", 10, y);  // Cabeçalho "Nº" para a numeração dos alunos
+        doc.text("Nº", 10, y);  
         doc.text("Nome", 20, y);
         doc.text("Status", 85, y);
         doc.text("Valor", 115, y);
@@ -331,7 +342,24 @@ const ListaPagamento: React.FC = () => {
         doc.save("relatorio_pagamentos.pdf");
     };
     ;
-    
+    const handleProjetoChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const projetoId = Number(e.target.value);
+        setSelectedProjeto(projetoId);
+
+        if (projetoId) {
+            try {
+                const response = await findByProjeto(projetoId); // Chama o serviço para buscar alunos por projeto
+                setAlunos(response.data); // Atualiza a lista de alunos com os alunos do projeto selecionado
+            } catch (error) {
+                console.error('Erro ao carregar alunos por projeto:', error);
+                setError("Erro ao carregar alunos por projeto");
+            }
+        } else {
+            // Caso o projeto não esteja selecionado, você pode definir um comportamento padrão, como limpar a lista de alunos
+            setAlunos([]);
+        }
+    };
+
     
     
     
@@ -344,6 +372,23 @@ const ListaPagamento: React.FC = () => {
                     <div className="col-10 col-md-9 align-items-center text-center">
                         <div className="container-white p-3">
                             <div className="row mt-3" id="inserirPG">
+                            <div className="col-2">
+                        <div className="form-group">
+                            <label className="pagamento">Projeto</label>
+                            <select
+                                className="form-control"
+                                value={selectedProjeto}
+                                onChange={handleProjetoChange}
+                            >
+                                <option value="">Selecione</option>
+                                {projetos.map((projeto) => (
+                                    <option key={projeto.id} value={projeto.id}>
+                                        {projeto.nome}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
                                 <div className="col-4">
                                     <div className="form-group">
                                         <label className="pagamento">Aluno</label>

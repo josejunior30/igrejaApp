@@ -100,11 +100,11 @@ const DetalhesAlunos = () => {
 
     doc.setFontSize(12);
     doc.text(`Nome: ${nome}`, 14, 45);
-    doc.text(`Idade: ${idade}`, 100, 45);
+    doc.text(`Idade: ${idade}`, 110, 45);
     doc.text(`Nascimento: ${dataNascimento}`, 130, 45);
     doc.text(`Telefone: ${telefone}`, 14, 55);
     doc.text(`Email: ${email}`, 70, 55);
-    doc.text(`Curso: ${curso}`, 130, 55);
+    doc.text(`Curso: ${curso}`, 150, 55);
     doc.text("Possui alguma doença?", 14, 65);
     doc.text(perguntaText, 65, 65);
     doc.text(`Responsável: ${responsavel}`, 14, 75);
@@ -158,7 +158,7 @@ fornecer o apoio necessário para sua participação. `, 14, 150);
           {alunosDTO ? (
             <>
               <div className="col-md-4 col-9 m-5 md-5 pb-3 text-center" id="dados">
-                <img src={alunosDTO.url ?? "-----"} alt="Foto do Membro" className="img-fluid mb-3 offset-4" />
+                <img src={alunosDTO.url ?? "-----"} alt="Foto do Membro" className="img-fluid mb-3 rounded mx-auto d-block " />
                 <span className="nome-id">{alunosDTO.nome ?? "-----"}</span>
                 <p className="dados"><span>Identidade:</span> {alunosDTO.rg ?? "-----"}</p>
                 <p className="dados"><span>Idade:</span> {alunosDTO.idade ?? "-----"}</p>
