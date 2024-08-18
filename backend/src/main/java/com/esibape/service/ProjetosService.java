@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.ProjetosDTO;
+import com.esibape.entities.Alunos;
 import com.esibape.entities.Projetos;
 import com.esibape.repository.ProjetosRepository;
 
@@ -18,18 +19,32 @@ public class ProjetosService {
 	private ProjetosRepository repository;
 	
 	
-	@Transactional(readOnly = true)
-	public List<ProjetosDTO> findAll() {
-		List <Projetos> entity = repository.findAll();
-		return  entity.stream()
-	               .map(x -> new ProjetosDTO(x, x.getAlunos(), x.getChamada(),x.getRelatorio() ))
-	               .collect(Collectors.toList());
-	}
-	@Transactional(readOnly = true)
+
+    @Transactional(readOnly = true)
+    public List<ProjetosDTO> findAll() {
+        List<Projetos> entity = repository.findAll();
+        return entity.stream()
+                .map(x -> {
+                    // Filtrar alunos ativos
+                    List<Alunos> alunosAtivos = x.getAlunos().stream()
+                            .filter(aluno -> aluno.isAtivo()) // Supondo que existe um método isAtivo()
+                            .collect(Collectors.toList());
+
+                    return new ProjetosDTO(x, alunosAtivos, x.getChamada(), x.getRelatorio());
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public ProjetosDTO findById(Long id) {
-    	Optional<Projetos> projetos = repository.findById(id);
-    	Projetos entity = projetos.get();
-    	return  new ProjetosDTO(entity, entity.getAlunos(), entity.getChamada(),entity.getRelatorio()) ;
+        Optional<Projetos> projetos = repository.findById(id);
+        Projetos entity = projetos.get();
+        // Filtrar alunos ativos
+        List<Alunos> alunosAtivos = entity.getAlunos().stream()
+                .filter(aluno -> aluno.isAtivo()) // Supondo que existe um método isAtivo()
+                .collect(Collectors.toList());
+                
+        return new ProjetosDTO(entity, alunosAtivos, entity.getChamada(), entity.getRelatorio());
     }
 	
 	@Transactional
