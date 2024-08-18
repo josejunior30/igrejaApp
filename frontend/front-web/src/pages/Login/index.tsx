@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import './styles.css';
 
 import *as authService from "../../service/AuthService";
@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { ContextToken } from "../../ultilitarios/context-token";
 import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 import { SubmitHandler, useForm } from "react-hook-form";
+
+
+const loadingImage = '/imagens/loading.gif';
 
 
 type FormValues = {
@@ -21,12 +24,15 @@ const Login = () => {
     const [isMobile, setIsMobile] = useState(false);
     const loginImagem = 'https://i.postimg.cc/zDy9k0jx/Ama.png';
     const logoPequeno= 'https://i.postimg.cc/nL176G6s/Ama-1.png';
+    const [loading, setLoading] = useState(false);
+
     
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const onSubmit: SubmitHandler<FormValues> = (data:any) => {
+    const onSubmit: SubmitHandler<FormValues> = (data: any) => {
+        setLoading(true);  // Inicia o carregamento
         authService.loginRequest(data)
             .then(response => {
                 authService.saveAccessToken(response.data.access_token);
@@ -36,8 +42,12 @@ const Login = () => {
             .catch(error => {
                 console.error('Erro ao fazer login:', error);
                 setError("username", { message: "Usuário ou senha inválidos." });
+            })
+            .finally(() => {
+                setLoading(false);  // Termina o carregamento
             });
     };
+    
     useEffect(() => {
         const checkScreenWidth = () => {
             setIsMobile(window.innerWidth < 768);
@@ -64,41 +74,44 @@ const Login = () => {
                     </div>
                     <div className="col-8 col-md-3" id="login">
                     <h2 >Login</h2>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="mb-4 col-11" >
-                                <label className="form-label">Email:</label>
-                                <div className="input-group">
-                                <input
-                                 type="text"
-                                 id="username"
-                                    className="form-control"
-                                    placeholder="Insira seu e-mail"
-                                    {...register("username", { required: true })}
-                                />
-                                </div>
-                            </div>
-                            <div className="mb-4">
-                                <label className="form-label">Senha:</label>
-                                <div className="input-group">
-                                    <input
-                                        className="form-control"
-                                        type={showPassword ? "text" : "password"}
-                                        id="password"
-                                        placeholder="Insira sua senha"
-                                        {...register("password", { required: true })}
-                                    />
-                                    <button type="button" className="btn btn-outline-secondary" id="olho" onClick={togglePasswordVisibility}>
-                                        {showPassword ? <FaRegEyeSlash /> : <FaEye />}
-                                    </button>
-                                </div>
-                                {errors.username && <p className="invalid-error-message">{errors.username.message}</p>}
+                    <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb-4 col-11">
+                <label className="form-label">Email:</label>
+                <div className="input-group">
+                    <input
+                        type="text"
+                        id="username"
+                        className="form-control"
+                        placeholder="Insira seu e-mail"
+                        {...register("username", { required: true })}
+                    />
+                </div>
+            </div>
+            <div className="mb-4">
+                <label className="form-label">Senha:</label>
+                <div className="input-group">
+                    <input
+                        className="form-control"
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        placeholder="Insira sua senha"
+                        {...register("password", { required: true })}
+                    />
+                    <button type="button" className="btn btn-outline-secondary" id="olho" onClick={togglePasswordVisibility}>
+                        {showPassword ? <FaRegEyeSlash /> : <FaEye />}
+                    </button>
+                </div>
+                {errors.username && <p className="invalid-error-message">{errors.username.message}</p>}
+                <div className="d-grid gap-2 col-9 mx-auto">
+                    {loading ? (
+                        <img src={loadingImage} alt="Carregando..." className="rounded mx-auto d-block "  id="loading-image"/>
+                    ) : (
+                        <button type="submit" className="btn btn-primary" id="btn-logar">Entrar</button>
+                    )}
+                </div>
+            </div>
+        </form>
 
-                                <div className="d-grid gap-2 col-9 mx-auto">
-                                <button type="submit" className="btn btn-primary" id="btn-logar">Entrar</button>
-                                 </div>
-                               
-                            </div>
-                        </form>
                     </div>
                 </div>
                 
