@@ -75,9 +75,6 @@ const PresençaBox = () => {
       case 'ausente':
         updatedPresencas[index].chamadaAluno = isChecked ? 1 : 0;
         break;
-      case 'justificada':
-        updatedPresencas[index].chamadaAluno = isChecked ? 2 : 0;
-        break;
       default:
         break;
     }
@@ -146,7 +143,7 @@ const PresençaBox = () => {
             </div>
           </div>
         </div>
-
+<h3 className="text-center" id="projetoNome">{projetosDTO?.nome}</h3>
         <div className="container col-md-6">
           <div className="row justify-content-center text-center">
             <div className="col-md-12" id="tabela-lista">
@@ -155,11 +152,10 @@ const PresençaBox = () => {
                   <thead className="thead">
                     <tr>
                       <th scope="col">Nome</th>
-                      <th scope="col">Projeto</th>
                       <th scope="col">Horario</th>
                       <th scope="col">Presente</th>
                       <th scope="col">Ausente</th>
-                      <th scope="col">Justificada</th>
+                     
                     </tr>
                   </thead>
                   <tbody>
@@ -169,11 +165,6 @@ const PresençaBox = () => {
                           <td>
                             <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
                               {aluno.nome}
-                            </Link>
-                          </td>
-                          <td>
-                            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
-                              {projetosDTO.nome}
                             </Link>
                           </td>
                           <td>
@@ -197,14 +188,7 @@ const PresençaBox = () => {
                               onChange={(e) => handleCheckboxChange(aluno.id, 'ausente', e.target.checked)}
                             />
                           </td>
-                          <td>
-                            <input
-                              type="checkbox"
-                              id={`justificada-${aluno.id}`}
-                              value="justificada"
-                              onChange={(e) => handleCheckboxChange(aluno.id, 'justificada', e.target.checked)}
-                            />
-                          </td>
+                  
                         </tr>
                       ))
                     )}
