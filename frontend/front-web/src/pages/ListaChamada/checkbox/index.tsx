@@ -109,7 +109,7 @@ const PresençaBox = () => {
 
   const closeModal = () => {
     setShowModal(false);
-    navigate(-1); // Navegar de volta para a página anterior
+    navigate(0);
   };
 
   const formatHorario = (horario: any) => {
