@@ -65,7 +65,7 @@ function App() {
     <Route path="/relatorio/:id" element={<PrivateRoute><DetalhesRelatorio /></PrivateRoute>} />
     <Route path="/enviarRelatorio" element={<PrivateRoute><AddRelatorio /></PrivateRoute>} />
     <Route path="/redefinirsenha" element={<PrivateRoute><ChangePassword /></PrivateRoute> } />
-    <Route path="/enviarChamada/:id" element={<PrivateRoute><PresencaBox /></PrivateRoute> } />
+    <Route path="/enviarChamada/:id" element={<PresencaBox /> } />
     <Route path="/pagamento" element={<PrivateRoute><ListaPagamento/></PrivateRoute> } />
   </Routes>
   </Router>
