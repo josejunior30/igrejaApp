@@ -27,6 +27,7 @@ import * as authService from './service/AuthService';
 import ChangePassword from './pages/Usuario/Redefinir';
 import PresencaBox from './pages/ListaChamada/checkbox';
 import ListaPagamento from './pages/Pagamento/exibir/ListaPagamento';
+import AlunoPagamentos from './pages/Pagamento/exibirAluno';
 
 
 
@@ -67,6 +68,7 @@ function App() {
     <Route path="/redefinirsenha" element={<PrivateRoute><ChangePassword /></PrivateRoute> } />
     <Route path="/enviarChamada/:id" element={<PresencaBox /> } />
     <Route path="/pagamento" element={<PrivateRoute><ListaPagamento/></PrivateRoute> } />
+    <Route path="/historicoPagamento/:id" element={<PrivateRoute><AlunoPagamentos /></PrivateRoute>} />
   </Routes>
   </Router>
 </ContextToken.Provider>

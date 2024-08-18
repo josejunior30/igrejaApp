@@ -1,6 +1,7 @@
 
 
 export type Pagamento= {
+    [x: string]: any;
     pagamento: any;
     id: number;
     valor: number;

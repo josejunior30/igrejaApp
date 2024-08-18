@@ -115,7 +115,7 @@ public class AlunosDTO implements Serializable {
         if (entity.getAlunoStatus() != null) {
             this.alunoStatus = new AlunoStatusDTO(entity.getAlunoStatus());
         } else {
-            this.alunoStatus = null; // Garante que alunoStatus seja nulo se a entidade não tiver alunoStatus definido
+            this.alunoStatus = null; 
         }
         if (entity.getProjetos() != null) {
             this.projetos = new ProjetosDTO(entity.getProjetos());
