@@ -18,6 +18,7 @@ export type alunos={
     responsavel: string;
 	 cpfResponsavel: string;
      telefone: string;
+     horario:string ;
      chamada: chamada[];
 
 }

@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import { PiPrinterFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
+import Projetos from "../Projetos";
 
 
   
@@ -127,7 +128,7 @@ const Presenca = () => {
             onChange={handleProjetoChange}
         
           />
-          <label htmlFor="projeto3" className="form-check-label me-1 " >Teclado/Violão</label>
+          <label htmlFor="projeto3" className="form-check-label me-1 " >Teclado</label>
           <input
             type="radio"
             id="projeto3"
@@ -145,12 +146,21 @@ const Presenca = () => {
             onChange={handleProjetoChange}
         
           />
-          <label htmlFor="projeto5" className="form-check-label me-1 " >Bateria/Percursão</label>
+          <label htmlFor="projeto5" className="form-check-label me-1 " >Bateria</label>
           <input
             type="radio"
             id="projeto"
             value="5"
             checked={projeto === 5}
+            onChange={handleProjetoChange}
+          
+          />
+           <label htmlFor="projeto5" className="form-check-label me-1 " > violão e Guitarra</label>
+          <input
+            type="radio"
+            id="projeto"
+            value="6"
+            checked={projeto === 6}
             onChange={handleProjetoChange}
           
           />

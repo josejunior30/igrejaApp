@@ -138,16 +138,23 @@ const Alunos = () => {
                       />
                     </div>
                   )}
-                  {searchType === 'horario' && (
-                    <div className="col-md-5 col-4">
-                      <input
-                        value={searchHorario}
-                        placeholder="Digite um horário (HH:mm)"
-                        onChange={(e) => setSearchHorario(e.target.value)}
-                        className="form-control"
-                      />
-                    </div>
-                  )}
+                {searchType === 'horario' && (
+  <div className="col-md-5 col-4">
+    <select
+      value={searchHorario}
+      onChange={(e) => setSearchHorario(e.target.value)}
+      className="form-control"
+    >
+      <option value="">horário</option>
+      <option value="15:00">15:00</option>
+      <option value="16:00">16:00</option>
+      <option value="17:00">17:00</option>
+      <option value="18:00">18:00</option>
+      <option value="19:00">19:00</option>
+    </select>
+  </div>
+)}
+
                   {searchType === 'projeto' && (
                     <div className="col-md-5 col-4">
                       <select
@@ -181,12 +188,18 @@ const Alunos = () => {
                         </select>
                       </div>
                       <div className="col-md-5 col-4 mb-2">
-                        <input
-                          value={searchHorario}
-                          placeholder="Digite um horário (HH:mm)"
-                          onChange={(e) => setSearchHorario(e.target.value)}
-                          className="form-control"
-                        />
+                      <select
+      value={searchHorario}
+      onChange={(e) => setSearchHorario(e.target.value)}
+      className="form-control"
+    >
+      <option value="">horário</option>
+      <option value="15:00">15:00</option>
+      <option value="16:00">16:00</option>
+      <option value="17:00">17:00</option>
+      <option value="18:00">18:00</option>
+      <option value="19:00">19:00</option>
+    </select>
                       </div>
                     </>
                   )}
