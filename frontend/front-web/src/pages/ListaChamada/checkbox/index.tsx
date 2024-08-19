@@ -159,40 +159,48 @@ const PresençaBox = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {projetosDTO.alunos && (
-                      projetosDTO.alunos.map((aluno) => (
-                        <tr key={aluno.id}>
-                          <td>
-                            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
-                              {aluno.nome}
-                            </Link>
-                          </td>
-                          <td>
-                            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
-                            {formatHorario(aluno.horario)}
-                            </Link>
-                          </td>
-                          <td>
-                            <input
-                              type="checkbox"
-                              id={`presente-${aluno.id}`}
-                              value="presente"
-                              onChange={(e) => handleCheckboxChange(aluno.id, 'presente', e.target.checked)}
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="checkbox"
-                              id={`ausente-${aluno.id}`}
-                              value="ausente"
-                              onChange={(e) => handleCheckboxChange(aluno.id, 'ausente', e.target.checked)}
-                            />
-                          </td>
-                  
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
+  {projetosDTO.alunos && (
+    projetosDTO.alunos
+      .slice() // Faz uma cópia do array para evitar mutação
+      .sort((a, b) => {
+        const hourA = typeof a.horario === 'string' ? parseInt(a.horario, 10) : a.horario;
+        const hourB = typeof b.horario === 'string' ? parseInt(b.horario, 10) : b.horario;
+        return hourA - hourB;
+      })
+      .map((aluno) => (
+        <tr key={aluno.id}>
+          <td>
+            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
+              {aluno.nome}
+            </Link>
+          </td>
+          <td>
+            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
+              {formatHorario(aluno.horario)}
+            </Link>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              id={`presente-${aluno.id}`}
+              value="presente"
+              onChange={(e) => handleCheckboxChange(aluno.id, 'presente', e.target.checked)}
+            />
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              id={`ausente-${aluno.id}`}
+              value="ausente"
+              onChange={(e) => handleCheckboxChange(aluno.id, 'ausente', e.target.checked)}
+            />
+          </td>
+        </tr>
+      ))
+  )}
+</tbody>
+
+
                 </table>
               )}
 
