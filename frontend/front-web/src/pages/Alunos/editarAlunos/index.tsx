@@ -326,7 +326,7 @@ const EditarAlunos =()=>{
                     className="form-control"
                     name="complemento"
                     value={alunosDTO.complemento}
-                   
+                    onChange={(e) => setAlunosDTO({ ...alunosDTO, complemento: e.target.value })}
                   />
           </div>
          
