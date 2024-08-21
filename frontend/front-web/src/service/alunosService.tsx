@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
-
+import * as authService from '../service/AuthService';
 
 
 export function findAll(){
@@ -20,8 +20,22 @@ export function insertAluno(alunosDTO:any){
 export function updateMembro(id: number, alunosDTO:any){
     return axios.put(`${BASE_URL}/alunos/${id}`, alunosDTO);
 }
-export function deleteMembro(id: number) {
-    return axios.delete(`${BASE_URL}/alunos/${id}`);
+
+export async function deleteMembro(id: number) {
+    
+    // Verifica se o usuário tem a role 'ROLE_ADMIN'
+    if (!authService.hasAnyRoles(['ROLE_ADMIN'])) {
+        alert('Acesso negado: Você não tem permissão para realizar esta ação.');
+        throw new Error('Acesso negado: Você não tem permissão para realizar esta ação.');
+    }
+
+    try {
+        const response = await axios.delete(`${BASE_URL}/alunos/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao inserir pagamento:', error);
+        throw error;
+    }
 }
 export function findByNome(nome:string){
 

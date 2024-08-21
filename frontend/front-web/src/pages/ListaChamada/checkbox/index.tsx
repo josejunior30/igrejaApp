@@ -11,15 +11,15 @@ import { GiConfirmed } from "react-icons/gi";
 
 
 
-
 const PresençaBox = () => {
   const { id } = useParams<{ id: string }>() ?? { id: "" };
   const [projetosDTO, setProjetosDTO] = useState<projetosDTO>();
   const [loading, setLoading] = useState(true);
   const [listaDeAlunos, setListaDeAlunos] = useState<alunos[]>([]);
   const [presencas, setPresencas] = useState<PresencaDTO[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string>(new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }));
+
   const navigate = useNavigate();
 
   const loadProjetosDTO = (id: string) => {
@@ -86,14 +86,21 @@ const PresençaBox = () => {
     setSelectedDate(e.target.value);
     const updatedPresencas = presencas.map(p => ({
       ...p,
-      data: new Date(e.target.value),
+      data: new Date(e.target.value + 'T00:00:00'), // Define a data local sem avançar o dia
     }));
     setPresencas(updatedPresencas);
   };
+  
 
   const enviarListaDePresenca = () => {
     presencas.forEach(presenca => {
-      presencaService.insert(presenca)
+      // Certifique-se de que a data está sendo formatada corretamente
+      const presencaComDataFormatada = {
+        ...presenca,
+        data: new Date(selectedDate) // Ou formatar de outra maneira se necessário
+      };
+  
+      presencaService.insert(presencaComDataFormatada)
         .then(response => {
           console.log("Presença enviada com sucesso:", response.data);
           setShowModal(true);
@@ -103,6 +110,7 @@ const PresençaBox = () => {
         });
     });
   };
+  
 
   const closeModal = () => {
     setShowModal(false);
@@ -128,7 +136,7 @@ const PresençaBox = () => {
       <div className="container-fluid mt-5 pt-5">
         <div className="container pt-5 p-3 col-md-5">
           <div className="row justify-content-center" id="pesquisa-lista">
-            <div className="col-md-5 p-4 col-5">
+            <div className="col-md-6 p-4 col-6">
               <label htmlFor="datePicker" className="form-label">Escolha a data:</label>
               <input
                 className="form-control"
@@ -159,46 +167,40 @@ const PresençaBox = () => {
                     </tr>
                   </thead>
                   <tbody>
-  {projetosDTO.alunos && (
-    projetosDTO.alunos
-      .slice() // Faz uma cópia do array para evitar mutação
-      .sort((a, b) => {
-        const hourA = typeof a.horario === 'string' ? parseInt(a.horario, 10) : a.horario;
-        const hourB = typeof b.horario === 'string' ? parseInt(b.horario, 10) : b.horario;
-        return hourA - hourB;
-      })
-      .map((aluno) => (
-        <tr key={aluno.id}>
-          <td>
-            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
-              {aluno.nome}
-            </Link>
-          </td>
-          <td>
-            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
-              {formatHorario(aluno.horario)}
-            </Link>
-          </td>
-          <td>
-            <input
-              type="checkbox"
-              id={`presente-${aluno.id}`}
-              value="presente"
-              onChange={(e) => handleCheckboxChange(aluno.id, 'presente', e.target.checked)}
-            />
-          </td>
-          <td>
-            <input
-              type="checkbox"
-              id={`ausente-${aluno.id}`}
-              value="ausente"
-              onChange={(e) => handleCheckboxChange(aluno.id, 'ausente', e.target.checked)}
-            />
-          </td>
-        </tr>
-      ))
-  )}
-</tbody>
+                    {projetosDTO.alunos && (
+                      projetosDTO.alunos.map((aluno) => (
+                        <tr key={aluno.id}>
+                          <td>
+                            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
+                              {aluno.nome}
+                            </Link>
+                          </td>
+                          <td>
+                            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
+                            {formatHorario(aluno.horario)}
+                            </Link>
+                          </td>
+                          <td>
+                            <input
+                              type="checkbox"
+                              id={`presente-${aluno.id}`}
+                              value="presente"
+                              onChange={(e) => handleCheckboxChange(aluno.id, 'presente', e.target.checked)}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="checkbox"
+                              id={`ausente-${aluno.id}`}
+                              value="ausente"
+                              onChange={(e) => handleCheckboxChange(aluno.id, 'ausente', e.target.checked)}
+                            />
+                          </td>
+
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
 
 
                 </table>

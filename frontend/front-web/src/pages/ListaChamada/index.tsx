@@ -7,7 +7,7 @@ import Header from "../../components/Header";
 import { PiPrinterFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
-import Projetos from "../Projetos";
+
 
 
   
@@ -197,22 +197,25 @@ const Presenca = () => {
             <th scope="col">Projeto</th>
           </tr>
       </thead>
-      <tbody>
-        {presencas.length > 0 ? (
-              presencas.map((presenca:any) => (
-            <tr key={presenca.id}>
-              <td>{presenca.alunos ? presenca.alunos.nome : 'Aluno não encontrado'}</td>
-              <td>{presenca.chamadaAluno}</td>
-              <td>{presenca.projetosChamada ? presenca.projetosChamada.nome : 'Projeto não encontrado'}</td>
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td>Nenhuma presença encontrada</td>
-          </tr>
-        )}
+     <tbody>
+  {presencas.length > 0 ? (
+    presencas.map((presenca: any) => (
+      <tr key={presenca.id}>
+        <td>{presenca.alunos ? presenca.alunos.nome : 'Aluno não encontrado'}</td>
+        <td 
+          style={{ color: presenca.chamadaAluno === 'AUSENTE' ? '#eb6161' : 'white' }}>
+          {presenca.chamadaAluno}
+        </td>
+        <td>{presenca.projetosChamada ? presenca.projetosChamada.nome : 'Projeto não encontrado'}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan={3}>Nenhuma presença encontrada</td>
+    </tr>
+  )}
+</tbody> 
 
-        </tbody>
 
         </table>
         </div>
@@ -227,5 +230,4 @@ const Presenca = () => {
   );
   
 };
-
 export default Presenca;

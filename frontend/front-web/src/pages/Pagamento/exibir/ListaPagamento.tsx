@@ -253,11 +253,10 @@ const ListaPagamento: React.FC = () => {
 
     
     const currentDate = new Date();
-
     const handlePrint = () => {
         const doc = new jsPDF();
         let y = 15;
-        const lineHeight = 10;
+        const lineHeight = 5;
         const pageHeight = doc.internal.pageSize.height;
         let counter = 1; // Inicia o contador para numerar os alunos
     
@@ -266,52 +265,23 @@ const ListaPagamento: React.FC = () => {
             y = 15; // Reinicia a posição `y` no topo da nova página
         };
     
-        doc.setFontSize(18);
-        doc.text("Relatório de Pagamentos", 65, y);
-        y += lineHeight + 5;
-    
         doc.setFontSize(14);
-        doc.text(`Mês de Referência: ${selectedMonth ? selectedMonth.charAt(0).toUpperCase() + selectedMonth.slice(1) : ''}`, 70, y);
+        doc.text("Relatório de Pagamentos", 80, y);
+        y += lineHeight ;
+    
+        doc.setFontSize(10);
+        doc.text(`Mês de Referência: ${selectedMonth ? selectedMonth.charAt(0).toUpperCase() + selectedMonth.slice(1) : ''}`, 85, y);
         y += lineHeight + 5;
-    
-        doc.setFontSize(12);
-        if (totalPix !== null) {
-            doc.setFont('helvetica', 'normal'); 
-            doc.text(`Pix: R$${totalPix}`, 10, y);
-            y += lineHeight;
-        }
-        if (totalDinheiro !== null) {
-            doc.setFont('helvetica', 'normal'); 
-            doc.text(`Dinheiro: R$${totalDinheiro}`, 10, y);
-            y += lineHeight;
-        }
-        if (totalMes !== null) {
-            doc.setFont('helvetica', 'bold'); 
-            doc.text(`Sub-Total: R$${totalMes}`, 10, y);
-            y += lineHeight;
-        }
-        totalEntradas.forEach((entrada) => {
-            doc.setFont('helvetica', 'normal'); 
-            doc.text(`${entrada.entrada} - R$${entrada.valor} (${entrada.formaPagamento})`, 10, y);
-            y += lineHeight;
-        });
-    
-        if (total !== null) {
-            y += 4; 
-            doc.setFontSize(18);
-            doc.setFont('helvetica', 'bold'); 
-            doc.textWithLink(`TOTAL RECEBIDO: R$${total}`, 10, y, { underline: true }); 
-            y += lineHeight;
-        }
     
         y += lineHeight;
-        doc.setFontSize(10);
+        doc.setFontSize(9);
         doc.setFont('helvetica', 'bold'); 
         doc.text("Nº", 10, y);  
         doc.text("Nome", 20, y);
-        doc.text("Status", 85, y);
-        doc.text("Valor", 115, y);
-        doc.text("Data", 140, y);
+        doc.text("Projetos", 80, y);  // Nova coluna Projetos
+        doc.text("Status", 105, y);
+        doc.text("Valor", 135, y);
+        doc.text("Data", 150, y);
         doc.text("Forma", 180, y);
         y += lineHeight;
     
@@ -331,16 +301,77 @@ const ListaPagamento: React.FC = () => {
                 doc.setFont('helvetica', aluno.ativo ? 'normal' : 'italic'); // Estiliza o texto para inativos (opcional)
                 doc.text(`${counter}`, 10, y); // Usando o contador para numerar os alunos
                 doc.text(`${aluno.nome}`, 20, y);
-                doc.text(`${status}`, 85, y);
-                doc.text(`${pagamentoDoAluno?.valor || '-'}`, 115, y);
-                doc.text(`${pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}`, 140, y);
+                doc.text(`${aluno.projetos.nome}`, 80, y);  // Preenche a coluna Projetos
+                doc.text(`${status}`, 105, y);
+                doc.text(`${pagamentoDoAluno?.valor || '-'}`, 135, y);
+                doc.text(`${pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}`, 150, y);
                 doc.text(`${pagamentoDoAluno?.formaPagamento || '-'}`, 180, y);
                 y += lineHeight;
                 counter++; // Incrementa o contador para o próximo aluno
             });
     
+        // Adiciona uma linha tracejada após a tabela
+        y += lineHeight / 2; // Adiciona um pequeno espaço antes da linha
+        for (let i = 10; i < 200; i += 5) {
+            doc.line(i, y, i + 2, y); // Desenha pequenas linhas para simular uma linha tracejada
+        }
+        y += lineHeight + 5;
+    
+        // Coloca totalPix e totalDinheiro na mesma linha
+        doc.setFontSize(10);
+        if (totalPix !== null || totalDinheiro !== null) {
+            doc.setFont('helvetica', 'normal'); 
+            const totalPixText = totalPix !== null ? `Pix: R$${totalPix}` : '';
+            const totalDinheiroText = totalDinheiro !== null ? `Dinheiro: R$${totalDinheiro}` : '';
+            doc.text(`${totalPixText}    ${totalDinheiroText}`, 10, y);
+            y += lineHeight;
+        }
+        
+        if (totalMes !== null) {
+            doc.setFont('helvetica', 'bold'); 
+            doc.text(`Sub-Total: R$${totalMes}`, 10, y);
+            y += lineHeight;
+        }
+        totalEntradas.forEach((entrada) => {
+            doc.setFont('helvetica', 'normal'); 
+            doc.text(`${entrada.entrada} - R$${entrada.valor} (${entrada.formaPagamento})`, 10, y);
+            y += lineHeight;
+        });
+    
+        if (total !== null) {
+            y += 4; 
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold'); 
+            doc.textWithLink(`TOTAL RECEBIDO: R$${total}`, 10, y, { underline: true }); 
+            y += lineHeight;
+        }
+    
+        // Adiciona as linhas de assinatura
+        y += 20; // Adiciona um espaço antes das linhas
+    
+        // Define as coordenadas para as linhas de assinatura
+        const lineWidth = 70; // Largura das linhas de assinatura
+        const coordX = 20; // Posição X da linha Coordenador
+        const secX = 120; // Posição X da linha Secretaria
+        const lineY = y;
+    
+        // Linha de Coordenador
+        doc.setFont('helvetica', 'lighter');
+        doc.setFontSize(9);
+        doc.line(coordX, lineY, coordX + lineWidth, lineY);
+        doc.text("Gilson Ornelas dos Santos", coordX + 10, lineY + 5);
+    
+        // Linha de Secretaria
+        doc.setFontSize(9);
+        doc.line(secX, lineY, secX + lineWidth, lineY);
+        doc.text("Rhuan da Silva Tavares", secX + 15, lineY + 5);
+    
         doc.save("relatorio_pagamentos.pdf");
     };
+    
+    
+    
+    
     ;
     const handleProjetoChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         const projetoId = Number(e.target.value);
@@ -646,5 +677,6 @@ const ListaPagamento: React.FC = () => {
         </>
     );
 };
+
 
 export default ListaPagamento;
