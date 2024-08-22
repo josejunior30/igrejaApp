@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { AlunoPG, FormaPagamento, MesReferencia, Pagamento, EntradaPG, projetos } from "../../../models/pagamento";
-import { findByMes as findPagamentoByMes, findByMesAtual, insertPagamento } from "../../../service/pagamentoService"; 
-import { findByMes as findEntradaByMes, insertEntradaPG } from "../../../service/entradaService"; 
+import { findByMes as findPagamentoByMes, findByMesAtual, insertPagamento, deletePagamento } from "../../../service/pagamentoService"; 
+import { deleteEntradaPG, findByMes as findEntradaByMes, insertEntradaPG } from "../../../service/entradaService"; 
 import Header from "../../../components/Header";
 import './styles.css';
 import { findAllAlunos, findByProjeto } from "../../../service/alunosService";
 import { jsPDF } from "jspdf";
-import { PiPrinterFill } from "react-icons/pi";
+import { PiPrinterFill, PiTrashFill } from "react-icons/pi";
 import axios from "axios";
 import { BASE_URL } from "../../../ultilitarios/system";
 
@@ -21,7 +21,9 @@ const ListaPagamento: React.FC = () => {
     const [totalPix, setTotalPix] = useState<number | null>(null);
     const [totalDinheiro, setTotalDinheiro] = useState<number | null>(null);
     const [totalMes, setTotalMes] = useState<number | null>(null);
-    const [totalEntradas, setTotalEntradas] = useState<{ entrada: string, valor: number, formaPagamento: FormaPagamento }[]>([]);
+    const [totalEntradas, setTotalEntradas] = useState<{
+        id: number; entrada: string, valor: number, formaPagamento: FormaPagamento 
+}[]>([]);
     const [alunos, setAlunos] = useState<AlunoPG[]>([]);
     const [selectedMonth, setSelectedMonth] = useState<MesReferencia | ''>('');
     const [selectedAluno, setSelectedAluno] = useState<number | ''>('');
@@ -97,13 +99,11 @@ const ListaPagamento: React.FC = () => {
     
         try {
             const response = await findPagamentoByMes(selectedMonth as MesReferencia);
-    
             const pagamentosComData: Pagamento[] = response.data.map((pagamento: Pagamento) => ({
                 ...pagamento,
                 dataPagamento: new Date(pagamento.dataPagamento)
             }));
     
-            console.log('Pagamentos para o mês selecionado:', pagamentosComData);
             setPagamentos(pagamentosComData);
     
             if (pagamentosComData.length > 0) {
@@ -118,14 +118,14 @@ const ListaPagamento: React.FC = () => {
     
             // Fetch entradas for the selected month only after clicking "Buscar"
             const entradaResponse = await findEntradaByMes(selectedMonth as MesReferencia);
-            setEntradas(entradaResponse.data);
-    
             const entradasComValores = entradaResponse.data.map((entrada: EntradaPG) => ({
+                id: entrada.id, // Adiciona o id aqui
                 entrada: entrada.entrada,
                 valor: entrada.valor,
                 formaPagamento: entrada.formaPagamento
             }));
     
+            setEntradas(entradaResponse.data); // Armazena as entradas completas
             setTotalEntradas(entradasComValores);
     
             // Calcular o total de entradas
@@ -140,6 +140,7 @@ const ListaPagamento: React.FC = () => {
             setError("Erro ao carregar pagamentos e entradas");
         }
     };
+    
     
     
     
@@ -391,8 +392,33 @@ const ListaPagamento: React.FC = () => {
         }
     };
 
+    const handleDeletePayment = async (pagamentoId: number) => {
+        if (window.confirm('Tem certeza de que deseja deletar este pagamento?')) {
+            try {
+                await deletePagamento(pagamentoId);
+                alert('Pagamento deletado com sucesso!');
+                setPagamentos(pagamentos.filter(pagamento => pagamento.id !== pagamentoId)); // Atualiza a lista de pagamentos
+            } catch (error) {
+                console.error('Erro ao deletar pagamento:', error);
+                alert('Erro ao deletar pagamento.');
+            }
+        }
+    };
     
-    
+   
+    const handleDeleteEntrada = async (entradaId: number) => {
+        if (window.confirm('Tem certeza de que deseja deletar esta entrada?')) {
+            try {
+                await deleteEntradaPG(entradaId);
+                alert('Entrada deletada com sucesso!');
+                setEntradas(entradas.filter(entrada => entrada.id !== entradaId)); // Atualiza a lista de entradas
+                fetchPagamentosForMonth(); // Atualiza a lista de pagamentos e entradas
+            } catch (error) {
+                console.error('Erro ao deletar entrada:', error);
+                alert('Erro ao deletar entrada.');
+            }
+        }
+    };
     
     return (
         <>
@@ -578,10 +604,19 @@ const ListaPagamento: React.FC = () => {
 
     
     <div className="col-9 col-md-11 ">
-        {totalEntradas.length > 0 && totalEntradas.map((entrada, index) => (
-            <h3 key={index} className="valor">{entrada.entrada} - R${entrada.valor} ({entrada.formaPagamento})</h3>
-        ))}
-    </div>
+    {totalEntradas.length > 0 && totalEntradas.map((entrada, index) => (
+    <h3 
+        key={index} 
+        className="valor" 
+        style={{ cursor: 'pointer', color: 'white' }} 
+        onClick={() => handleDeleteEntrada(entrada.id)}
+    >
+        {entrada.entrada} - R${entrada.valor} ({entrada.formaPagamento})
+    </h3>
+))}
+
+</div>
+
 
     <div className="col-9 col-md-11 d-flex align-items-center justify-content-between">
         {total !== null && (
@@ -619,8 +654,6 @@ const ListaPagamento: React.FC = () => {
     </div>
 </div>
 
-
-        
 <div className="row justify-content-center mt-3">
     <div className="col-9 col-md-11 ">
         {alunos.length === 0 ? (
@@ -635,7 +668,8 @@ const ListaPagamento: React.FC = () => {
                         <th scope="col">Status</th>
                         <th scope="col">Valor</th>
                         <th scope="col">Data de Pagamento</th>
-                        <th scope="col">Forma de Pagamento</th>
+                        <th scope="col">Forma</th>
+                        <th scope="col">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -645,21 +679,26 @@ const ListaPagamento: React.FC = () => {
         .map(aluno => {
             const pagamentoDoAluno = pagamentos.find(pagamento => pagamento.alunosPG.id === aluno.id);
             const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
-            return { aluno, status, pagamentoDoAluno }; // Retorna o aluno junto com o status e pagamento para o próximo filtro
+            return { aluno, status, pagamentoDoAluno }; 
         })
-        .filter(({ status }) => !filterPaidOnly || status === 'PAGO') // Aplica o filtro baseado no checkbox "Mostrar somente status PAGO"
+        .filter(({ status }) => !filterPaidOnly || status === 'PAGO') 
         .map(({ aluno, status, pagamentoDoAluno }, index) => {
-            const rowClass = aluno.ativo ? '' : 'inativo'; // Adiciona a classe 'inativo' se o aluno não for ativo
+            const rowClass = aluno.ativo ? '' : 'inativo'; 
 
             return (
-                <tr key={aluno.id} className={rowClass}> {/* Aplica a classe à linha */}
+                <tr key={aluno.id} className={rowClass}>
                     <td>{index + 1}</td>
                     <td>{aluno.nome}</td>
-                    <td>{aluno.projetos.nome || '-'}</td> {/* Exibe o nome do projeto */}
+                    <td>{aluno.projetos.nome || '-'}</td>
                     <td className={getStatusClass(status)}>{status}</td>
                     <td>{pagamentoDoAluno?.valor || '-'}</td>
                     <td>{pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}</td>
                     <td>{pagamentoDoAluno?.formaPagamento || '-'}</td>
+                    <td>
+                                                    <button onClick={() => handleDeletePayment(pagamentoDoAluno?.id || 0)} className="custom-btn">
+                                                        <PiTrashFill />
+                                                    </button>
+                                                </td>
                 </tr>
             );
         })}
