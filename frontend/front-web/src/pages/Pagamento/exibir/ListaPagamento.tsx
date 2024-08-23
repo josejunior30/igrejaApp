@@ -33,14 +33,12 @@ const ListaPagamento: React.FC = () => {
     const [paymentMonth, setPaymentMonth] = useState<MesReferencia | ''>('');
     const [showInactive, setShowInactive] = useState<boolean>(false); // Exibir inativos por padrão
     const [filterPaidOnly, setFilterPaidOnly] = useState<boolean>(false);
-
-    const [selectedProjeto, setSelectedProjeto] = useState<number | ''>(''); // Estado para o projeto selecionado
-    
-    // States for EntradaPG form
+    const [selectedProjeto, setSelectedProjeto] = useState<number | ''>(''); 
     const [entradaValue, setEntradaValue] = useState<number | ''>('');
     const [entradaDescription, setEntradaDescription] = useState<string>('');
     const [entradaPaymentMethod, setEntradaPaymentMethod] = useState<FormaPagamento | ''>('');
     const [entradaMonth, setEntradaMonth] = useState<MesReferencia | ''>('');
+    const [filterPendingOnly, setFilterPendingOnly] = useState(false);
 
     useEffect(() => {
         const fetchPagamentos = async () => {
@@ -116,10 +114,10 @@ const ListaPagamento: React.FC = () => {
                 setTotalDinheiro(0);
             }
     
-            // Fetch entradas for the selected month only after clicking "Buscar"
+            
             const entradaResponse = await findEntradaByMes(selectedMonth as MesReferencia);
             const entradasComValores = entradaResponse.data.map((entrada: EntradaPG) => ({
-                id: entrada.id, // Adiciona o id aqui
+                id: entrada.id, 
                 entrada: entrada.entrada,
                 valor: entrada.valor,
                 formaPagamento: entrada.formaPagamento
@@ -155,7 +153,7 @@ const ListaPagamento: React.FC = () => {
         }
 
         const newPayment: Pagamento = {
-            id: 0, // ID será gerado pelo backend
+            id: 0, 
             valor: Number(paymentValue),
             dataPagamento: new Date(paymentDate),
             totalMensalidade: totalMes || 0,
@@ -164,7 +162,7 @@ const ListaPagamento: React.FC = () => {
             totalDinheiro: totalDinheiro || 0,
             formaPagamento: paymentMethod as FormaPagamento,
             mesReferencia: paymentMonth as MesReferencia,
-            alunosPG: alunoSelecionado // Associando o aluno completo
+            alunosPG: alunoSelecionado 
             ,
             pagamento: undefined
         };
@@ -190,7 +188,7 @@ const ListaPagamento: React.FC = () => {
         if (entradaValue === '' || entradaDescription === '' || !entradaPaymentMethod || entradaMonth === '') return;
 
         const newEntrada: EntradaPG = {
-            id: 0, // ID será gerado pelo backend
+            id: 0, 
             valor: Number(entradaValue),
             entrada: entradaDescription,
             formaPagamento: entradaPaymentMethod as FormaPagamento,
@@ -254,6 +252,8 @@ const ListaPagamento: React.FC = () => {
 
     
     const currentDate = new Date();
+    
+    
     const handlePrint = () => {
         const doc = new jsPDF();
         let y = 15;
@@ -372,8 +372,6 @@ const ListaPagamento: React.FC = () => {
     
     
     
-    
-    ;
     const handleProjetoChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         const projetoId = Number(e.target.value);
         setSelectedProjeto(projetoId);
@@ -419,6 +417,7 @@ const ListaPagamento: React.FC = () => {
             }
         }
     };
+    
     
     return (
         <>
@@ -633,21 +632,45 @@ const ListaPagamento: React.FC = () => {
             onChange={() => setShowInactive(!showInactive)} 
         />
         <label className="form-inativos" htmlFor="showInactive">
-            Mostrar alunos inativos
+             Alunos inativos
         </label>
     </div>
     <div className="form-check ms-4">
-        <input
-            className="form-check-input"
-            type="checkbox"
-            id="filterPaidOnly"
-            checked={filterPaidOnly}
-            onChange={() => setFilterPaidOnly(!filterPaidOnly)}
-        />
-        <label className="form-inativos" htmlFor="filterPaidOnly">
-            Mostrar PAGO
-        </label>
-    </div>
+    <input
+        className="form-check-input"
+        type="checkbox"
+        id="filterPaidOnly"
+        checked={filterPaidOnly}
+        onChange={() => {
+            if (filterPendingOnly) {
+                setFilterPendingOnly(false);
+            }
+            setFilterPaidOnly(!filterPaidOnly);
+        }}
+    />
+    <label className="form-inativos" htmlFor="filterPaidOnly">
+        PAGO
+    </label>
+</div>
+
+
+<div className="form-check ms-4">
+    <input
+        className="form-check-input"
+        type="checkbox"
+        id="filterPendingOnly"
+        checked={filterPendingOnly}
+        onChange={() => {
+            if (filterPaidOnly) {
+                setFilterPaidOnly(false);
+            }
+            setFilterPendingOnly(!filterPendingOnly);
+        }}
+    />
+    <label className="form-inativos" htmlFor ="filterPendingOnly">
+        PENDENTE
+    </label>
+</div>
 </div>
 
 
@@ -681,7 +704,11 @@ const ListaPagamento: React.FC = () => {
             const status = getStatus(pagamentoDoAluno, currentDate, selectedMonth as MesReferencia);
             return { aluno, status, pagamentoDoAluno }; 
         })
-        .filter(({ status }) => !filterPaidOnly || status === 'PAGO') 
+        .filter(({ status }) => {
+            if (filterPaidOnly) return status === 'PAGO';
+            if (filterPendingOnly) return status === 'PENDENTE';
+            return true;
+        })
         .map(({ aluno, status, pagamentoDoAluno }, index) => {
             const rowClass = aluno.ativo ? '' : 'inativo'; 
 
@@ -695,14 +722,15 @@ const ListaPagamento: React.FC = () => {
                     <td>{pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}</td>
                     <td>{pagamentoDoAluno?.formaPagamento || '-'}</td>
                     <td>
-                                                    <button onClick={() => handleDeletePayment(pagamentoDoAluno?.id || 0)} className="custom-btn">
-                                                        <PiTrashFill />
-                                                    </button>
-                                                </td>
+                        <button onClick={() => handleDeletePayment(pagamentoDoAluno?.id || 0)} className="custom-btn">
+                            <PiTrashFill />
+                        </button>
+                    </td>
                 </tr>
             );
         })}
 </tbody>
+
 
 
 

@@ -29,7 +29,7 @@ public class PagamentoService {
     @Autowired
     private AlunosRepository alunosRepository;
     @Autowired
-private ProjetosRepository projetosRepository;
+    private ProjetosRepository projetosRepository;
  
     
     @Transactional(readOnly = true)

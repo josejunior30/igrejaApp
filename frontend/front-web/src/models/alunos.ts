@@ -54,7 +54,7 @@ export type alunosPG={
     pergunta: string;
     grauParentesco:string;
     ativo: string;
-    pagamento: Pagamento[];
+    pagamento: Pagamento;
     
 }
 export type alunoDTO={

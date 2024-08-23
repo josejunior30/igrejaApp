@@ -49,6 +49,7 @@ public class AlunosService {
         return list.stream()
             .map(x -> {
                 AlunosDTO dto = new AlunosDTO(x, x.getProjetos(), x.getAlunoStatus(), x.getChamada(), x.getPagamentos());
+                atualizarIdade(dto);
                 verificarStatusPagamento(dto);
                 return dto;
             })
@@ -60,6 +61,7 @@ public class AlunosService {
         Alunos entity = repository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new NoSuchElementException("Aluno não encontrado ou inativo"));
         AlunosDTO dto = new AlunosDTO(entity, entity.getProjetos(), entity.getAlunoStatus(), entity.getChamada(), entity.getPagamentos());
+        atualizarIdade(dto);
         verificarStatusPagamento(dto);
         return dto;
     }
@@ -75,6 +77,7 @@ public class AlunosService {
 
     @Transactional
     public AlunosDTO update(Long id, AlunosDTO dto) {
+    	atualizarIdade(dto);
         Alunos entity = repository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new NoSuchElementException("Aluno não encontrado ou inativo"));
         copyDtoToEntity(dto, entity);

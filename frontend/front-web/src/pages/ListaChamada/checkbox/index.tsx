@@ -90,16 +90,14 @@ const PresençaBox = () => {
     }));
     setPresencas(updatedPresencas);
   };
-  
 
   const enviarListaDePresenca = () => {
     presencas.forEach(presenca => {
-      // Certifique-se de que a data está sendo formatada corretamente
       const presencaComDataFormatada = {
         ...presenca,
         data: new Date(selectedDate) // Ou formatar de outra maneira se necessário
       };
-  
+
       presencaService.insert(presencaComDataFormatada)
         .then(response => {
           console.log("Presença enviada com sucesso:", response.data);
@@ -110,7 +108,6 @@ const PresençaBox = () => {
         });
     });
   };
-  
 
   const closeModal = () => {
     setShowModal(false);
@@ -123,6 +120,11 @@ const PresençaBox = () => {
     return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
   };
 
+  const sortedAlunos = projetosDTO?.alunos?.slice().sort((a, b) => {
+    const horarioA = formatHorario(a.horario);
+    const horarioB = formatHorario(b.horario);
+    return horarioA.localeCompare(horarioB);
+  }) ?? [];
 
   return (
     <>
@@ -151,7 +153,7 @@ const PresençaBox = () => {
             </div>
           </div>
         </div>
-<h3 className="text-center" id="projetoNome">{projetosDTO?.nome}</h3>
+        <h3 className="text-center" id="projetoNome">{projetosDTO?.nome}</h3>
         <div className="container col-md-6">
           <div className="row justify-content-center text-center">
             <div className="col-md-12" id="tabela-lista">
@@ -163,46 +165,40 @@ const PresençaBox = () => {
                       <th scope="col">Horario</th>
                       <th scope="col">Presente</th>
                       <th scope="col">Ausente</th>
-                     
                     </tr>
                   </thead>
                   <tbody>
-                    {projetosDTO.alunos && (
-                      projetosDTO.alunos.map((aluno) => (
-                        <tr key={aluno.id}>
-                          <td>
-                            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
-                              {aluno.nome}
-                            </Link>
-                          </td>
-                          <td>
-                            <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
+                    {sortedAlunos.map((aluno) => (
+                      <tr key={aluno.id}>
+                        <td>
+                          <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
+                            {aluno.nome}
+                          </Link>
+                        </td>
+                        <td>
+                          <Link to={`/alunos/${aluno.id}`} className="chamada-alunos">
                             {formatHorario(aluno.horario)}
-                            </Link>
-                          </td>
-                          <td>
-                            <input
-                              type="checkbox"
-                              id={`presente-${aluno.id}`}
-                              value="presente"
-                              onChange={(e) => handleCheckboxChange(aluno.id, 'presente', e.target.checked)}
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="checkbox"
-                              id={`ausente-${aluno.id}`}
-                              value="ausente"
-                              onChange={(e) => handleCheckboxChange(aluno.id, 'ausente', e.target.checked)}
-                            />
-                          </td>
-
-                        </tr>
-                      ))
-                    )}
+                          </Link>
+                        </td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            id={`presente-${aluno.id}`}
+                            value="presente"
+                            onChange={(e) => handleCheckboxChange(aluno.id, 'presente', e.target.checked)}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            id={`ausente-${aluno.id}`}
+                            value="ausente"
+                            onChange={(e) => handleCheckboxChange(aluno.id, 'ausente', e.target.checked)}
+                          />
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
-
-
                 </table>
               )}
 
@@ -221,6 +217,7 @@ const PresençaBox = () => {
       </div>
     </>
   );
- };
+};
 
 export default PresençaBox;
+
