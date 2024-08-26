@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { BASE_URL } from "../ultilitarios/system";
 import * as authService from '../service/AuthService';
+import { AlunoPG } from "../models/pagamento";
 
 
 export function findAll(){
@@ -14,6 +15,8 @@ export function findAllAlunos(){
 export function findById(id:number){
     return axios.get(`${BASE_URL}/alunos/${id}`);
 }
+
+
 export function insertAluno(alunosDTO:any){
     return axios.post(`${BASE_URL}/alunos`, alunosDTO);
 }

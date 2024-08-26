@@ -45,6 +45,9 @@ public class Alunos implements Serializable{
 	private String sangue;
 	private String grauParentesco;
 	private LocalTime horario;
+	private LocalDate dataMatricula;
+	private LocalDate dataInativo;
+	private LocalDate dataReativado;
 	private boolean ativo = true;
 	private String statusPagamento;
 	private AlunoDoenca alunoDoenca;
@@ -68,12 +71,9 @@ public class Alunos implements Serializable{
 	}
 	
 	
-
-
-
 	public Alunos(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
 			String cpfResponsavel, String telefone, String email, String url, String rua, String cep, String numero,
-			String bairro, String cidade, String complemento, String pergunta, String sangue, boolean ativo ,LocalTime horario, String grauParentesco,
+			String bairro, String cidade, String complemento, LocalDate dataMatricula, LocalDate dataInativo, LocalDate dataReativado, String pergunta, String sangue, boolean ativo ,LocalTime horario, String grauParentesco,
 			AlunoDoenca alunoDoenca, List<Pagamento> pagamentos, AlunoStatus alunoStatus, Projetos projetos, String statusPagamento,
 			List<Chamada> chamada) {
 		super();
@@ -97,9 +97,12 @@ public class Alunos implements Serializable{
 		this.sangue = sangue;
 		this.horario = horario;
 		this.ativo = ativo;
+		this.dataReativado= dataReativado;
 		this.statusPagamento= statusPagamento;
 		this.alunoDoenca = alunoDoenca;
 		this.grauParentesco = grauParentesco;
+		this.dataMatricula =dataMatricula;
+		this.dataInativo  = dataInativo;
 		this.pagamentos = pagamentos;
 		this.alunoStatus = alunoStatus;
 		this.projetos = projetos;
@@ -150,6 +153,16 @@ public class Alunos implements Serializable{
 
 
 
+	public LocalDate getDataReativado() {
+		return dataReativado;
+	}
+
+
+	public void setDataReativado(LocalDate dataReativado) {
+		this.dataReativado = dataReativado;
+	}
+
+
 	public String getGrauParentesco() {
 		return grauParentesco;
 	}
@@ -163,7 +176,27 @@ public class Alunos implements Serializable{
 	}
 
 
+	
 
+
+	public LocalDate getDataMatricula() {
+		return dataMatricula;
+	}
+
+
+	public void setDataMatricula(LocalDate dataMatricula) {
+		this.dataMatricula = dataMatricula;
+	}
+
+
+	public LocalDate getDataInativo() {
+		return dataInativo;
+	}
+
+
+	public void setDataInativo(LocalDate dataInativo) {
+		this.dataInativo = dataInativo;
+	}
 
 
 	public void setAtivo(boolean ativo) {

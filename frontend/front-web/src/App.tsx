@@ -27,7 +27,8 @@ import * as authService from './service/AuthService';
 import ChangePassword from './pages/Usuario/Redefinir';
 import PresencaBox from './pages/ListaChamada/checkbox';
 import ListaPagamento from './pages/Pagamento/exibir/ListaPagamento';
-import AlunoPagamentos from './pages/Pagamento/exibirAluno';
+import AlunoPagamentos from './pages/Pagamento/historicoPG';
+import Dashboard from './pages/Dashbord/Alunos';
 
 
 
@@ -65,10 +66,11 @@ function App() {
     <Route path="/relatorio" element={<PrivateRoute><Relatorio /></PrivateRoute>} />
     <Route path="/relatorio/:id" element={<PrivateRoute><DetalhesRelatorio /></PrivateRoute>} />
     <Route path="/enviarRelatorio" element={<PrivateRoute><AddRelatorio /></PrivateRoute>} />
-    <Route path="/redefinirsenha" element={<PrivateRoute><ChangePassword /></PrivateRoute> } />
+    <Route path="/redefinirsenha" element={<ChangePassword /> } />
     <Route path="/enviarChamada/:id" element={<PresencaBox /> } />
     <Route path="/pagamento" element={<PrivateRoute><ListaPagamento/></PrivateRoute> } />
-    <Route path="/historicoPagamento/:id" element={<PrivateRoute><AlunoPagamentos /></PrivateRoute>} />
+    <Route path="pagamento/historicoPagamento/:id" element={<PrivateRoute><AlunoPagamentos /></PrivateRoute>} />
+    <Route path="/dashbord" element={<Dashboard/> } />
   </Routes>
   </Router>
 </ContextToken.Provider>

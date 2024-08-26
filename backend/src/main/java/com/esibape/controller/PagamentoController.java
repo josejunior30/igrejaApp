@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +23,7 @@ import com.esibape.service.PagamentoService;
 @RestController
 @RequestMapping(value="/pagamento")
 public class PagamentoController {
+	
 	@Autowired
 	private PagamentoService service;
 	@GetMapping
@@ -83,6 +85,11 @@ public class PagamentoController {
 	    return ResponseEntity.ok().body(pagamentos);
 	}
 
-
-
+	 @GetMapping("/aluno/{id}")
+	    public ResponseEntity<List<PagamentoDTO>> getPagamentosByAluno(@PathVariable Long id) {
+	      
+	        List<PagamentoDTO> pagamentosDTO = service.getPagamentosByAluno(id);
+	        
+	        return ResponseEntity.ok(pagamentosDTO);
+	    }
 }

@@ -58,7 +58,8 @@ const PresençaBox = () => {
         chamadaAluno: 0,
         alunos: {
           id: alunoId,
-          nome: ""
+          nome: "",
+          horario:""
         },
         projetosChamada: {
           id: projetosDTO?.id ?? 0,

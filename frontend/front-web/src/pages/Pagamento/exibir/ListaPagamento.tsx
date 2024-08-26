@@ -9,6 +9,7 @@ import { jsPDF } from "jspdf";
 import { PiPrinterFill, PiTrashFill } from "react-icons/pi";
 import axios from "axios";
 import { BASE_URL } from "../../../ultilitarios/system";
+import { Link } from "react-router-dom";
 
 
 const ListaPagamento: React.FC = () => {
@@ -153,7 +154,7 @@ const ListaPagamento: React.FC = () => {
         }
 
         const newPayment: Pagamento = {
-            id: 0, 
+            id: 0,
             valor: Number(paymentValue),
             dataPagamento: new Date(paymentDate),
             totalMensalidade: totalMes || 0,
@@ -162,9 +163,11 @@ const ListaPagamento: React.FC = () => {
             totalDinheiro: totalDinheiro || 0,
             formaPagamento: paymentMethod as FormaPagamento,
             mesReferencia: paymentMonth as MesReferencia,
-            alunosPG: alunoSelecionado 
-            ,
-            pagamento: undefined
+            alunosPG: alunoSelecionado,
+
+            pagamento: undefined,
+            length: 0,
+            map: undefined
         };
 
         console.log('Novo pagamento:', newPayment);
@@ -715,7 +718,8 @@ const ListaPagamento: React.FC = () => {
             return (
                 <tr key={aluno.id} className={rowClass}>
                     <td>{index + 1}</td>
-                    <td>{aluno.nome}</td>
+                  
+                    <td> <Link to={`historicoPagamento/${aluno.id}`} className="name-link">{aluno.nome} </Link></td>
                     <td>{aluno.projetos.nome || '-'}</td>
                     <td className={getStatusClass(status)}>{status}</td>
                     <td>{pagamentoDoAluno?.valor || '-'}</td>

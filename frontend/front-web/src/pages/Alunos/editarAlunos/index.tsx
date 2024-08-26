@@ -29,7 +29,10 @@ const EditarAlunos =()=>{
       pergunta: "",
       horario: "",
       grauParentesco: "",
+      dataReativado: new Date(),
       ativo: "true",
+      dataMatricula: new Date(),
+      dataInativo: new Date(),
       AlunoDoenca: 0,
       rua: "",
       bairro: "",
@@ -108,7 +111,28 @@ const EditarAlunos =()=>{
                     <option value="false">Inativo</option>
                   </select>
                 </div>
-
+                <div className="col-md-3">
+                  <label htmlFor="data" className="form-label">Data Inativo</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    name="dataInativo"
+                    value={alunosDTO.dataInativo instanceof Date ? alunosDTO.dataInativo.toISOString().split('T')[0] : ''}
+                      onChange={(e) => setAlunosDTO({ ...alunosDTO, dataInativo: new Date(e.target.value) })}
+                 
+                    />
+                  </div>
+                  <div className="col-md-3">
+                  <label htmlFor="data" className="form-label">Data Rematricula</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    name="dataReativo"
+                    value={alunosDTO.dataReativado instanceof Date ? alunosDTO.dataReativado.toISOString().split('T')[0] : ''}
+                      onChange={(e) => setAlunosDTO({ ...alunosDTO, dataReativado: new Date(e.target.value) })}
+                 
+                    />
+                  </div>
                  
                   <div className="col-md-12">
                   <h3 className="titulo-form">Dados pessoais </h3>
@@ -159,6 +183,7 @@ const EditarAlunos =()=>{
                  
                     />
                   </div>
+                  
                   <div className="col-md-4">
                   <label htmlFor="telefone"className="form-label">Telefone:</label>
                   <input 

@@ -26,8 +26,9 @@ export type alunosDTO={
     pergunta: string;
     grauParentesco:string;
     ativo: string;
-    
-    
+   dataInativo: Date;
+    dataMatricula: Date;
+    dataReativado:Date;
 }
 export type alunosPG={
   
@@ -35,7 +36,7 @@ export type alunosPG={
     nome: string;
     dataNascimento:Date;
     idade: number;
-	  rg: string;
+	rg: string;
     responsavel: string;
 	  cpfResponsavel: string;
     telefone: string;
@@ -54,9 +55,10 @@ export type alunosPG={
     pergunta: string;
     grauParentesco:string;
     ativo: string;
-    pagamento: Pagamento;
+    pagamento: Pagamento[];
     
 }
+
 export type alunoDTO={
   
     id:number;
@@ -80,6 +82,7 @@ export type alunoDTO={
     AlunoDoenca:number;
     sangue: string;
     pergunta: string;
+    dataMatricula: Date;
 }
 export type projetos = {
     

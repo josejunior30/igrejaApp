@@ -16,14 +16,7 @@ export type Pagamento= {
 
 
 }
-export type EntradaPG={
-    id:number;
-    valor: number;
-    entrada: string;
-    formaPagamento:FormaPagamento;
-    mesReferencia: MesReferencia;
-    
-} 
+
 
 export type AlunoPG={
     id:number;
@@ -38,7 +31,14 @@ export type projetos={
     nome: string;
 }
 
-
+export type EntradaPG={
+    id:number;
+    valor: number;
+    entrada: string;
+    formaPagamento:FormaPagamento;
+    mesReferencia: MesReferencia;
+    
+} 
 export enum FormaPagamento {
     PIX = 'PIX',
     DINHEIRO = 'DINHEIRO',

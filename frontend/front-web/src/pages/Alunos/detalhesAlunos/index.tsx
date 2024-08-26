@@ -160,6 +160,9 @@ fornecer o apoio necessário para sua participação. `, 14, 150);
               <div className="col-md-4 col-9 m-5 md-5 pb-3 text-center" id="dados">
                 <img src={alunosDTO.url ?? "-----"} alt="Foto do Membro" className="img-fluid mb-3 rounded mx-auto d-block " />
                 <span className="nome-id">{alunosDTO.nome ?? "-----"}</span>
+                <p className="dados"><span>Data da Matricula:</span> {alunosDTO.dataMatricula ? new Date(alunosDTO.dataMatricula).toLocaleDateString() : "-----"}</p>
+                <p className="dados"><span>Data de Inativo:</span><span className="dados-doença"> {alunosDTO.dataInativo ? new Date(alunosDTO.dataInativo).toLocaleDateString() : "-----"}</span></p>
+
                 <p className="dados"><span>Identidade:</span> {alunosDTO.rg ?? "-----"}</p>
                 <p className="dados"><span>Idade:</span> {alunosDTO.idade ?? "-----"}</p>
                 <p className="dados"><span>Data de Nascimento:</span> {alunosDTO.dataNascimento ? new Date(alunosDTO.dataNascimento).toLocaleDateString() : "-----"}</p>

@@ -1,0 +1,9 @@
+#PG-titulo{
+    color: white;
+}
+#PG-nome{
+    color:var(--color-coral);
+}
+#PG-curso{
+    color: var(--color-coral);
+}

@@ -58,8 +58,8 @@ public class AlunosService {
 
     @Transactional(readOnly = true)
     public AlunosDTO findById(Long id) {
-        Alunos entity = repository.findByIdAndAtivoTrue(id)
-                .orElseThrow(() -> new NoSuchElementException("Aluno não encontrado ou inativo"));
+        Alunos entity = repository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Aluno não encontrado"));
         AlunosDTO dto = new AlunosDTO(entity, entity.getProjetos(), entity.getAlunoStatus(), entity.getChamada(), entity.getPagamentos());
         atualizarIdade(dto);
         verificarStatusPagamento(dto);
@@ -94,7 +94,7 @@ public class AlunosService {
     
     @Transactional(readOnly = true)
     public List<AlunosDTO> findByNomeIgnoreCaseContaining(String nome) {
-        List<Alunos> result = repository.findByNomeIgnoreCaseContainingAndAtivoTrue(nome); // Modificado para buscar apenas alunos ativos
+        List<Alunos> result = repository.findByNomeIgnoreCaseContaining(nome); // Busca alunos independentemente do status 'ativo'
         return result.stream().map(x -> new AlunosDTO(x)).toList();
     }
 
@@ -150,6 +150,9 @@ public class AlunosService {
         entity.setAlunoDoenca(dto.getAlunoDoenca());
         entity.setSangue(dto.getSangue());
         entity.setAtivo(dto.isAtivo()); 
+        entity.setDataReativado(dto.getDataReativado());
+        entity.setDataMatricula(dto.getDataMatricula());
+        entity.setDataInativo(dto.getDataInativo());
         entity.setHorario(dto.getHorario());
         entity.setGrauParentesco(dto.getGrauParentesco());
         entity.setPergunta(dto.getPergunta());

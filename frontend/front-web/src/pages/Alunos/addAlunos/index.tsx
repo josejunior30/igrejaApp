@@ -24,6 +24,7 @@ const AddAlunos: React.FC = () => {
         sangue: "",
         pergunta: "",
         horario: "",
+        dataMatricula: new Date(),
         grauParentesco: "",
         AlunoDoenca: 0,
         rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",
@@ -66,6 +67,14 @@ const AddAlunos: React.FC = () => {
                     [name]: dataNascimento,
                 }));
             }
+        }else if (name === "dataMatricula") {
+                const dataMatricula = new Date(value);
+                if (!isNaN(dataMatricula.getTime())) {
+                    setAlunosDTO((prevAlunosDTO) => ({
+                        ...prevAlunosDTO,
+                        [name]: dataMatricula,
+                    }));
+                }
         } else if (name === "telefone") {
             let telefone = value;
             if (!telefone.startsWith("21")) {
@@ -108,6 +117,7 @@ const AddAlunos: React.FC = () => {
                 horario: "",
                 pergunta: "",
                 grauParentesco: "",
+                dataMatricula: new Date(),
                 AlunoDoenca: 0,
                 rua: "", bairro: "", cep: "", numero: "", cidade: "", complemento: "",
                 projetos: {
@@ -140,13 +150,23 @@ const AddAlunos: React.FC = () => {
                                 required
                             />
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <label htmlFor="rg" className="form-label">Identidade:</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 name="rg"
                                 value={alunosDTO.rg}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="col-md-3">
+                            <label htmlFor="dataMatricula" className="form-label">Data Matricula:</label>
+                            <input
+                                type="date"
+                                className="form-control"
+                                name="dataMatricula"
+                                value={alunosDTO.dataMatricula.toISOString().split('T')[0]}
                                 onChange={handleChange}
                             />
                         </div>

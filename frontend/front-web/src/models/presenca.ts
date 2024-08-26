@@ -13,6 +13,7 @@ export type PresencaDTO ={
 export type alunos ={
     id: number;
     nome: string;
+    horario: string;
    
 }
 export type projetosChamada = {

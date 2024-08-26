@@ -1,0 +1,15 @@
+/* Dashboard.module.css */
+.chartContainer {
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .chartTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  #ageChart {
+width: 100px;
+height: 100px;
+  }

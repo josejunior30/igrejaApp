@@ -137,7 +137,37 @@ public class PagamentoService {
             repository.save(pagamento);
         }
     }
+    
+    
+    @Transactional(readOnly = true)
+    public List<PagamentoDTO> getPagamentosByAluno(Long alunoId) {
+        // Recupera o aluno pelo ID
+        Alunos aluno = alunosRepository.findById(alunoId)
+                                       .orElseThrow(() -> new EntityNotFoundException("Aluno não encontrado."));
+        
+        // Recupera os pagamentos para o aluno
+        List<Pagamento> pagamentos = repository.findPagamentosByAluno(aluno);
+        
+        // Converte os pagamentos para PagamentoDTO
+        return pagamentos.stream()
+                         .map(pagamento -> {
+                             // Cria um novo PagamentoDTO
+                             PagamentoDTO dto = new PagamentoDTO();
+                             
+                             // Preenche os atributos do DTO
+                             dto.setId(pagamento.getId());
+                             dto.setValor(pagamento.getValor());
+                             dto.setDataPagamento(pagamento.getDataPagamento());
+                             dto.setFormaPagamento(pagamento.getFormaPagamento());
+                             dto.setMesReferencia(pagamento.getMesReferencia());
+                             dto.setAtrasado(pagamento.getAtrasado());
+                       
 
+                             return dto;
+                         })
+                         .collect(Collectors.toList());
+    }
+    
     @Transactional
     private void updateTotalMesForAllPagamentos() {
         List<MesReferencia> meses = repository.findAll().stream()

@@ -43,7 +43,10 @@ public class AlunosDTO implements Serializable {
     private String complemento;
     private String pergunta;
     private String sangue;
+	private LocalDate dataMatricula;
+	private LocalDate dataInativo;
     private String grauParentesco;
+    private LocalDate dataReativado;
     private boolean ativo = true;
     private String statusPagamento;
     private LocalTime horario;
@@ -56,7 +59,7 @@ public class AlunosDTO implements Serializable {
 
     public AlunosDTO(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
                      String cpfResponsavel, String telefone, String url, String email, String rua, String cep, 
-                     String numero, String bairro, String cidade, String complemento, boolean ativo ,String pergunta, String grauParentesco,String statusPagamento,String sangue, LocalTime horario,
+                     String numero, String bairro, String cidade, LocalDate dataReativado,String complemento, boolean ativo ,String pergunta, LocalDate dataMatricula, LocalDate dataInativo, String grauParentesco,String statusPagamento,String sangue, LocalTime horario,
                      AlunoDoenca alunoDoenca, AlunoStatusDTO alunoStatus, ProjetosDTO projetos, List<ChamadaDTO> chamada, List<PagamentoDTO>pagamentos) {
         this.id = id;
         this.nome = nome;
@@ -76,7 +79,10 @@ public class AlunosDTO implements Serializable {
         this.complemento = complemento;
         this.pergunta = pergunta;
         this.sangue = sangue;
+        this.dataMatricula = dataMatricula;
+        this.dataInativo = dataInativo;
         this.horario = horario;
+        this.dataReativado =dataReativado;
         this.grauParentesco = grauParentesco;
         this.statusPagamento =statusPagamento;
         this.alunoDoenca = alunoDoenca;
@@ -105,8 +111,11 @@ public class AlunosDTO implements Serializable {
         this.complemento = entity.getComplemento();
         this.numero = entity.getNumero();
         this.alunoDoenca = entity.getAlunoDoenca();
+        this.dataInativo = entity.getDataInativo();
+        this.dataMatricula = entity.getDataMatricula();
         this.statusPagamento=entity.getStatusPagamento();
         this.sangue = entity.getSangue();
+        this.dataReativado = entity.getDataReativado();
         this.horario = entity.getHorario();
         this.pergunta = entity.getPergunta();
         this.ativo = entity.isAtivo();
@@ -169,15 +178,39 @@ public class AlunosDTO implements Serializable {
         this.dataNascimento = dataNascimento;
     }
 
-    public Integer getIdade() {
+    public LocalDate getDataMatricula() {
+		return dataMatricula;
+	}
+
+	public void setDataMatricula(LocalDate dataMatricula) {
+		this.dataMatricula = dataMatricula;
+	}
+
+	public LocalDate getDataInativo() {
+		return dataInativo;
+	}
+
+	public void setDataInativo(LocalDate dataInativo) {
+		this.dataInativo = dataInativo;
+	}
+
+	public Integer getIdade() {
         return idade;
     }
 
-    public void setIdade(Integer idade) {
+    public LocalDate getDataReativado() {
+		return dataReativado;
+	}
+
+	public void setDataReativado(LocalDate dataReativado) {
+		this.dataReativado = dataReativado;
+	}
+
+	public void setIdade(Integer idade) {
         this.idade = idade;
     }
     
-
+    
     public boolean isAtivo() {
 		return ativo;
 	}
