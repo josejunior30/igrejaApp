@@ -97,7 +97,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
             name="nome"
             value={MembroDTO.nome}
             onChange={(e) => setMembroDTO({ ...MembroDTO, nome: e.target.value })}
-            required
+          
           />
         </div>
         <div className="col-md-6">
@@ -108,7 +108,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
             name="sobrenome"
             value={MembroDTO.sobrenome}
             onChange={(e) => setMembroDTO({ ...MembroDTO, sobrenome: e.target.value })}
-            required
+          
           />
         
         </div>
@@ -120,7 +120,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
             className="form-control"
             value={MembroDTO.cpf}
             onChange={(e) => setMembroDTO({ ...MembroDTO, cpf: e.target.value })}
-            required
+           
           />
 
         </div>
@@ -132,7 +132,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
             className="form-control"
             value={MembroDTO.email}
             onChange={(e) => setMembroDTO({ ...MembroDTO, email: e.target.value })}
-            required
+         
           />
         </div>
         <div className='col-md-4'>
@@ -142,7 +142,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
               className="form-select"
               value={MembroDTO.estadoCivil} 
               onChange={(e) => setMembroDTO({ ...MembroDTO, estadoCivil: Number(e.target.value) })}
-              required
+             
             >
             
             <option >ESCOLHA</option>
@@ -160,7 +160,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
       name="telefone"
       value={MembroDTO.telefone}
       onChange={(e) => setMembroDTO({ ...MembroDTO, telefone: e.target.value })}
-      required
+     
     />
         </div>
         <div className='col-md-4'>
@@ -171,7 +171,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
             name="dataNascimento"
             value={MembroDTO.dataNascimento instanceof Date && !isNaN(MembroDTO.dataNascimento.getTime()) ? MembroDTO.dataNascimento.toISOString().split('T')[0] : ''}
             onChange={handleChange}
-            required
+          
             />
         </div>
      
@@ -187,7 +187,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
       name="rua"
       value={MembroDTO.rua}
       onChange={(e) => setMembroDTO({ ...MembroDTO, rua: e.target.value })}
-      required
+    
     />
        </div>
  
@@ -199,7 +199,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
       name="bairro"
       value={MembroDTO.bairro}
       onChange={(e) => setMembroDTO({ ...MembroDTO, bairro: e.target.value })}
-      required
+    
     />
        </div>
        <div className='col-md-4'>
@@ -210,7 +210,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
       name="cidade"
       value={MembroDTO.cidade}
       onChange={(e) => setMembroDTO({ ...MembroDTO, cidade: e.target.value })}
-      required
+     
     />
        </div>
        <div className='col-md-2'>
@@ -221,7 +221,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
       name="numero"
       value={MembroDTO.numero}
       onChange={(e) => setMembroDTO({ ...MembroDTO, numero: Number(e.target.value) })}
-      required
+   
     />
        </div>
        <div className='col-md-6'>
@@ -232,7 +232,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
       name="complemento"
       value={MembroDTO.complemento}
       onChange={(e) => setMembroDTO({ ...MembroDTO, complemento: e.target.value })}
-      required
+     
     />
        </div>
        <div className='col-md-4'>
@@ -243,7 +243,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
       name="cep"
       value={MembroDTO.cep}
       onChange={(e) => setMembroDTO({ ...MembroDTO, cep: e.target.value })}
-      required
+     
     />
        </div>
        <div className="d-grid gap-2 col-6 mx-auto mt-5">
