@@ -103,6 +103,7 @@ const Alunos = () => {
   const formatPhoneNumber = (phoneNumber:any) => {
     return phoneNumber.replace(/\D/g, '');
   };
+  const sortedAlunos = [...alunosDTO].sort((a, b) => a.nome.localeCompare(b.nome));
 
   return (
     <>
@@ -113,9 +114,8 @@ const Alunos = () => {
           <div className="col-11 col-md-10 mt-5 pt-5 offset-1">
             <div className="row pt-3">
               <div className="container col-11 col-md-6 mt-4">
-
                 <div className="row justify-content-center p-3" id="barra-pesquisa-secretaria">
-                <div className="col-md-8 col-4 mb-3">
+                  <div className="col-md-8 col-4 mb-3">
                     <select
                       value={searchType}
                       onChange={(e) => setSearchType(e.target.value)}
@@ -138,23 +138,22 @@ const Alunos = () => {
                       />
                     </div>
                   )}
-                {searchType === 'horario' && (
-  <div className="col-md-5 col-4">
-    <select
-      value={searchHorario}
-      onChange={(e) => setSearchHorario(e.target.value)}
-      className="form-control"
-    >
-      <option value="">horário</option>
-      <option value="15:00">15:00</option>
-      <option value="16:00">16:00</option>
-      <option value="17:00">17:00</option>
-      <option value="18:00">18:00</option>
-      <option value="19:00">19:00</option>
-    </select>
-  </div>
-)}
-
+                  {searchType === 'horario' && (
+                    <div className="col-md-5 col-4">
+                      <select
+                        value={searchHorario}
+                        onChange={(e) => setSearchHorario(e.target.value)}
+                        className="form-control"
+                      >
+                        <option value="">horário</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="19:00">19:00</option>
+                      </select>
+                    </div>
+                  )}
                   {searchType === 'projeto' && (
                     <div className="col-md-5 col-4">
                       <select
@@ -188,18 +187,18 @@ const Alunos = () => {
                         </select>
                       </div>
                       <div className="col-md-5 col-4 mb-2">
-                      <select
-      value={searchHorario}
-      onChange={(e) => setSearchHorario(e.target.value)}
-      className="form-control"
-    >
-      <option value="">horário</option>
-      <option value="15:00">15:00</option>
-      <option value="16:00">16:00</option>
-      <option value="17:00">17:00</option>
-      <option value="18:00">18:00</option>
-      <option value="19:00">19:00</option>
-    </select>
+                        <select
+                          value={searchHorario}
+                          onChange={(e) => setSearchHorario(e.target.value)}
+                          className="form-control"
+                        >
+                          <option value="">horário</option>
+                          <option value="15:00">15:00</option>
+                          <option value="16:00">16:00</option>
+                          <option value="17:00">17:00</option>
+                          <option value="18:00">18:00</option>
+                          <option value="19:00">19:00</option>
+                        </select>
                       </div>
                     </>
                   )}
@@ -212,20 +211,17 @@ const Alunos = () => {
             </div>
             <div className="row pt-2 justify-content-center">
               <div className="col-12 offset-10 mt-2" id="btn-add-aluno">
-                
-              <Link to="/adicionarAlunos">
-                      <button className="btn btn-primary">Adicionar Aluno</button>
-                    </Link>
-                  
+                <Link to="/adicionarAlunos">
+                  <button className="btn btn-primary">Adicionar Aluno</button>
+                </Link>
               </div>
-          
               <div className="col-11 col-md-11">
                 <div className="img-print-membro">
                   <Link to="#">
                     <button onClick={handlePrint} className="mr-2"><PiPrinterFill /> Imprimir</button>
                   </Link>
                 </div>
-                <table className="table table-striped " ref={componentRef} id="col-tab-alunos-2">
+                <table className="table table-striped" ref={componentRef} id="col-tab-alunos-2">
                   <thead className="thead">
                     <tr>
                       <th scope="col">#</th>
@@ -242,7 +238,7 @@ const Alunos = () => {
                         <td colSpan={6}>Carregando dados...</td>
                       </tr>
                     ) : (
-                      alunosDTO.map((aluno, index) => (
+                      sortedAlunos.map((aluno, index) => (
                         <tr key={aluno.id}>
                           <td>{index + 1}</td>
                           <td>
@@ -257,7 +253,7 @@ const Alunos = () => {
                           </td>
                           <td>
                             <Link to={`https://wa.me/${formatPhoneNumber(aluno.telefone)}`} target="_blank" className="name-link">
-                            <i className="bi bi-whatsapp"></i> {aluno.telefone}
+                              <i className="bi bi-whatsapp"></i> {aluno.telefone}
                             </Link>
                           </td>
                           {aluno.projetos && (
