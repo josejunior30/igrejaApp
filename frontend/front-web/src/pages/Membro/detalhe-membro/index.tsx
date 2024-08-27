@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { MembroDTO } from "../../../models/membro";
 import './styles.css';
-import { FaChevronRight,FaChevronLeft} from "react-icons/fa";
 import * as membroService from '../../../service/membroService';
 import { deleteMembro } from "../../formMembro/excluirMembro";
 import SuccessModal from "../../../components/Modal";
@@ -50,20 +49,7 @@ const Detalhes = () => {
     }
   }, [id]);
 
-  const getColorClassForPequenoGrupo = (id: number): string => {
-    switch (id) {
-      case 1:
-        return "pg-id1";
-      case 2:
-        return "pg-id2";
-      case 3:
-        return "pg-id3";
-      case 4:
-        return "pg-id4";// Adicione mais casos conforme necessário
-      default:
-        return ""; // Adicione uma classe padrão ou deixe vazio para a cor padrão
-    }
-  };
+
 
   const handleModalClose = () => {
     setIsModalVisible(false);
@@ -86,21 +72,7 @@ const Detalhes = () => {
     setShowDeleteConfirmation(false);
   };
 
-  const handleNextClick = () => {
-    if (id !== undefined) {
-      const nextId = parseInt(id, 10) + 1;
-      navigate(`/membro/${nextId}`);
-    }
-  };
 
-  const handlePreviousClick = () => {
-    if (id !== undefined) {
-      const previousId = parseInt(id, 10) - 1;
-      if (previousId > 0) {
-        navigate(`/membro/${previousId}`);
-      }
-    }
-  };
 
   const handleGoBack = () => {
     navigate(`/membro`);
@@ -146,7 +118,7 @@ const Detalhes = () => {
           <img
             src={Foto?.fileDownloadUri}
             alt="Foto do Membro"
-            className="foto-membro"
+            className="img-fluid mb-3 rounded mx-auto d-block " id="foto-membro"
             onClick={() => inputRef.current?.click()}
           />
           <input
@@ -164,16 +136,7 @@ const Detalhes = () => {
           <p className="dados"><span>Data de Nascimento:</span> {new Date(MembroDTO.dataNascimento).toLocaleDateString()}</p>
           <p className="dados"><span>Email:</span> {MembroDTO.email}</p>
           <p className="dados"><span>Telefone:</span> {MembroDTO.telefone}</p>
-          {MembroDTO.pequenoGrupo && (
-            <div>
-              <p className="dados">
-                <span>Pequeno Grupo:</span>
-                <span className={`pg ${getColorClassForPequenoGrupo(MembroDTO.pequenoGrupo.id)}`}>
-                  {MembroDTO.pequenoGrupo.apelido}
-                </span>
-              </p>
-            </div>
-          )}
+       
           <div className="botoes-container">
             <Link to={`/membro/atualizar/${id}`}>
               <button className="botao-editar">Editar</button>

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import * as membroService from '../../../service/membroService';
-import { MembroDTO, pequenoGrupo } from "../../../models/membro";
+import { MembroDTO } from "../../../models/membro";
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { BASE_URL } from '../../../ultilitarios/system';
 import SuccessModal from '../../../components/Modal';
 import { useNavigate } from 'react-router-dom'; 
 
@@ -12,7 +10,6 @@ const FormularioUpdate =()=>{
     const navigate = useNavigate();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isRedirecting, setIsRedirecting] = useState(false);
-    const [listaDeGrupos, setListaDeGrupos] = useState<pequenoGrupo[]>([]);
     const [MembroDTO, setMembroDTO] = useState<MembroDTO>({
       id: 0,
       nome: "",
@@ -25,10 +22,6 @@ const FormularioUpdate =()=>{
       cpf: "",
       estadoCivil: 0,
       rua: "", bairro: "", cep: "", numero: 0, cidade: "", complemento: "",
-      pequenoGrupo: {
-        id: 0,
-        apelido: ""
-      }
     });
   
     useEffect(() => {
@@ -45,17 +38,6 @@ const FormularioUpdate =()=>{
       };
   
       fetchData();
-
-      const fetchGrupos = async () => {
-        try {
-          const response = await axios.get(`${BASE_URL}/pg`);
-          setListaDeGrupos(response.data);
-        } catch (error) {
-          console.error('Erro ao obter a lista de grupos:', error);
-        }
-      };
-  
-      fetchGrupos();
     }, [id]);
   
     
@@ -192,24 +174,7 @@ const handleUpdateClick = (e: React.FormEvent<HTMLFormElement>) => {
             required
             />
         </div>
-        <div className='col-md-4'>
-        <label htmlFor="grupo" className="form-label">Pequeno Grupo:</label>
-    <select
-    name="pequenoGrupo"
-    className="form-select"
-      value={MembroDTO.pequenoGrupo.id} 
-      onChange={(e) => setMembroDTO({ ...MembroDTO, pequenoGrupo: { id: Number(e.target.value), apelido: "placeholder" } })}
-      required
-    >
-    <option >Selecione </option>
-      {listaDeGrupos.map((grupo) => (
-      
-        <option key={grupo.id} value={grupo.id}>
-          {grupo.id} - {grupo.apelido}
-        </option>
-      ))}
-  </select>
-        </div>
+     
         <div className='col-12'>
         <h3 >Endereço</h3>
         </div>

@@ -2,7 +2,6 @@ package com.esibape.DTO;
 
 import java.util.Objects;
 
-import com.esibape.entities.PequenoGrupo;
 import com.esibape.entities.Visitante;
 
 public class VisitanteDTO {
@@ -11,8 +10,7 @@ public class VisitanteDTO {
 		private String sobrenome;
 		private String sexo;
 		private String telefone;
-		
-		private PequenoGrupoDTO pequenoGrupo;
+
 		
 	public VisitanteDTO() {
 			
@@ -35,11 +33,7 @@ public class VisitanteDTO {
 		this.telefone=entity.getTelefone();
 		
 	}
-	public VisitanteDTO(Visitante entity, PequenoGrupo pequenoGrupo ) {
-		this(entity);
-		this.pequenoGrupo = new PequenoGrupoDTO(pequenoGrupo);
-		
-	}
+
 	public Long getId() {
 		return id;
 	}
@@ -72,14 +66,6 @@ public class VisitanteDTO {
 		this.sexo = sexo;
 	}
 
-	public PequenoGrupoDTO getPequenoGrupo() {
-		return pequenoGrupo;
-	}
-
-	public void setPequenoGrupo(PequenoGrupoDTO pequenoGrupo) {
-		this.pequenoGrupo = pequenoGrupo;
-	}
-	
 
 	public String getTelefone() {
 		return telefone;

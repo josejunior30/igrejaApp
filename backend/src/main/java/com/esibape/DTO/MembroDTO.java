@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 import com.esibape.entities.Membro;
 import com.esibape.entities.MembroEstado;
-import com.esibape.entities.PequenoGrupo;
+
 
 public class MembroDTO implements Serializable{
 
@@ -35,10 +35,9 @@ public class MembroDTO implements Serializable{
 	private String bairro;
 	private String cidade;
 	private String complemento;
-
+	private String url;
 	
-	private PequenoGrupoDTO pequenoGrupo;
-
+	
 	public MembroDTO() {
 		
 	}
@@ -46,7 +45,7 @@ public class MembroDTO implements Serializable{
 	
 	public MembroDTO(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String url, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero,
-			String bairro, String cidade, String complemento, PequenoGrupoDTO pequenoGrupo ) {
+			String bairro, String cidade, String complemento ) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -63,7 +62,8 @@ public class MembroDTO implements Serializable{
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.complemento = complemento;
-		this.pequenoGrupo = pequenoGrupo;
+		this.url =url;
+
 	
 	}
 
@@ -83,17 +83,12 @@ public class MembroDTO implements Serializable{
 		this.complemento= entity.getComplemento();
 		this.rua=entity.getRua();
 		this.numero=entity.getNumero();
-	
+		this.url=entity.getUrl();
 	
 		
 		
 	}
-	public MembroDTO(Membro entity, PequenoGrupo pequenoGrupo) {
-		this(entity);
-		this.pequenoGrupo = new PequenoGrupoDTO(pequenoGrupo);
-		
-	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -111,6 +106,16 @@ public class MembroDTO implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+
+	public String getUrl() {
+		return url;
+	}
+
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 
@@ -184,16 +189,6 @@ public class MembroDTO implements Serializable{
 
 	public void setEstadoCivil(MembroEstado estadoCivil) {
 		this.estadoCivil = estadoCivil;
-	}
-
-
-	public PequenoGrupoDTO getPequenoGrupo() {
-		return pequenoGrupo;
-	}
-
-
-	public void setPequenoGrupo(PequenoGrupoDTO pequenoGrupo) {
-		this.pequenoGrupo = pequenoGrupo;
 	}
 
 	

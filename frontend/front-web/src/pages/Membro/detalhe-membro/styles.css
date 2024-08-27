@@ -7,8 +7,6 @@
     
   }
   
-  
-  
   .conteudo-centralizado {
     text-align: center; 
   }
@@ -16,6 +14,7 @@
   .foto-membro {
     width: 100px; 
     height: 100px;
+    margin-bottom: 10px;
     border-radius: 50%; 
     margin: 0 auto; 
     display: block;
@@ -24,7 +23,7 @@
   
   .nome-id {
     margin-top: 20px;
-    font-size: 18px;
+    font-size: 12px;
     font-weight: bold;
     color: #0b1f34;
     padding-top: 10px;
@@ -38,6 +37,11 @@
 
   .dados span {
     font-weight: bold;
+  }
+
+  .nome-id{
+    font-weight: bold;
+   
   }
   .botoes-container {
     display: flex;
@@ -78,56 +82,12 @@
   .pg{
     font-weight: bold;
   }
-  .setas {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-   
-    right: 20%;
-    top: 50%;
-    transform: translateY(-50%);
-    color: white;
-    
-   
-  }
 
-  .btn-left,
-  .btn-right {
-    font-size: 50px;
-    padding: 10px;
-    background-color: transparent;
-    border: none;
-    color: inherit;
-    cursor: pointer;
- 
-  }
-  .pg-id1 {
-    color: blue;
-  }
+
+
   
-  .pg-id2 {
-    color: green;
-  }
-  .pg-id3 {
-    color:yellow;
-  }
-  .pg-id4 {
-    color: indigo;
-  }
 
-  .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    z-index: 1000;
-  }
+
   
   .icone-confirma {
     font-size: 40px;

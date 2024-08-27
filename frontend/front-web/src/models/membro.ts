@@ -16,7 +16,6 @@ export type MembroDTO ={
     bairro: string;
     cidade: string;
     numero: number;
-    pequenoGrupo: pequenoGrupo;
 }
 export type MembrosDTO ={
     id:number;
@@ -33,9 +32,6 @@ export type MembrosDTO ={
     bairro: string;
     cidade: string;
     numero: number;
-    pequenoGrupo: pequenoGrupo;
+ 
 }
-export type pequenoGrupo={
-    id:number;
-    apelido: string;
-}
+

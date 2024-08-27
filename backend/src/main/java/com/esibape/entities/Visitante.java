@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -23,21 +21,18 @@ public class Visitante {
 	private String sexo;
 	private String telefone;
 	
-	@ManyToOne()
-	@JoinColumn(name="PG_id")
-	private PequenoGrupo pequenoGrupo;
 	
 	public Visitante() {
 		
 		
 	}
 
-	public Visitante(Long id, String nome, String sobrenome, PequenoGrupo pequenoGrupo, String sexo, String telefone) {
+	public Visitante(Long id, String nome, String sobrenome, String sexo, String telefone) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
-		this.pequenoGrupo = pequenoGrupo;
+	
 		this.sexo= sexo;
 		this.telefone= telefone;
 	}
@@ -65,15 +60,6 @@ public class Visitante {
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}
-
-	public PequenoGrupo getPequenoGrupo() {
-		return pequenoGrupo;
-	}
-
-	public void setPequenoGrupo(PequenoGrupo pequenoGrupo) {
-		this.pequenoGrupo = pequenoGrupo;
-	}
-	
 
 	public Visitante(String sexo) {
 		super();

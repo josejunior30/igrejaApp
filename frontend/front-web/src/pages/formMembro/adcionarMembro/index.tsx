@@ -1,19 +1,14 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent, } from "react";
 
 import './styles.css';
-import SuccessModal from "../../../components/Modal";
+
 import { insertMembro } from "../../../service/membroService";
-import { MembrosDTO, pequenoGrupo } from "../../../models/membro";
-import { BASE_URL } from "../../../ultilitarios/system";
-import axios from "axios";
+import { MembrosDTO,  } from "../../../models/membro";
 import { useNavigate } from 'react-router-dom'; 
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/sidebar";
 
 const Formulario: React.FC = () => {
-  const [listaDeGrupos, setListaDeGrupos] = useState<pequenoGrupo[]>([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isRedirecting, setIsRedirecting] = useState(false);
   const [membroDTO, setMembroDTO] = useState<MembrosDTO>({
     id: 0,
     nome: '',
@@ -30,41 +25,16 @@ const Formulario: React.FC = () => {
     numero: 0,
     cidade: '',
     complemento: '',
-    pequenoGrupo: {
-      id: 0,
-      apelido: '',
-    },
+  
   });
-  const [imagem, setImagem] = useState<File | null>(null); // Estado para armazenar o arquivo de imagem
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchGrupos = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/pg`);
-        setListaDeGrupos(response.data);
-      } catch (error) {
-        console.error('Erro ao obter a lista de grupos:', error);
-      }
-    };
-
-    fetchGrupos();
-  }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
   
-    if (name === 'pequenoGrupo') {
-      const grupoId = parseInt(value, 10);
-  
-      setMembroDTO(prevMembroDTO => ({
-        ...prevMembroDTO,
-        pequenoGrupo: {
-          ...prevMembroDTO.pequenoGrupo,
-          id: grupoId,
-        },
-      }));
-    } else if (name === 'dataNascimento') {
+
+     if (name === 'dataNascimento') {
       const dataNascimento = value ? new Date(value) : new Date();
   
       setMembroDTO(prevMembroDTO => ({
@@ -86,38 +56,15 @@ const Formulario: React.FC = () => {
     e.preventDefault();
 
     try {
-      // Enviar a imagem antes de enviar o membro
-      let imageUrl = '';
-      if (imagem) {
-        const formData = new FormData();
-        formData.append('file', imagem);
+  
+      await insertMembro(membroDTO);
 
-        const response = await axios.post(`${BASE_URL}/api/files/upload`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        imageUrl = response.data.fileDownloadUri;
-      }
-
-      // Atualizar o objeto membroDTO com a URL da imagem, se existir
-      const membroComImagem = {
-        ...membroDTO,
-        imageUrl: imageUrl,
-      };
-
-      // Utilizar a função insertMembro para adicionar o membro
-      await insertMembro(membroComImagem);
-
-      // Lógica de manipulação de sucesso, redirecionamento, etc.
-      setIsModalVisible(true);
+      alert('Membro adicionado com sucesso!');
       setMembroDTO({
         id: 0,
         nome: '',
         sobrenome: '',
         email: '',
-    
         dataNascimento: new Date(),
         telefone: '',
         cpf: '',
@@ -128,25 +75,15 @@ const Formulario: React.FC = () => {
         numero: 0,
         cidade: '',
         complemento: '',
-        pequenoGrupo: {
-          id: 0,
-          apelido: '',
-        },
+    
       });
+
+      navigate('/membro');
     } catch (error) {
       console.error('Erro ao adicionar membro:', error);
-      // Lógica de manipulação de erro
     }
   };
 
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-    setIsRedirecting(true);
-  };
-
-  if (isRedirecting) {
-    navigate('/membro');
-  }
   
   return (
     <>
@@ -245,24 +182,7 @@ const Formulario: React.FC = () => {
              
             />
               </div>
-              <div className="col-md-4">
-              <label htmlFor="grupo" className="form-label">Pequeno Grupo:</label>
-      <select
-      name="pequenoGrupo"
-        className="form-select"
-        value={membroDTO.pequenoGrupo.id} 
-        onChange={handleChange}
-    
-      >
-      <option >Selecione </option>
-        {listaDeGrupos.map((grupo) => (
-        
-          <option key={grupo.id} value={grupo.id}>
-            {grupo.id} - {grupo.apelido}
-          </option>
-        ))}
-    </select>
-              </div>
+             
               <div className="col-12">
               <h3 >Endereço </h3>
               </div>
@@ -338,13 +258,6 @@ const Formulario: React.FC = () => {
             <button className="btn btn-primary" type="submit">Adicionar</button>
       </div>
       </form>
-      {isModalVisible && (
-        <SuccessModal
-          onClose={handleModalClose}
-          onRedirect={() => setIsRedirecting(true)} 
-          operation="adicionar"
-        />
-      )}
       </div>
      </div>
 

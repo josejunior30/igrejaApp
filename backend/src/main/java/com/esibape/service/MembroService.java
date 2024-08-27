@@ -11,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.MembroDTO;
-import com.esibape.DTO.PequenoGrupoDTO;
 import com.esibape.entities.Membro;
-import com.esibape.entities.PequenoGrupo;
 import com.esibape.repository.MembroRepository;
-import com.esibape.repository.PequenoGrupoRepository;
+
 
 
 @Service
@@ -24,9 +22,7 @@ public class MembroService {
     @Autowired
     private MembroRepository repository;
     
-    @Autowired
-    private PequenoGrupoRepository pequenoGrupoRepository;
-   
+  
 
    
     @Transactional(readOnly = true)
@@ -34,14 +30,14 @@ public class MembroService {
         List<Membro> list = repository.findAll();
         
         return  list.stream()
-	               .map(x -> new MembroDTO(x, x.getPequenoGrupo()))
+	               .map(x -> new MembroDTO(x))
 	               .collect(Collectors.toList());
     }
     @Transactional(readOnly = true)
     public MembroDTO findById(Long id) {
     	Optional<Membro> membro = repository.findById(id);
     	Membro entity = membro.get();
-    	return  new MembroDTO(entity, entity.getPequenoGrupo());
+    	return  new MembroDTO(entity);
     }
    
     @Transactional
@@ -82,11 +78,7 @@ public class MembroService {
 		entity.setRua(dto.getRua());
 		entity.setNumero(dto.getNumero());
 		entity.setEstadoCivil(dto.getEstadoCivil());
-		PequenoGrupoDTO pgDTO = dto.getPequenoGrupo();
-		PequenoGrupo pequenoGrupo = pequenoGrupoRepository.getReferenceById(pgDTO.getId());
-		entity.setPequenoGrupo(pequenoGrupo);
-	
-		
+		entity.setUrl(dto.getUrl());
 	}	
     
     
@@ -96,12 +88,7 @@ public class MembroService {
 		 return  result.stream().map(x -> new MembroDTO(x)).toList();
 		
 	}
-    @Transactional(readOnly = true)
-    public List<MembroDTO> findByPequenoGrupoApelido(String apelido) {
-        List<Membro> result = repository.findByPequenoGrupo_Apelido(apelido);
-		 return  result.stream().map(x -> new MembroDTO(x)).toList();
-    }
-
+ 
     public void atualizarIdade(MembroDTO dto) {
         LocalDate dataNascimento = dto.getDataNascimento();
         Integer idadeAtual = dto.getIdade(); 

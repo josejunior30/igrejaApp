@@ -3,14 +3,11 @@ package com.esibape.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -37,11 +34,8 @@ public class Membro implements Serializable {
 	private String bairro;
 	private String cidade;
 	private String complemento;
+	private String url;
 
-	
-	@ManyToOne
-	@JoinColumn(name="PG_id")
-	private PequenoGrupo pequenoGrupo;
 	
 	@OneToOne(mappedBy= "membro", cascade = CascadeType.ALL)
 	private FileStorage foto;
@@ -50,8 +44,8 @@ public class Membro implements Serializable {
 	}
 	
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
-			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero,
-			String bairro, String cidade, String complemento, PequenoGrupo pequenoGrupo, FileStorage foto) {
+			String telefone, String cpf, MembroEstado estadoCivil, String rua, String url,String cep, String numero,
+			String bairro, String cidade, String complemento, FileStorage foto) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -68,7 +62,7 @@ public class Membro implements Serializable {
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.complemento = complemento;
-		this.pequenoGrupo = pequenoGrupo;
+	this.url=url;
 		this.foto = foto;
 	
 		
@@ -114,6 +108,14 @@ public class Membro implements Serializable {
 		this.idade = idade;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
@@ -138,14 +140,6 @@ public class Membro implements Serializable {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
-	}
-
-	public PequenoGrupo getPequenoGrupo() {
-		return pequenoGrupo;
-	}
-
-	public void setPequenoGrupo(PequenoGrupo pequenoGrupo) {
-		this.pequenoGrupo = pequenoGrupo;
 	}
 	
 

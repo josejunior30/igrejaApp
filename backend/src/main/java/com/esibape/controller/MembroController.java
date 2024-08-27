@@ -73,10 +73,6 @@ public class MembroController {
 			List<MembroDTO> result= service.findByNomeIgnoreCaseContaining(nome);
 			return ResponseEntity.ok(result);
 		}
-		  @GetMapping(value="/search1")
-		  public ResponseEntity<List<MembroDTO>> findByPequenoGrupoApelido(@RequestParam String apelido) {
-		        List<MembroDTO> membros = service.findByPequenoGrupoApelido(apelido);
-		        return ResponseEntity.ok().body(membros);
-		    }
+		
 		  
 }
