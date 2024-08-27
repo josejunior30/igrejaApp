@@ -40,6 +40,7 @@ const ListaPagamento: React.FC = () => {
     const [entradaPaymentMethod, setEntradaPaymentMethod] = useState<FormaPagamento | ''>('');
     const [entradaMonth, setEntradaMonth] = useState<MesReferencia | ''>('');
     const [filterPendingOnly, setFilterPendingOnly] = useState(false);
+    const [filterFreeOnly, setFilterFreeOnly] = useState(false);
 
     useEffect(() => {
         const fetchPagamentos = async () => {
@@ -215,14 +216,19 @@ const ListaPagamento: React.FC = () => {
     };
 
     const getStatus = (pagamentoDoAluno: Pagamento | undefined, currentDate: Date, month: MesReferencia) => {
+        // Se o pagamento do aluno não é indefinido e a forma de pagamento é "GRATIS"
         if (pagamentoDoAluno) {
-            return 'PAGO';
+            if (pagamentoDoAluno.formaPagamento === 'GRATIS') {
+                return 'GRATUITO';
+            }
+            return 'PAGO'; // Retorna "PAGO" se a forma de pagamento não for "GRATIS"
         }
-
+    
+        // Lógica existente para determinar o status com base na data
         const selectedMonthIndex = Object.values(MesReferencia).indexOf(month);
         const tenthOfSelectedMonth = new Date(currentDate.getFullYear(), selectedMonthIndex, 10);
         const twentiethOfSelectedMonth = new Date(currentDate.getFullYear(), selectedMonthIndex, 20);
-
+    
         if (currentDate <= tenthOfSelectedMonth) {
             return 'EM DIA';
         } else if (currentDate > twentiethOfSelectedMonth) {
@@ -231,15 +237,7 @@ const ListaPagamento: React.FC = () => {
             return 'PENDENTE';
         }
     };
-
-    if (loading) {
-        return <div>Carregando...</div>;
-    }
-
-    if (error) {
-        return <div>{error}</div>;
-    }
-
+    
     const getStatusClass = (status: string) => {
         switch (status) {
             case 'PAGO':
@@ -248,6 +246,8 @@ const ListaPagamento: React.FC = () => {
                 return 'status-em-dia';
             case 'PENDENTE':
                 return 'status-pendente';
+             case 'GRATUITO':
+            return 'status-gratuito'; 
             default:
                 return 'status-default';
         }
@@ -420,7 +420,12 @@ const ListaPagamento: React.FC = () => {
             }
         }
     };
-    
+    const getFormaPagamentoClass = (formaPagamento: string) => {
+        if (formaPagamento === 'GRATIS') {
+            return 'forma-pagamento-gratuito'; // Classe para GRATUITO
+        }
+        return '';
+    };
     
     return (
         <>
@@ -674,6 +679,26 @@ const ListaPagamento: React.FC = () => {
         PENDENTE
     </label>
 </div>
+<div className="form-check ms-4">
+    <input
+        className="form-check-input"
+        type="checkbox"
+        id="filterFreeOnly"
+        checked={filterFreeOnly}
+        onChange={() => {
+            if (filterPendingOnly) {
+                setFilterPendingOnly(false);
+            }else if(filterPaidOnly){
+                setFilterPaidOnly(false);
+            }
+            setFilterFreeOnly(!filterFreeOnly);
+        }}
+    />
+    <label className="form-inativos" htmlFor="filterFreeOnly">
+        GRATUITO
+    </label>
+</div>
+
 </div>
 
 
@@ -710,21 +735,22 @@ const ListaPagamento: React.FC = () => {
         .filter(({ status }) => {
             if (filterPaidOnly) return status === 'PAGO';
             if (filterPendingOnly) return status === 'PENDENTE';
+            if (filterFreeOnly) return status === 'GRATUITO'; 
             return true;
         })
         .map(({ aluno, status, pagamentoDoAluno }, index) => {
             const rowClass = aluno.ativo ? '' : 'inativo'; 
+            const formaPagamentoClass = getFormaPagamentoClass(pagamentoDoAluno?.formaPagamento || '');
 
             return (
                 <tr key={aluno.id} className={rowClass}>
                     <td>{index + 1}</td>
-                  
                     <td> <Link to={`historicoPagamento/${aluno.id}`} className="name-link">{aluno.nome} </Link></td>
                     <td>{aluno.projetos.nome || '-'}</td>
                     <td className={getStatusClass(status)}>{status}</td>
                     <td>{pagamentoDoAluno?.valor || '-'}</td>
                     <td>{pagamentoDoAluno?.dataPagamento.toLocaleDateString() || '-'}</td>
-                    <td>{pagamentoDoAluno?.formaPagamento || '-'}</td>
+                    <td className={formaPagamentoClass}>{pagamentoDoAluno?.formaPagamento || '-'}</td>
                     <td>
                         <button onClick={() => handleDeletePayment(pagamentoDoAluno?.id || 0)} className="custom-btn">
                             <PiTrashFill />
@@ -734,6 +760,7 @@ const ListaPagamento: React.FC = () => {
             );
         })}
 </tbody>
+
 
 
 
