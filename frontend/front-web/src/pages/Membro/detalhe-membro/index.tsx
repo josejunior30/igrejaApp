@@ -112,7 +112,7 @@ const Detalhes = () => {
    
 
 
-    <div className="col-md-3 col-7 m-5 md-5 pb-3 text-center" id="dados">
+    <div className="col-md-4 col-7 m-5 md-5 pb-3 text-center" id="dados">
       {MembroDTO ? (
         <>
           <img

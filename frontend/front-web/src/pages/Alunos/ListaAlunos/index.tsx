@@ -101,7 +101,8 @@ const Alunos = () => {
   };
 
   const formatPhoneNumber = (phoneNumber:any) => {
-    return phoneNumber.replace(/\D/g, '');
+    phoneNumber.replace(/\D/g, '');
+    return `55${ phoneNumber}`;
   };
   const sortedAlunos = [...alunosDTO].sort((a, b) => a.nome.localeCompare(b.nome));
 

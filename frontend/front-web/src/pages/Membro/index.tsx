@@ -41,7 +41,8 @@ const Membro = () => {
     }
   };
   const formatPhoneNumber = (phoneNumber:any) => {
-    return phoneNumber.replace(/\D/g, '');
+    phoneNumber.replace(/\D/g, '');
+    return `55${ phoneNumber}`;
   };
   const handlePrint = () => {
     const doc = new jsPDF();
