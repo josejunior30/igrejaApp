@@ -177,7 +177,7 @@ const Formulario: React.FC = () => {
                     name="sobrenome"
                     value={membroDTO.sobrenome}
                     onChange={handleChange}
-                    required
+                   
                   />
                       
             </div>
@@ -189,7 +189,7 @@ const Formulario: React.FC = () => {
                 className="form-control"
                 value={membroDTO.cpf}
                 onChange={handleChange}
-                required
+             
               />
             </div>
         
@@ -202,7 +202,7 @@ const Formulario: React.FC = () => {
         className="form-control"
         value={membroDTO.email}
         onChange={handleChange}
-        required
+    
       />
             </div>
 
@@ -213,7 +213,7 @@ const Formulario: React.FC = () => {
                   className="form-select"
                   value={membroDTO.estadoCivil} 
                   onChange={handleChange}
-                  required
+               
                 >
                   <option >ESCOLHA</option>
                   <option value="0">Solteiro</option>
@@ -230,7 +230,7 @@ const Formulario: React.FC = () => {
         name="telefone"
         value={membroDTO.telefone}
         onChange={handleChange}
-        required
+     
       />
               </div>
 
@@ -242,7 +242,7 @@ const Formulario: React.FC = () => {
               name="dataNascimento"
               value={membroDTO.dataNascimento.toISOString().split('T')[0]}
               onChange={handleChange}
-              required
+             
             />
               </div>
               <div className="col-md-4">
@@ -252,7 +252,7 @@ const Formulario: React.FC = () => {
         className="form-select"
         value={membroDTO.pequenoGrupo.id} 
         onChange={handleChange}
-        required
+    
       >
       <option >Selecione </option>
         {listaDeGrupos.map((grupo) => (
@@ -274,7 +274,7 @@ const Formulario: React.FC = () => {
                 name="rua"
                 value={membroDTO.rua}
                 onChange={handleChange}
-                required
+          
               />
     </div>
     <div className="col-md-4">
@@ -285,7 +285,7 @@ const Formulario: React.FC = () => {
         name="cidade"
         value={membroDTO.cidade}
         onChange={handleChange}
-        required
+      
       />
     </div>
    
@@ -297,7 +297,7 @@ const Formulario: React.FC = () => {
         name="bairro"
         value={membroDTO.bairro}
         onChange={handleChange}
-        required
+      
       />
     </div>
     <div className="col-md-2">
@@ -308,7 +308,7 @@ const Formulario: React.FC = () => {
         name="numero"
         value={membroDTO.numero}
         onChange={handleChange}
-        required
+       
       />
     </div>
     <div className="col-md-6">
@@ -319,7 +319,7 @@ const Formulario: React.FC = () => {
         name="complemento"
         value={membroDTO.complemento}
         onChange={handleChange}
-        required
+    
       />
     </div>
     <div className="col-md-4">
@@ -330,7 +330,7 @@ const Formulario: React.FC = () => {
         name="cep"
         value={membroDTO.cep}
         onChange={handleChange}
-        required
+      
       />
     </div>
 
