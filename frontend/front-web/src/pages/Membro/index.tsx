@@ -95,14 +95,16 @@ const Membro = () => {
       </div>
 
       <div className="row pt-2 justify-content-center">
-        <div className="col-11 col-md-11">
-          <div className="img-print-membro">
+    
+        <div className="col-11 col-md-10">
+          <div className="img-print-membro ">
             <Link to="#">
               <button onClick={handlePrint}>
                 <PiPrinterFill /> Imprimir
               </button>
             </Link>
           </div>
+          <h3 className="text-center" id="membros">Membros</h3>
           <table className="table table-striped text-center" id="col-tab-alunos-2" ref={componentRef}>
             <thead className="thead">
               <tr>
