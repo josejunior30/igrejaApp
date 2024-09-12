@@ -41,7 +41,8 @@ public class AlunosService {
     private AlunoStatusRepository alunoStatusRepository;
     @Autowired
     private PagamentoRepository pagamentoRepository;
-    
+    @Autowired
+    private ChamadaService chamadaService;
     
  // Modificado para buscar apenas alunos ativos
     @Transactional(readOnly = true)
@@ -49,9 +50,14 @@ public class AlunosService {
         List<Alunos> list = repository.findByAtivoTrue(); 
         return list.stream()
             .map(x -> {
+                // Atualiza a idade e verifica o status de pagamento
                 AlunosDTO dto = new AlunosDTO(x, x.getProjetos(), x.getAlunoStatus(), x.getChamada(), x.getPagamentos());
                 atualizarIdade(dto);
                 verificarStatusPagamento(dto);
+
+                // Chama o método verificarAusenciasConsecutivas para cada aluno
+                chamadaService.verificarAusenciasConsecutivas(x);
+
                 return dto;
             })
             .collect(Collectors.toList());
