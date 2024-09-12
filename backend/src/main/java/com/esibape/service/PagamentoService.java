@@ -187,15 +187,15 @@ public class PagamentoService {
     private void updateTotalPixForPagamentos(MesReferencia mesReferencia) {
         FormaPagamento formaPagamentoPix = FormaPagamento.PIX;
         Integer totalPix = repository.sumValoresByFormaPagamentoAndMesReferencia(formaPagamentoPix, mesReferencia);
-        System.out.println("Total PIX for " + mesReferencia + ": " + totalPix);
+        
         
         List<Pagamento> pagamentos = repository.findByMesReferencia(mesReferencia);
 
         for (Pagamento pagamento : pagamentos) {
             pagamento.setTotalPix(totalPix);
-            System.out.println("Before Save: totalPix for pagamento " + pagamento.getId() + ": " + pagamento.getTotalPix());
+           
             repository.save(pagamento);
-            System.out.println("After Save: totalPix for pagamento " + pagamento.getId() + ": " + pagamento.getTotalPix());
+           
         }
     }
 
@@ -279,15 +279,15 @@ public class PagamentoService {
     private void updateTotalDinheiroForPagamentos(MesReferencia mesReferencia) {
         FormaPagamento formaPagamentoDinheiro = FormaPagamento.DINHEIRO; // ajuste conforme sua enumeração
         Integer totalDinheiro = repository.sumValoresByFormaPagamentoAndMesReferencia(formaPagamentoDinheiro, mesReferencia);
-        System.out.println("Total Dinheiro for " + mesReferencia + ": " + totalDinheiro);
+        
         
         List<Pagamento> pagamentos = repository.findByMesReferencia(mesReferencia);
 
         for (Pagamento pagamento : pagamentos) {
             pagamento.setTotalDinheiro(totalDinheiro);
-            System.out.println("Before Save: totalDinheiro for pagamento " + pagamento.getId() + ": " + pagamento.getTotalDinheiro());
+            
             repository.save(pagamento);
-            System.out.println("After Save: totalDinheiro for pagamento " + pagamento.getId() + ": " + pagamento.getTotalDinheiro());
+            
         }
     }
 

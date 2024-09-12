@@ -16,7 +16,12 @@ margin-bottom: 10px;
    background-color: var(--color-coral);
    border-color: var(--color-coral);
   }
-  
+  .text-danger {
+    color: red!important;
+  }
+  .text-abandono {
+    color: rgb(255, 88, 88)!important;
+  }
   @media (max-width: 768px) {
    
     #botoes button{

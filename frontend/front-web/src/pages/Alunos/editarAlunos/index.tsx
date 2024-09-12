@@ -26,6 +26,7 @@ const EditarAlunos =()=>{
       responsavel: "",
       idade: 0,
       sangue: "",
+      abandono:"",
       pergunta: "",
       horario: "",
       grauParentesco: "",

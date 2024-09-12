@@ -20,6 +20,7 @@ import com.esibape.DTO.ProjetosDTO;
 import com.esibape.entities.AlunoStatus;
 import com.esibape.entities.Alunos;
 import com.esibape.entities.Chamada;
+import com.esibape.entities.ChamadaAluno;
 import com.esibape.entities.Pagamento;
 import com.esibape.entities.Projetos;
 import com.esibape.repository.AlunoStatusRepository;
@@ -42,15 +43,27 @@ public class AlunosService {
     private PagamentoRepository pagamentoRepository;
     
     
-
+ // Modificado para buscar apenas alunos ativos
     @Transactional(readOnly = true)
     public List<AlunosDTO> findAll() {
-        List<Alunos> list = repository.findByAtivoTrue(); // Modificado para buscar apenas alunos ativos
+        List<Alunos> list = repository.findByAtivoTrue(); 
         return list.stream()
             .map(x -> {
                 AlunosDTO dto = new AlunosDTO(x, x.getProjetos(), x.getAlunoStatus(), x.getChamada(), x.getPagamentos());
                 atualizarIdade(dto);
                 verificarStatusPagamento(dto);
+                return dto;
+            })
+            .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
+    public List<AlunosDTO> findAllAlunos() {
+        List<Alunos> list = repository.findAll(); 
+        return list.stream()
+            .map(x -> {
+                AlunosDTO dto = new AlunosDTO(x, x.getProjetos(), x.getAlunoStatus(), x.getChamada(), x.getPagamentos());
+                verificarStatusPagamento(dto);
+                verificarAusenciasConsecutivas(x);
                 return dto;
             })
             .collect(Collectors.toList());
@@ -91,45 +104,45 @@ public class AlunosService {
         entity.setAtivo(false); // Marca o aluno como inativo em vez de deletá-lo
         repository.save(entity);
     }
-    
+ // Busca alunos independentemente do status 'ativo'
     @Transactional(readOnly = true)
     public List<AlunosDTO> findByNomeIgnoreCaseContaining(String nome) {
-        List<Alunos> result = repository.findByNomeIgnoreCaseContaining(nome); // Busca alunos independentemente do status 'ativo'
+        List<Alunos> result = repository.findByNomeIgnoreCaseContaining(nome); 
         return result.stream().map(x -> new AlunosDTO(x)).toList();
     }
 
+ // Modificado para buscar apenas alunos ativos
     @Transactional(readOnly = true)
     public List<AlunosDTO> findByHorario(LocalTime horario) {
-        List<Alunos> result = repository.findByHorarioAndAtivoTrue(horario); // Modificado para buscar apenas alunos ativos
+        List<Alunos> result = repository.findByHorarioAndAtivoTrue(horario); 
         return result.stream().map(x -> new AlunosDTO(x)).collect(Collectors.toList());
     }
-
+ // Modificado para buscar apenas alunos ativos
     @Transactional(readOnly = true)
     public List<AlunosDTO> findByProjetoId(Long projetoId) {
-        List<Alunos> result = repository.findByProjetosIdAndAtivoTrue(projetoId); // Modificado para buscar apenas alunos ativos
+        List<Alunos> result = repository.findByProjetosIdAndAtivoTrue(projetoId); 
         return result.stream().map(x -> new AlunosDTO(x)).collect(Collectors.toList());
     }
-
+ // Modificado para buscar apenas alunos ativos
     @Transactional(readOnly = true)
     public List<AlunosDTO> findByProjetoIdAndHorario(Long projetoId, LocalTime horario) {
-        List<Alunos> result = repository.findByProjetosIdAndHorarioAndAtivoTrue(projetoId, horario); // Modificado para buscar apenas alunos ativos
+        List<Alunos> result = repository.findByProjetosIdAndHorarioAndAtivoTrue(projetoId, horario); 
         return result.stream().map(x -> new AlunosDTO(x)).collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public List<AlunosDTO> findAllAlunos() {
-        List<Alunos> list = repository.findAll(); // Busca todos os alunos, ativos e inativos
-        return list.stream()
-            .map(x -> {
-                AlunosDTO dto = new AlunosDTO(x, x.getProjetos(), x.getAlunoStatus(), x.getChamada(), x.getPagamentos());
-                verificarStatusPagamento(dto);
-                return dto;
-            })
-            .collect(Collectors.toList());
-    }
+   
+    private void verificarAusenciasConsecutivas(Alunos aluno) {
+        List<Chamada> ultimasChamadas = chamadaRepository.findTop3ByAlunosOrderByDataDesc(aluno);
 
-    
-    
+        boolean tresAusenciasSeguidas = ultimasChamadas.stream()
+            .allMatch(chamada -> chamada.getChamadaAluno() == ChamadaAluno.AUSENTE);
+
+        if (tresAusenciasSeguidas) {
+            aluno.setAbandono(true);
+            repository.save(aluno);
+        }
+    }
+    // metodo para inserir atributos
     private void copyDtoToEntity(AlunosDTO dto, Alunos entity) {
         atualizarIdade(dto);
         entity.setNome(dto.getNome());
@@ -150,54 +163,56 @@ public class AlunosService {
         entity.setAlunoDoenca(dto.getAlunoDoenca());
         entity.setSangue(dto.getSangue());
         entity.setAtivo(dto.isAtivo()); 
+        entity.setAbandono(dto.isAbandono());
         entity.setDataReativado(dto.getDataReativado());
         entity.setDataMatricula(dto.getDataMatricula());
         entity.setDataInativo(dto.getDataInativo());
         entity.setHorario(dto.getHorario());
         entity.setGrauParentesco(dto.getGrauParentesco());
         entity.setPergunta(dto.getPergunta());
-
-        // Configuração de Projetos
+        
+        
         ProjetosDTO pjDTO = dto.getProjetos();
         Projetos projetos = projetosRepository.getReferenceById(pjDTO.getId());
         entity.setProjetos(projetos);
 
-        // Configuração de Chamada
+     
         List<ChamadaDTO> chaDTO = dto.getChamada();
         List<Chamada> chamada = chaDTO.stream()
             .map(chamadaDto -> chamadaRepository.getReferenceById(chamadaDto.getId()))
             .collect(Collectors.toList());
         entity.setChamada(chamada);
 
-        // Configuração de Pagamentos
+     
         List<PagamentoDTO> pgDTO = dto.getPagamentos();
         List<Pagamento> pagamentos = pgDTO.stream()
             .map(pagamentoDto -> pagamentoRepository.getReferenceById(pagamentoDto.getId()))
             .collect(Collectors.toList());
         entity.setPagamentos(pagamentos);
 
-        // Configuração de AlunoStatus
+     
         if (dto.getAlunoStatus() != null) {
             AlunoStatusDTO aluDTO = dto.getAlunoStatus();
             AlunoStatus alunoStatus = alunoStatusRepository.getReferenceById(aluDTO.getId());
             entity.setAlunoStatus(alunoStatus);
         } else {
-            entity.setAlunoStatus(null); // Permite que alunoStatus seja nulo na entidade
+            entity.setAlunoStatus(null); 
         }
     }
-
+    
+ // Calcula a idade apenas se a idade estiver vazia
     public void atualizarIdade(AlunosDTO dto) {
         LocalDate dataNascimento = dto.getDataNascimento();
         Integer idadeAtual = dto.getIdade(); 
         
-        // Calcula a idade apenas se a idade estiver vazia
+        
         if (dataNascimento != null && idadeAtual == null) {
             LocalDate dataAtual = LocalDate.now();
             Period periodo = Period.between(dataNascimento, dataAtual);
             dto.setIdade(periodo.getYears());
         }
     }
-
+ // Verifica o Pagamento
     private void verificarStatusPagamento(AlunosDTO dto) {
         LocalDate hoje = LocalDate.now();
         LocalDate dia10DoMes = LocalDate.of(hoje.getYear(), hoje.getMonth(), 10);
@@ -205,7 +220,7 @@ public class AlunosService {
         // Verifica se há pelo menos um pagamento registrado
         boolean temPagamento = !dto.getPagamentos().isEmpty();
         
-        // Determina o status de acordo com a data e a presença de pagamentos
+    
         if (temPagamento) {
             dto.setStatusPagamento("Pago");
         } else if (hoje.isBefore(dia10DoMes)) {

@@ -13,6 +13,7 @@ import com.esibape.DTO.ChamadaDTO;
 import com.esibape.DTO.ProjetosDTO;
 import com.esibape.entities.Alunos;
 import com.esibape.entities.Chamada;
+import com.esibape.entities.ChamadaAluno;
 import com.esibape.entities.Projetos;
 import com.esibape.repository.AlunosRepository;
 import com.esibape.repository.ChamadaRepository;
@@ -77,10 +78,43 @@ public class ChamadaService {
 		 Chamada entity = new Chamada();
 		 copyDtoToEntity(dto, entity);
 		 entity = repository.save(entity);
+		 verificarAusenciasConsecutivas(entity.getAlunos());
 	    	return new ChamadaDTO(entity);
 	    	
 	    }
-	
+	    public void verificarAusenciasConsecutivas(Alunos aluno) {
+	        // Busca as três últimas chamadas do aluno
+	        List<Chamada> ultimasChamadas = repository.findTop3ByAlunosOrderByDataDesc(aluno);
+
+	        // Adiciona um log para verificar as chamadas retornadas
+	        System.out.println("Últimas Chamadas: ");
+	        for (Chamada chamada : ultimasChamadas) {
+	            System.out.println("ID: " + chamada.getId() + ", Data: " + chamada.getData() + ", Status: " + chamada.getChamadaAluno());
+	        }
+
+	        // Verifica se as três últimas chamadas são "AUSENTE"
+	        boolean tresAusenciasSeguidas = ultimasChamadas.stream()
+	            .allMatch(chamada -> chamada.getChamadaAluno() == ChamadaAluno.AUSENTE);
+
+	        // Log do estado atual do aluno antes da atualização
+	        System.out.println("Estado atual do aluno antes da atualização: abandono = " + aluno.isAbandono());
+
+	        if (tresAusenciasSeguidas) {
+	            // Atualiza o campo 'abandono' para true se houver três ausências seguidas
+	            aluno.setAbandono(true);
+	            alunosRepository.save(aluno);
+	            System.out.println("Campo 'abandono' atualizado para true.");
+	        } else if (!ultimasChamadas.isEmpty() && ultimasChamadas.get(0).getChamadaAluno() == ChamadaAluno.PRESENTE) {
+	            // Se a última chamada for 'PRESENTE', reverte o campo 'abandono' para false
+	            aluno.setAbandono(false);
+	            alunosRepository.save(aluno);
+	            System.out.println("Campo 'abandono' revertido para false.");
+	        } else {
+	            // Nenhuma atualização
+	            System.out.println("Campo 'abandono' não foi alterado.");
+	        }
+	    }
+
 
 	    private void copyDtoToEntity(ChamadaDTO dto, Chamada entity) {
 			entity.setData(dto.getData());

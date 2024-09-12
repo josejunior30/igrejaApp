@@ -1,0 +1,19 @@
+
+#quantidade{
+  color:white;
+}
+
+#totalCulto{
+  color:white;
+}
+#QuantidadeTitulo{
+  color:white;
+}
+.btn-EnviarQuantiade{
+  background-color: var(--color-coral);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}

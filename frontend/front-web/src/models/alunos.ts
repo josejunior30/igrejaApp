@@ -26,6 +26,7 @@ export type alunosDTO={
     pergunta: string;
     grauParentesco:string;
     ativo: string;
+    abandono: string;
    dataInativo: Date;
     dataMatricula: Date;
     dataReativado:Date;

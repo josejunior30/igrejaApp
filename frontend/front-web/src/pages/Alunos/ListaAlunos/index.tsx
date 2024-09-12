@@ -22,7 +22,7 @@ const Alunos = () => {
 
   useEffect(() => {
     fetchAlunos();
-    projetosService.findAll() // Buscar todos os projetos
+    projetosService.findAll() 
       .then(response => {
         setProjetos(response.data);
       })
@@ -234,45 +234,50 @@ const Alunos = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {loading ? (
-                      <tr>
-                        <td colSpan={6}>Carregando dados...</td>
-                      </tr>
-                    ) : (
-                      sortedAlunos.map((aluno, index) => (
-                        <tr key={aluno.id}>
-                          <td>{index + 1}</td>
-                          <td>
-                            <Link to={`${aluno.id}`} className="name-link">
-                              {aluno.nome}
-                            </Link>
-                          </td>
-                          <td>
-                            <Link to={`${aluno.id}`} className="name-link">
-                              {aluno.idade}
-                            </Link>
-                          </td>
-                          <td>
-                            <Link to={`https://wa.me/${formatPhoneNumber(aluno.telefone)}`} target="_blank" className="name-link">
-                              <i className="bi bi-whatsapp"></i> {aluno.telefone}
-                            </Link>
-                          </td>
-                          {aluno.projetos && (
-                            <td>
-                              <Link to="#" className="name-link">
-                                {aluno.projetos.nome}
-                              </Link>
-                            </td>
-                          )}
-                          <td>
-                            <Link to={`${aluno.id}`} className="name-link">
-                              {formatHorario(aluno.horario)}
-                            </Link>
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
+  {loading ? (
+    <tr>
+      <td colSpan={6}>Carregando dados...</td>
+    </tr>
+  ) : (
+    sortedAlunos.map((aluno, index) => (
+      <tr key={aluno.id}>
+        <td>{index + 1}</td>
+        <td>
+          <Link 
+            to={`${aluno.id}`} 
+            className={`name-link ${aluno.abandono ? 'text-abandono' : ''}`} // Adiciona classe 'text-danger' se abandono for true
+          >
+            {aluno.nome}
+          </Link>
+        </td>
+        <td>
+          <Link to={`${aluno.id}`} className={`name-link ${aluno.abandono ? 'text-abandono' : ''}`}>
+            {aluno.idade}
+          </Link>
+        </td>
+        <td>
+          <Link to={`https://wa.me/${formatPhoneNumber(aluno.telefone)}`} target="_blank" className={`name-link ${aluno.abandono ? 'text-abandono' : ''}`}>
+            <i className="bi bi-whatsapp"></i> {aluno.telefone}
+          </Link>
+        </td>
+        {aluno.projetos && (
+          <td>
+            <Link to="#" className={`name-link ${aluno.abandono ? 'text-abandono' : ''}`}>
+              {aluno.projetos.nome}
+            </Link>
+          </td>
+        )}
+        <td>
+          <Link to={`${aluno.id}`} className={`name-link ${aluno.abandono ? 'text-abandono' : ''}`}>
+            {formatHorario(aluno.horario)}
+          </Link>
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
+
+
                 </table>
               </div>
             </div>

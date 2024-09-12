@@ -48,6 +48,7 @@ public class AlunosDTO implements Serializable {
     private String grauParentesco;
     private LocalDate dataReativado;
     private boolean ativo = true;
+    private boolean abandono = false;
     private String statusPagamento;
     private LocalTime horario;
     private AlunoDoenca alunoDoenca;
@@ -59,7 +60,7 @@ public class AlunosDTO implements Serializable {
 
     public AlunosDTO(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
                      String cpfResponsavel, String telefone, String url, String email, String rua, String cep, 
-                     String numero, String bairro, String cidade, LocalDate dataReativado,String complemento, boolean ativo ,String pergunta, LocalDate dataMatricula, LocalDate dataInativo, String grauParentesco,String statusPagamento,String sangue, LocalTime horario,
+                     String numero, String bairro, String cidade, boolean abandono,LocalDate dataReativado,String complemento, boolean ativo ,String pergunta, LocalDate dataMatricula, LocalDate dataInativo, String grauParentesco,String statusPagamento,String sangue, LocalTime horario,
                      AlunoDoenca alunoDoenca, AlunoStatusDTO alunoStatus, ProjetosDTO projetos, List<ChamadaDTO> chamada, List<PagamentoDTO>pagamentos) {
         this.id = id;
         this.nome = nome;
@@ -79,6 +80,7 @@ public class AlunosDTO implements Serializable {
         this.complemento = complemento;
         this.pergunta = pergunta;
         this.sangue = sangue;
+        this.abandono = abandono;
         this.dataMatricula = dataMatricula;
         this.dataInativo = dataInativo;
         this.horario = horario;
@@ -108,6 +110,7 @@ public class AlunosDTO implements Serializable {
         this.bairro = entity.getBairro();
         this.cidade = entity.getCidade();
         this.cep = entity.getCep();
+        this.abandono = entity.isAbandono();
         this.complemento = entity.getComplemento();
         this.numero = entity.getNumero();
         this.alunoDoenca = entity.getAlunoDoenca();
@@ -247,7 +250,15 @@ public class AlunosDTO implements Serializable {
         return cpfResponsavel;
     }
 
-    public void setCpfResponsavel(String cpfResponsavel) {
+    public boolean isAbandono() {
+		return abandono;
+	}
+
+	public void setAbandono(boolean abandono) {
+		this.abandono = abandono;
+	}
+
+	public void setCpfResponsavel(String cpfResponsavel) {
         this.cpfResponsavel = cpfResponsavel;
     }
 

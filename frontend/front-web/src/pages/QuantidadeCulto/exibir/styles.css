@@ -1,0 +1,39 @@
+.total-verde {
+    color: rgb(1, 255, 1)!important;
+    font-weight: bold!important;
+  }
+
+  #filtro-mes{
+    color: white;
+    color: #02fcfc;
+    color: #386c01;
+  }
+  .titulo-grafico{
+    color: white!important;
+  }
+  .chart-container {
+    width: 250px!important; /* Defina a largura desejada */
+    height: 250px!important; /* Defina a altura desejada */
+    margin: 0 auto; /* Centralize o gráfico, se desejado */
+}
+.grafico-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.titulo-grafico {
+  flex: 1;
+  text-align: left;
+}
+
+.grafico-homens-mulheres {
+  flex: 1;
+  text-align: right;
+}
+
+.chart-container {
+  max-width: 400px;
+  margin: 0 auto;
+}

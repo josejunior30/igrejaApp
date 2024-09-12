@@ -10,7 +10,7 @@ import com.esibape.entities.Alunos;
 
 public interface AlunosRepository extends JpaRepository<Alunos, Long> {
 
-    // Busca alunos por nome, considerando apenas os ativos
+    // Busca alunos por nome
 	List<Alunos> findByNomeIgnoreCaseContaining(String nome);
     
     // Busca alunos por horário, considerando apenas os ativos

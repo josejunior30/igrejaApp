@@ -51,6 +51,7 @@ public class Alunos implements Serializable{
 	private boolean ativo = true;
 	private String statusPagamento;
 	private AlunoDoenca alunoDoenca;
+	 private boolean abandono = false;
 	@OneToMany(mappedBy ="alunosPG"  )
     private List<Pagamento> pagamentos = new ArrayList<>();
 	@ManyToOne()
@@ -73,7 +74,7 @@ public class Alunos implements Serializable{
 	
 	public Alunos(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,
 			String cpfResponsavel, String telefone, String email, String url, String rua, String cep, String numero,
-			String bairro, String cidade, String complemento, LocalDate dataMatricula, LocalDate dataInativo, LocalDate dataReativado, String pergunta, String sangue, boolean ativo ,LocalTime horario, String grauParentesco,
+			String bairro, String cidade,   boolean abandono,String complemento, LocalDate dataMatricula, LocalDate dataInativo, LocalDate dataReativado, String pergunta, String sangue, boolean ativo ,LocalTime horario, String grauParentesco,
 			AlunoDoenca alunoDoenca, List<Pagamento> pagamentos, AlunoStatus alunoStatus, Projetos projetos, String statusPagamento,
 			List<Chamada> chamada) {
 		super();
@@ -97,6 +98,7 @@ public class Alunos implements Serializable{
 		this.sangue = sangue;
 		this.horario = horario;
 		this.ativo = ativo;
+		this.abandono =abandono;
 		this.dataReativado= dataReativado;
 		this.statusPagamento= statusPagamento;
 		this.alunoDoenca = alunoDoenca;
@@ -151,6 +153,16 @@ public class Alunos implements Serializable{
 
 
 
+	
+
+	public boolean isAbandono() {
+		return abandono;
+	}
+
+
+	public void setAbandono(boolean abandono) {
+		this.abandono = abandono;
+	}
 
 
 	public LocalDate getDataReativado() {

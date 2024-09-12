@@ -108,8 +108,7 @@ const Presenca = () => {
               />
             </div>
             <div className="col-md-12 p-4">
-              {/* Radio buttons for selecting the project */}
-              {/* ... */}
+           
               <div className="d-grid gap-2 col-4 mx-auto">
                 <button className="btn btn-primary mb-2" onClick={buscarPresencasPorDataEProjeto}>Buscar</button>
               </div>

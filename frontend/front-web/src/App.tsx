@@ -29,6 +29,8 @@ import PresencaBox from './pages/ListaChamada/checkbox';
 import ListaPagamento from './pages/Pagamento/exibir/ListaPagamento';
 import AlunoPagamentos from './pages/Pagamento/historicoPG';
 import Dashboard from './pages/Dashbord/Alunos';
+import InsertQuantidade from './pages/QuantidadeCulto/Inserir';
+import NumeroCulto from './pages/QuantidadeCulto/exibir';
 
 
 
@@ -49,7 +51,6 @@ function App() {
     <Route path="/" element={<Login />} />
     <Route path="/inicio" element={<PrivateRoute><Inicial /></PrivateRoute>} />
     <Route path="/Pg" element={<Celulas />} />
-    
     <Route path="/membro" element={<PrivateRoute><Membro/></PrivateRoute>} />
     <Route path="/membro/:id" element={<PrivateRoute roles={['ROLE_ADMIN']}><Detalhes /></PrivateRoute>} />
     <Route path="/membro/adicionar" element={<PrivateRoute roles={['ROLE_ADMIN']}><Formulario /></PrivateRoute>} />
@@ -62,7 +63,7 @@ function App() {
     <Route path="/alunos/:id" element={<PrivateRoute><DetalhesAlunos /></PrivateRoute>} /> 
     <Route path="/editarAlunos/:id" element={<PrivateRoute><EditarAlunos /></PrivateRoute>} /> 
     <Route path="/chamada" element={<PrivateRoute><Presenca /></PrivateRoute>} />
-   
+    <Route path="/quantidade" element={<PrivateRoute><InsertQuantidade/></PrivateRoute>} />
     <Route path="/relatorio" element={<PrivateRoute><Relatorio /></PrivateRoute>} />
     <Route path="/relatorio/:id" element={<PrivateRoute><DetalhesRelatorio /></PrivateRoute>} />
     <Route path="/enviarRelatorio" element={<PrivateRoute><AddRelatorio /></PrivateRoute>} />
@@ -71,6 +72,7 @@ function App() {
     <Route path="/pagamento" element={<PrivateRoute><ListaPagamento/></PrivateRoute> } />
     <Route path="pagamento/historicoPagamento/:id" element={<PrivateRoute><AlunoPagamentos /></PrivateRoute>} />
     <Route path="/dashbord" element={<Dashboard/> } />
+    <Route path="/numeroculto" element={<PrivateRoute><NumeroCulto /></PrivateRoute>} />
   </Routes>
   </Router>
 </ContextToken.Provider>

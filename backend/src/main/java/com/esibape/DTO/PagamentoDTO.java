@@ -2,11 +2,7 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.esibape.entities.Alunos;
-import com.esibape.entities.OutrosPG;
 import com.esibape.entities.FormaPagamento;
 import com.esibape.entities.MesReferencia;
 import com.esibape.entities.Pagamento;

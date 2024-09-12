@@ -1,30 +1,21 @@
 package com.esibape.entities;
-
 public enum ChamadaAluno {
-	PRESENTE("presente"),
-	AUSENTE("ausente"),
-	LICENÇA("licença");
-	
-	private String chamadaAluno;
+    PRESENTE("presente"),
+    AUSENTE("ausente"),
+    LICENÇA("licença");
 
-	
-	 
-	 private ChamadaAluno(String chamadaAluno) {
-		this.chamadaAluno = chamadaAluno;
-	}
+    private final String chamadaAluno;
 
+    ChamadaAluno(String chamadaAluno) {
+        this.chamadaAluno = chamadaAluno;
+    }
 
+    public String getChamadaAluno() {
+        return chamadaAluno;
+    }
 
-	public String getChamadaAluno() {
-		return chamadaAluno;
-	}
-
-
-
-	public void setChamadaAluno(String chamadaAluno) {
-		this.chamadaAluno = chamadaAluno;
-	}
-
-	
+    @Override
+    public String toString() {
+        return chamadaAluno;
+    }
 }
-	
