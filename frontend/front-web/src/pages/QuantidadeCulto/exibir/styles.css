@@ -8,13 +8,16 @@
     color: #02fcfc;
     color: #386c01;
   }
-  .titulo-grafico{
-    color: white!important;
-  }
+  #escolha-mes{
+    color: white;
+   }
   .chart-container {
-    width: 250px!important; /* Defina a largura desejada */
-    height: 250px!important; /* Defina a altura desejada */
-    margin: 0 auto; /* Centralize o gráfico, se desejado */
+    width: 250px!important; 
+    height: 250px!important; 
+    margin: 0 auto; 
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    
 }
 .grafico-info {
   display: flex;
@@ -25,7 +28,8 @@
 
 .titulo-grafico {
   flex: 1;
-  text-align: left;
+  margin-top: 120px;
+  color: white!important;
 }
 
 .grafico-homens-mulheres {
@@ -35,5 +39,20 @@
 
 .chart-container {
   max-width: 400px;
-  margin: 0 auto;
+
+}
+.btn-inserir-numeros{
+  margin-left: 20px;
+  padding:  7px 20px;
+  background-color: var(--color-coral);
+  border-radius: 5px;
+  color: #ffffff;
+}
+.btn-inserir-numeros:hover{
+background-color: rgb(255, 102, 47);
+}
+.chart-container-torre{
+  padding-top: 5%;
+  width: 400px!important; 
+  height: 300px!important; 
 }

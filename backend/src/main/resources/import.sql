@@ -113,8 +113,22 @@ INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, 
 INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 10, '2024-07-28' , 32 ,17, 15, 1 );
 INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 10, '2024-08-07' , 32 ,17, 15, 1 );
 INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 30, '2024-08-14' , 52 ,30, 12, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 32, 10, '2024-09-21' , 42 ,27, 15, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 10, '2024-09-28' , 32 ,13, 17, 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 70, 50, '2024-09-21' , 120 ,50, 70, 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 40, 55, '2024-09-28' , 95 , 45, 50, 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 35, 55, '2024-09-28' , 90 , 40, 50, 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 60, 50, '2024-09-28' , 110 , 55, 55, 1 );
+
+
+INSERT INTO tb_requerimento(Data_Requerimento, Data_Evento, Data_Aprovação, Data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local ) VALUES ( '2024-07-07', '2024-07-07', '2024-09-28' , '2024-09-28' , 1 ,'festa da roça', 'comunhao da igreja', 'Junior', 'Igreja');
+INSERT INTO tb_requerimento(Data_Requerimento, Data_Evento, Data_Aprovação, Data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local ) VALUES ( '2024-07-07', '2024-07-10', '2024-09-30' , '2024-09-20' , 1 ,'festa da primavera', 'comunhao da igreja', 'Aurici', 'Igreja');
+
+INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'hamburguer', 120.97, 1);
+INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'ovo', 20.90, 1);
+INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'pão', 45.50, 1);
+INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'batata', 37.79, 2);
+
+
+
 
 INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 10, '2024-06-07' , 32 ,17, 15, 1 );
 INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 20, '2024-06-14' , 42 ,27, 15, 1 );

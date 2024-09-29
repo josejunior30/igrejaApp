@@ -1,7 +1,7 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
 import * as authService from '../service/AuthService';
-import { AlunoPG } from "../models/pagamento";
+
 
 
 export function findAll(){

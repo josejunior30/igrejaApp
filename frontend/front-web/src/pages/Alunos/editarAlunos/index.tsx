@@ -4,14 +4,11 @@ import { alunosDTO, projetos } from "../../../models/alunos";
 import *as alunosService from '../../../service/alunosService';
 import axios from "axios";
 import { BASE_URL } from "../../../ultilitarios/system";
-import SuccessModal from "../../../components/Modal";
 import './styles.css';
 import Header from "../../../components/Header";
 const EditarAlunos =()=>{
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [isRedirecting, setIsRedirecting] = useState(false);
     const [listaDeGrupos, setListaDeGrupos] = useState<projetos[]>([]);
     
     const [alunosDTO, setAlunosDTO] = useState<alunosDTO>({

@@ -8,6 +8,7 @@
 }
 #QuantidadeTitulo{
   color:white;
+  margin-left: 10%;
 }
 .btn-EnviarQuantiade{
   background-color: var(--color-coral);
@@ -16,4 +17,5 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  margin-left: 10px;
 }

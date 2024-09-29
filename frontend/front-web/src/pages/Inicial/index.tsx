@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 
 const projetos ='https://i.postimg.cc/6qJgcsZs/Esta-o-siba-250-x-150-mm-250-x-170-mm.png'
 const financeiro = 'https://i.postimg.cc/QdwmwPQs/financeiro.jpg'
-const lideranca = 'https://i.postimg.cc/Pq3Pxsqv/liderenca.jpg'
+const lideranca = 'https://i.postimg.cc/T3FHVw9N/2.png'
 const pg= 'https://i.postimg.cc/sDMXn0w3/pequeno-Grupo.jpg'
 const secretaria = 'https://i.postimg.cc/TYvd9YLJ/secretaria.jpg'
 const visitante = 'https://i.postimg.cc/TYvd9YLJ/secretaria.jpg'
@@ -43,8 +43,8 @@ const Inicial = () => (
           <div className="col-9 col-md-3" id="col-img">
             <img src={lideranca} alt="Calendario" className="img-fluid" id="img-menu" />
                 
-                  <h3>Liderança</h3>
-                  <Link to="#">
+                  <h3>Operacional</h3>
+                  <Link to="/numeroculto">
                   <button className="btn btn-info" >Clique aqui</button>
                   </Link>
               

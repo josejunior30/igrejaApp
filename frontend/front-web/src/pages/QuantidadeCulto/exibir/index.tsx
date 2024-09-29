@@ -2,18 +2,22 @@ import { useEffect, useState } from "react";
 import { QuantidadePorCulto } from "../../../models/quantidade";
 import * as quantidadePorCultoService from "../../../service/quantidadePorCultoService";
 import Header from "../../../components/Header";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie, Bar } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
 import './styles.css';
+import { Link } from "react-router-dom";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+
+
+
+ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const NumeroCulto = () => {
     const [quantidadePorCulto, setQuantidadePorCulto] = useState<QuantidadePorCulto[]>([]);
     const [loading, setLoading] = useState(true);
     const [mesSelecionado, setMesSelecionado] = useState<number | string>("todos");
     const [mostrarGrafico, setMostrarGrafico] = useState(true);
-    const [tipoGrafico, setTipoGrafico] = useState<string>("homensMulheres"); // Estado para controlar o tipo de gráfico
+    const [tipoGrafico, setTipoGrafico] = useState<string>("homensMulheres");
 
     const buscarCultos = async (mes: number | string) => {
         setLoading(true);
@@ -47,7 +51,10 @@ const NumeroCulto = () => {
         setMesSelecionado(event.target.value);
     };
 
-    // Função para calcular dados do gráfico de Homens e Mulheres
+    const handleTipoGraficoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setTipoGrafico(event.target.value);
+    };
+
     const calcularDadosGraficoHomensMulheres = (dados: QuantidadePorCulto[]) => {
         const totalHomens = dados.reduce((acc, curr) => acc + curr.numeroHomem, 0);
         const totalMulheres = dados.reduce((acc, curr) => acc + curr.numeroMulher, 0);
@@ -60,14 +67,13 @@ const NumeroCulto = () => {
             datasets: [
                 {
                     data: [totalHomens, totalMulheres],
-                    backgroundColor: ["#36A2EB", "#FF6384"],
-                    hoverBackgroundColor: ["#36A2EB", "#FF6384"],
+                    backgroundColor: ["#36A2EB", "#ff9100"],
+                 
                 },
             ],
         };
     };
 
-    // Função para calcular dados do gráfico de Membros e Visitantes
     const calcularDadosGraficoMembrosVisitantes = (dados: QuantidadePorCulto[]) => {
         const totalMembros = dados.reduce((acc, curr) => acc + curr.membro, 0);
         const totalVisitantes = dados.reduce((acc, curr) => acc + curr.visitante, 0);
@@ -80,34 +86,52 @@ const NumeroCulto = () => {
             datasets: [
                 {
                     data: [totalMembros, totalVisitantes],
-                    backgroundColor: ["#02fcfc", "#386c01"],
-                    hoverBackgroundColor: ["#02fcfc", "#386c01"],
+                    backgroundColor: ["#134190", "#248154"],
+                },
+            ],
+         
+        };
+        
+        
+    };
+
+    const calcularDadosGraficoTotalPorMes = (dados: QuantidadePorCulto[]) => {
+        const meses = dados.map(dado => new Date(dado.data).toLocaleDateString('pt-BR', { month: 'long' }));
+        const totais = dados.map(dado => dado.total);
+
+        return {
+            labels: meses,
+            datasets: [
+                {
+                    label: 'Total por Mês',
+                    data: totais,
+                    backgroundColor: '#02fcfc',
+                    borderColor: '#ffffff',
+                    borderWidth: 1,
                 },
             ],
         };
     };
+   
 
     const dadosGrafico = tipoGrafico === "homensMulheres"
         ? calcularDadosGraficoHomensMulheres(quantidadePorCulto)
         : calcularDadosGraficoMembrosVisitantes(quantidadePorCulto);
 
-    // Função para alternar visibilidade do gráfico
+    const dadosGraficoTotalPorMes = calcularDadosGraficoTotalPorMes(quantidadePorCulto);
+
     const toggleGrafico = () => {
         setMostrarGrafico(!mostrarGrafico);
-    };
-
-    const handleTipoGraficoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setTipoGrafico(event.target.value);
     };
 
     return (
         <>
             <Header />
             <div className="container-fluid">
-                <div className="row justify-content-center pt-5 mt-4">
-                    <div className="col-2 pt-5">
+            <div className="row justify-content-center pt-5 mt-4">
+                    <div className="col-2 pt-5 offset-1">
                         <div className="form-group">
-                            <label htmlFor="selectMes" className="text-center" id="filtro-mes">
+                            <label htmlFor="selectMes" className="text-center" id="escolha-mes">
                                 Escolha o mês:
                             </label>
                             <select
@@ -132,10 +156,10 @@ const NumeroCulto = () => {
                             </select>
                         </div>
                     </div>
-                 
+
                     <div className="col-2 pt-5 mb-5">
                         <div className="form-group">
-                            <label htmlFor="selectTipoGrafico" className="text-center" id="filtro-tipo">
+                            <label htmlFor="selectTipoGrafico" className="text-center" id="escolha-mes">
                                 Tipo de Gráfico:
                             </label>
                             <select
@@ -149,46 +173,98 @@ const NumeroCulto = () => {
                             </select>
                         </div>
                     </div>
-                    <div className="col-2 pt-5 mt-4"><button className="btn btn-primary mb-3" onClick={toggleGrafico}>
+                    <div className="col-4 pt-5 mt-4">
+                        <button className="btn btn-primary" onClick={toggleGrafico}>
                             {mostrarGrafico ? "Esconder Gráfico" : "Mostrar Gráfico"}
-                        </button></div>
-                    <div className="col-md-11">
-                        
+                        </button>
+                        <Link to={"/quantidade"}>
+                            <button className="btn-inserir-numeros mb-3">
+                                Inserir Dados
+                            </button>
+                        </Link>
+                    </div>
 
-                        {mostrarGrafico && (
-                            loading ? (
-                                <p>Carregando dados...</p>
-                            ) : (
-                                <div className="mb-5">
-                                    <h5 className="titulo-grafico ">
-                                        {mesSelecionado === "todos" 
-                                            ? `Total Acumulado até ${new Date().toLocaleDateString()}` 
-                                            : `Mês de ${new Date(0, Number(mesSelecionado) - 1).toLocaleDateString('pt-BR', { month: 'long' })}`}
-                                    </h5>
-                                    <div className="chart-container">
-                                        <Pie
-                                            data={dadosGrafico}
-                                            options={{
-                                                plugins: {
-                                                    tooltip: {
-                                                        callbacks: {
-                                                            label: (context) => {
-                                                                const value = context.raw as number;
-                                                                const total = (context.chart.data.datasets[0].data as number[]).reduce((acc, curr) => acc + curr, 0);
-                                                                const percentage = ((value / total) * 100).toFixed(2);
-                                                                return `${context.label}: ${value} (${percentage}%)`;
-                                                            },
+                    <div className="row">
+                        <div className="col-md-7 offset-2">
+                            {mostrarGrafico && (
+                                loading ? (
+                                    <p>Carregando dados...</p>
+                                ) : (
+                                    <div className="d-flex">
+                                        <div className="chart-container">
+                                            <Pie
+                                                data={dadosGrafico}
+                                                options={{
+                                                    plugins: {
+                                                        tooltip: {
+                                                            callbacks: {
+                                                                label: (context) => {
+                                                                    const value = context.raw as number;
+                                                                    const total = (context.chart.data.datasets[0].data as number[]).reduce((acc, curr) => acc + curr, 0);
+                                                                    const percentage = ((value / total) * 100).toFixed(2);
+                                                                    return `${context.label}: ${value} (${percentage}%)`;
+                                                                }
+                                                            }
+                                                        },
+                                                        legend: {
+                                                            position: 'top',
+                                                            labels: {
+                                                                color: 'white', 
+                                                              
+                                                            }
                                                         },
                                                     },
-                                                },
-                                            }}
-                                        />
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="chart-container-torre">
+                                            <Bar
+                                                data={dadosGraficoTotalPorMes}
+                                                
+                                                options={{
+                                                    responsive: true,
+                                                    plugins: {
+                                                        legend: {
+                                                            position: 'top',
+                                                            labels: {
+                                                                color: 'white', 
+                                                              
+                                                            }
+                                                        },
+                                                        
+                                                        tooltip: {
+                                                            callbacks: {
+                                                                label: (context) => {
+                                                                    return `${context.label}: ${context.raw}`;
+                                                                }
+                                                            }
+                                                        },
+                                                    },
+                                                    scales: {
+                                                        x: {
+                                                            ticks: {
+                                                                color: '#FFFFFF',
+                                                         },
+                                                         
+                                                      
+                                                        },
+                                                        y: {
+                                                            ticks: {
+                                                                color: '#FFFFFF',
+                                                            },
+                                                            
+                                                        },
+                                                    },
+                                                }}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        )}
+                                )
+                            )}
+                        </div>
                     </div>
                 </div>
+            
 
                 <div className="row justify-content-center ">
                     <div className="col-md-7">

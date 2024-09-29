@@ -3,6 +3,8 @@ import { QuantidadePorCulto } from '../../../models/quantidade';
 import Header from "../../../components/Header";
 import './styles.css';
 import { insertQuantidade } from '../../../service/quantidadePorCultoService';
+import { TiArrowBack } from 'react-icons/ti';
+import { Link } from 'react-router-dom';
 
 const InsertQuantidade: React.FC = () => {
     const [quantidadePorCulto, setQuantidadePorCulto] = useState<QuantidadePorCulto>({
@@ -24,8 +26,7 @@ const InsertQuantidade: React.FC = () => {
         } else if (['visitante', 'membro', 'numeroMulher', 'numeroHomem'].includes(name)) {
             newValue = Number(value);
         }
-        console.log(`Handling change for ${name}:`, value); // Adicionado para debug
-        console.log(`New value for ${name}:`, newValue); // Adicionado para debug
+
         setQuantidadePorCulto(prevState => ({
             ...prevState,
             [name]: newValue,
@@ -34,7 +35,7 @@ const InsertQuantidade: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Submitting form with values:', quantidadePorCulto); // Adicionado para debug
+        console.log('Submitting form with values:', quantidadePorCulto); 
         alert("Adicionado com sucesso!");
         try {
             await insertQuantidade(quantidadePorCulto);
@@ -57,9 +58,14 @@ const InsertQuantidade: React.FC = () => {
         <>
             <Header />
             <div className='container-fluid mt-5 pt-5'>
+            <div className="voltar-projetos-menu">
+                    <Link to= "/numeroculto">
+                        <TiArrowBack />   Voltar
+                    </Link>
+                </div>
                 <div className='container col-6'>
                     <form onSubmit={handleSubmit} className='row justify-content-center g-4 px-4 pb-4'>
-                        <div className="col-md-12 text-center">
+                        <div className="col-md-11 text-center">
                             <h3 className='text-center pt-4' id='QuantidadeTitulo'>Quantidade por cultos</h3>
                         </div>
                         <div className='col-md-4 text-center offset-1' id='quantidade'>
@@ -90,7 +96,7 @@ const InsertQuantidade: React.FC = () => {
                                 <option value="4">Ordenação</option>
                             </select>
                         </div>
-                        <div className='col-md-2 text-center offset-1' id='quantidade'>
+                        <div className='col-md-2 text-center offset-1 mt-5' id='quantidade'>
                             <label>Visitantes</label>
                             <input
                                 type="number"
@@ -101,7 +107,7 @@ const InsertQuantidade: React.FC = () => {
                                 required
                             />
                         </div>
-                        <div className='col-md-2 text-center' id='quantidade'>
+                        <div className='col-md-2 text-center mt-5' id='quantidade'>
                             <label htmlFor="membro">Membros:</label>
                             <input
                                 type="number"
@@ -112,7 +118,7 @@ const InsertQuantidade: React.FC = () => {
                                 required
                             />
                         </div>
-                        <div className='col-md-2 text-center' id='quantidade'>
+                        <div className='col-md-2 text-center mt-5' id='quantidade'>
                             <label htmlFor="numeroHomem">Homens:</label>
                             <input
                                 type="number"
@@ -122,7 +128,7 @@ const InsertQuantidade: React.FC = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className='col-md-2 text-center' id='quantidade'>
+                        <div className='col-md-2 text-center mt-5' id='quantidade'>
                             <label htmlFor="numeroMulher">Mulheres:</label>
                             <input
                                 type="number"
