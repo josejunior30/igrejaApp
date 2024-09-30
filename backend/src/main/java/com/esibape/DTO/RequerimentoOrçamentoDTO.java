@@ -15,9 +15,9 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id; 
-	private LocalDate DataRequerimento;
-	private LocalDate DataEvento;
-	private LocalDate DataAprovação;
+	private LocalDate dataRequerimento;
+	private LocalDate dataEvento;
+	private LocalDate dataAprovacao;
 	private StatusRequerimento statusRequerimento;
 	private LocalDate DataPagamento;
 	@JsonProperty("O QUE VAI SER FEITO?")
@@ -42,9 +42,9 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	public RequerimentoOrçamentoDTO(RequerimentoOrçamento entity) {
 	
 		id = entity.getId();
-		DataRequerimento = entity.getDataRequerimento();
-		DataEvento = entity.getDataEvento();
-		DataAprovação = entity.getDataAprovação();
+		dataRequerimento = entity.getDataRequerimento();
+		dataEvento = entity.getDataEvento();
+		dataAprovacao = entity.getDataAprovacao();
 		statusRequerimento = entity.getStatusRequerimento();
 		DataPagamento = entity.getDataPagamento();
 		pergunta1 = entity.getPergunta1();
@@ -63,37 +63,39 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 		this.id = id;
 	}
 
+
 	public LocalDate getDataRequerimento() {
-		return DataRequerimento;
+		return dataRequerimento;
 	}
 
 	public void setDataRequerimento(LocalDate dataRequerimento) {
-		DataRequerimento = dataRequerimento;
+		this.dataRequerimento = dataRequerimento;
 	}
 
 	public LocalDate getDataEvento() {
-		return DataEvento;
+		return dataEvento;
 	}
 
 	public void setDataEvento(LocalDate dataEvento) {
-		DataEvento = dataEvento;
+		this.dataEvento = dataEvento;
 	}
 
-	public LocalDate getDataAprovação() {
-		return DataAprovação;
+	public LocalDate getDataAprovacao() {
+		return dataAprovacao;
 	}
 
-	public void setDataAprovação(LocalDate dataAprovação) {
-		DataAprovação = dataAprovação;
+	public void setDataAprovacao(LocalDate dataAprovacao) {
+		this.dataAprovacao = dataAprovacao;
 	}
 
-	public StatusRequerimento getStatusRequerimeento() {
+	public StatusRequerimento getStatusRequerimento() {
 		return statusRequerimento;
 	}
 
-	public void setStatusRequerimeento(StatusRequerimento statusRequerimeento) {
-		this.statusRequerimento = statusRequerimeento;
+	public void setStatusRequerimento(StatusRequerimento statusRequerimento) {
+		this.statusRequerimento = statusRequerimento;
 	}
+
 
 	public LocalDate getDataPagamento() {
 		return DataPagamento;

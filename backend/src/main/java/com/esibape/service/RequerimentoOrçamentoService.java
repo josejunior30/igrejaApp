@@ -1,5 +1,6 @@
 package com.esibape.service;
 
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -10,6 +11,7 @@ import com.esibape.DTO.ProdutoDTO;
 import com.esibape.DTO.RequerimentoOrçamentoDTO;
 import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
+import com.esibape.entities.StatusRequerimento;
 import com.esibape.repository.ProdutoRepository;
 import com.esibape.repository.RequerimentoOrçamentoRepository;
 
@@ -19,7 +21,9 @@ public class RequerimentoOrçamentoService {
 	private RequerimentoOrçamentoRepository repository;
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
+	 @Autowired
+	private EmailService emailService; 
+	 
 	@Transactional(readOnly = true)
 	public List<RequerimentoOrçamentoDTO>findAll(){
 		List<RequerimentoOrçamento> list = repository.findAll();
@@ -44,7 +48,8 @@ public class RequerimentoOrçamentoService {
 	    
 	    // Copia os dados do DTO para a entidade
 	    copyDtoToEntity(dto, entity);
-	    
+	    entity.setStatusRequerimento(StatusRequerimento.PENDENTE);
+        
 	    // Adiciona os produtos do DTO à entidade RequerimentoOrçamento
 	    if (dto.getProduto() != null) {
 	        for (ProdutoDTO produtoDTO : dto.getProduto()) {
@@ -59,7 +64,9 @@ public class RequerimentoOrçamentoService {
 
 	    // Salva a entidade RequerimentoOrçamento com os produtos no repositório
 	    entity = repository.save(entity);
-	    
+	 // Após salvar, enviar o e-mail de notificação para outro usuário
+	    String recipientEmail = "joseluizjunior@yahoo.com"; // Defina o e-mail do usuário a ser notificado
+        emailService.sendNewRequerimentoNotification(recipientEmail, entity.getResponsavel());
 	    return new RequerimentoOrçamentoDTO(entity);
 	}
 
@@ -80,7 +87,7 @@ public class RequerimentoOrçamentoService {
 	   
 	private void copyDtoToEntity(RequerimentoOrçamentoDTO dto, RequerimentoOrçamento entity) {
       
-        entity.setDataAprovação(dto.getDataAprovação());
+        entity.setDataAprovacao(dto.getDataAprovacao());
         entity.setDataEvento(dto.getDataEvento());
         entity.setDataPagamento(dto.getDataPagamento());
         entity.setDataRequerimento(dto.getDataRequerimento());
@@ -88,8 +95,8 @@ public class RequerimentoOrçamentoService {
         entity.setPergunta1(dto.getPergunta1());
         entity.setPergunta2(dto.getPergunta2());
         entity.setResponsavel(dto.getResponsavel());
-        entity.setStatusRequerimeento(dto.getStatusRequerimeento());
+        entity.setStatusRequerimento(dto.getStatusRequerimento());
      
-      
+     
 	}
 }

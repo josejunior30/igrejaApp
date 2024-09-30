@@ -119,8 +119,8 @@ INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, 
 INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 60, 50, '2024-09-28' , 110 , 55, 55, 1 );
 
 
-INSERT INTO tb_requerimento(Data_Requerimento, Data_Evento, Data_Aprovação, Data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local ) VALUES ( '2024-07-07', '2024-07-07', '2024-09-28' , '2024-09-28' , 1 ,'festa da roça', 'comunhao da igreja', 'Junior', 'Igreja');
-INSERT INTO tb_requerimento(Data_Requerimento, Data_Evento, Data_Aprovação, Data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local ) VALUES ( '2024-07-07', '2024-07-10', '2024-09-30' , '2024-09-20' , 1 ,'festa da primavera', 'comunhao da igreja', 'Aurici', 'Igreja');
+INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local ) VALUES ( '2024-07-07', '2024-07-07', '2024-09-28' , '2024-09-28' , 1 ,'festa da roça', 'comunhao da igreja', 'Junior', 'Igreja');
+INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local ) VALUES ( '2024-07-07', '2024-07-10', '2024-09-30' , '2024-09-20' , 1 ,'festa da primavera', 'comunhao da igreja', 'Aurici', 'Igreja');
 
 INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'hamburguer', 120.97, 1);
 INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'ovo', 20.90, 1);

@@ -20,9 +20,9 @@ public class RequerimentoOrçamento implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 
-	private LocalDate DataRequerimento;
-	private LocalDate DataEvento;
-	private LocalDate DataAprovação;
+	private LocalDate dataRequerimento;
+	private LocalDate dataEvento;
+	private LocalDate dataAprovacao;
 	private StatusRequerimento statusRequerimento;
 	private LocalDate DataPagamento;
 	private String pergunta1;
@@ -40,16 +40,16 @@ public class RequerimentoOrçamento implements Serializable{
 	} 
 
 
-	public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovação,
+	public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovacao,
 			StatusRequerimento statusRequerimento, LocalDate dataPagamento, String pergunta1, String pergunta2,
 			 String responsavel, String local, List<Produto> produto) {
 		super();
 		this.id = id;
-		DataRequerimento = dataRequerimento;
-		DataEvento = dataEvento;
-		DataAprovação = dataAprovação;
+		this.dataRequerimento = dataRequerimento;
+		this.dataEvento = dataEvento;
+		this.dataAprovacao = dataAprovacao;
 		this.statusRequerimento = statusRequerimento;
-		DataPagamento = dataPagamento;
+		this.DataPagamento = dataPagamento;
 		this.pergunta1 = pergunta1;
 		this.pergunta2 = pergunta2;
 		this.responsavel = responsavel;
@@ -69,35 +69,9 @@ public class RequerimentoOrçamento implements Serializable{
 		this.id = id;
 	}
 
-	public LocalDate getDataRequerimento() {
-		return DataRequerimento;
-	}
-
-	public void setDataRequerimento(LocalDate dataRequerimento) {
-		DataRequerimento = dataRequerimento;
-	}
-
 	public LocalDate getDataPagamento() {
 		return DataPagamento;
 	}
-
-	public LocalDate getDataEvento() {
-		return DataEvento;
-	}
-
-
-
-	public LocalDate getDataAprovação() {
-		return DataAprovação;
-	}
-
-
-
-
-	public void setDataAprovação(LocalDate dataAprovação) {
-		DataAprovação = dataAprovação;
-	}
-
 
 
 
@@ -107,18 +81,51 @@ public class RequerimentoOrçamento implements Serializable{
 
 
 
-
-	public void setStatusRequerimeento(StatusRequerimento statusRequerimento) {
-		this.statusRequerimento = statusRequerimento;
-	}
-
-
 	public Double getTotal() {
 		return produto.stream()
 				.mapToDouble(Produto::getPreço) 
 				.sum();
 	}
 
+
+	public void setStatusRequerimento(StatusRequerimento statusRequerimento) {
+		this.statusRequerimento = statusRequerimento;
+	}
+
+
+	public LocalDate getDataRequerimento() {
+		return dataRequerimento;
+	}
+
+
+	public void setDataRequerimento(LocalDate dataRequerimento) {
+		this.dataRequerimento = dataRequerimento;
+	}
+
+
+	public LocalDate getDataEvento() {
+		return dataEvento;
+	}
+
+
+	public void setDataEvento(LocalDate dataEvento) {
+		this.dataEvento = dataEvento;
+	}
+
+
+	public LocalDate getDataAprovacao() {
+		return dataAprovacao;
+	}
+
+
+	public void setDataAprovacao(LocalDate dataAprovacao) {
+		this.dataAprovacao = dataAprovacao;
+	}
+
+
+	public void setTotal(Double total) {
+		Total = total;
+	}
 
 
 	public List<Produto> getProduto() {
@@ -131,9 +138,7 @@ public class RequerimentoOrçamento implements Serializable{
 	}
 
 
-	public void setDataEvento(LocalDate dataEvento) {
-		DataEvento = dataEvento;
-	}
+
 
 
 

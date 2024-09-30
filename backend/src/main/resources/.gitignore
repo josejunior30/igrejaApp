@@ -1,0 +1,12 @@
+# Ignore environment files
+.env
+
+# Ignore sensitive properties files
+application.properties
+application.yml
+
+# Logs and temporary files
+/logs/
+/tmp/
+*.log
+*.tmp
