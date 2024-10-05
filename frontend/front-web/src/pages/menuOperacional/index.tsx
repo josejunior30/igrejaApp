@@ -10,13 +10,14 @@ const lideranca = 'https://i.postimg.cc/T3FHVw9N/2.png'
 const pg= 'https://i.postimg.cc/sDMXn0w3/pequeno-Grupo.jpg'
 const secretaria = 'https://i.postimg.cc/TYvd9YLJ/secretaria.jpg'
 const visitante = 'https://i.postimg.cc/TYvd9YLJ/secretaria.jpg'
-const Inicial = () => (
+
+const OperacionalMenu = () => (
   <>
     <Header/>
     <div className="container-fluid mt-5 pt-5" id="conteiner-inicio">
       <div className="row p-2" id="bem-vindo">
         <div className="col-12">
-            <h2>Bem Vindo !</h2>
+      
           <p>Escolha uma seção!</p>
         </div>
       </div>
@@ -25,8 +26,8 @@ const Inicial = () => (
         <div className=" col-9 col-md-3" id="col-img">
             <img src={financeiro} alt="Calendario" className="img-fluid" id="img-menu" />
               
-                  <h3>Tesouraria</h3>
-                  <Link to="#">
+                  <h3>Controle Frequencia</h3>
+                  <Link to="/numeroculto">
                   <button className="btn btn-info">Clique aqui</button>
                   </Link>
               
@@ -34,8 +35,8 @@ const Inicial = () => (
           <div className="col-9 col-md-3" id="col-img">
             <img src={secretaria} alt="Calendario" className="img-fluid" id="img-menu" />
             
-                  <h3>Secretaria</h3>
-                  <Link to="/membro">
+                  <h3>Requerimento</h3>
+                  <Link to="/requerimento">
                   <button className="btn btn-info">Clique aqui</button>
                   </Link>
               
@@ -44,7 +45,7 @@ const Inicial = () => (
             <img src={lideranca} alt="Calendario" className="img-fluid" id="img-menu" />
                 
                   <h3>Operacional</h3>
-                  <Link to="/operacional">
+                  <Link to="/numeroculto">
                   <button className="btn btn-info" >Clique aqui</button>
                   </Link>
               
@@ -87,4 +88,4 @@ const Inicial = () => (
   </>
 );
 
-export default Inicial;
+export default OperacionalMenu;

@@ -31,6 +31,11 @@ import AlunoPagamentos from './pages/Pagamento/historicoPG';
 import Dashboard from './pages/Dashbord/Alunos';
 import InsertQuantidade from './pages/QuantidadeCulto/Inserir';
 import NumeroCulto from './pages/QuantidadeCulto/exibir';
+import RequerimentoOrçamento from './pages/Requerimento/Inserir';
+import RequerimentoExibir from './pages/Requerimento/Exibir';
+import RequerimentoEditar from './pages/Requerimento/Editar';
+import OperacionalMenu from './pages/menuOperacional';
+import RequerimentoAprovar from './pages/Requerimento/id';
 
 
 
@@ -72,6 +77,11 @@ function App() {
     <Route path="/pagamento" element={<PrivateRoute><ListaPagamento/></PrivateRoute> } />
     <Route path="pagamento/historicoPagamento/:id" element={<PrivateRoute><AlunoPagamentos /></PrivateRoute>} />
     <Route path="/dashbord" element={<Dashboard/> } />
+    <Route path="/requerimento" element={<RequerimentoExibir/> } />
+    <Route path="/requerimento/editar/:id" element={<RequerimentoEditar/> } />
+    <Route path="/requerimento/inserir" element={<RequerimentoOrçamento/> } />
+    <Route path="/operacional" element={<OperacionalMenu/> } />
+    <Route path="/requerimento/aprovar/:id" element={<RequerimentoAprovar/> } />
     <Route path="/numeroculto" element={<PrivateRoute><NumeroCulto /></PrivateRoute>} />
   </Routes>
   </Router>

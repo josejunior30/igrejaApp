@@ -71,20 +71,32 @@ public class RequerimentoOrçamentoService {
 	}
 
 
-    @Transactional
+	@Transactional
     public RequerimentoOrçamentoDTO update(Long id, RequerimentoOrçamentoDTO dto) {
-    	RequerimentoOrçamento entity = repository.getReferenceById(id);
+        RequerimentoOrçamento entity = repository.getReferenceById(id);
         copyDtoToEntity(dto, entity);
+
+        // Atualiza os produtos associados ao requerimento
+        entity.getProduto().clear(); 
+
+        if (dto.getProduto() != null) {
+            for (ProdutoDTO produtoDTO : dto.getProduto()) {
+                Produto produto = new Produto();
+                produto.setNome(produtoDTO.getNome());
+                produto.setPreço(produtoDTO.getPreço());
+
+                entity.addProduto(produto);  
+            }
+        }
+
         entity = repository.save(entity);
         return new RequerimentoOrçamentoDTO(entity);
     }
-    
-    
-	   public void delete(Long id) {
-	    	repository.deleteById(id);
-	 
-	   }
-	   
+	  public void delete(Long id) {
+	        repository.deleteById(id);
+	    }
+	  
+	  
 	private void copyDtoToEntity(RequerimentoOrçamentoDTO dto, RequerimentoOrçamento entity) {
       
         entity.setDataAprovacao(dto.getDataAprovacao());

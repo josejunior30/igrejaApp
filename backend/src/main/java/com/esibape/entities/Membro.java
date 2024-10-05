@@ -35,6 +35,8 @@ public class Membro implements Serializable {
 	private String cidade;
 	private String complemento;
 	private String url;
+	private Boolean status =true;
+	
 
 	
 	@OneToOne(mappedBy= "membro", cascade = CascadeType.ALL)
@@ -44,7 +46,7 @@ public class Membro implements Serializable {
 	}
 	
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
-			String telefone, String cpf, MembroEstado estadoCivil, String rua, String url,String cep, String numero,
+			String telefone, String cpf, MembroEstado estadoCivil, String rua, Boolean status, String url,String cep, String numero,
 			String bairro, String cidade, String complemento, FileStorage foto) {
 		super();
 		this.id = id;
@@ -61,6 +63,7 @@ public class Membro implements Serializable {
 		this.numero = numero;
 		this.bairro = bairro;
 		this.cidade = cidade;
+		this.status =status;
 		this.complemento = complemento;
 	this.url=url;
 		this.foto = foto;
@@ -86,6 +89,14 @@ public class Membro implements Serializable {
 
 	public String getSobrenome() {
 		return sobrenome;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 	public void setSobrenome(String sobrenome) {

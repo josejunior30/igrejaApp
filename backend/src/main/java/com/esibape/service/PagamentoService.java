@@ -125,6 +125,7 @@ public class PagamentoService {
         entity.setAlunosPG(alunos);
     }
 
+  
     @Transactional
     private void updateTotalMesForPagamentos(MesReferencia mesReferencia) {
         Integer totalMes = repository.sumValoresByMesReferencia(mesReferencia);
@@ -161,6 +162,7 @@ public class PagamentoService {
                              dto.setFormaPagamento(pagamento.getFormaPagamento());
                              dto.setMesReferencia(pagamento.getMesReferencia());
                              dto.setAtrasado(pagamento.getAtrasado());
+                             dto.setTotalCartao(pagamento.getTotalCartao());
                        
 
                              return dto;
@@ -179,9 +181,26 @@ public class PagamentoService {
             updateTotalMesForPagamentos(mes);
         }
     }
-
+    
     
 
+    @Transactional(readOnly = true)
+    public List<PagamentoDTO> findPagamentosByMesReferencia(MesReferencia mesReferencia) {
+        List<Pagamento> pagamentos = repository.findByMesReferencia(mesReferencia);
+        updateTotalMesForAllPagamentos();
+        updateTotalPixForAllPagamentos();
+        updateTotalDinheiroForAllPagamentos(); 
+        updateTotalCartaoForAllPagamentos();
+        return pagamentos.stream()
+                         .map(pagamento -> {
+                             PagamentoDTO dto = new PagamentoDTO(pagamento, pagamento.getAlunosPG());
+                             verificarStatusPagamento(dto.getAlunosPG());
+                             return dto;
+                         })
+                         .collect(Collectors.toList());
+    }
+
+//  metodos total no mes de pagamentos dinheiro, pix , cartao
 
     @Transactional
     private void updateTotalPixForPagamentos(MesReferencia mesReferencia) {
@@ -210,7 +229,63 @@ public class PagamentoService {
             updateTotalPixForPagamentos(mes);
         }
     }
+    
+    @Transactional
+    private void updateTotalDinheiroForPagamentos(MesReferencia mesReferencia) {
+        FormaPagamento formaPagamentoDinheiro = FormaPagamento.DINHEIRO; // ajuste conforme sua enumeração
+        Integer totalDinheiro = repository.sumValoresByFormaPagamentoAndMesReferencia(formaPagamentoDinheiro, mesReferencia);
+        
+        
+        List<Pagamento> pagamentos = repository.findByMesReferencia(mesReferencia);
 
+        for (Pagamento pagamento : pagamentos) {
+            pagamento.setTotalDinheiro(totalDinheiro);
+            
+            repository.save(pagamento);
+            
+        }
+    }
+    @Transactional
+    private void updateTotalDinheiroForAllPagamentos() {
+        List<MesReferencia> meses = repository.findAll().stream()
+                                              .map(Pagamento::getMesReferencia)
+                                              .distinct()
+                                              .collect(Collectors.toList());
+
+        for (MesReferencia mes : meses) {
+            updateTotalDinheiroForPagamentos(mes);
+        }
+    }
+    
+    @Transactional
+    private void updateTotalCartao(MesReferencia mesReferencia) {
+        FormaPagamento formaPagamentoCARTAO = FormaPagamento.CARTAO; // ajuste conforme sua enumeração
+        Integer totalCartao = repository.sumValoresByFormaPagamentoAndMesReferencia(formaPagamentoCARTAO, mesReferencia);
+        
+        
+        List<Pagamento> pagamentos = repository.findByMesReferencia(mesReferencia);
+
+        for (Pagamento pagamento : pagamentos) {
+            pagamento.setTotalCartao(totalCartao);
+            
+            repository.save(pagamento);
+            
+        }
+    }
+    @Transactional
+    private void updateTotalCartaoForAllPagamentos() {
+        List<MesReferencia> meses = repository.findAll().stream()
+                                              .map(Pagamento::getMesReferencia)
+                                              .distinct()
+                                              .collect(Collectors.toList());
+
+        for (MesReferencia mes : meses) {
+            updateTotalCartao(mes);
+        }
+    }
+    
+    
+    		//todos pagamentos mes
 
     @Transactional(readOnly = true)
     public List<PagamentoDTO> findPagamentosMesAtual() {
@@ -232,40 +307,35 @@ public class PagamentoService {
                                  .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public List<PagamentoDTO> findPagamentosByMesReferencia(MesReferencia mesReferencia) {
-        List<Pagamento> pagamentos = repository.findByMesReferencia(mesReferencia);
-        updateTotalMesForAllPagamentos();
     
-        updateTotalPixForAllPagamentos();
-        updateTotalDinheiroForAllPagamentos(); 
-        return pagamentos.stream()
-                         .map(pagamento -> {
-                             PagamentoDTO dto = new PagamentoDTO(pagamento, pagamento.getAlunosPG());
-                             verificarStatusPagamento(dto.getAlunosPG());
-                             return dto;
-                         })
-                         .collect(Collectors.toList());
-    }
-
+// verifica status de pagamento
     public void verificarStatusPagamento(AlunosDTO dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("O DTO do aluno está nulo.");
+        }
+
+        if (dto.getPagamentos() == null || dto.getPagamentos().isEmpty()) {
+            // Caso o aluno não tenha pagamentos, defina o status como "Pendente"
+            dto.setStatusPagamento("Pendente");
+            return;  // Não faz sentido continuar verificando se não há pagamentos
+        }
+
         LocalDate hoje = LocalDate.now();
         LocalDate dia10DoMes = LocalDate.of(hoje.getYear(), hoje.getMonth(), 10);
-
-        boolean temPagamento = !dto.getPagamentos().isEmpty();
 
         boolean todosMesesPagos = true;
         for (int i = 1; i <= hoje.getMonthValue(); i++) {
             MesReferencia mesReferencia = MesReferencia.fromNumero(i);
             boolean mesPago = dto.getPagamentos().stream()
                 .anyMatch(pagamento -> pagamento.getMesReferencia().equals(mesReferencia));
+
             if (!mesPago) {
                 todosMesesPagos = false;
                 break;
             }
         }
 
-        if (todosMesesPagos && temPagamento) {
+        if (todosMesesPagos) {
             dto.setStatusPagamento("Pago");
         } else if (hoje.isBefore(dia10DoMes)) {
             dto.setStatusPagamento("Em Dia");
@@ -273,48 +343,21 @@ public class PagamentoService {
             dto.setStatusPagamento("Pendente");
         }
     }
+
     
-
-    @Transactional
-    private void updateTotalDinheiroForPagamentos(MesReferencia mesReferencia) {
-        FormaPagamento formaPagamentoDinheiro = FormaPagamento.DINHEIRO; // ajuste conforme sua enumeração
-        Integer totalDinheiro = repository.sumValoresByFormaPagamentoAndMesReferencia(formaPagamentoDinheiro, mesReferencia);
-        
-        
-        List<Pagamento> pagamentos = repository.findByMesReferencia(mesReferencia);
-
-        for (Pagamento pagamento : pagamentos) {
-            pagamento.setTotalDinheiro(totalDinheiro);
-            
-            repository.save(pagamento);
-            
-        }
-    }
-
-    @Transactional
-    private void updateTotalDinheiroForAllPagamentos() {
-        List<MesReferencia> meses = repository.findAll().stream()
-                                              .map(Pagamento::getMesReferencia)
-                                              .distinct()
-                                              .collect(Collectors.toList());
-
-        for (MesReferencia mes : meses) {
-            updateTotalDinheiroForPagamentos(mes);
-        }
-    }
-    
+  // pagamentos por projeto
     public List<PagamentoDTO> findPagamentosByMesReferenciaAndProjetos(MesReferencia mesReferencia, Long projetoId) {
         try {
-            // Recupera o projeto pelo ID
+   
             Projetos projeto = projetosRepository.findById(projetoId).orElse(null);
 
-            // Se o projeto não for encontrado, retorna uma lista vazia
+         
             if (projeto == null) {
                 System.err.println("Projeto not found for this id :: " + projetoId);
                 return Collections.emptyList();
             }
 
-            // Recupera os pagamentos filtrados por mês de referência e projeto
+      
             List<Pagamento> pagamentos = repository.findByMesReferenciaAndAlunosPG_Projetos(mesReferencia, projeto);
 
             // Converte a lista de Pagamento para PagamentoDTO e verifica o status dos pagamentos

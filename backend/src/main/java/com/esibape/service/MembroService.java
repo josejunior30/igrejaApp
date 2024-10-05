@@ -79,6 +79,7 @@ public class MembroService {
 		entity.setNumero(dto.getNumero());
 		entity.setEstadoCivil(dto.getEstadoCivil());
 		entity.setUrl(dto.getUrl());
+		entity.setStatus(dto.getStatus());
 	}	
     
     

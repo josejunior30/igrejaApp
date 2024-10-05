@@ -16,7 +16,7 @@ export function findById(id:number){
 
 export function findPagamentosByAluno(id: number): Promise<Pagamento[]> {
     return axios.get(`${BASE_URL}/pagamento/aluno/${id}`)
-                .then(response => response.data); // Retorna apenas os dados da resposta
+                .then(response => response.data); 
 }
 
 export async function insertPagamento(pagamento: Pagamento) {

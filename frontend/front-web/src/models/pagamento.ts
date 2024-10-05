@@ -9,6 +9,7 @@ export type Pagamento= {
     totalMensalidade: number;
     totalPix: number;
     totalDinheiro:number;
+    totalCartao:number;
     total: number;	
     formaPagamento:FormaPagamento;
  mesReferencia: MesReferencia;
@@ -42,7 +43,8 @@ export type EntradaPG={
 export enum FormaPagamento {
     PIX = 'PIX',
     DINHEIRO = 'DINHEIRO',
-    GRATIS = 'GRATIS'
+    GRATIS = 'GRATIS',
+    CARTAO = 'CARTAO'
 }
 export enum MesReferencia {
     JANEIRO = 'JANEIRO',

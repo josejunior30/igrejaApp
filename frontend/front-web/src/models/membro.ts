@@ -16,6 +16,7 @@ export type MembroDTO ={
     bairro: string;
     cidade: string;
     numero: number;
+    status: boolean;
 }
 export type MembrosDTO ={
     id:number;

@@ -1,6 +1,7 @@
 package com.esibape.DTO;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,14 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	private LocalDate dataEvento;
 	private LocalDate dataAprovacao;
 	private StatusRequerimento statusRequerimento;
-	private LocalDate DataPagamento;
-	@JsonProperty("O QUE VAI SER FEITO?")
+	private LocalDate dataPagamento;
+	@JsonProperty("O que vai ser feito ?")
 	private String pergunta1;
-	@JsonProperty("QUAL MOTIVO DE SER FEITO?")
+	@JsonProperty("Qual o motivo de ser feito ?")
 	private String pergunta2;
 	private String responsavel;
 	private String local; 
-	private Double Total;
+	private BigDecimal Total;
 
 	private List<ProdutoDTO> produto = new ArrayList<>();
 	
@@ -46,7 +47,7 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 		dataEvento = entity.getDataEvento();
 		dataAprovacao = entity.getDataAprovacao();
 		statusRequerimento = entity.getStatusRequerimento();
-		DataPagamento = entity.getDataPagamento();
+		dataPagamento = entity.getDataPagamento();
 		pergunta1 = entity.getPergunta1();
 		pergunta2 = entity.getPergunta2();
 		responsavel = entity.getResponsavel();
@@ -98,11 +99,13 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 
 
 	public LocalDate getDataPagamento() {
-		return DataPagamento;
+		return dataPagamento;
 	}
 
+	
+	
 	public void setDataPagamento(LocalDate dataPagamento) {
-		DataPagamento = dataPagamento;
+		this.dataPagamento = dataPagamento;
 	}
 
 	public String getPergunta1() {
@@ -137,11 +140,11 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 		this.local = local;
 	}
 
-	public Double getTotal() {
+	public BigDecimal getTotal() {
 		return Total;
 	}
 
-	public void setTotal(Double total) {
+	public void setTotal(BigDecimal total) {
 		Total = total;
 	}
 

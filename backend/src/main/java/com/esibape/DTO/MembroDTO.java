@@ -36,7 +36,7 @@ public class MembroDTO implements Serializable{
 	private String cidade;
 	private String complemento;
 	private String url;
-	
+	private Boolean status =true;
 	
 	public MembroDTO() {
 		
@@ -45,7 +45,7 @@ public class MembroDTO implements Serializable{
 	
 	public MembroDTO(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String url, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero,
-			String bairro, String cidade, String complemento ) {
+			String bairro, String cidade, String complemento, Boolean status ) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -63,6 +63,7 @@ public class MembroDTO implements Serializable{
 		this.cidade = cidade;
 		this.complemento = complemento;
 		this.url =url;
+		this.status = status;
 
 	
 	}
@@ -84,8 +85,7 @@ public class MembroDTO implements Serializable{
 		this.rua=entity.getRua();
 		this.numero=entity.getNumero();
 		this.url=entity.getUrl();
-	
-		
+		this.status = entity.getStatus();
 		
 	}
 
@@ -136,6 +136,16 @@ public class MembroDTO implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 

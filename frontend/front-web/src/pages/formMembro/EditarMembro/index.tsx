@@ -18,7 +18,7 @@ const FormularioUpdate =()=>{
       idade: 0,
       dataNascimento: new Date(),
       telefone: "",
-
+      status: true,
       cpf: "",
       estadoCivil: 0,
       rua: "", bairro: "", cep: "", numero: 0, cidade: "", complemento: "",

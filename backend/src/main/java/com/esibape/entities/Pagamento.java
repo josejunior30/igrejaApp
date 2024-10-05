@@ -3,6 +3,8 @@ package com.esibape.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,9 +28,13 @@ private Integer valor;
 private LocalDate dataPagamento;
 private Integer totalMensalidade;
 private Integer atrasado;
-private Integer totalMes; 
+private Integer totalMes;
+@Column(name = "total_cartao")
+private Integer totalCartao; 
 private Integer total;
+@Column(name = "total_pix")
 private Integer totalPix;
+@Column(name = "total_dinheiro")
 private Integer totalDinheiro;
 @Enumerated(EnumType.STRING)
 private FormaPagamento formaPagamento;
@@ -48,7 +54,7 @@ public Pagamento() {
 
 
 public Pagamento(Long id, Integer valor, LocalDate dataPagamento, Integer totalMensalidade, Integer atrasado,
-		Integer totalMes, Integer total, Integer totalPix, Integer totalDinheiro, FormaPagamento formaPagamento,
+		Integer totalMes, Integer total, Integer totalPix, Integer totalCartao ,Integer totalDinheiro, FormaPagamento formaPagamento,
 		MesReferencia mesReferencia, Alunos alunosPG) {
 	super();
 	this.id = id;
@@ -59,6 +65,7 @@ public Pagamento(Long id, Integer valor, LocalDate dataPagamento, Integer totalM
 	this.totalMes = totalMes;
 	this.total = total;
 	this.totalPix = totalPix;
+	this.totalCartao = totalCartao;
 	this.totalDinheiro = totalDinheiro;
 	this.formaPagamento = formaPagamento;
 	this.mesReferencia = mesReferencia;
@@ -98,6 +105,16 @@ public void setDataPagamento(LocalDate dataPagamento) {
 	this.dataPagamento = dataPagamento;
 }
 
+
+
+public Integer getTotalCartao() {
+	return totalCartao;
+}
+
+
+public void setTotalCartao(Integer totalCartao) {
+	this.totalCartao = totalCartao;
+}
 
 
 

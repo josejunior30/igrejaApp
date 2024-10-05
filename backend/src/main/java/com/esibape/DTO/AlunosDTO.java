@@ -56,6 +56,7 @@ public class AlunosDTO implements Serializable {
     private ProjetosDTO projetos;
     private List<ChamadaDTO> chamada = new ArrayList<>();
     private List<PagamentoDTO> pagamentos = new ArrayList<>();
+    
     public AlunosDTO() {}
 
     public AlunosDTO(Long id, String nome, LocalDate dataNascimento, Integer idade, String rg, String responsavel,

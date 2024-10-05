@@ -3,7 +3,8 @@ package com.esibape.entities;
 public enum FormaPagamento {
     PIX(1, "pix"),
     DINHEIRO(2, "dinheiro"),
-	 GRATIS(3, "Gratis");
+	 GRATIS(3, "gratis"),
+	   CARTAO(4, "cartao");
   
 
     private int codigo;

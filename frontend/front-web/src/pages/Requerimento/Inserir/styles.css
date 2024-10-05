@@ -1,0 +1,39 @@
+
+html, body{
+  background-color: var(--color-black);
+
+}
+.container-fluid{
+  background-color: var(--color-black);
+
+
+}
+
+#relatorio-add{
+  background-color: var(--color-black);
+
+  padding-top: 5%;
+}
+#relatorio-add form{
+  background-color: white;
+  
+}
+#relatorio-add h3{
+  background-color: var(--color-form);
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+#relatorio-add form label{
+font-weight: bold;
+}
+#relatorio-add form button:hover{
+background-color: var(--color-coral);
+border: none;
+  }
+
+  @media (max-width: 768px) {
+    
+
+  }

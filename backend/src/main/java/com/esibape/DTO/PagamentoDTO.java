@@ -18,6 +18,7 @@ public class PagamentoDTO implements Serializable {
     private Integer atrasado;
     private Integer totalMes; 
     private Integer total;
+    private Integer totalCartao; 
     private Integer totalPix;
     private Integer totalDinheiro;
     private FormaPagamento formaPagamento;
@@ -27,12 +28,13 @@ public class PagamentoDTO implements Serializable {
   
     
     public PagamentoDTO() {
+    
     }
 
     
 
 	public PagamentoDTO(Long id, Integer valor, LocalDate dataPagamento, Integer totalMensalidade, Integer atrasado,
-			Integer totalMes, Integer total, FormaPagamento formaPagamento, MesReferencia mesReferencia,
+			Integer totalMes, Integer total, FormaPagamento formaPagamento, Integer totalCartao ,MesReferencia mesReferencia,
 			AlunosDTO alunosPG, Integer totalPix, Integer totalDinheiro) {
 		super();
 		this.id = id;
@@ -46,6 +48,7 @@ public class PagamentoDTO implements Serializable {
 		this.mesReferencia = mesReferencia;
 		this.alunosPG = alunosPG;
 		this.totalPix = totalPix;
+		this.totalCartao =totalCartao;
 		this.totalDinheiro = totalDinheiro;
 	
 	}
@@ -65,6 +68,7 @@ public class PagamentoDTO implements Serializable {
         this.atrasado = entity.getAtrasado();
         this.totalMensalidade = entity.getTotalMensalidade();
         this.totalPix = entity.getTotalPix();
+        this.totalCartao =entity.getTotalCartao();
         this.totalDinheiro = entity.getTotalDinheiro();
         
        
@@ -126,6 +130,16 @@ public class PagamentoDTO implements Serializable {
 	}
 
 
+
+	public Integer getTotalCartao() {
+		return totalCartao;
+	}
+
+
+
+	public void setTotalCartao(Integer totalCartao) {
+		this.totalCartao = totalCartao;
+	}
 
 
 

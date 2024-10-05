@@ -1,6 +1,7 @@
 package com.esibape.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ public class Produto implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 
 	private String nome;
-	private Double preço;
+	private BigDecimal preço;
 	@ManyToOne
 	@JoinColumn(name = "requerimento_id")
 	private RequerimentoOrçamento requerimento;
@@ -30,7 +31,7 @@ public class Produto implements Serializable{
 	}
 
 
-	public Produto(Long id, String nome, Double preço, RequerimentoOrçamento requerimento) {
+	public Produto(Long id, String nome, BigDecimal preço, RequerimentoOrçamento requerimento) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -48,11 +49,11 @@ public class Produto implements Serializable{
 		this.id = id;
 	}
 
-	public Double getPreço() {
+	public BigDecimal getPreço() {
 		return preço;
 	}
 
-	public void setPreço(Double preço) {
+	public void setPreço(BigDecimal preço) {
 		this.preço = preço;
 	}
 

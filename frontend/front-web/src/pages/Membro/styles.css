@@ -3,6 +3,10 @@
 color: white  ;
 
 }
+tbody .afastado a{
+  color: rgb(255, 238, 0);  
+  font-weight: bold;
+}
 
 @media print {
  

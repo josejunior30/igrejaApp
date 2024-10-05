@@ -1,6 +1,7 @@
 package com.esibape.DTO;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import com.esibape.entities.Produto;
@@ -11,7 +12,7 @@ public class ProdutoDTO implements Serializable{
 	
 	private Long id; 
 	private String nome;
-	private Double preço;
+	private BigDecimal preço;
 
 	private RequerimentoOrçamentoDTO requerimento;
 	
@@ -61,11 +62,11 @@ public class ProdutoDTO implements Serializable{
 	}
 
 
-	public Double getPreço() {
+	public BigDecimal getPreço() {
 		return preço;
 	}
 
-	public void setPreço(Double preço) {
+	public void setPreço(BigDecimal preço) {
 		this.preço = preço;
 	}
 

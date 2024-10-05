@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import './styles.css';
-import { FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MembroDTO } from "../../models/membro";
 import *as membroService from '../../service/membroService';
@@ -18,7 +17,7 @@ const Membro = () => {
   const [MembroDTO, setMembroDTO] = useState<MembroDTO[]>([]);
   const componentRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [filteredMembros, setFilteredMembros] = useState<MembroDTO[]>([]);
+ 
   
   useEffect(() => {
    membroService.findAll()
@@ -105,43 +104,56 @@ const Membro = () => {
             </Link>
           </div>
           <h3 className="text-center" id="membros">Membros</h3>
-          <table className="table table-striped text-center" id="col-tab-alunos-2" ref={componentRef}>
+          <table className="table table-striped text-center"  ref={componentRef}>
             <thead className="thead">
               <tr>
                 <th scope="col">Índice</th>
                 <th scope="col">Data de Nascimento</th>
                 <th scope="col">Nome</th>
+                <th scope="col">Status</th>
                 <th scope="col">Telefone</th>
               </tr>
             </thead>
             <tbody>
-              {MembroDTO.length > 0 ? (
-                MembroDTO.map((membro, index) => (
-                  <tr key={membro.id}>
-                    <td>{index + 1}</td> {/* Adiciona o índice na tabela */}
-                    <td>
-                      {membro.dataNascimento
-                        ? new Date(membro.dataNascimento).toLocaleDateString()
-                        : "Data de Nascimento Não Disponível"}
-                    </td>
-                    <td>
-                      <Link to={`${membro.id}`} className="name-link">
-                        {membro.nome} {membro.sobrenome}
-                      </Link>
-                    </td>
-                    <td>
+                    {MembroDTO.length > 0 ? (
+                      MembroDTO.map((membro, index) => (
+                        <tr
+                          key={membro.id}
+                          className={membro.status === false ? 'afastado' : ''}
+                        >
+                          <td><Link to={`${membro.id}`} className="name-link">{index + 1}</Link></td>
+                          <td>
+                          <Link to={`${membro.id}`} className="name-link">
+                            {membro.dataNascimento
+                              ? new Date(membro.dataNascimento).toLocaleDateString()
+                              : "Data de Nascimento Não Disponível"}
+                           </Link>
+                          </td>
+                          <td>
+                            <Link to={`${membro.id}`} className="name-link">
+                              {membro.nome} {membro.sobrenome}
+                            </Link>
+                          </td>
+                          <td >
+                          <Link to={`${membro.id}`} className="name-link">
+                            {membro.status ? "ativo" : "afastado"}
+                            </Link>
+                          </td>
+                          <td>
                             <Link to={`https://wa.me/${formatPhoneNumber(membro.telefone)}`} target="_blank" className="name-link">
                               <i className="bi bi-whatsapp"></i> {membro.telefone}
                             </Link>
                           </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={4}>Carregando dados...</td>
-                </tr>
-              )}
-            </tbody>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={5}>Carregando dados...</td>
+                      </tr>
+                    )}
+                  </tbody>
+
+
           </table>
         </div>
       </div>

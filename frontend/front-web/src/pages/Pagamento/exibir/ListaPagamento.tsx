@@ -21,6 +21,7 @@ const ListaPagamento: React.FC = () => {
     const [total, setTotal] = useState<number | null>(null);
     const [totalPix, setTotalPix] = useState<number | null>(null);
     const [totalDinheiro, setTotalDinheiro] = useState<number | null>(null);
+    const [totalCartao, setTotalCartao] = useState<number | null>(null);
     const [totalMes, setTotalMes] = useState<number | null>(null);
     const [totalEntradas, setTotalEntradas] = useState<{
         id: number; entrada: string, valor: number, formaPagamento: FormaPagamento 
@@ -58,6 +59,7 @@ const ListaPagamento: React.FC = () => {
                     setTotalMes(pagamentosComData[0].totalMensalidade || 0);
                     setTotalPix(pagamentosComData[0].totalPix || 0);
                     setTotalDinheiro(pagamentosComData[0].totalDinheiro || 0);
+                    setTotalCartao(pagamentosComData[0].totalCartao || 0);
                 }
             } catch (error) {
                 setError("Erro ao carregar pagamentos");
@@ -110,10 +112,12 @@ const ListaPagamento: React.FC = () => {
                 setTotalMes(pagamentosComData[0].totalMensalidade || 0);
                 setTotalPix(pagamentosComData[0].totalPix || 0);
                 setTotalDinheiro(pagamentosComData[0].totalDinheiro || 0);
+                setTotalCartao(pagamentosComData[0].totalCartao || 0);
             } else {
                 setTotalMes(0);
                 setTotalPix(0);
                 setTotalDinheiro(0);
+                setTotalCartao(0);
             }
     
             
@@ -125,7 +129,7 @@ const ListaPagamento: React.FC = () => {
                 formaPagamento: entrada.formaPagamento
             }));
     
-            setEntradas(entradaResponse.data); // Armazena as entradas completas
+            setEntradas(entradaResponse.data); 
             setTotalEntradas(entradasComValores);
     
             // Calcular o total de entradas
@@ -161,11 +165,11 @@ const ListaPagamento: React.FC = () => {
             totalMensalidade: totalMes || 0,
             total: total || 0,
             totalPix: totalPix || 0,
+            totalCartao: totalCartao || 0,
             totalDinheiro: totalDinheiro || 0,
             formaPagamento: paymentMethod as FormaPagamento,
             mesReferencia: paymentMonth as MesReferencia,
             alunosPG: alunoSelecionado,
-
             pagamento: undefined,
             length: 0,
             map: undefined
@@ -221,7 +225,7 @@ const ListaPagamento: React.FC = () => {
             if (pagamentoDoAluno.formaPagamento === 'GRATIS') {
                 return 'GRATUITO';
             }
-            return 'PAGO'; // Retorna "PAGO" se a forma de pagamento não for "GRATIS"
+            return 'PAGO'; 
         }
     
         // Lógica existente para determinar o status com base na data
@@ -600,12 +604,17 @@ const ListaPagamento: React.FC = () => {
     </div>
     <div className="col-9 col-md-11 ">
         {totalDinheiro !== null && (
-            <h3 className="valor">Dinheiro: R${totalDinheiro}</h3>
+            <h3 className="valor">Dinheiro:  R$ {totalDinheiro}</h3>
+        )}
+    </div>
+    <div className="col-9 col-md-11 ">
+        {totalCartao !== null && (
+            <h3 className="valor">Cartão:  R$ {totalCartao}</h3>
         )}
     </div>
     <div className="col-9 col-md-11 ">
         {totalMes !== null && (
-            <h3 className="sub-total">Sub-Total: R${totalMes}</h3>
+            <h3 className="sub-total">Sub-Total:  R$ {totalMes}</h3>
         )}
     </div>
 
@@ -760,12 +769,7 @@ const ListaPagamento: React.FC = () => {
             );
         })}
 </tbody>
-
-
-
-
-
-            </table>
+ </table>
         )}
     </div>
 </div>
