@@ -209,31 +209,30 @@ const RequerimentoEditar: React.FC = () => {
             </div>
 
         
-            <div className="col-4 col-md-4">
+            <div className="col-3 col-md-3">
               <button
                 type="button"
-                className="btn btn-secondary mt-4"
+                className="btn btn-secondary mt-4" id='add-produto'
                 onClick={handleAddProduct}
               >
-                Adicionar Produto
+                Adicionar 
               </button>
             </div>
 
    
-            <div className="col-12 mt-3">
-              <h5>Produtos adicionados:</h5>
-              <ul>
+            <div className=" mt-3">
+            <label htmlFor="quantidade" className="form-label mt-3">Produtos Adicionados:</label>
+              <ul  className="list-group">
                 {requerimento.produto && requerimento.produto.map((p: Produto, index: number) => (
-                  <li key={index}>
+                  <li key={index} className="list-group-item">
                     {p.nome} - R${p.preço.toFixed(2)}
                   </li>
                 ))}
               </ul>
             </div>
-
-            
-            <div className="d-flex col-6 mx-auto mt-5">
-              <button className="btn btn-primary" type="submit">Atualizar</button>
+            <label>Total: R$ {requerimento.Total}</label>
+            <div className="col-4 mt-5 offset-5 ">
+              <button className="btn btn-primary " type="submit">Atualizar</button>
             </div>
           </form>
         </div>

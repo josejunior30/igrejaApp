@@ -20,7 +20,7 @@ export function updateRequerimento(id: number, requerimentoOrçamento:any){
     return axios.put(`${BASE_URL}/requerimento/${id}`, requerimentoOrçamento);
 }
 
-export async function deleteMembro(id: number) {
+export async function deleteRequerimento(id: number) {
 
     return axios.delete(`${BASE_URL}/requerimento/${id}`);
 }

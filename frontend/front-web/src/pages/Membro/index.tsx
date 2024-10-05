@@ -1,51 +1,49 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './styles.css';
 import { Link } from "react-router-dom";
 import { MembroDTO } from "../../models/membro";
-import *as membroService from '../../service/membroService';
+import * as membroService from '../../service/membroService';
 import Sidebar from "../../components/sidebar";
 import Header from "../../components/Header";
-
 import { PiPrinterFill } from "react-icons/pi";
 import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 
-
-
-
 const Membro = () => {
   const [MembroDTO, setMembroDTO] = useState<MembroDTO[]>([]);
-  const componentRef = useRef(null);
+  const [filteredMembroDTO, setFilteredMembroDTO] = useState<MembroDTO[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
- 
+  const [filterAtivo, setFilterAtivo] = useState<boolean>(false);
+  const [filterAfastado, setFilterAfastado] = useState<boolean>(false);
   
   useEffect(() => {
-   membroService.findAll()
+    membroService.findAll()
       .then(response => {
-        console.log("Dados recebidos:", response.data);
         setMembroDTO(response.data);
+        setFilteredMembroDTO(response.data); // Mostra todos inicialmente
       })
       .catch(error => {
         console.error("Erro ao buscar dados:", error);
-        // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
       });
   }, []);
+
   const handleSearch = async () => {
     try {
       const response = await membroService.findByNome(searchTerm);
       setMembroDTO(response.data);
+      applyFilters(response.data);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
-      // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
     }
   };
-  const formatPhoneNumber = (phoneNumber:any) => {
+
+  const formatPhoneNumber = (phoneNumber: any) => {
     phoneNumber.replace(/\D/g, '');
-    return `55${ phoneNumber}`;
+    return `55${phoneNumber}`;
   };
+
   const handlePrint = () => {
     const doc = new jsPDF();
-  
     //@ts-ignore
     doc.autoTable({
       head: [['Data de Nascimento', 'Nome', 'Idade', 'Email', 'Telefone']],
@@ -59,84 +57,136 @@ const Membro = () => {
         membro.telefone,
       ]),
     });
-  
     doc.save('membros.pdf');
   };
-  
+
+  // Função para aplicar os filtros "Ativo" ou "Afastado"
+  const applyFilters = (members: MembroDTO[]) => {
+    let filtered = members;
+
+    if (filterAtivo) {
+      // Exibe apenas membros ativos
+      filtered = members.filter(membro => membro.status === true);
+    } else if (filterAfastado) {
+      // Exibe apenas membros afastados
+      filtered = members.filter(membro => membro.status === false);
+    }
+
+    setFilteredMembroDTO(filtered);
+  };
+
+  // Lida com a mudança na checkbox "Ativo" e "Afastado"
+  const handleFilterChange = (filterType: string) => {
+    if (filterType === 'ativo') {
+      setFilterAtivo(!filterAtivo); // Alterna o estado do filtro "Ativo"
+      setFilterAfastado(false);     // Desativa o filtro "Afastado" se "Ativo" for marcado
+    } else if (filterType === 'afastado') {
+      setFilterAfastado(!filterAfastado); // Alterna o estado do filtro "Afastado"
+      setFilterAtivo(false);             // Desativa o filtro "Ativo" se "Afastado" for marcado
+    }
+
+    applyFilters(MembroDTO);  // Aplica o filtro imediatamente após a mudança
+  };
+
+  useEffect(() => {
+    applyFilters(MembroDTO);  // Aplica o filtro toda vez que os estados mudarem
+  }, [filterAtivo, filterAfastado, MembroDTO]);  // Observa as mudanças nos filtros e na lista de membros
+
   return (
     <>
-    <Header/>
-<Sidebar/>
-<div className="container-fluid">
-  <div className="row justify-content-center">
-    <div className="col-md-10 col-11 mt-5 pt-5 offset-1">
-      <div className="row pt-3">
-        <div className="container col-11 col-md-7 mt-5">
-          <div className="row justify-content-center p-3" id="barra-pesquisa-secretaria">
-            <div className="col-md-5 col-4">
-              <input
-                value={searchTerm}
-                placeholder="Digite um nome"
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="form-control"
-              />
+      <Header />
+      <Sidebar />
+      <div className="container-fluid">
+        <div className="row justify-content-center">
+          <div className="col-md-10 col-11 mt-5 pt-5 offset-1">
+            <div className="row pt-3">
+              <div className="container col-11 col-md-7 mt-5">
+                <div className="row justify-content-center p-3" id="barra-pesquisa-secretaria">
+                  <div className="col-md-5 col-4">
+                    <input
+                      value={searchTerm}
+                      placeholder="Digite um nome"
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="col-md-7 col-8" id="botoes">
+                    <button type="submit" className="btn btn-primary me-2" id="btn-pesquisa" onClick={handleSearch}>
+                      Pesquisar
+                    </button>
+                    <Link to="/membro/adicionar">
+                      <button className="btn btn-primary">Adicionar</button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="col-md-7 col-8" id="botoes">
-              <button type="submit" className="btn btn-primary me-2" id="btn-pesquisa" onClick={handleSearch}>
-                Pesquisar
-              </button>
-              <Link to="/membro/adicionar">
-                <button className="btn btn-primary">Adicionar</button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div className="row pt-2 justify-content-center">
-    
-        <div className="col-11 col-md-10">
-          <div className="img-print-membro ">
-            <Link to="#">
-              <button onClick={handlePrint}>
-                <PiPrinterFill /> Imprimir
-              </button>
-            </Link>
-          </div>
-          <h3 className="text-center" id="membros">Membros</h3>
-          <table className="table table-striped text-center"  ref={componentRef}>
-            <thead className="thead">
-              <tr>
-                <th scope="col">Índice</th>
-                <th scope="col">Data de Nascimento</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Status</th>
-                <th scope="col">Telefone</th>
-              </tr>
-            </thead>
-            <tbody>
-                    {MembroDTO.length > 0 ? (
-                      MembroDTO.map((membro, index) => (
+            {/* Checkboxes para filtrar ativo e afastado */}
+         
+
+            {/* Tabela de membros */}
+            <div className="row pt-2 justify-content-center ">
+              <div className="col-11 col-md-10">
+               
+                <h3 className="text-center mt-5" id="membros">Membros</h3>
+                <div className="row justify-content-center">
+              <div className="col-md-10">
+                <div className="form-check form-check-inline mb-3 mt-3">
+                  <input
+                    type="checkbox"
+                    id="filterAtivo"
+                    className="form-check-input"
+                    checked={filterAtivo}
+                    onChange={() => handleFilterChange('ativo')}
+                  />
+                  <label className="form-check-label" htmlFor="filterAtivo">Mostrar Ativo</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    type="checkbox"
+                    id="filterAfastado"
+                    className="form-check-input"
+                    checked={filterAfastado}
+                    onChange={() => handleFilterChange('afastado')}
+                  />
+                  <label className="form-check-label" htmlFor="filterAfastado">Mostrar Afastado</label>
+                </div>
+              </div>
+            </div>
+                <table className="table table-striped text-center">
+                  <thead className="thead">
+                    <tr>
+                      <th scope="col">Índice</th>
+                      <th scope="col">Data de Nascimento</th>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Telefone</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredMembroDTO.length > 0 ? (
+                      filteredMembroDTO.map((membro, index) => (
                         <tr
                           key={membro.id}
                           className={membro.status === false ? 'afastado' : ''}
                         >
                           <td><Link to={`${membro.id}`} className="name-link">{index + 1}</Link></td>
                           <td>
-                          <Link to={`${membro.id}`} className="name-link">
-                            {membro.dataNascimento
-                              ? new Date(membro.dataNascimento).toLocaleDateString()
-                              : "Data de Nascimento Não Disponível"}
-                           </Link>
+                            <Link to={`${membro.id}`} className="name-link">
+                              {membro.dataNascimento
+                                ? new Date(membro.dataNascimento).toLocaleDateString()
+                                : "Data de Nascimento Não Disponível"}
+                            </Link>
                           </td>
                           <td>
                             <Link to={`${membro.id}`} className="name-link">
                               {membro.nome} {membro.sobrenome}
                             </Link>
                           </td>
-                          <td >
-                          <Link to={`${membro.id}`} className="name-link">
-                            {membro.status ? "ativo" : "afastado"}
+                          <td>
+                            <Link to={`${membro.id}`} className="name-link">
+                              {membro.status ? "ativo" : "afastado"}
                             </Link>
                           </td>
                           <td>
@@ -152,25 +202,14 @@ const Membro = () => {
                       </tr>
                     )}
                   </tbody>
-
-
-          </table>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-   
-   
- 
-      
     </>
   );
-  
- 
 };
 
 export default Membro;
-
-

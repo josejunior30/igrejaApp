@@ -78,10 +78,10 @@ function App() {
     <Route path="pagamento/historicoPagamento/:id" element={<PrivateRoute><AlunoPagamentos /></PrivateRoute>} />
     <Route path="/dashbord" element={<Dashboard/> } />
     <Route path="/requerimento" element={<RequerimentoExibir/> } />
-    <Route path="/requerimento/editar/:id" element={<RequerimentoEditar/> } />
+    <Route path="/requerimentoEditar/:id" element={<RequerimentoEditar/> } />
     <Route path="/requerimento/inserir" element={<RequerimentoOrçamento/> } />
     <Route path="/operacional" element={<OperacionalMenu/> } />
-    <Route path="/requerimento/aprovar/:id" element={<RequerimentoAprovar/> } />
+    <Route path="/requerimentoAprovar/:id" element={<RequerimentoAprovar/> } />
     <Route path="/numeroculto" element={<PrivateRoute><NumeroCulto /></PrivateRoute>} />
   </Routes>
   </Router>

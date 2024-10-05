@@ -7,18 +7,14 @@ INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider
 INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider, foto_fundo) VALUES ('Violão e guitarra','Samuel Lopes', null, null, 'https://i.postimg.cc/7L8NGg10/Samuel.png', 'https://i.postimg.cc/Y08F3xRD/violao.png');
 INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider, foto_fundo) VALUES (	'Percursão',' Alan Sant''Ana', null, null, 'https://i.postimg.cc/YCD88SP8/prof-bateria.jpg', 'https://i.postimg.cc/nL86ZKKP/percursao.png');
 
-
-
 INSERT INTO tb_role (authority ) VALUES ( 'ROLE_ADMIN');
 INSERT INTO tb_role (authority ) VALUES ( 'ROLE_OPERADOR');
-
 
 INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Eleilson','Mendes' ,'eleison_mendes@hotmail.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
 INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Junior','Ribeiro Junior' ,'joseluizjunior@yahoo.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
 INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Jaline','Mirian Peereira' ,'jalineemirian@gmail.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
 INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Marcus','Mendes' ,'marcusmendes85@yahoo.com.br', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
 INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Rhuan','Tavares' ,'rhuan.tavares92@gmail.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
-
 
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 1, 1);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 2, 1);
@@ -45,13 +41,9 @@ INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status) VALUES ( 'Joel', 'Pinheiro', 'ricardo@gmail.com', '1967-01-14', 70, '970312251', '828.908.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status) VALUES ('Ricardo', 'Chavier Galvão', 'ricardo@gmail.com', '1967-01-14', 70, '970312251', '128.308.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true);
 
-
-
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (1, 'Identidade')
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (2, 'Assinatura')
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (3, 'Horários')
-
-
 
 INSERT INTO tb_alunos (projeto_id, data_Matricula ,nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep, url, email, status_id, aluno_Doenca, horario, ativo, abandono) VALUES (3 ,'2024-05-02','Thiago Pereira Fonseca','2010-05-11', 13, 234567899,'Joao Carlos', 1234567-78, '21970312251',  'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221, 'https://i.postimg.cc/85qrHB69/Design-sem-nome.png', 'ricardo@gmail.com', 1, 0, '17:00:00', 'true', 'false' );
 INSERT INTO tb_alunos (projeto_id, data_Matricula,nome, data_nascimento, idade, rg, responsavel, cpf_responsavel, telefone, rua, bairro, numero, cidade, complemento, cep, url, email, status_id, aluno_Doenca, horario, ativo, abandono)  VALUES (1 ,'2024-06-07','Joana Lopez Marques','1977-05-11', 13, 234567899, null, null, '21970312251', 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', 24110221, 'https://i.postimg.cc/85qrHB69/Design-sem-nome.png', 'claudio@gmail.com', 1 , 0, '17:00:00', 'true', 'false');
@@ -82,7 +74,6 @@ INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES
 
 
 
-
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-07-10', 'DINHEIRO', 'JUNHO', 50, 1 )
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado, aluno_id) VALUES (50,'2024-07-10', 'PIX', 'ABRIL', 50, 2 )
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado, aluno_id) VALUES (50,'2024-07-01', 'PIX', 'JULHO', 50, 3 )
@@ -90,21 +81,18 @@ INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado, aluno_id) VALUES (50,'2024-07-05', 'DINHEIRO', 'JULHO', 50, 5 )
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado, aluno_id) VALUES (50,'2024-07-05', 'DINHEIRO', 'JULHO' , 50, 6)
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado, aluno_id) VALUES (50,'2024-07-15', 'PIX', 'JULHO' , 50, 7)
-
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-04-10', 'DINHEIRO', 'ABRIL', 50, 1 )
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-03-13', 'PIX', 'MARCO', 50, 1 )
-
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-08-14', 'DINHEIRO', 'AGOSTO', 50, 1 )
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-07-10', 'PIX', 'JULHO', 50, 1 )
-
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-05-17', 'PIX', 'MAIO', 50, 1 )
+
 
 INSERT INTO tb_entrada (entrada, valor, forma_pagamento, mes_referencia) VALUES ('Atrasado Abril', 50, 'PIX', 'JUNHO')
 INSERT INTO tb_entrada (entrada, valor, forma_pagamento, mes_referencia) VALUES ('Atrasado Abril', 50, 'PIX', 'JUNHO')
 INSERT INTO tb_entrada (entrada, valor, forma_pagamento, mes_referencia) VALUES ('Atrasado Abril', 50, 'DINHEIRO','JULHO')
 INSERT INTO tb_entrada (entrada, valor, forma_pagamento, mes_referencia) VALUES ('Atrasado maio', 50, 'PIX','JULHO')
 INSERT INTO tb_entrada (entrada, valor, forma_pagamento, mes_referencia) VALUES ('Atrasado maio', 50, 'PIX', 'JULHO')
-
 
 
 INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 10, '2024-07-07' , 32 ,17, 15, 1 );
@@ -121,6 +109,11 @@ INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, 
 
 INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local, Total ) VALUES ( '2024-07-07', '2024-07-07', '2024-09-28' , '2024-09-28' , 0 ,'festa da roça', 'comunhao da igreja', 'Junior', 'Igreja', 187.37);
 INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local, Total ) VALUES ( '2024-07-07', '2024-07-10', '2024-09-30' , '2024-09-20' , 1 ,'festa da primavera', 'comunhao da igreja', 'Aurici', 'Igreja', 37.79);
+INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local, Total ) VALUES ( '2024-07-07', '2024-07-07', '2024-09-28' , '2024-09-28' , 2 ,'festa da roça', 'comunhao da igreja', 'Junior', 'Igreja', 187.37);
+INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local, Total ) VALUES ( '2024-07-07', '2024-07-07', '2024-09-28' , '2024-09-28' , 2 ,'festa da roça', 'comunhao da igreja', 'Junior', 'Igreja', 187.37);
+INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, local, Total ) VALUES ( '2024-07-07', '2024-07-07', '2024-09-28' , '2024-09-28' , 2 ,'festa da roça', 'comunhao da igreja', 'Junior', 'Igreja', 187.37);
+
+
 
 INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'hamburguer', 120.97, 1);
 INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'ovo', 20.90, 1);
@@ -151,8 +144,6 @@ INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, per
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-23', 1, 'Sim, mas houve uma interrupção breve.', 'Sim, um aluno precisou de ajuda extra.', 'Não, o material foi bem compreendido pela maioria.', 'Seria útil criar um fórum online para discussões.', 'Nenhuma observação adicional no momento.');
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-23', 2, 'Não, houve atraso na chegada do professor.', 'Sim, um aluno precisou de ajuda extra.', 'Não, o material foi bem compreendido pela maioria.', 'Seria útil criar um fórum online para discussões.', 'Nenhuma observação adicional no momento.');
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-23', 3, 'Sim, mas houve uma interrupção breve.', 'Sim, um aluno precisou de ajuda extra.', 'Não, o material foi bem compreendido pela maioria.', 'Seria útil criar um fórum online para discussões.', 'Nenhuma observação adicional no momento.');
-
-
 
 
 

@@ -2,31 +2,38 @@
   font-weight: bold;
   color:#00ff3c!important; 
 }
+
 .recusado td a{
   color: #ff5050 !important;
   font-weight: bold;
 }
-
+.editar-req{
+  color: blue;
+}
 #pesquisa-chamada{
 
   background-color: white;
   border-radius: 10px;
 
 }
+.aprovar-req{
+  color:#00ff3c!important; 
+
+}
 #pesquisa-chamada label {
   font-size: 14px;
   margin-left: 4%;
-    
-    font-weight: bolder;
+  font-weight: bolder;
   }
+
   #pesquisa-chamada h3{
     margin-top: 10px;
      text-align: center;
      font-weight: bolder;
         
-      }
+   }
 
-      #pesquisa-chamada input{
+ #pesquisa-chamada input{
       margin-left:2px;
             
           }
@@ -57,12 +64,15 @@ margin-left: 2%;
   border-radius: 10px;
   padding: 10px;
   margin-top: 20px;
+  height: 15vh;
+ 
 }
 #barra-requerimento button{
+  margin-top: 20px;
   margin-left: 5%;
   border-radius: 10px;
   border: none;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bold;
  background-color: var(--color-coral);
 

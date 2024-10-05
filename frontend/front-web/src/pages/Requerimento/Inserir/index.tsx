@@ -231,7 +231,7 @@ const RequerimentoOrçamento: React.FC = () => {
                 type="text"
                 className="form-control"
                 name="preço"
-                value={formatarValor(newProduto.preço.toString())} // Exibe o valor formatado no input
+                value={formatarValor(newProduto.preço.toString())} 
                 onChange={handlePrecoChange} 
                 placeholder="Preço do produto"
                 required
@@ -260,9 +260,7 @@ const RequerimentoOrçamento: React.FC = () => {
                 Adicionar
               </button>
             </div>
-
-            {/* Lista de produtos adicionados */}
-            <div className=" mt-3">
+          <div className=" mt-3">
             <label htmlFor="quantidade" className="form-label mt-3">Produtos Adicionados:</label>
               <ul className="list-group">
                 {requerimentoOrçamento.produto.map((prod, index) => (
@@ -280,14 +278,11 @@ const RequerimentoOrçamento: React.FC = () => {
           </form>
         </div>
 
-        <div className="row justify-content-center mt-5" id="btn-voltar-relatorio">
+        <div className="row justify-content-center mt-5 mb-5" id="btn-voltar-relatorio">
           <div className="col-12 col-md-8 text-center">
             <button className="btn btn-primary " onClick={handleGoBack}>Voltar</button>
           </div>
         </div>
-
-        {/* Exibe o total geral de todos os produtos */}
-
       </div>
     </>
   );
