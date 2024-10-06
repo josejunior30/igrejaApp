@@ -122,12 +122,8 @@ const Membro = () => {
               </div>
             </div>
 
-            {/* Checkboxes para filtrar ativo e afastado */}
-         
-
-            {/* Tabela de membros */}
             <div className="row pt-2 justify-content-center ">
-              <div className="col-11 col-md-10">
+              <div className="col-11 col-md-11">
                
                 <h3 className="text-center mt-5" id="membros">Membros</h3>
                 <div className="row justify-content-center">

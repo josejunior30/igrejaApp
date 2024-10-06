@@ -57,7 +57,7 @@ const RequerimentoExibir = () => {
           </div>
         </div>
         <div className="row justify-content-center ">
-          <div className="col-11 col-md-3 text-center" id="barra-requerimento">
+          <div className="col-11 col-md-5 text-center" id="barra-requerimento">
             <Link to="inserir">
               <button className="btn btn-primary">
                 Criar Requerimento
@@ -71,7 +71,7 @@ const RequerimentoExibir = () => {
           </div>
         </div>
 
-        <div className="container col-11 col-md-7">
+        <div className="container col-11 col-md-9">
           <div className="row justify-content-center mt-4 text-center">
             <div className="col-md-11 col-11 mb-5">
               <table className="table table-striped mb-5">
