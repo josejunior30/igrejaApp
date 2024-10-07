@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.AlunosDTO;
@@ -72,6 +73,7 @@ public class PagamentoService {
         entity = repository.save(entity);
         updateTotalMesForPagamentos(entity.getMesReferencia());
         updateTotalPixForPagamentos(entity.getMesReferencia());
+        updateTotalCartao(entity.getMesReferencia());
         verificarStatusPagamento(dto.getAlunosPG());
         return new PagamentoDTO(entity);
     }
@@ -94,6 +96,7 @@ public class PagamentoService {
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
         updateTotalMesForPagamentos(entity.getMesReferencia());
+        updateTotalCartao(entity.getMesReferencia());
         updateTotalPixForPagamentos(entity.getMesReferencia());
         verificarStatusPagamento(dto.getAlunosPG());
         return new PagamentoDTO(entity);
@@ -108,7 +111,7 @@ public class PagamentoService {
         Pagamento entity = pagamentoOptional.get();
         repository.deleteById(id);
         updateTotalMesForPagamentos(entity.getMesReferencia());
-   
+        updateTotalCartao(entity.getMesReferencia());
         updateTotalPixForPagamentos(entity.getMesReferencia());
         verificarStatusPagamento(new AlunosDTO(entity.getAlunosPG()));
     }
@@ -292,12 +295,29 @@ public class PagamentoService {
         LocalDate hoje = LocalDate.now();
         int mesAtual = hoje.getMonthValue();
         
+        // Log para verificar o mês atual
+        System.out.println("Mês atual (número): " + mesAtual);
+        
         MesReferencia mesReferenciaAtual = MesReferencia.fromNumero(mesAtual);
+        
+        // Log para verificar a conversão de MesReferencia
+        System.out.println("MesReferencia atual: " + mesReferenciaAtual);
+        
         List<Pagamento> pagamentosMesAtual = repository.findByMesReferencia(mesReferenciaAtual);
+        
+        // Log para verificar se pagamentos foram encontrados
+        System.out.println("Número de pagamentos encontrados para o mês atual: " + pagamentosMesAtual.size());
+        
+        // Atualiza os totais
         updateTotalMesForAllPagamentos();
-     
+        updateTotalCartaoForAllPagamentos();
         updateTotalPixForAllPagamentos();
-        updateTotalDinheiroForAllPagamentos(); 
+        updateTotalDinheiroForAllPagamentos();
+        
+        // Log após atualização dos totais
+        System.out.println("Totais atualizados para o mês atual.");
+
+        // Mapeia os pagamentos para DTO
         return pagamentosMesAtual.stream()
                                  .map(x -> {
                                      PagamentoDTO dto = new PagamentoDTO(x, x.getAlunosPG());
@@ -306,6 +326,7 @@ public class PagamentoService {
                                  })
                                  .collect(Collectors.toList());
     }
+
 
     
 // verifica status de pagamento

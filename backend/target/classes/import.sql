@@ -85,7 +85,7 @@ INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-03-13', 'PIX', 'MARCO', 50, 1 )
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-08-14', 'DINHEIRO', 'AGOSTO', 50, 1 )
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-07-10', 'PIX', 'JULHO', 50, 1 )
-INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-05-17', 'PIX', 'MAIO', 50, 1 )
+INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-10-17', 'PIX', 'OUTUBRO', 50, 1 )
 
 
 INSERT INTO tb_entrada (entrada, valor, forma_pagamento, mes_referencia) VALUES ('Atrasado Abril', 50, 'PIX', 'JUNHO')
