@@ -341,6 +341,7 @@ const ListaPagamento: React.FC = () => {
             y += lineHeight;
         }
         totalEntradas.forEach((entrada) => {
+            doc.setFontSize(8);
             doc.setFont('helvetica', 'normal'); 
             doc.text(`${entrada.entrada} - R$${entrada.valor} (${entrada.formaPagamento})`, 10, y);
             y += lineHeight;
