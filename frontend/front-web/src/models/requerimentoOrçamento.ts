@@ -5,7 +5,7 @@ export type requerimentoOrçamento={
 	dataRequerimento: Date;
 	dataEvento:Date;
 	dataAprovacao:Date;
-	statusRequerimento:number;
+	statusRequerimento:StatusRequerimento;
 	dataPagamento:Date;
 	"O que vai ser feito ?": string;
 	"Qual o motivo de ser feito ?": string;
@@ -15,14 +15,18 @@ export type requerimentoOrçamento={
     produto: Produto[];
 
 }
-export type Produto={
+
+  export enum StatusRequerimento {
+	APROVADO,
+	RECUSADO,
+	PENDENTE
+	
+	
+  }
+
+  export type Produto={
     id:number; 
 	nome: string;
 	preço: number;
 	quantidade: number; 
 }
-export enum Status {
-	PENDENTE = 2,
-	RECUSADO = 1,
-	APROVADO = 0,
-  }
