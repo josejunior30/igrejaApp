@@ -119,7 +119,9 @@ INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'hamburguer', 120
 INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'ovo', 20.90, 1);
 INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'pão', 45.50, 1);
 INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'batata', 37.79, 2);
-
+INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'café', 20.00, 2);
+INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'leite', 06.79, 2);
+INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'açucar', 2.79, 2);
 
 
 

@@ -12,15 +12,12 @@ import com.esibape.DTO.RequerimentoOrçamentoDTO;
 import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusRequerimento;
-import com.esibape.repository.ProdutoRepository;
 import com.esibape.repository.RequerimentoOrçamentoRepository;
 
 @Service
 public class RequerimentoOrçamentoService {
 	@Autowired
 	private RequerimentoOrçamentoRepository repository;
-	@Autowired
-	private ProdutoRepository produtoRepository;
 	 @Autowired
 	private EmailService emailService; 
 	 

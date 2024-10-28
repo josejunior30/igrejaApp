@@ -15,7 +15,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(recipientEmail);
         message.setSubject("Novo Requerimento Criado");
-        message.setText("Olá Josué, Um novo requerimento foi criado por " + responsavel + ". Acesse o sistema i-SIBAPE para mais detalhes.");
+        message.setText("Olá , Um novo requerimento foi criado por " + responsavel + ". Acesse o sistema i-SIBAPE para mais detalhes.");
 
         mailSender.send(message);
     }
