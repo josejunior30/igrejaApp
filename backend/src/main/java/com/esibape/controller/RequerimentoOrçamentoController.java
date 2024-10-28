@@ -2,6 +2,7 @@ package com.esibape.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.esibape.DTO.AlunosDTO;
 import com.esibape.DTO.RequerimentoOrçamentoDTO;
+import com.esibape.entities.StatusRequerimento;
 import com.esibape.service.RequerimentoOrçamentoService;
 
 @RestController
@@ -62,5 +65,20 @@ public class RequerimentoOrçamentoController {
 		 service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping(value = "/{id}/status")
+	public ResponseEntity<RequerimentoOrçamentoDTO> updateStatus(
+	        @PathVariable Long id, 
+	        @RequestParam StatusRequerimento newStatus) {
+	    try {
+	        RequerimentoOrçamentoDTO updatedRequerimento = service.updateStatus(id, newStatus);
+	        return ResponseEntity.ok().body(updatedRequerimento);
+	    } catch (NoSuchElementException e) {
+	        return ResponseEntity.notFound().build(); // Retorna 404 se o requerimento não for encontrado
+	    } catch (Exception e) {
+	        return ResponseEntity.badRequest().build(); // Retorna 400 para outros erros
+	    }
+	}
+
 
 }

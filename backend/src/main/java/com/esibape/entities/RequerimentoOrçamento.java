@@ -9,6 +9,8 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +27,13 @@ public class RequerimentoOrçamento implements Serializable {
     private LocalDate dataRequerimento;
     private LocalDate dataEvento;
     private LocalDate dataAprovacao;
+    @Enumerated(EnumType.STRING)
     private StatusRequerimento statusRequerimento;
     private LocalDate dataPagamento;
     private String pergunta1;
     private String pergunta2;
     private String responsavel;
+    private String emailResponsavel;
     private String local;
 
     @Column(nullable = false)
@@ -42,7 +46,7 @@ public class RequerimentoOrçamento implements Serializable {
 
     public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovacao,
                                   StatusRequerimento statusRequerimento, LocalDate dataPagamento, BigDecimal total, 
-                                  String pergunta1, String pergunta2, String responsavel, String local, List<Produto> produto) {
+                                  String pergunta1, String pergunta2, String responsavel, String emailResponsave ,String local, List<Produto> produto) {
         this.id = id;
         this.dataRequerimento = dataRequerimento;
         this.dataEvento = dataEvento;
@@ -55,6 +59,7 @@ public class RequerimentoOrçamento implements Serializable {
         this.local = local;
         this.produto = produto;
         this.total = total;
+        this.emailResponsavel = emailResponsave;
     }
 
     public Long getId() {
@@ -108,8 +113,16 @@ public class RequerimentoOrçamento implements Serializable {
     public List<Produto> getProduto() {
         return produto;
     }
+    
+    public String getEmailResponsavel() {
+		return emailResponsavel;
+	}
 
-    public String getPergunta1() {
+	public void setEmailResponsavel(String emailResponsavel) {
+		this.emailResponsavel = emailResponsavel;
+	}
+
+	public String getPergunta1() {
 		return pergunta1;
 	}
 

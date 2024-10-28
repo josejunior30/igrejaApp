@@ -2,7 +2,7 @@ import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './styles.css';
 import * as requerimentoService from '../../../service/requerimentoService';
-import { Produto, requerimentoOrçamento, Status } from '../../../models/requerimentoOrçamento';
+import { Produto, requerimentoOrçamento, StatusRequerimento } from '../../../models/requerimentoOrçamento';
 import Header from '../../../components/Header';
 
 const RequerimentoEditar: React.FC = () => {
@@ -14,7 +14,7 @@ const RequerimentoEditar: React.FC = () => {
     dataEvento: new Date(),
     dataPagamento: new Date(),
     dataAprovacao: new Date(),
-    statusRequerimento: Status.PENDENTE,
+    statusRequerimento: StatusRequerimento.PENDENTE,
     responsavel: "",
     local: "",
     Total: 0,
@@ -231,15 +231,17 @@ const RequerimentoEditar: React.FC = () => {
               </ul>
             </div>
             <label>Total: R$ {requerimento.Total}</label>
-            <div className="col-4 mt-5 offset-5 ">
-              <button className="btn btn-primary " type="submit">Atualizar</button>
-            </div>
+            <div className="col-12  mt-5 mb-5 text-center" >
+                <button type="submit" className="btn btn-primary"  style={{ backgroundColor: 'var(--color-coral)', border:'none' }}>
+                 Atualizar
+                </button>
+              </div>
           </form>
         </div>
         
-        <div className="row justify-content-center mt-5" id="btn-voltar-relatorio">
-          <div className="col-12 col-md-8 d-flex justify-content-between">
-            <button className="btn btn-outline-secondary" onClick={handleGoBack}>Voltar</button>
+        <div className="row justify-content-center mt-5 mb-5" id="btn-voltar-relatorio">
+          <div className="col-12 text-center" >
+            <button className="btn btn-primary"  onClick={handleGoBack}>Voltar</button>
           </div>
         </div>
       </div>

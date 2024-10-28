@@ -35,7 +35,7 @@ import RequerimentoOrçamento from './pages/Requerimento/Inserir';
 import RequerimentoExibir from './pages/Requerimento/Exibir';
 import RequerimentoEditar from './pages/Requerimento/Editar';
 import OperacionalMenu from './pages/menuOperacional';
-import RequerimentoAprovar from './pages/Requerimento/id';
+import RequerimentoAprovar from './pages/Requerimento/Aprovar';
 
 
 

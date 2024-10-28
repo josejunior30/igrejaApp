@@ -26,6 +26,7 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	@JsonProperty("Qual o motivo de ser feito ?")
 	private String pergunta2;
 	private String responsavel;
+	 private String emailResponsavel;
 	private String local; 
 	private BigDecimal Total;
 
@@ -53,6 +54,7 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 		responsavel = entity.getResponsavel();
 		local = entity.getLocal();
 		Total = entity.getTotal();
+		emailResponsavel= entity.getEmailResponsavel();
 		
 	}
 	public RequerimentoOrçamentoDTO(RequerimentoOrçamento entity,List<Produto> produto ) {
@@ -97,6 +99,14 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 		this.statusRequerimento = statusRequerimento;
 	}
 
+
+	public String getEmailResponsavel() {
+		return emailResponsavel;
+	}
+
+	public void setEmailResponsavel(String emailResponsavel) {
+		this.emailResponsavel = emailResponsavel;
+	}
 
 	public LocalDate getDataPagamento() {
 		return dataPagamento;
