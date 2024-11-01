@@ -21,6 +21,22 @@ INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 2, 1);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 3, 2);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 4, 2);
 
+INSERT INTO tb_curso(nome) VALUES ( 'Fundamentos');
+INSERT INTO tb_curso(nome) VALUES ( 'Biblia e Teologia');
+INSERT INTO tb_curso(nome) VALUES ( 'Vida Cristã');
+INSERT INTO tb_curso(nome) VALUES ( 'Capacitação Ministerial');
+INSERT INTO tb_curso(nome) VALUES ( 'Crianças e Adolescentes');
+INSERT INTO tb_curso(nome) VALUES ( 'Palavra & Vida');
+
+INSERT INTO tb_estudos(nome, curso_id, caminho_Arquivo) VALUES ('Genesis 1', 1, 'fefgfgsgesgesgs');
+INSERT INTO tb_estudos(nome, curso_id, caminho_Arquivo) VALUES ('Exodo 1', 1 ,'fefgfgsgesgesgs');
+INSERT INTO tb_estudos(nome, curso_id, caminho_Arquivo) VALUES ('Mathueus ', 2, 'fefgfgsgesgesgs');
+INSERT INTO tb_estudos(nome, curso_id, caminho_Arquivo) VALUES ('Samuel', 3, 'fefgfgsgesgesgs');
+INSERT INTO tb_estudos(nome, curso_id, caminho_Arquivo) VALUES ('Apocalipse', 4, 'fefgfgsgesgesgs');
+INSERT INTO tb_estudos(nome, curso_id, caminho_Arquivo) VALUES ('Homens de fé', 5, 'fefgfgsgesgesgs');
+INSERT INTO tb_estudos(nome, curso_id, caminho_Arquivo) VALUES ('Apocalipse III', 6, 'fefgfgsgesgesgs');
+
+
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil, rua, bairro, numero, cidade, complemento, cep, status) VALUES ('José Luiz', 'Ribeiro Junior', 'junior@gmail.com', '1988-10-07', 35, 21970312251, '123.789.964-67', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep , status) VALUES ('Marcus', 'Fereira Duarte', 'marcus@gmail.com', '1987-05-11', 37, '21970312251', '923.289.964-12' ,0, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status) VALUES ('Jaline', 'Pereira Fonseca', 'jaline@gmail.com', '1991-06-22', 30, '21970312251', '954.789.964-99', 3, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true);
@@ -40,6 +56,23 @@ INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status) VALUES ('Karol', 'Machado Galvão', 'ricardo@gmail.com', '1967-01-14', 70, '970312251', '712.308.317-76', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202',' 24110221', true);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status) VALUES ( 'Joel', 'Pinheiro', 'ricardo@gmail.com', '1967-01-14', 70, '970312251', '828.908.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status) VALUES ('Ricardo', 'Chavier Galvão', 'ricardo@gmail.com', '1967-01-14', 70, '970312251', '128.308.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true);
+
+
+
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '1', 1);
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '1', 2);
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '1', 3);
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '2', 4);
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '3', 7);
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '4', 5);
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '5', 6);
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '6', 7);
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '1', 4);
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '1', 8);
+INSERT INTO tb_inscricao(curso_id, membro_id) VALUES ( '1', 9);
+
+
+
 
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (1, 'Identidade')
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (2, 'Assinatura')

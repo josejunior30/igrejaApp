@@ -52,7 +52,7 @@ public class Membro implements Serializable {
 	
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, Boolean status, String url,String cep, String numero,
-			String bairro, String cidade, String complemento, FileStorage foto) {
+			String bairro, String cidade, String complemento, List<Inscricao> inscricoes,FileStorage foto) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -70,6 +70,7 @@ public class Membro implements Serializable {
 		this.cidade = cidade;
 		this.status =status;
 		this.complemento = complemento;
+		this.inscricoes=inscricoes;
 	this.url=url;
 		this.foto = foto;
 	
@@ -134,6 +135,14 @@ public class Membro implements Serializable {
 
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
+	}
+
+	public List<Inscricao> getInscricoes() {
+		return inscricoes;
+	}
+
+	public void setInscricoes(List<Inscricao> inscricoes) {
+		this.inscricoes = inscricoes;
 	}
 
 	public void setDataNascimento(LocalDate dataNascimento) {

@@ -10,8 +10,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.esibape.DTO.InscricaoDTO;
 import com.esibape.DTO.MembroDTO;
+import com.esibape.entities.Inscricao;
 import com.esibape.entities.Membro;
+import com.esibape.repository.InscricaoRepository;
 import com.esibape.repository.MembroRepository;
 
 
@@ -22,7 +26,8 @@ public class MembroService {
     @Autowired
     private MembroRepository repository;
     
-  
+    @Autowired
+    private InscricaoRepository  inscricaoRepository; 
 
    
     @Transactional(readOnly = true)
@@ -30,14 +35,14 @@ public class MembroService {
         List<Membro> list = repository.findAll();
         
         return  list.stream()
-	               .map(x -> new MembroDTO(x))
+	               .map(x -> new MembroDTO(x, x.getInscricoes()))
 	               .collect(Collectors.toList());
     }
     @Transactional(readOnly = true)
     public MembroDTO findById(Long id) {
     	Optional<Membro> membro = repository.findById(id);
     	Membro entity = membro.get();
-    	return  new MembroDTO(entity);
+    	return  new MembroDTO(entity, entity.getInscricoes());
     }
    
     @Transactional
@@ -80,8 +85,15 @@ public class MembroService {
 		entity.setEstadoCivil(dto.getEstadoCivil());
 		entity.setUrl(dto.getUrl());
 		entity.setStatus(dto.getStatus());
+		
+		List<InscricaoDTO> insDTO = dto.getInscricoes();
+	    List<Inscricao> inscricao= insDTO.stream()
+	        .map(inscricaoDto -> inscricaoRepository.getReferenceById(inscricaoDto.getId()))
+	        .collect(Collectors.toList());
+	    entity.setInscricoes(inscricao);
 	}	
     
+   
     
     @Transactional(readOnly = true)
 	public List<MembroDTO> findByNomeIgnoreCaseContaining(String nome) {

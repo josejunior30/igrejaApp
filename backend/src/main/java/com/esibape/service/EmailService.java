@@ -14,17 +14,12 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-<<<<<<< HEAD
-    public void sendNewRequerimentoNotification(String recipientEmail, String responsavel) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(recipientEmail);
-        message.setSubject("Novo Requerimento Criado");
-        message.setText("Olá , Um novo requerimento foi criado por " + responsavel + ". Acesse o sistema i-SIBAPE para mais detalhes.");
-=======
+
+
     public void sendNewRequerimentoNotification(String recipientEmail, String responsavel) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
->>>>>>> be9141646d2f9861b8297aa4163b8c3e3696f999
+
 
         String htmlContent = "<html>" +
                 "<body>" +

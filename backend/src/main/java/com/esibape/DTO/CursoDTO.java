@@ -65,22 +65,24 @@ public class CursoDTO implements Serializable{
 	}
 
 
-	public List<Estudos> getEstudos() {
+
+
+	public List<EstudosDTO> getEstudos() {
 		return estudos;
 	}
 
 
-	public void setEstudos(List<Estudos> estudos) {
+	public void setEstudos(List<EstudosDTO> estudos) {
 		this.estudos = estudos;
 	}
 
 
-	public List<Inscricao> getInscricoes() {
+	public List<InscricaoDTO> getInscricoes() {
 		return inscricoes;
 	}
 
 
-	public void setInscricoes(List<Inscricao> inscricoes) {
+	public void setInscricoes(List<InscricaoDTO> inscricoes) {
 		this.inscricoes = inscricoes;
 	}
 

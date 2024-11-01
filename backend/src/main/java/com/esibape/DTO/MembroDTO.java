@@ -2,6 +2,7 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import javax.validation.constraints.Email;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
+import com.esibape.entities.Inscricao;
 import com.esibape.entities.Membro;
 import com.esibape.entities.MembroEstado;
 
@@ -37,14 +39,14 @@ public class MembroDTO implements Serializable{
 	private String complemento;
 	private String url;
 	private Boolean status =true;
-	
+	private List<InscricaoDTO> inscricoes;
 	public MembroDTO() {
 		
 	}
 
 	
 	public MembroDTO(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
-			String telefone, String url, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero,
+			String telefone, String url, String cpf, MembroEstado estadoCivil, List<InscricaoDTO> inscricoes,String rua, String cep, String numero,
 			String bairro, String cidade, String complemento, Boolean status ) {
 		super();
 		this.id = id;
@@ -64,6 +66,7 @@ public class MembroDTO implements Serializable{
 		this.complemento = complemento;
 		this.url =url;
 		this.status = status;
+		this.inscricoes = inscricoes;
 
 	
 	}
@@ -87,6 +90,22 @@ public class MembroDTO implements Serializable{
 		this.url=entity.getUrl();
 		this.status = entity.getStatus();
 		
+	}
+	
+	public List<InscricaoDTO> getInscricoes() {
+		return inscricoes;
+	}
+
+
+	public void setInscricoes(List<InscricaoDTO> inscricoes) {
+		this.inscricoes = inscricoes;
+	}
+
+
+	public MembroDTO(Membro entity, List<Inscricao> inscricoes) {
+	this(entity);
+	inscricoes.forEach(x-> this.inscricoes.add(new InscricaoDTO(x)));
+	
 	}
 
 	public Long getId() {
