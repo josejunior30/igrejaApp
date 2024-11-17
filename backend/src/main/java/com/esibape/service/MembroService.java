@@ -26,23 +26,20 @@ public class MembroService {
     @Autowired
     private MembroRepository repository;
     
-    @Autowired
-    private InscricaoRepository  inscricaoRepository; 
-
-   
     @Transactional(readOnly = true)
     public List<MembroDTO> findAll() {
         List<Membro> list = repository.findAll();
-        
-        return  list.stream()
-	               .map(x -> new MembroDTO(x, x.getInscricoes()))
-	               .collect(Collectors.toList());
+        return list.stream()
+                   .map(x -> new MembroDTO(x)) 
+                   .collect(Collectors.toList());
     }
+
+ 
     @Transactional(readOnly = true)
     public MembroDTO findById(Long id) {
     	Optional<Membro> membro = repository.findById(id);
     	Membro entity = membro.get();
-    	return  new MembroDTO(entity, entity.getInscricoes());
+    	return  new MembroDTO(entity);
     }
    
     @Transactional
@@ -85,12 +82,8 @@ public class MembroService {
 		entity.setEstadoCivil(dto.getEstadoCivil());
 		entity.setUrl(dto.getUrl());
 		entity.setStatus(dto.getStatus());
-		
-		List<InscricaoDTO> insDTO = dto.getInscricoes();
-	    List<Inscricao> inscricao= insDTO.stream()
-	        .map(inscricaoDto -> inscricaoRepository.getReferenceById(inscricaoDto.getId()))
-	        .collect(Collectors.toList());
-	    entity.setInscricoes(inscricao);
+		entity.setCurso(dto.getCurso());
+
 	}	
     
    

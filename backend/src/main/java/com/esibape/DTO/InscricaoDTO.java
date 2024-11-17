@@ -2,6 +2,7 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 
+
 import com.esibape.entities.Curso;
 import com.esibape.entities.Inscricao;
 import com.esibape.entities.Membro;
@@ -11,26 +12,32 @@ public class InscricaoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
     private Long id;
-    private Curso curso;
-    private Membro membroEBD;
-    
+    private CursoDTO curso;
+    private MembroDTO membrosEBD;
  public InscricaoDTO () {
     	
     	
     }
 
-public InscricaoDTO(Long id, Curso curso, Membro membroEBD) {
+public InscricaoDTO(Long id, CursoDTO curso, MembroDTO membrosEBD) {
 	super();
 	this.id = id;
 	this.curso = curso;
-	this.membroEBD = membroEBD;
+	this.membrosEBD = membrosEBD;
 }
- 
+
+
 public InscricaoDTO (Inscricao entity) {
-	
 	this.id = entity.getId();
-	this.curso = entity.getCurso();
-	this.membroEBD = entity.getMembroEBD();
+	
+
+}
+
+public InscricaoDTO (Inscricao entity, Curso curso, Membro membrosEBD) {
+	this(entity);
+	this.curso = new CursoDTO(curso);
+	this.membrosEBD = new MembroDTO(membrosEBD);
+	
 }
 
 public Long getId() {
@@ -41,21 +48,37 @@ public void setId(Long id) {
 	this.id = id;
 }
 
-public Curso getCurso() {
+
+
+public CursoDTO getCurso() {
 	return curso;
 }
 
-public void setCurso(Curso curso) {
+public void setCurso(CursoDTO curso) {
 	this.curso = curso;
 }
 
-public Membro getMembroEBD() {
-	return membroEBD;
+public MembroDTO getMembrosEBD() {
+	return membrosEBD;
 }
 
-public void setMembroEBD(Membro membroEBD) {
-	this.membroEBD = membroEBD;
+public void setMembrosEBD(MembroDTO membrosEBD) {
+	this.membrosEBD = membrosEBD;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     
 }

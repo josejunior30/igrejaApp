@@ -2,6 +2,7 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,9 +11,11 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
+import com.esibape.entities.Curso;
 import com.esibape.entities.Inscricao;
 import com.esibape.entities.Membro;
 import com.esibape.entities.MembroEstado;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 public class MembroDTO implements Serializable{
@@ -39,15 +42,21 @@ public class MembroDTO implements Serializable{
 	private String complemento;
 	private String url;
 	private Boolean status =true;
-	private List<InscricaoDTO> inscricoes;
+	private Curso curso;
+
 	public MembroDTO() {
 		
 	}
 
 	
-	public MembroDTO(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
-			String telefone, String url, String cpf, MembroEstado estadoCivil, List<InscricaoDTO> inscricoes,String rua, String cep, String numero,
-			String bairro, String cidade, String complemento, Boolean status ) {
+	
+
+	public MembroDTO(Long id,
+			@Size(min = 3, message = "O nome deve ter no minimo 3 caracteres") @NotEmpty(message = "campo não poe ser nulo ou vazio") String nome,
+			String sobrenome, @Email(message = "Deve ser um Email Valido") String email,
+			@PastOrPresent(message = "escolha uma data válida") LocalDate dataNascimento, Integer idade,
+			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
+			String cidade, String complemento, String url, Boolean status, Curso curso) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -64,12 +73,27 @@ public class MembroDTO implements Serializable{
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.complemento = complemento;
-		this.url =url;
+		this.url = url;
 		this.status = status;
-		this.inscricoes = inscricoes;
-
-	
+		this.curso = curso;
 	}
+
+
+
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+
+
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+
+
+
 
 	public MembroDTO(Membro entity) {
 		this.id= entity.getId();
@@ -89,24 +113,10 @@ public class MembroDTO implements Serializable{
 		this.numero=entity.getNumero();
 		this.url=entity.getUrl();
 		this.status = entity.getStatus();
+		this.curso = entity.getCurso();
 		
 	}
-	
-	public List<InscricaoDTO> getInscricoes() {
-		return inscricoes;
-	}
 
-
-	public void setInscricoes(List<InscricaoDTO> inscricoes) {
-		this.inscricoes = inscricoes;
-	}
-
-
-	public MembroDTO(Membro entity, List<Inscricao> inscricoes) {
-	this(entity);
-	inscricoes.forEach(x-> this.inscricoes.add(new InscricaoDTO(x)));
-	
-	}
 
 	public Long getId() {
 		return id;

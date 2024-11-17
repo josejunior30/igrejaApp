@@ -1,0 +1,27 @@
+.titulo-curso {
+  color: white;
+}
+
+.section-trilho {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+}
+.sobre-trilha {
+  font-size: 24px;
+}
+.inscrever {
+  width: 160px;
+  height: 40px;
+  background-color: var(--color-coral);
+  color: white;
+  border-radius: 10px;
+}
+.voltar {
+  width: 160px;
+  height: 40px;
+}
+.curso-trilha {
+  color: var(--color-coral);
+  font-size: 38px;
+}

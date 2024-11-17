@@ -51,7 +51,7 @@ public class Alunos implements Serializable{
 	private boolean ativo = true;
 	private String statusPagamento;
 	private AlunoDoenca alunoDoenca;
-	 private boolean abandono = false;
+	private boolean abandono = false;
 	@OneToMany(mappedBy ="alunosPG"  )
     private List<Pagamento> pagamentos = new ArrayList<>();
 	@ManyToOne()

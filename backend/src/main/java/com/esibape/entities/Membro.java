@@ -2,7 +2,6 @@ package com.esibape.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -10,9 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
@@ -22,7 +25,9 @@ public class Membro implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonProperty("id")
 	private Long id;
+	 @JsonProperty("nome")
 	private String nome;
 	private String sobrenome;
 	private String email;
@@ -40,21 +45,32 @@ public class Membro implements Serializable {
 	private String url;
 	private Boolean status =true;
 	 
-	@OneToMany(mappedBy = "membroEBD")
-	private List<Inscricao> inscricoes;
+	@ManyToOne()
+	@JoinColumn(name= "curso_id")
+	@JsonBackReference
+    private Curso curso;
 
 	
 	@OneToOne(mappedBy= "membro", cascade = CascadeType.ALL)
 	private FileStorage foto;
+	
 	public Membro() {
 		
 	}
 	
+
+	  @JsonProperty("curso")
+	    public CursoResumo getCursoResumo() {
+	      
+	        return curso != null ? new CursoResumo(curso.getId(), curso.getNome()) : null;
+	    }
+
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
-			String telefone, String cpf, MembroEstado estadoCivil, String rua, Boolean status, String url,String cep, String numero,
-			String bairro, String cidade, String complemento, List<Inscricao> inscricoes,FileStorage foto) {
+			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
+			String cidade, String complemento, String url, Boolean status, Curso curso, FileStorage foto) {
 		super();
 		this.id = id;
+		
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.email = email;
@@ -68,14 +84,15 @@ public class Membro implements Serializable {
 		this.numero = numero;
 		this.bairro = bairro;
 		this.cidade = cidade;
-		this.status =status;
 		this.complemento = complemento;
-		this.inscricoes=inscricoes;
-	this.url=url;
+		this.url = url;
+		this.status = status;
+		this.curso = curso;
 		this.foto = foto;
-	
-		
 	}
+
+
+
 
 	public Long getId() {
 		return id;
@@ -137,13 +154,24 @@ public class Membro implements Serializable {
 		return dataNascimento;
 	}
 
-	public List<Inscricao> getInscricoes() {
-		return inscricoes;
+
+
+
+
+
+	public Curso getCurso() {
+		return curso;
 	}
 
-	public void setInscricoes(List<Inscricao> inscricoes) {
-		this.inscricoes = inscricoes;
+
+
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
+
+
+
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;

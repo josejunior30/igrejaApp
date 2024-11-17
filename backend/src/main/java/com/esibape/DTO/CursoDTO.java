@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.esibape.entities.Curso;
-import com.esibape.entities.Estudos;
 import com.esibape.entities.Inscricao;
+import com.esibape.entities.Membro;
 
 public class CursoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nome;
-	private List<EstudosDTO> estudos  = new ArrayList<>();
-	private List<InscricaoDTO> inscricoes = new ArrayList<>();
+	private List<MembroDTO> membro = new ArrayList<>();
 	  
 	public CursoDTO() {
 			
@@ -22,13 +22,16 @@ public class CursoDTO implements Serializable{
 	}
 	
 	
-	public CursoDTO(Long id, String nome, List<EstudosDTO> estudos, List<InscricaoDTO> inscricoes) {
+
+
+	public CursoDTO(Long id, String nome, List<MembroDTO> membro) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.estudos = estudos;
-		this.inscricoes = inscricoes;
+		this.membro = membro;
 	}
+
+
 
 
 	public CursoDTO(Curso entity) {
@@ -37,13 +40,13 @@ public class CursoDTO implements Serializable{
 		
 	}
 	
-	public CursoDTO(Curso entity, List<Estudos> estudos, List<Inscricao>inscricoes ) {
-		this(entity);
-		estudos.forEach(x-> this.estudos.add(new EstudosDTO(x)));
-		inscricoes.forEach(x-> this.inscricoes.add(new InscricaoDTO(x)));
-		
-	}
-
+	   public CursoDTO(Curso curso, List<Membro> membro) {
+	        this.id = curso.getId();
+	        this.nome = curso.getNome();
+	        this.membro = membro.stream()
+	            .map(Membro -> new MembroDTO(Membro))  // Mapeando para um DTO de inscrição
+	            .collect(Collectors.toList());
+	    }
 
 	public Long getId() {
 		return id;
@@ -67,24 +70,18 @@ public class CursoDTO implements Serializable{
 
 
 
-	public List<EstudosDTO> getEstudos() {
-		return estudos;
+	public List<MembroDTO> getMembro() {
+		return membro;
 	}
 
 
-	public void setEstudos(List<EstudosDTO> estudos) {
-		this.estudos = estudos;
+
+
+	public void setMembro(List<MembroDTO> membro) {
+		this.membro = membro;
 	}
 
 
-	public List<InscricaoDTO> getInscricoes() {
-		return inscricoes;
-	}
-
-
-	public void setInscricoes(List<InscricaoDTO> inscricoes) {
-		this.inscricoes = inscricoes;
-	}
 
 
 	@Override

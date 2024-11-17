@@ -19,21 +19,16 @@ public class InscricaoService {
 	 @Transactional(readOnly = true)
 	    public List<InscricaoDTO> findAll() {
 	        List<Inscricao> list = repository.findAll(); 
-	        return list.stream()
-	            .map(x -> {
-	            	InscricaoDTO dto = new InscricaoDTO(x);
+	        return list.stream().map(x ->  new InscricaoDTO(x, x.getCurso(),x.getMembrosEBD())).collect(Collectors.toList());
 	   
-	                return dto;
-	            })
-	            .collect(Collectors.toList());
 	    }
 	 
 	   @Transactional(readOnly = true)
 	    public InscricaoDTO findById(Long id) {
 	    	Optional<Inscricao> inscricao = repository.findById(id);
 	    	Inscricao entity = inscricao.get();
-	          InscricaoDTO dto = new InscricaoDTO(entity);
-	        return dto;
+	          return  new InscricaoDTO(entity, entity.getCurso(),entity.getMembrosEBD());
+	        
 	    }
 	    
 	    public void delete(Long id) {

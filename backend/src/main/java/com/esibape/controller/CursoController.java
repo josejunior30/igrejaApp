@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.esibape.DTO.ChamadaDTO;
 import com.esibape.DTO.CursoDTO;
 
 import com.esibape.service.CursoService;
@@ -30,12 +30,12 @@ public class CursoController {
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@GetMapping(value="/{id}")
-	public ResponseEntity<CursoDTO>findById(@PathVariable Long id){
-		CursoDTO entity = service.findById(id);
-		return ResponseEntity.ok().body(entity);
+    @GetMapping("/{id}")
+    public ResponseEntity<CursoDTO> findById(@PathVariable Long id) {
+        CursoDTO result = service.findById(id);
+        return ResponseEntity.ok().body(result);
+    }
 
-}
 	
 	
 	@DeleteMapping(value="/{id}")

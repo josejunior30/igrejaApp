@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name="tb_curso")
 public class Curso implements Serializable{
@@ -21,23 +23,22 @@ public class Curso implements Serializable{
 	private Long id;
 	private String nome;
 	@OneToMany(mappedBy = "curso")
-	private List<Estudos> estudos = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "curso")
-    private List<Inscricao> inscricoes = new ArrayList<>();
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Membro> membro = new ArrayList<>();
 	
 	public Curso() {
 		
 		
 	}
 
-	public Curso(Long id, String nome, List<Estudos> estudos, List<Inscricao> inscricoes) {
+
+	public Curso(Long id, String nome, List<Membro> membro) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.estudos = estudos;
-		this.inscricoes = inscricoes;
+		this.membro = membro;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -55,21 +56,17 @@ public class Curso implements Serializable{
 		this.nome = nome;
 	}
 
-	public List<Estudos> getEstudos() {
-		return estudos;
+
+
+	public List<Membro> getMembro() {
+		return membro;
 	}
 
-	public void setEstudos(List<Estudos> estudos) {
-		this.estudos = estudos;
+
+	public void setMembro(List<Membro> membro) {
+		this.membro = membro;
 	}
 
-	public List<Inscricao> getInscricoes() {
-		return inscricoes;
-	}
-
-	public void setInscricoes(List<Inscricao> inscricoes) {
-		this.inscricoes = inscricoes;
-	}
 
 	@Override
 	public int hashCode() {
@@ -86,7 +83,9 @@ public class Curso implements Serializable{
 			return false;
 		Curso other = (Curso) obj;
 		return Objects.equals(id, other.id);
-	} 
+	}
+
+	
 	
 	
 }

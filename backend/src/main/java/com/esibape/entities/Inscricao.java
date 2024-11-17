@@ -2,7 +2,6 @@ package com.esibape.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,21 +23,24 @@ public class Inscricao implements Serializable{
     @JoinColumn(name = "curso_id")
     private Curso curso;
     
+ 
     @ManyToOne
     @JoinColumn(name = "membro_id")
-    private Membro membroEBD;
-    
+    private Membro membrosEBD;
     public Inscricao () {
     	
     	
     }
 
-	public Inscricao(Long id, Curso curso, Membro membroEBD) {
+
+	public Inscricao(Long id, Curso curso, Membro membrosEBD) {
 		super();
 		this.id = id;
 		this.curso = curso;
-		this.membroEBD = membroEBD;
+		this.membrosEBD = membrosEBD;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -56,13 +58,18 @@ public class Inscricao implements Serializable{
 		this.curso = curso;
 	}
 
-	public Membro getMembroEBD() {
-		return membroEBD;
+	
+
+
+	public Membro getMembrosEBD() {
+		return membrosEBD;
 	}
 
-	public void setMembroEBD(Membro membroEBD) {
-		this.membroEBD = membroEBD;
+
+	public void setMembrosEBD(Membro membrosEBD) {
+		this.membrosEBD = membrosEBD;
 	}
+
 
 	@Override
 	public int hashCode() {
