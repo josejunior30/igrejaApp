@@ -41,16 +41,16 @@ const TrilhaId = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
-        <div className="voltar-projetos-menu">
-          <Link to="/trilha">
-            <TiArrowBack /> Voltar
-          </Link>
-        </div>
         <div className="row justify-content-center">
+          <div className="voltar-projetos-menu mt-5">
+            <Link to="/trilha">
+              <TiArrowBack /> Voltar
+            </Link>
+          </div>
           {loading ? (
             <p>Carregando detalhes do curso...</p>
           ) : curso ? (
-            <div className="col-md-6 col-10 m-3 md-5 pb-3 text-center">
+            <div className="col-md-8 col-10 m-3 md-5 pb-3 text-center">
               <h1 className="title">
                 <span className="trilho-titulo">Trilha : </span>
                 {curso.nome}

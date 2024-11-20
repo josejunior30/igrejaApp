@@ -66,15 +66,10 @@ const Inicial = () => (
 
       <div className="row justify-content-center" id="row-menu">
         <div className="col-9 col-md-3" id="col-img">
-          <img
-            src={pg}
-            alt="Pequeno Grupo"
-            className="img-fluid"
-            id="img-menu"
-          />
+          <img src={pg} alt="CFC" className="img-fluid" id="img-menu" />
 
           <h3>CFC</h3>
-          <Link to="#">
+          <Link to="/trilho">
             <button className="btn btn-info">Clique aqui</button>
           </Link>
         </div>

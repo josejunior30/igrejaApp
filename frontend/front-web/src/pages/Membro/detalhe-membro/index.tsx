@@ -103,7 +103,7 @@ const Detalhes = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
-        <div className="row justify-content-center">
+        <div className="row justify-content-center text-center ">
           <div className="col-md-4 col-7 m-5 md-5 pb-3 text-center" id="dados">
             {MembroDTO ? (
               <>
@@ -144,6 +144,11 @@ const Detalhes = () => {
                 <p className="dados">
                   <span>Telefone:</span> {MembroDTO.telefone}
                 </p>
+                {MembroDTO.curso && (
+                  <p className="dados-trilho offset-3 mb-5">
+                    <span>Trilho:</span> {MembroDTO.curso.nome}
+                  </p>
+                )}
 
                 <div className="botoes-container">
                   <Link to={`/membro/atualizar/${id}`}>

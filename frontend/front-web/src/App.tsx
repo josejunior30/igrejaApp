@@ -39,6 +39,7 @@ import RequerimentoAprovar from "./pages/Requerimento/Aprovar";
 import Trilha from "./pages/Cfc";
 import TrilhaId from "./pages/Cfc/trilha";
 import MenuOpcao from "./pages/Cfc/menuAlunos";
+import Inscrever from "./pages/Cfc/Inscrever";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -228,9 +229,10 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/trilha" element={<Trilha />} />
-          <Route path="/trilha/:id" element={<TrilhaId />} />
-          <Route path="trilha/opcao/:id" element={<MenuOpcao />} />
+          <Route path="/trilho" element={<Trilha />} />
+          <Route path="/trilho/:id" element={<TrilhaId />} />
+          <Route path="trilho/opcao/:id" element={<MenuOpcao />} />
+          <Route path="trilho/inscrever/:id" element={<Inscrever />} />
         </Routes>
       </Router>
     </ContextToken.Provider>
