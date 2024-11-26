@@ -25,8 +25,9 @@ INSERT INTO tb_curso(nome) VALUES ( 'Fundamentos');
 INSERT INTO tb_curso(nome) VALUES ( 'Biblia e Teologia');
 INSERT INTO tb_curso(nome) VALUES ( 'Vida Cristã');
 INSERT INTO tb_curso(nome) VALUES ( 'Capacitação Ministerial');
-INSERT INTO tb_curso(nome) VALUES ( 'Crianças e Adolescentes');
+INSERT INTO tb_curso(nome) VALUES ( 'Crianças');
 INSERT INTO tb_curso(nome) VALUES ( 'Palavra & Vida');
+INSERT INTO tb_curso(nome) VALUES ( 'Adolescentes');
 
 
 
@@ -52,6 +53,12 @@ INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ( 'Joel', 'Pinheiro', 'ricardo@gmail.com', '1967-01-14', 70, '970312251', '828.908.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 2);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ('Ricardo', 'Chavier Galvão', 'ricardo@gmail.com', '1967-01-14', 70, '970312251', '128.308.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 3);
 
+
+
+
+INSERT INTO tb_visitante (nome, telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Elias','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
+INSERT INTO tb_visitante (nome, telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Lucas','(21)970323353','juneba@gmail.com', '1988-10-07', 32, 1);
+INSERT INTO tb_visitante (nome, telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Claudio','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
 
 
 
@@ -164,10 +171,3 @@ INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, per
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-23', 2, 'Não, houve atraso na chegada do professor.', 'Sim, um aluno precisou de ajuda extra.', 'Não, o material foi bem compreendido pela maioria.', 'Seria útil criar um fórum online para discussões.', 'Nenhuma observação adicional no momento.');
 INSERT INTO tb_relatorio (data, projeto_id, pergunta1, pergunta2, pergunta3, pergunta4, pergunta5) VALUES ('2024-04-23', 3, 'Sim, mas houve uma interrupção breve.', 'Sim, um aluno precisou de ajuda extra.', 'Não, o material foi bem compreendido pela maioria.', 'Seria útil criar um fórum online para discussões.', 'Nenhuma observação adicional no momento.');
 
-
-
-INSERT INTO tb_visitante (nome, sobrenome, sexo) VALUES ('Elias','Levia Silva','Masculino');
-INSERT INTO tb_visitante (nome, sobrenome, sexo) VALUES ('Andre','Favale Nogueira','Masculino');
-INSERT INTO tb_visitante (nome, sobrenome,  sexo) VALUES ('Maria','Laurindo Souza', 'Feminino');
-INSERT INTO tb_visitante (nome, sobrenome, sexo) VALUES ('Emerson','Levia Silva', 'Masculino');
-INSERT INTO tb_visitante (nome, sobrenome,  sexo) VALUES ('José','Bueno Vera', 'Masculino');

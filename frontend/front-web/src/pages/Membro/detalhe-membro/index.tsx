@@ -145,7 +145,7 @@ const Detalhes = () => {
                   <span>Telefone:</span> {MembroDTO.telefone}
                 </p>
                 {MembroDTO.curso && (
-                  <p className="dados-trilho offset-3 mb-5">
+                  <p className="dados-trilho offset-2 mb-5">
                     <span>Trilho:</span> {MembroDTO.curso.nome}
                   </p>
                 )}

@@ -35,17 +35,15 @@
 }
 .dados-trilho {
   background-color: var(--color-coral);
-  width: 15vw;
+  width: 20vw;
   height: 30px;
   margin-top: 10px;
   color: white;
   font-weight: bold;
   border-radius: 10px;
-
   align-content: center;
 }
-.dados-trilho span {
-}
+
 .dados span {
   font-weight: bold;
 }

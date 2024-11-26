@@ -1,15 +1,18 @@
 package com.esibape.DTO;
 
+import java.time.LocalDate;
 import java.util.Objects;
-
+import com.esibape.entities.Curso;
 import com.esibape.entities.Visitante;
 
 public class VisitanteDTO {
 		private Long id;
 		private String nome;
-		private String sobrenome;
-		private String sexo;
+		private Integer idade;
+		private String email;
 		private String telefone;
+		private LocalDate dataNascimento;
+	    private Curso curso;
 
 		
 	public VisitanteDTO() {
@@ -17,20 +20,25 @@ public class VisitanteDTO {
 			
 		}
 	
-	public VisitanteDTO(Long id, String nome, String sobrenome, String sexo, String telefone) {
+	public VisitanteDTO(Long id, String nome, Integer idade, String email, String telefone, LocalDate dataNascimento,
+			Curso curso) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.sobrenome = sobrenome;
-		this.sexo = sexo;
-		
+		this.idade = idade;
+		this.email = email;
+		this.telefone = telefone;
+		this.dataNascimento = dataNascimento;
+		this.curso = curso;
 	}
+
 	public VisitanteDTO(Visitante entity) {
 		this.id= entity.getId();
 		this.nome= entity.getNome();
-		this.sobrenome= entity.getSobrenome();
-		this.sexo= entity.getSexo();
+		this.dataNascimento = entity.getDataNascimento();
+		this.email = entity.getEmail();
 		this.telefone=entity.getTelefone();
+		this.idade = entity.getIdade();
 		
 	}
 
@@ -50,22 +58,38 @@ public class VisitanteDTO {
 		this.nome = nome;
 	}
 	
-	public String getSobrenome() {
-		return sobrenome;
-	}
-	
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
-	}
-	
-	public String getSexo() {
-		return sexo;
-	}
-	
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
+
+	public Integer getIdade() {
+		return idade;
 	}
 
+	public void setIdade(Integer idade) {
+		this.idade = idade;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
 
 	public String getTelefone() {
 		return telefone;

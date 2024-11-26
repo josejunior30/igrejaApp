@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.ResourceAccessException;
 
-import com.esibape.DTO.InscricaoDTO;
 import com.esibape.DTO.MembroDTO;
-import com.esibape.entities.Inscricao;
+import com.esibape.entities.Curso;
 import com.esibape.entities.Membro;
-import com.esibape.repository.InscricaoRepository;
+import com.esibape.repository.CursoRepository;
 import com.esibape.repository.MembroRepository;
 
 
@@ -25,6 +25,9 @@ public class MembroService {
     
     @Autowired
     private MembroRepository repository;
+
+    @Autowired
+    private CursoRepository cursoRepository;
     
     @Transactional(readOnly = true)
     public List<MembroDTO> findAll() {
@@ -63,6 +66,20 @@ public class MembroService {
     public void delete(Long id) {
     	repository.deleteById(id);
  
+    }
+    @Transactional
+    public void patchUpdateCurso(Long membroId, Long cursoId) {
+        // Busca o membro pelo ID
+        Membro membro = repository.findById(membroId)
+                                  .orElseThrow(() -> new ResourceAccessException("Membro não encontrado"));
+
+        // Busca o curso pelo ID
+        Curso curso = cursoRepository.findById(cursoId)
+                                     .orElseThrow(() -> new ResourceAccessException("Curso não encontrado"));
+
+        // Atualiza o curso do membro
+        membro.setCurso(curso);
+        repository.save(membro);
     }
     private void copyDtoToEntity(MembroDTO dto, Membro entity) {
     	atualizarIdade(dto);

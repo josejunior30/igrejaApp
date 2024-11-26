@@ -70,17 +70,18 @@ const MenuOpcao = () => {
             </p>
           </div>
         </div>
-
-        <div className="botoes mt-5 offset-4 mb-5">
-          <button className="inscrever ms-5" onClick={handleInscrever}>
-            Inscrever-se
-          </button>
-          <button
-            className="voltar btn btn-primary ms-5"
-            onClick={() => navigate(-1)}
-          >
-            Voltar
-          </button>
+        <div className="row justify-content-center">
+          <div className="botoes mt-5 col-12 mx-auto mb-5">
+            <button className="inscrever" onClick={handleInscrever}>
+              Inscrever-se
+            </button>
+            <button
+              className="voltar btn btn-primary ms-5"
+              onClick={() => navigate(-1)}
+            >
+              Voltar
+            </button>
+          </div>
         </div>
       </div>
     </>

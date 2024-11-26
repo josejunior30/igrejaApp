@@ -18,6 +18,9 @@
   height: 100%;
   width: 10vw;
 }
+.idade-trilho {
+  color: var(--color-coral);
+}
 #img-menu {
   border-radius: 10px;
 }

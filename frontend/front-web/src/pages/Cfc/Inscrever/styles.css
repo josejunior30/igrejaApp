@@ -3,11 +3,42 @@
 }
 .curso-selecionado {
   color: white;
+  font-weight: bold;
+  position: absolute;
+  right: 10vw;
+  margin-top: 50px;
+  background-color: var(--color-turquoise);
+  padding: 18px;
+  border-radius: 20px;
+  width: 200px;
 }
-.btn-inscrição {
-  width: 160px;
-  height: 60px;
+.btn-inscricao {
+  width: 150px;
+  height: 40px;
+  border-radius: 10px;
+  color: white;
+
+  border: none;
+  background-color: var(--color-coral);
 }
 .opcao-membro {
   color: white;
+}
+.Sim {
+  margin-right: 10px;
+  font-size: 20px;
+}
+.Nao {
+  margin-left: 6vw;
+  margin-right: 10px;
+  font-size: 20px;
+}
+.dados-visitante {
+  font-weight: bold;
+}
+.form-visitante {
+  background-color: white;
+}
+.input-sim {
+  margin-left: 10px;
 }

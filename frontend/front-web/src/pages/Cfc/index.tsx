@@ -19,19 +19,28 @@ const Trilha = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5  " id="conteiner-inicio">
-        <div className="row p-2" id="bem-vindo">
-          <div className="col-12">
-            <p>Escolha um Trilho!</p>
-          </div>
-        </div>
+        <div className="row p-2 mt-4" id="bem-vindo"></div>
         <div className="container d-flex  justify-content-center">
           <div className="row justify-content-center   mb-4" id="linha-menu">
-            <h3>Trilhos entre 0 a 18 anos e 65 anos </h3>
+            <h3>
+              Trilhos entre <span className="idade-trilho"> 0 a 17 anos </span>
+            </h3>
+
+            <div className="col-9 col-md-3" id="container-img">
+              <Link to="/trilho/opcao/5">
+                <img
+                  src={crianca}
+                  alt="crianca"
+                  className="img-fluid imagem-trilho"
+                  id="img-menu"
+                />
+              </Link>
+            </div>
             <div
               className="col-7 col-md-2 justify-content-center"
               id="container-img"
             >
-              <Link to="#">
+              <Link to="/trilho/opcao/7">
                 <img
                   src={Adolescentes}
                   alt="Adolescente"
@@ -40,32 +49,14 @@ const Trilha = () => {
                 />
               </Link>
             </div>
-            <div className="col-9 col-md-3" id="container-img">
-              <Link to="#">
-                <img
-                  src={crianca}
-                  alt="crianca"
-                  className="img-fluid"
-                  id="img-menu"
-                />
-              </Link>
-            </div>
-            <div className="col-9 col-md-3" id="container-img">
-              <Link to="#">
-                <img
-                  src={PalavaVida}
-                  alt="Palava e vida"
-                  className="img-fluid"
-                  id="img-menu"
-                />
-              </Link>
-            </div>
           </div>
 
-          <div className="row justify-content-center" id="linha-menu">
-            <h3>Trilhos entre 0 a 18 anos e 65 anos </h3>
+          <div className="row justify-content-center " id="linha-menu">
+            <h3>
+              Trilhos entre <span className="idade-trilho"> 18 a 65 anos</span>
+            </h3>
             <div className=" col-9 col-md-3" id="container-img">
-              <Link to="#">
+              <Link to="/trilho/opcao/3">
                 <img
                   src={VidaCrista}
                   alt="Vida Crista"
@@ -75,7 +66,7 @@ const Trilha = () => {
               </Link>
             </div>
             <div className="col-9 col-md-3" id="container-img">
-              <Link to="#">
+              <Link to="/trilho/opcao/2">
                 <img
                   src={BibliaTeologia}
                   alt="Biblia"
@@ -89,6 +80,22 @@ const Trilha = () => {
                 <img
                   src={Fundamentos}
                   alt="Fundamentos"
+                  className="img-fluid"
+                  id="img-menu"
+                />
+              </Link>
+            </div>
+          </div>
+
+          <div className="row justify-content-center" id="linha-menu">
+            <h3>
+              Trilhos mais de <span className="idade-trilho"> 65 anos</span>
+            </h3>
+            <div className="col-9 col-md-3" id="container-img">
+              <Link to="/trilho/opcao/6">
+                <img
+                  src={PalavaVida}
+                  alt="Palava e vida"
                   className="img-fluid"
                   id="img-menu"
                 />

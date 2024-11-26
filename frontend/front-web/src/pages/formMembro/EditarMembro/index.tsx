@@ -21,8 +21,10 @@ const FormularioUpdate = () => {
     curso: {
       id: 0,
       nome: "",
+      visitante: [],
       membro: [],
     },
+
     status: true,
     cpf: "",
     estadoCivil: 0,

@@ -25,6 +25,9 @@ public class Curso implements Serializable{
 	@OneToMany(mappedBy = "curso")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Membro> membro = new ArrayList<>();
+	@OneToMany(mappedBy = "curso")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Visitante> visitante = new ArrayList<>();
 	
 	public Curso() {
 		
@@ -32,12 +35,15 @@ public class Curso implements Serializable{
 	}
 
 
-	public Curso(Long id, String nome, List<Membro> membro) {
+
+	public Curso(Long id, String nome, List<Membro> membro, List<Visitante> visitante) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.membro = membro;
+		this.visitante = visitante;
 	}
+
 
 
 	public Long getId() {
@@ -66,6 +72,18 @@ public class Curso implements Serializable{
 	public void setMembro(List<Membro> membro) {
 		this.membro = membro;
 	}
+
+
+	public List<Visitante> getVisitante() {
+		return visitante;
+	}
+
+
+
+	public void setVisitante(List<Visitante> visitante) {
+		this.visitante = visitante;
+	}
+
 
 
 	@Override

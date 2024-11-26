@@ -25,3 +25,9 @@
   color: var(--color-coral);
   font-size: 38px;
 }
+.botoes {
+  justify-content: center; /* Centraliza os botões horizontalmente */
+  align-items: center;
+  gap: 20px;
+  display: flex;
+}

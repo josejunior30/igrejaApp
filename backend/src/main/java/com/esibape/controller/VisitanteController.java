@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -65,5 +66,9 @@ public class VisitanteController {
 				List<VisitanteDTO> result= service.findByNomeIgnoreCaseContaining(nome);
 				return ResponseEntity.ok(result);
 			}
-			
+			  @PatchMapping("/{visitanteId}/curso/{cursoId}")
+			    public ResponseEntity<Void> updateCurso(@PathVariable Long visitanteId, @PathVariable Long cursoId) {
+			        service.patchUpdateCurso(visitanteId, cursoId);
+			        return ResponseEntity.noContent().build();
+			    }
 }
