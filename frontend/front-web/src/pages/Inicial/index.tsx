@@ -69,7 +69,7 @@ const Inicial = () => (
           <img src={pg} alt="CFC" className="img-fluid" id="img-menu" />
 
           <h3>CFC</h3>
-          <Link to="/trilho">
+          <Link to="#">
             <button className="btn btn-info">Clique aqui</button>
           </Link>
         </div>
