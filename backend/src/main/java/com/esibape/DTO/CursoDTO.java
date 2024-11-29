@@ -13,6 +13,7 @@ public class CursoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nome;
+	private String url;
 	private List<MembroDTO> membro = new ArrayList<>();
 	private List<VisitanteDTO> visitante = new ArrayList<>();
 	public CursoDTO() {
@@ -22,10 +23,11 @@ public class CursoDTO implements Serializable{
 	
 	
 
-	public CursoDTO(Long id, String nome, List<MembroDTO> membro, List<VisitanteDTO> visitante) {
+	public CursoDTO(Long id, String nome, String url, List<MembroDTO> membro, List<VisitanteDTO> visitante) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.url= url;
 		this.membro = membro;
 		this.visitante = visitante;
 	}
@@ -36,15 +38,29 @@ public class CursoDTO implements Serializable{
 
 
 
+	public String getUrl() {
+		return url;
+	}
+
+
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+
+
 	public CursoDTO(Curso entity) {
 		this.id= entity.getId();
 		this.nome=entity.getNome();
-		
+		this.url=entity.getUrl();
+		;
 	}
 	
 	   public CursoDTO(Curso curso, List<Membro> membro, List<Visitante> visitante) {
 	        this.id = curso.getId();
 	        this.nome = curso.getNome();
+	        this.url =curso.getUrl();
 	        this.membro = membro.stream()
 	            .map(Membro -> new MembroDTO(Membro))  
 	            .collect(Collectors.toList());

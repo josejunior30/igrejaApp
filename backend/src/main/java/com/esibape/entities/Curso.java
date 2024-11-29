@@ -22,6 +22,7 @@ public class Curso implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	private String url;
 	@OneToMany(mappedBy = "curso")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Membro> membro = new ArrayList<>();
@@ -36,11 +37,12 @@ public class Curso implements Serializable{
 
 
 
-	public Curso(Long id, String nome, List<Membro> membro, List<Visitante> visitante) {
+	public Curso(Long id, String nome, String url, List<Membro> membro, List<Visitante> visitante) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.membro = membro;
+		this.url= url;
 		this.visitante = visitante;
 	}
 
@@ -53,6 +55,18 @@ public class Curso implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public String getUrl() {
+		return url;
+	}
+
+
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+
 
 	public String getNome() {
 		return nome;

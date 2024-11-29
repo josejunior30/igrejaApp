@@ -21,13 +21,13 @@ INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 2, 1);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 3, 2);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 4, 2);
 
-INSERT INTO tb_curso(nome) VALUES ( 'Fundamentos');
-INSERT INTO tb_curso(nome) VALUES ( 'Biblia e Teologia');
-INSERT INTO tb_curso(nome) VALUES ( 'Vida Cristã');
-INSERT INTO tb_curso(nome) VALUES ( 'Capacitação Ministerial');
-INSERT INTO tb_curso(nome) VALUES ( 'Crianças');
-INSERT INTO tb_curso(nome) VALUES ( 'Palavra & Vida');
-INSERT INTO tb_curso(nome) VALUES ( 'Adolescentes');
+INSERT INTO tb_curso(nome, url) VALUES ( 'Fundamentos', 'https://i.postimg.cc/13SywQfk/6.png');
+INSERT INTO tb_curso(nome, url) VALUES ( 'Biblia e Teologia', 'https://i.postimg.cc/vmMwgLSb/5.png');
+INSERT INTO tb_curso(nome, url) VALUES ( 'Vida Cristã', 'https://i.postimg.cc/J0TzKYvN/4.png');
+INSERT INTO tb_curso(nome, url) VALUES ( 'Capacitação Ministerial', 'https://i.postimg.cc/mZF4nDMx/7.png');
+INSERT INTO tb_curso(nome, url) VALUES ( 'Crianças', 'https://i.postimg.cc/5tvj13QJ/3.png');
+INSERT INTO tb_curso(nome, url) VALUES ( 'Palavra & Vida','https://i.postimg.cc/hvMf6tz7/1.png');
+INSERT INTO tb_curso(nome, url) VALUES ( 'Adolescentes', 'https://i.postimg.cc/XYrp13Vp/2.png');
 
 
 
