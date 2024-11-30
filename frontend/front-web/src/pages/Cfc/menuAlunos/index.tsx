@@ -44,12 +44,22 @@ const MenuOpcao = () => {
       alert("Curso não encontrado. Tente novamente.");
     }
   };
+  const handleAreaProfessor = () => {
+    if (curso) {
+      navigate(`/trilho/${curso.id}`);
+    } else {
+      alert("Nao foi possivel abrir o painel.");
+    }
+  };
 
   return (
     <>
       <Header />
       <div className="container-fluid mt-5 pt-2">
-        <button className="btn btn-danger text-center mt-5 ms-5">
+        <button
+          className="btn btn-danger text-center mt-5 ms-5"
+          onClick={handleAreaProfessor}
+        >
           Área do Professor
         </button>
 

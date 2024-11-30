@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.AlunoStatusDTO;
 import com.esibape.entities.AlunoStatus;
 import com.esibape.repository.AlunoStatusRepository;
-import com.esibape.repository.AlunosRepository;
+
 
 
 @Service

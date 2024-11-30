@@ -2,15 +2,19 @@ package com.esibape.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -50,6 +54,8 @@ public class Membro implements Serializable {
 	@JsonBackReference
     private Curso curso;
 
+	@OneToMany(mappedBy = "membro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
 	
 	@OneToOne(mappedBy= "membro", cascade = CascadeType.ALL)
 	private FileStorage foto;
@@ -65,12 +71,16 @@ public class Membro implements Serializable {
 	        return curso != null ? new CursoResumo(curso.getId(), curso.getNome()) : null;
 	    }
 
+	
+
+
+
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
-			String cidade, String complemento, String url, Boolean status, Curso curso, FileStorage foto) {
+			String cidade, String complemento, String url, Boolean status, Curso curso,
+			List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto) {
 		super();
 		this.id = id;
-		
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.email = email;
@@ -88,10 +98,9 @@ public class Membro implements Serializable {
 		this.url = url;
 		this.status = status;
 		this.curso = curso;
+		this.listaPresencaEBD = listaPresencaEBD;
 		this.foto = foto;
 	}
-
-
 
 
 	public Long getId() {
@@ -178,6 +187,16 @@ public class Membro implements Serializable {
 	}
 	
 	
+
+	public List<ListaPresencaEBD> getListaPresencaEBD() {
+		return listaPresencaEBD;
+	}
+
+
+	public void setListaPresencaEBD(List<ListaPresencaEBD> listaPresencaEBD) {
+		this.listaPresencaEBD = listaPresencaEBD;
+	}
+
 
 	public FileStorage getFoto() {
 		return foto;

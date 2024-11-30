@@ -1,0 +1,108 @@
+
+
+#pesquisa-chamada{
+
+  background-color: white;
+  border-radius: 10px;
+
+}
+#pesquisa-chamada label {
+  font-size: 14px;
+  margin-left: 4%;
+    
+    font-weight: bolder;
+  }
+  #pesquisa-chamada h3{
+    margin-top: 10px;
+     text-align: center;
+     font-weight: bolder;
+        
+      }
+
+      #pesquisa-chamada input{
+      margin-left:2px;
+            
+          }
+    
+
+.img-print-lista{
+margin-left: 80%;
+font-size: 20px;
+text-align: center;
+
+color: white;
+}
+
+.img-print-lista p{
+  color: white;
+ 
+}
+
+#btn-pesquisa-lista{
+  align-self: self-end;
+justify-content: end;
+align-items: self-end;
+width: 180px;
+margin-left: 2%;
+
+}
+@media (max-width: 768px) {
+  #pesquisa-chamada label{
+   font-size: 12px;
+          
+        }
+        .img-print-lista{
+       
+          font-size: 12px;
+         
+          }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

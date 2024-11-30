@@ -78,6 +78,7 @@ public class VisitanteService {
     }
     private void copyDtoToEntity(VisitanteDTO dto, Visitante entity) {
 		entity.setNome(dto.getNome());
+		entity.setSobrenome(dto.getSobrenome());
 	entity.setDataNascimento(dto.getDataNascimento());
 	entity.setEmail(dto.getEmail());
 	entity.setTelefone(dto.getTelefone());

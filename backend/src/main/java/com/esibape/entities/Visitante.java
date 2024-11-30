@@ -1,14 +1,19 @@
 package com.esibape.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -22,6 +27,7 @@ public class Visitante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	private String sobrenome;
 	private Integer idade;
 	private String email;
 	private String telefone;
@@ -32,6 +38,8 @@ public class Visitante {
 	@JsonBackReference
     private Curso curso;
 	
+	@OneToMany(mappedBy = "visitante", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
 	
 	public Visitante() {
 		
@@ -39,11 +47,12 @@ public class Visitante {
 	}
 
 
-	public Visitante(Long id, String nome, Integer idade, String email, String telefone, LocalDate dataNascimento,
+	public Visitante(Long id, String nome, String sobrenome, Integer idade, String email, String telefone, LocalDate dataNascimento,
 			Curso curso) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.sobrenome= sobrenome;
 		this.idade = idade;
 		this.email = email;
 		this.telefone = telefone;
@@ -83,6 +92,16 @@ public class Visitante {
 
 	public String getEmail() {
 		return email;
+	}
+
+
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
+
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
 	}
 
 

@@ -12,10 +12,10 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 import com.esibape.entities.Curso;
-import com.esibape.entities.Inscricao;
+import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
 import com.esibape.entities.MembroEstado;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 public class MembroDTO implements Serializable{
@@ -43,7 +43,7 @@ public class MembroDTO implements Serializable{
 	private String url;
 	private Boolean status =true;
 	private Curso curso;
-
+	private List<ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
 	public MembroDTO() {
 		
 	}
@@ -51,12 +51,17 @@ public class MembroDTO implements Serializable{
 	
 	
 
+	
+
+
+
 	public MembroDTO(Long id,
 			@Size(min = 3, message = "O nome deve ter no minimo 3 caracteres") @NotEmpty(message = "campo não poe ser nulo ou vazio") String nome,
 			String sobrenome, @Email(message = "Deve ser um Email Valido") String email,
 			@PastOrPresent(message = "escolha uma data válida") LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
-			String cidade, String complemento, String url, Boolean status, Curso curso) {
+			String cidade, String complemento, String url, Boolean status, Curso curso,
+			List<ListaPresencaEBDDTO> listaPresencaEBD) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -76,7 +81,12 @@ public class MembroDTO implements Serializable{
 		this.url = url;
 		this.status = status;
 		this.curso = curso;
+		this.listaPresencaEBD = listaPresencaEBD;
 	}
+
+
+
+
 
 
 
@@ -116,7 +126,13 @@ public class MembroDTO implements Serializable{
 		this.curso = entity.getCurso();
 		
 	}
-
+	public MembroDTO(Membro entity, List<ListaPresencaEBD>listaPresencaEBD) {
+		 this(entity);
+		  if (listaPresencaEBD !=null) {
+			  listaPresencaEBD.forEach(pg-> this.listaPresencaEBD.add(new ListaPresencaEBDDTO(pg)));
+	        }
+		
+	}
 
 	public Long getId() {
 		return id;

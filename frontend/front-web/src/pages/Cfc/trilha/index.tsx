@@ -37,13 +37,34 @@ const TrilhaId = () => {
     return `55${phoneNumber}`;
   };
 
+  // Helper function to merge and sort participants
+  const getSortedParticipants = () => {
+    if (!curso) return [];
+    const allParticipants = [
+      ...(curso.membro || []).map((membro) => ({
+        ...membro,
+        status: "Membro",
+        sobrenome: membro.sobrenome || "", // Garantir sobrenome nos membros
+      })),
+      ...(curso.visitante || []).map((visitante) => ({
+        ...visitante,
+        status: "Visitante",
+        sobrenome: visitante.sobrenome || "(Sem Sobrenome)", // Adicionar sobrenome padrão para visitantes
+      })),
+    ];
+    return allParticipants.sort(
+      (a, b) =>
+        a.nome.localeCompare(b.nome) || a.sobrenome.localeCompare(b.sobrenome)
+    );
+  };
+
   return (
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center">
           <div className="voltar-projetos-menu mt-5">
-            <Link to="/trilha">
+            <Link to="/trilho">
               <TiArrowBack /> Voltar
             </Link>
           </div>
@@ -61,7 +82,7 @@ const TrilhaId = () => {
                 <button className="Painel-Menu">Lista de Presenca</button>
                 <button className="Painel-Menu">Avaliacoes</button>
               </div>
-              {curso.membro && curso.membro.length > 0 ? (
+              {curso.membro?.length || curso.visitante?.length ? (
                 <div>
                   <table className="table table-striped">
                     <thead>
@@ -74,26 +95,24 @@ const TrilhaId = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {curso.membro.map((membro) => (
-                        <tr key={membro.id}>
+                      {getSortedParticipants().map((participant) => (
+                        <tr key={`${participant.status}-${participant.id}`}>
                           <td>
-                            <Link to={`/membro/${membro.id}`}>
-                              {`${membro.nome} ${membro.sobrenome}`}
-                            </Link>
+                            {`${participant.nome} ${participant.sobrenome}`}
                           </td>
-                          <td>{`${membro.idade}`}</td>
+                          <td>{`${participant.idade}`}</td>
                           <td>
                             <Link
                               to={`https://wa.me/${formatPhoneNumber(
-                                membro.telefone
+                                participant.telefone
                               )}`}
                             >
                               <i className="bi bi-whatsapp"></i>{" "}
-                              {membro.telefone}
+                              {participant.telefone}
                             </Link>
                           </td>
-                          <td>{membro.email}</td>
-                          <td>Membro</td>
+                          <td>{participant.email}</td>
+                          <td>{participant.status}</td>
                         </tr>
                       ))}
                     </tbody>

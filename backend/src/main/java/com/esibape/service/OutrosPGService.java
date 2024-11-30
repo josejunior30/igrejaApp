@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.OutrosPGDTO;
-import com.esibape.DTO.PagamentoDTO;
+
 import com.esibape.entities.MesReferencia;
 import com.esibape.entities.OutrosPG;
-import com.esibape.entities.Pagamento;
+
 import com.esibape.repository.OutrosPGRepository;
 
 
