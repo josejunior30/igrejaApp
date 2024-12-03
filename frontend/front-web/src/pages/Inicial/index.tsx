@@ -11,6 +11,8 @@ const lideranca = "https://i.postimg.cc/T3FHVw9N/2.png";
 const pg = "https://i.postimg.cc/sDMXn0w3/pequeno-Grupo.jpg";
 const secretaria = "https://i.postimg.cc/TYvd9YLJ/secretaria.jpg";
 const visitante = "https://i.postimg.cc/TYvd9YLJ/secretaria.jpg";
+const cfc =
+  "https://i.postimg.cc/cCW1P3MX/C-pia-de-Projeto-Final-CFC-SIBAPE.png";
 const Inicial = () => (
   <>
     <Header />
@@ -66,10 +68,10 @@ const Inicial = () => (
 
       <div className="row justify-content-center" id="row-menu">
         <div className="col-9 col-md-3" id="col-img">
-          <img src={pg} alt="CFC" className="img-fluid" id="img-menu" />
+          <img src={cfc} alt="CFC" className="img-fluid" id="img-menu" />
 
           <h3>CFC</h3>
-          <Link to="#">
+          <Link to="/trilho">
             <button className="btn btn-info">Clique aqui</button>
           </Link>
         </div>

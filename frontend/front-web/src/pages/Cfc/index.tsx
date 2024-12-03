@@ -76,7 +76,7 @@ const Trilha = () => {
               </Link>
             </div>
             <div className="col-9 col-md-3" id="container-img">
-              <Link to="/trilha/opcao/1">
+              <Link to="/trilho/opcao/1">
                 <img
                   src={Fundamentos}
                   alt="Fundamentos"

@@ -3,39 +3,35 @@ package com.esibape.DTO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-
-import com.esibape.entities.ChamadaMembro;
+import com.esibape.entities.ChamadaVisitante;
 import com.esibape.entities.Curso;
-import com.esibape.entities.ListaPresencaEBD;
-import com.esibape.entities.Membro;
+import com.esibape.entities.ListaPresencaVisitanteEBD;
+import com.esibape.entities.Visitante;
 
 
-
-public class ListaPresencaEBDDTO implements Serializable{
+public class ListaPresencaVisitanteEBDDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 		
 	private Long id;
 	private LocalDate data; 
-	private MembroDTO membro ;
+	private VisitanteDTO visitante;
 	private CursoDTO curso; 
-	  private ChamadaMembro chamadaMembro; 
-	
-	  ListaPresencaEBDDTO(){
+
+	    private ChamadaVisitante chamadaVisitante; 
+	ListaPresencaVisitanteEBDDTO(){
 		
 	}
 
-
-
-	public ListaPresencaEBDDTO(ListaPresencaEBD entity) {
+	public ListaPresencaVisitanteEBDDTO(ListaPresencaVisitanteEBD entity) {
 		
 		this.id = entity.getId();
 		this.data = entity.getData();
-		this.chamadaMembro = entity.getChamadaMembro();
-
+		this.chamadaVisitante = entity.getChamadaVisitante();
 	}
-	public ListaPresencaEBDDTO(ListaPresencaEBD entity, Membro membro, Curso curso) {
+	
+	public ListaPresencaVisitanteEBDDTO(ListaPresencaVisitanteEBD entity, Visitante visitante, Curso curso) {
 		this(entity);
-		this.membro = new MembroDTO(membro);
+		this.visitante = new VisitanteDTO(visitante);
 		this.curso = new CursoDTO(curso);
 
 	}
@@ -75,26 +71,23 @@ public class ListaPresencaEBDDTO implements Serializable{
 	}
 
 
-
-	public ChamadaMembro getChamadaMembro() {
-		return chamadaMembro;
+	public ChamadaVisitante getChamadaVisitante() {
+		return chamadaVisitante;
 	}
 
 
-
-
-	public void setChamadaMembro(ChamadaMembro chamadaMembro) {
-		this.chamadaMembro = chamadaMembro;
+	public void setChamadaVisitante(ChamadaVisitante chamadaVisitante) {
+		this.chamadaVisitante = chamadaVisitante;
 	}
 
 
-	public MembroDTO getMembro() {
-		return membro;
+	public VisitanteDTO getVisitante() {
+		return visitante;
 	}
 
 
-	public void setMembro(MembroDTO membro) {
-		this.membro = membro;
+	public void setVisitante(VisitanteDTO visitante) {
+		this.visitante = visitante;
 	}
 
 
@@ -112,7 +105,7 @@ public class ListaPresencaEBDDTO implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ListaPresencaEBDDTO other = (ListaPresencaEBDDTO) obj;
+		ListaPresencaVisitanteEBDDTO other = (ListaPresencaVisitanteEBDDTO) obj;
 		return Objects.equals(id, other.id);
 	}
 	

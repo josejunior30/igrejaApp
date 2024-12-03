@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { curso } from "../../../models/trilha";
 import * as trilhoService from "../../../service/trilhoService";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../../../components/Header";
 import "./styles.css";
 import { TiArrowBack } from "react-icons/ti";
@@ -10,6 +10,7 @@ const TrilhaId = () => {
   const [curso, setCurso] = useState<curso | null>(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>() ?? { id: "" };
+  const navigate = useNavigate();
 
   const loadCurso = (id: string) => {
     trilhoService
@@ -57,7 +58,13 @@ const TrilhaId = () => {
         a.nome.localeCompare(b.nome) || a.sobrenome.localeCompare(b.sobrenome)
     );
   };
-
+  const handleAreaProfessor = () => {
+    if (curso) {
+      navigate(`/trilho/presenca/inserir/${curso.id}`);
+    } else {
+      alert("Nao foi possivel abrir o painel.");
+    }
+  };
   return (
     <>
       <Header />
@@ -79,7 +86,9 @@ const TrilhaId = () => {
 
               <div className="botoes-container col-10 mx-auto">
                 <button className="Painel-Menu">Inserir Estudo</button>
-                <button className="Painel-Menu">Lista de Presenca</button>
+                <button className="Painel-Menu" onClick={handleAreaProfessor}>
+                  Lista de Presenca
+                </button>
                 <button className="Painel-Menu">Avaliacoes</button>
               </div>
               {curso.membro?.length || curso.visitante?.length ? (

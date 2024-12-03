@@ -16,10 +16,9 @@ import javax.persistence.Table;
 
 
 
-
 @Entity
-@Table(name="tb_lista_presenca_Ebd")
-public class ListaPresencaEBD implements Serializable{
+@Table(name="tb_lista_presenca_Visitante_Ebd")
+public class ListaPresencaVisitanteEBD implements Serializable{
 	private static final long serialVersionUID = 1L;
 		
 	@Id
@@ -27,43 +26,46 @@ public class ListaPresencaEBD implements Serializable{
 	private Long id;
 	private LocalDate data; 
 	 @Enumerated(EnumType.STRING)
-    private ChamadaMembro chamadaMembro; 
+    private ChamadaVisitante chamadaVisitante; 
 
 	@ManyToOne
-    @JoinColumn(name = "membro_id", nullable = false)
-	private Membro membro ;
+	@JoinColumn(name= "visitante_id")
+	private Visitante visitante;
 	
 	@ManyToOne
 	@JoinColumn(name= "curso_id")
 
 	private Curso curso; 
 	
-	public ListaPresencaEBD(){
+	public ListaPresencaVisitanteEBD(){
 		
 	}
 
 
 
-	public ListaPresencaEBD(Long id, LocalDate data, ChamadaMembro chamadaMembro,
-			Membro membro, Curso curso) {
+	public ListaPresencaVisitanteEBD(Long id, LocalDate data, ChamadaVisitante chamadaVisitante,
+		 Visitante visitante, Curso curso) {
 		super();
 		this.id = id;
 		this.data = data;
-		this.chamadaMembro = chamadaMembro;
-		this.membro = membro;
+		this.chamadaVisitante = chamadaVisitante;
+		this.visitante = visitante;
 		this.curso = curso;
 	}
 
 
 
-	public ChamadaMembro getChamadaMembro() {
-		return chamadaMembro;
+
+
+	public ChamadaVisitante getChamadaVisitante() {
+		return chamadaVisitante;
 	}
 
-	public void setChamadaMembro(ChamadaMembro chamadaMembro) {
-		this.chamadaMembro = chamadaMembro;
-	}
 
+
+	public void setChamadaVisitante(ChamadaVisitante chamadaVisitante) {
+		this.chamadaVisitante = chamadaVisitante;
+	}
 
 	public Long getId() {
 		return id;
@@ -98,15 +100,13 @@ public class ListaPresencaEBD implements Serializable{
 
 
 
-
-
-	public Membro getMembro() {
-		return membro;
+	public Visitante getVisitante() {
+		return visitante;
 	}
 
 
-	public void setMembro(Membro membro) {
-		this.membro = membro;
+	public void setVisitante(Visitante visitante) {
+		this.visitante = visitante;
 	}
 
 
@@ -124,7 +124,7 @@ public class ListaPresencaEBD implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ListaPresencaEBD other = (ListaPresencaEBD) obj;
+		ListaPresencaVisitanteEBD other = (ListaPresencaVisitanteEBD) obj;
 		return Objects.equals(id, other.id);
 	}
 	

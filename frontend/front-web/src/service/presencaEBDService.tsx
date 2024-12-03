@@ -12,3 +12,12 @@ export function insert(ListaChamadaEBD: ListaChamadaEBD) {
 export function findById(id: number) {
   return axios.get(`${BASE_URL}/presenca/${id}`);
 }
+export function findMembroByMonthAndCurso(
+  mesEscolhido: number,
+  anoEscolhido: number,
+  cursoId: number
+) {
+  return axios.get(
+    `${BASE_URL}/presenca/listas-presenca?ano=${anoEscolhido}&mes=${mesEscolhido}&cursoId=${cursoId}`
+  );
+}

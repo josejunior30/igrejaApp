@@ -39,7 +39,7 @@ public class Visitante {
     private Curso curso;
 	
 	@OneToMany(mappedBy = "visitante", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
+	private List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD = new ArrayList<>();
 	
 	public Visitante() {
 		
@@ -47,18 +47,24 @@ public class Visitante {
 	}
 
 
-	public Visitante(Long id, String nome, String sobrenome, Integer idade, String email, String telefone, LocalDate dataNascimento,
-			Curso curso) {
+	
+
+
+	public Visitante(Long id, String nome, String sobrenome, Integer idade, String email, String telefone,
+			LocalDate dataNascimento, Curso curso, List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.sobrenome= sobrenome;
+		this.sobrenome = sobrenome;
 		this.idade = idade;
 		this.email = email;
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
 		this.curso = curso;
+		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
 	}
+
+
 
 
 
@@ -123,6 +129,22 @@ public class Visitante {
 	public Curso getCurso() {
 		return curso;
 	}
+
+
+	public List<ListaPresencaVisitanteEBD> getListaPresencaVisitanteEBD() {
+		return listaPresencaVisitanteEBD;
+	}
+
+
+
+
+
+	public void setListaPresencaVisitanteEBD(List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD) {
+		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
+	}
+
+
+
 
 
 	public void setCurso(Curso curso) {

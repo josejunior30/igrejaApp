@@ -1,21 +1,28 @@
 package com.esibape.entities;
+
 public enum ChamadaMembro {
-    PRESENTE("presente"),
-    AUSENTE("ausente"),
-    LICENÇA("licença");
+	  PRESENTE("Presente"),
+	    AUSENTE("Ausente"),
+	    JUSTIFICADO("Justificado");
 
-    private final String chamadaMembro;
+	    private final String valor;
 
-    ChamadaMembro(String chamadaMembro) {
-        this.chamadaMembro = chamadaMembro;
-    }
+	    ChamadaMembro(String valor) {
+	        this.valor = valor;
+	    }
 
-    public String getChamadaMembro() {
-        return chamadaMembro;
-    }
+	    public String getValor() {
+	        return valor;
+	    }
 
-    @Override
-    public String toString() {
-        return chamadaMembro;
-    }
-}
+	    // Convert from String to Enum
+	    public static ChamadaMembro fromValor(String valor) {
+	        for (ChamadaMembro chamada : values()) {
+	            if (chamada.getValor().equalsIgnoreCase(valor)) {
+	                return chamada;
+	            }
+	        }
+	        throw new IllegalArgumentException("Valor inválido para ChamadaMembro: " + valor);
+	    }
+	}
+

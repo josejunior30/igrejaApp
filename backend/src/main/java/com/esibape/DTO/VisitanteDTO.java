@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import com.esibape.entities.Curso;
-import com.esibape.entities.ListaPresencaEBD;
-
+import com.esibape.entities.ListaPresencaVisitanteEBD;
 import com.esibape.entities.Visitante;
 
 public class VisitanteDTO {
@@ -18,7 +17,7 @@ public class VisitanteDTO {
 		private String telefone;
 		private LocalDate dataNascimento;
 	    private Curso curso;
-		private List<ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
+	    private List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD = new ArrayList<>();
 		
 	public VisitanteDTO() {
 			
@@ -26,8 +25,10 @@ public class VisitanteDTO {
 		}
 	
 
+
+
 	public VisitanteDTO(Long id, String nome, String sobrenome, Integer idade, String email, String telefone,
-			LocalDate dataNascimento, Curso curso, List<ListaPresencaEBDDTO> listaPresencaEBD) {
+			LocalDate dataNascimento, Curso curso, List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -37,8 +38,10 @@ public class VisitanteDTO {
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
 		this.curso = curso;
-		this.listaPresencaEBD = listaPresencaEBD;
+		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
 	}
+
+
 
 
 	public VisitanteDTO(Visitante entity) {
@@ -51,10 +54,10 @@ public class VisitanteDTO {
 		this.idade = entity.getIdade();
 		
 	}
-	public VisitanteDTO(Visitante entity, List<ListaPresencaEBD>listaPresencaEBD) {
+	public VisitanteDTO(Visitante entity, List<ListaPresencaVisitanteEBD>listaPresencaVisitanteEBD) {
 		 this(entity);
-		  if (listaPresencaEBD !=null) {
-			  listaPresencaEBD.forEach(pg-> this.listaPresencaEBD.add(new ListaPresencaEBDDTO(pg)));
+		  if (listaPresencaVisitanteEBD !=null) {
+			  listaPresencaVisitanteEBD.forEach(pg-> this.listaPresencaVisitanteEBD.add(new ListaPresencaVisitanteEBDDTO(pg)));
 	        }
 		
 	}
@@ -125,15 +128,14 @@ public class VisitanteDTO {
 		this.telefone = telefone;
 	}
 
-	public List<ListaPresencaEBDDTO> getListaPresencaEBD() {
-		return listaPresencaEBD;
+
+	public List<ListaPresencaVisitanteEBDDTO> getListaPresencaVisitanteEBD() {
+		return listaPresencaVisitanteEBD;
 	}
 
-
-	public void setListaPresencaEBD(List<ListaPresencaEBDDTO> listaPresencaEBD) {
-		this.listaPresencaEBD = listaPresencaEBD;
+	public void setListaPresencaVisitanteEBD(List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD) {
+		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
 	}
-
 
 	@Override
 	public int hashCode() {

@@ -1,21 +1,25 @@
-// File: src/pages/InserirPresencaEBD.tsx
-
-import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useState, useEffect, useMemo } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 import * as trilhoService from "../../../../service/trilhoService";
 import * as presencaEBDService from "../../../../service/presencaEBDService";
-
+import "./styles.css";
 import { curso } from "../../../../models/trilha";
 import Header from "../../../../components/Header";
+import * as presencaVisitanteEBDService from "../../../../service/presencaVisitanteEBDService ";
+import { ListaChamadaEBD } from "../../../../models/ListaChamadaEBD";
+import { ListaChamadaVisitanteEBD } from "../../../../models/ListaChamadaVisitanteEBD";
 
 const InserirPresencaEBD = () => {
   const [curso, setCurso] = useState<curso | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
   const { id } = useParams<{ id: string }>() ?? { id: "" };
   const [presencas, setPresencas] = useState<
-    Record<number, "presente" | "ausente" | null>
+    Record<string, "presente" | "ausente" | null>
   >({});
+  const [dataPresenca, setDataPresenca] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Carregar detalhes do curso
@@ -39,67 +43,91 @@ const InserirPresencaEBD = () => {
     }
   }, [id]);
 
-  // Obter participantes ordenados
-  const getSortedParticipants = () => {
+  // Obter participantes ordenados e com IDs únicos
+  const sortedParticipants = useMemo(() => {
     if (!curso) return [];
     const allParticipants = [
       ...(curso.membro || []).map((membro) => ({
         ...membro,
         status: "Membro",
-        sobrenome: membro.sobrenome || "", // Garantir sobrenome nos membros
+        uniqueId: `membro-${membro.id}`,
       })),
       ...(curso.visitante || []).map((visitante) => ({
         ...visitante,
         status: "Visitante",
-        sobrenome: visitante.sobrenome || "(Sem Sobrenome)", // Adicionar sobrenome padrão para visitantes
+        uniqueId: `visitante-${visitante.id}`,
       })),
     ];
-    return allParticipants.sort(
-      (a, b) =>
-        a.nome.localeCompare(b.nome) || a.sobrenome.localeCompare(b.sobrenome)
-    );
-  };
+    return allParticipants.sort((a, b) => a.nome.localeCompare(b.nome));
+  }, [curso]);
 
   // Atualizar presenças
-  const handleCheckboxChange = (id: number, status: "presente" | "ausente") => {
-    setPresencas((prevState) => ({
-      ...prevState,
-      [id]: prevState[id] === status ? null : status, // Alternar entre selecionado e desmarcado
-    }));
+  const handleCheckboxChange = (
+    uniqueId: string,
+    status: "presente" | "ausente"
+  ) => {
+    setPresencas((prevState) => {
+      const newState = {
+        ...prevState,
+        [uniqueId]: prevState[uniqueId] === status ? null : status,
+      };
+      console.log("Novo estado após mudança:", newState);
+      return newState;
+    });
   };
 
   // Enviar lista de presenças
   const enviarListaDePresenca = async () => {
-    if (!curso) return;
+    if (!curso || !dataPresenca) {
+      alert("Por favor, selecione uma data válida antes de enviar.");
+      return;
+    }
 
-    const participantes = getSortedParticipants();
+    const listaPresencaVisitantes: ListaChamadaVisitanteEBD[] =
+      sortedParticipants
+        .filter(
+          (participant) =>
+            participant.status === "Visitante" &&
+            presencas[participant.uniqueId] === "presente"
+        )
+        .map((participant) => ({
+          id: 0,
+          data: new Date(dataPresenca),
+          chamadaVisitante: 1,
+          curso: { id: curso.id, nome: curso.nome, membro: [], visitante: [] },
+          visitante: { id: participant.id, nome: participant.nome },
+        }));
 
-    // Construir lista de presenças para enviar
-    const listaPresenca = participantes
-      .filter((participant) => presencas[participant.id]) // Apenas participantes com presença marcada
+    const listaPresencaMembros: ListaChamadaEBD[] = sortedParticipants
+      .filter(
+        (participant) =>
+          participant.status === "Membro" &&
+          presencas[participant.uniqueId] === "presente"
+      )
       .map((participant) => ({
         id: 0,
-        data: new Date(), // Data atual
-        chamadaMembro: participant.status === "Membro" ? 1 : 0,
-        chamadaVisitante: participant.status === "Visitante" ? 1 : 0,
+        data: new Date(dataPresenca),
+        chamadaMembro: 1,
         curso: { id: curso.id, nome: curso.nome, membro: [], visitante: [] },
-        membro:
-          participant.status === "Membro"
-            ? { id: participant.id, nome: participant.nome }
-            : { id: 0, nome: "" }, // Objeto padrão para membros
-        visitante:
-          participant.status === "Visitante"
-            ? { id: participant.id, nome: participant.nome }
-            : { id: 0, nome: "" }, // Objeto padrão para visitantes
+        membro: { id: participant.id, nome: participant.nome },
+        visitante: null,
       }));
 
     setIsSubmitting(true);
 
     try {
       await Promise.all(
-        listaPresenca.map((presenca) => presencaEBDService.insert(presenca))
+        listaPresencaVisitantes.map((presenca) =>
+          presencaVisitanteEBDService.insertPresencaVisitante(presenca)
+        )
+      );
+      await Promise.all(
+        listaPresencaMembros.map((presenca) =>
+          presencaEBDService.insert(presenca)
+        )
       );
       alert("Lista de presença enviada com sucesso!");
+      navigate(`/trilho/${curso.id}`);
     } catch (error) {
       console.error("Erro ao enviar lista de presença:", error);
       alert("Erro ao enviar lista de presença. Por favor, tente novamente.");
@@ -107,7 +135,13 @@ const InserirPresencaEBD = () => {
       setIsSubmitting(false);
     }
   };
-
+  const handleHistorico = () => {
+    if (curso) {
+      navigate(`/trilho/presenca/historicoChamada`);
+    } else {
+      alert("Nao foi possivel abrir o painel.");
+    }
+  };
   return (
     <>
       <Header />
@@ -121,48 +155,76 @@ const InserirPresencaEBD = () => {
           {loading ? (
             <p>Carregando detalhes do curso...</p>
           ) : curso ? (
-            <div className="col-md-8 col-10 m-3 md-5 pb-3 text-center">
+            <div className="col-md-7 col-10 m-3 md-5 pb-3 text-center">
               <h1 className="title">
                 <span className="trilho-titulo">Trilha : </span>
                 {curso.nome}
               </h1>
-              <select className="form-select mb-3">
-                <option>Selecione o mês</option>
-                <option>Janeiro</option>
-                <option>Fevereiro</option>
-                <option>Março</option>
-              </select>
-              {curso.membro?.length || curso.visitante?.length ? (
+              <div className="col-md-10 d-flex  col-10" id="containerData">
+                <div className="col-md-4  col-10 m-3 md-5 pb-3 text-center align-content-center">
+                  <label
+                    htmlFor="data-presenca"
+                    id="LabelDataPresenca"
+                    className="form-label"
+                  >
+                    Data da Chamada:
+                  </label>
+                  <input
+                    type="date"
+                    id="data-presenca"
+                    className="form-control mb-3 "
+                    value={dataPresenca}
+                    onChange={(e) => setDataPresenca(e.target.value)}
+                  />
+                </div>
+                <button className="Painel-Menu-btn" onClick={handleHistorico}>
+                  Historico de Chamada
+                </button>
+              </div>
+              {sortedParticipants.length ? (
                 <div>
                   <table className="table table-striped">
                     <thead>
                       <tr>
+                        <th>#</th>
                         <th>Nome</th>
                         <th>Presente</th>
                         <th>Ausente</th>
                       </tr>
                     </thead>
+
                     <tbody>
-                      {getSortedParticipants().map((participant) => (
-                        <tr key={`${participant.status}-${participant.id}`}>
+                      {sortedParticipants.map((participant, index) => (
+                        <tr key={participant.uniqueId}>
+                          <td>{index + 1}</td>
                           <td>
-                            {`${participant.nome} ${participant.sobrenome}`}
+                            {participant.nome} {participant.sobrenome}
                           </td>
                           <td>
                             <input
                               type="checkbox"
-                              checked={presencas[participant.id] === "presente"}
+                              checked={
+                                presencas[participant.uniqueId] === "presente"
+                              }
                               onChange={() =>
-                                handleCheckboxChange(participant.id, "presente")
+                                handleCheckboxChange(
+                                  participant.uniqueId,
+                                  "presente"
+                                )
                               }
                             />
                           </td>
                           <td>
                             <input
                               type="checkbox"
-                              checked={presencas[participant.id] === "ausente"}
+                              checked={
+                                presencas[participant.uniqueId] === "ausente"
+                              }
                               onChange={() =>
-                                handleCheckboxChange(participant.id, "ausente")
+                                handleCheckboxChange(
+                                  participant.uniqueId,
+                                  "ausente"
+                                )
                               }
                             />
                           </td>

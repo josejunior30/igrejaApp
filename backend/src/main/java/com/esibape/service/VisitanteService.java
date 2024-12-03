@@ -3,15 +3,12 @@ package com.esibape.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.ResourceAccessException;
-
 import com.esibape.DTO.VisitanteDTO;
 import com.esibape.entities.Curso;
-import com.esibape.entities.Membro;
 import com.esibape.entities.Visitante;
 import com.esibape.repository.CursoRepository;
 import com.esibape.repository.VisitanteRepository;

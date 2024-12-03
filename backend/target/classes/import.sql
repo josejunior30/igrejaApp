@@ -30,14 +30,11 @@ INSERT INTO tb_curso(nome, url) VALUES ( 'Palavra & Vida','https://i.postimg.cc/
 INSERT INTO tb_curso(nome, url) VALUES ( 'Adolescentes', 'https://i.postimg.cc/XYrp13Vp/2.png');
 
 
-
-
-
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil, rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ('José Luiz', 'Ribeiro Junior', 'junior@gmail.com', '1988-10-07', 35, 21970312251, '123.789.964-67', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 1);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep , status, curso_id) VALUES ('Marcus', 'Fereira Duarte', 'marcus@gmail.com', '1987-05-11', 37, '21970312251', '923.289.964-12' ,0, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 1);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ('Jaline', 'Pereira Fonseca', 'jaline@gmail.com', '1991-06-22', 30, '21970312251', '954.789.964-99', 3, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 1);
-INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ('Aline', 'Pereira Fonseca', 'aline@gmail.com', '1988-10-07', 40, '21970312251', '883.789.964-46', 2, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', false, 2);
-INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ('Alex', 'Soares Fonseca', 'alex@gmail.com', '1967-01-14',65, '21970312251', '149.789.964-67',2, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202','24110221', true, 2);
+INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ('Aline', 'Pereira Fonseca', 'aline@gmail.com', '1988-10-07', 40, '21970312251', '883.789.964-46', 2, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', false, 1);
+INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ('Alex', 'Soares Fonseca', 'alex@gmail.com', '1967-01-14',65, '21970312251', '149.789.964-67',2, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202','24110221', true, 1);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ('Carlos','Henriques Silva', 'carlosx@gmail.com', '1970-09-14', 53, '21970312251', '123.091.964-16', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', false, 2);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ( 'Gabriela', 'Lopez Marques', 'gabix@gmail.com', '1987-06-25', 41, '21970312251', '128.308.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202',' 24110221', true, 3);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id) VALUES ('João Arthur', 'Loureiro Ribeiro', 'joãox@gmail.com', '1981-04-19', 32, '21970312251', '935.308.745-56', 2, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 4);
@@ -59,13 +56,13 @@ INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone
 INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Elias ','Jamal Soares','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
 INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Lucas ','Damasco Figueira','(21)970323353','juneba@gmail.com', '1988-10-07', 32, 1);
 INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Claudio ','Luiz Coutinho','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
-
 INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Gabril ','Ventura Teixeira','(21)970323353','juneba@gmail.com', '1988-10-07',32, 2);
-INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Roberto' , ' Rodrigues da cruz','(21)970323353','juneba@gmail.com', '1988-10-07', 32, 2);
-INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Claudio ','Henrique Vieira','(21)970323353','juneba@gmail.com', '1988-10-07',32, 2);
-
-
-
+INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Roberto' , 'Rodrigues da cruz','(21)970323353','juneba@gmail.com', '1988-10-07', 32, 2);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Josue ','Henrique do Carmo','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Amarildo ', 'Miguel Ribeiro','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Carla ','Henrique Vieira','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Bruna ','Homer Silva','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Ana Cristina ','Henrique Vieira','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
 
 
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (1, 'Identidade')
@@ -100,11 +97,86 @@ INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES
 INSERT INTO tb_lista_presenca (data, chamada_aluno, aluno_id, projeto_id) VALUES ('2024-05-04', 1, 1, 2)
 
 
-INSERT INTO tb_lista_presenca_Ebd (data, chamada_Visitante, chamada_Membro, membro_id, visitante_id ,curso_id) VALUES ('2024-05-04', 1, 2, 1, 1,1)
-INSERT INTO tb_lista_presenca_Ebd (data,chamada_Visitante, chamada_Membro, membro_id, visitante_id ,curso_id) VALUES ('2024-05-04', 2, 1, 2, 2, 1)
-INSERT INTO tb_lista_presenca_Ebd (data, chamada_Visitante, chamada_Membro, membro_id, visitante_id ,curso_id) VALUES ('2024-05-04', 1, 1, 3, 3, 1)
-INSERT INTO tb_lista_presenca_Ebd (data,chamada_Visitante, chamada_Membro, membro_id, visitante_id ,curso_id) VALUES ('2024-05-04', 1, 1, 2, 4, 2)
-INSERT INTO tb_lista_presenca_Ebd (data, chamada_Visitante, chamada_Membro, membro_id, visitante_id ,curso_id) VALUES ('2024-05-04', null, 1, 5, 2, 2)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-05','PRESENTE', 1 , 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-05', 'PRESENTE', 2, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-05', 'PRESENTE', 3, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-05', 'AUSENTE', 4, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-05', 'PRESENTE', 5, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-05', 'PRESENTE', 6, 2)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-05', 'PRESENTE', 7, 2)
+
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-12','PRESENTE', 1 , 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 2, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 3, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-12',  'PRESENTE', 4, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 5, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 6, 2)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 7, 2)
+
+
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-19','PRESENTE', 1 , 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 2, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 3, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-19', 'AUSENTE', 4, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 5, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-19', 'AUSENTE', 6, 2)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 7, 2)
+
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-26','AUSENTE', 1 , 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 2, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 3, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-26',  'PRESENTE', 4, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 5, 1)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 6, 2)
+INSERT INTO tb_lista_presenca_Ebd (data, chamada_Membro, membro_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 7, 2)
+
+
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-05', 'PRESENTE', 1, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-05', 'AUSENTE', 2, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-05', 'PRESENTE', 3, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-05', 'AUSENTE', 4, 2)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-05', 'PRESENTE', 5, 2)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 1, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 2, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-12', 'AUSENTE', 3, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 1, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 2, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 3, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 1, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 2, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-26', 'AUSENTE', 3, 1)
+
+
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-5', 'PRESENTE', 6, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-5', 'PRESENTE', 7, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-5', 'PRESENTE', 8, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-5', 'PRESENTE', 9, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-5', 'PRESENTE', 10, 1)
+
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 6, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 7, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 8, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-12', 'AUSENTE', 9, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-12', 'PRESENTE', 10, 1)
+
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 6, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 7, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 8, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 9, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-19', 'PRESENTE', 10, 1)
+
+
+
+
+
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 6, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 7, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 8, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-26', 'AUSENTE', 9, 1)
+INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,curso_id) VALUES ('2024-05-26', 'PRESENTE', 10, 1)
+
+
+
 
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado ,aluno_id) VALUES (50,'2024-07-10', 'DINHEIRO', 'JUNHO', 50, 1 )
 INSERT INTO tb_pagamento (valor, data_pagamento, forma_pagamento, mes_referencia, atrasado, aluno_id) VALUES (50,'2024-07-10', 'PIX', 'ABRIL', 50, 2 )
