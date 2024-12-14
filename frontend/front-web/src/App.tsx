@@ -42,6 +42,7 @@ import MenuOpcao from "./pages/Cfc/menuAlunos";
 import Inscrever from "./pages/Cfc/Inscrever";
 import InserirPresencaEBD from "./pages/Cfc/ListaPresenca/Inserir";
 import HistoricoChamadaEBD from "./pages/Cfc/ListaPresenca/Exibir";
+import Estudo from "./pages/Cfc/Estudo";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -243,6 +244,8 @@ function App() {
             path="trilho/presenca/historicoChamada"
             element={<HistoricoChamadaEBD />}
           />
+
+          <Route path="trilho/estudo" element={<Estudo />} />
         </Routes>
       </Router>
     </ContextToken.Provider>

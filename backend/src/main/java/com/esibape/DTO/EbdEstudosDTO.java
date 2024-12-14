@@ -1,46 +1,48 @@
-package com.esibape.entities;
+package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import javax.persistence.Lob;
+import com.esibape.entities.EBDCurso;
+import com.esibape.entities.EbdEstudos;
 
 
-@Entity
-public class EbdCurso implements Serializable{
+public class EbdEstudosDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
-
-    @Column(nullable = false)
     private String nome;
-
-    @Lob
     private byte[] pdfDeEstudo; // Para armazenar o PDF em formato binário.
-
+    private EBDCurso ebdCurso;
     
-    public EbdCurso() {
+    public EbdEstudosDTO() {
     	
     	
     }
 
 
-	public EbdCurso(Long id, String nome, byte[] pdfDeEstudo) {
+	public EbdEstudosDTO(Long id, String nome, byte[] pdfDeEstudo, EBDCurso ebdCurso) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		
+		this.pdfDeEstudo = pdfDeEstudo;
+		this.ebdCurso = ebdCurso;
 	}
 
+
+
+
+
+
+	public EbdEstudosDTO(EbdEstudos entity) {
+		
+		this.id = entity.getId();
+		this.nome = entity.getNome();
+		this.pdfDeEstudo= entity.getPdfDeEstudo();
+		this.ebdCurso = entity.getEbdCurso();
+	}
 
 	public Long getId() {
 		return id;
@@ -74,6 +76,16 @@ public class EbdCurso implements Serializable{
 
 
 
+	public EBDCurso getEbdCurso() {
+		return ebdCurso;
+	}
+
+
+	public void setEbdCurso(EBDCurso ebdCurso) {
+		this.ebdCurso = ebdCurso;
+	}
+
+
 	public long getSerialVersionUID() {
 		return serialVersionUID;
 	}
@@ -93,7 +105,7 @@ public class EbdCurso implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EbdCurso other = (EbdCurso) obj;
+		EbdEstudosDTO other = (EbdEstudosDTO) obj;
 		return Objects.equals(id, other.id);
 	}
     

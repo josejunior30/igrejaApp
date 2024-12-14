@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -32,14 +31,21 @@ public class Curso implements Serializable{
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy ="curso")
 	private List <ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
+	@OneToMany(mappedBy ="curso")
+	private List <EBDCurso> ebdCurso = new ArrayList<>();
 	public Curso() {
 		
 		
 	}
 
 
+
+
+
+
+
 	public Curso(Long id, String nome, String url, List<Membro> membro, List<Visitante> visitante,
-			List<ListaPresencaEBD> listaPresencaEBD) {
+			List<ListaPresencaEBD> listaPresencaEBD, List<EBDCurso> ebdCurso) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -47,7 +53,9 @@ public class Curso implements Serializable{
 		this.membro = membro;
 		this.visitante = visitante;
 		this.listaPresencaEBD = listaPresencaEBD;
+		this.ebdCurso = ebdCurso;
 	}
+
 
 
 
@@ -87,6 +95,26 @@ public class Curso implements Serializable{
 	public List<Membro> getMembro() {
 		return membro;
 	}
+
+
+	public List<EBDCurso> getEbdCurso() {
+		return ebdCurso;
+	}
+
+
+
+
+
+
+
+	public void setEbdCurso(List<EBDCurso> ebdCurso) {
+		this.ebdCurso = ebdCurso;
+	}
+
+
+
+
+
 
 
 	public List<ListaPresencaEBD> getListaPresencaEBD() {

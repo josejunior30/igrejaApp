@@ -1,4 +1,4 @@
-package com.esibape.DTO;
+package com.esibape.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,14 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-
-import com.esibape.entities.EbdCurso;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 
 @Entity
-public class EbdCursoDTO implements Serializable{
+@Table(name="tb_Ebd_Estudos")
+public class EbdEstudos implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,29 +28,28 @@ public class EbdCursoDTO implements Serializable{
     private String nome;
 
     @Lob
-    private byte[] pdfDeEstudo; // Para armazenar o PDF em formato binário.
-
+    private byte[] pdfDeEstudo; 
     
-    public EbdCursoDTO() {
+	@ManyToOne()
+	@JoinColumn(name= "EBD_Curso_id")
+    private EBDCurso ebdCurso;
+	
+    
+    public EbdEstudos() {
     	
     	
     }
 
 
-	public EbdCursoDTO(Long id, String nome, byte[] pdfDeEstudo) {
+	public EbdEstudos(Long id, String nome, byte[] pdfDeEstudo, EBDCurso ebdCurso) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		
+		this.pdfDeEstudo = pdfDeEstudo;
+		this.ebdCurso = ebdCurso;
 	}
 
-	public EbdCursoDTO(EbdCurso entity) {
-		
-		this.id = entity.getId();
-		this.nome = entity.getNome();
-		this.pdfDeEstudo= entity.getPdfDeEstudo();
-		
-	}
+
 
 	public Long getId() {
 		return id;
@@ -81,10 +81,13 @@ public class EbdCursoDTO implements Serializable{
 	}
 
 
+	public EBDCurso getEbdCurso() {
+		return ebdCurso;
+	}
 
 
-	public long getSerialVersionUID() {
-		return serialVersionUID;
+	public void setEbdCurso(EBDCurso ebdCurso) {
+		this.ebdCurso = ebdCurso;
 	}
 
 
@@ -102,7 +105,7 @@ public class EbdCursoDTO implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EbdCursoDTO other = (EbdCursoDTO) obj;
+		EbdEstudos other = (EbdEstudos) obj;
 		return Objects.equals(id, other.id);
 	}
     

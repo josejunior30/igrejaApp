@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import com.esibape.entities.Curso;
+import com.esibape.entities.EBDCurso;
+
 import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
 import com.esibape.entities.Visitante;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 public class CursoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -18,29 +20,27 @@ public class CursoDTO implements Serializable{
 	private String url;
 	private List<MembroDTO> membro = new ArrayList<>();
 	private List<VisitanteDTO> visitante = new ArrayList<>();
-
 	private List <ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
+	private List <EBDCursoDTO> ebdCurso = new ArrayList<>();
+
+	
 	public CursoDTO() {
 			
 			
 	}
-	
-	
 
-	public CursoDTO(Long id, String nome, String url, List<MembroDTO> membro, List<VisitanteDTO> visitante, List<ListaPresencaEBDDTO> listaPresencaEBD) {
+
+	public CursoDTO(Long id, String nome, String url, List<MembroDTO> membro, List<VisitanteDTO> visitante,
+			List<ListaPresencaEBDDTO> listaPresencaEBD, List<EBDCursoDTO> ebdCurso) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.url= url;
+		this.url = url;
 		this.membro = membro;
 		this.visitante = visitante;
-		this.listaPresencaEBD= listaPresencaEBD;
+		this.listaPresencaEBD = listaPresencaEBD;
+		this.ebdCurso = ebdCurso;
 	}
-
-
-
-
-
 
 
 	public String getUrl() {
@@ -48,11 +48,9 @@ public class CursoDTO implements Serializable{
 	}
 
 
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 
 
 	public CursoDTO(Curso entity) {
@@ -62,19 +60,28 @@ public class CursoDTO implements Serializable{
 		;
 	}
 	
-	   public CursoDTO(Curso curso, List<Membro> membro, List<Visitante> visitante, List<ListaPresencaEBD> listaPresencaEBD) {
+	   public CursoDTO(Curso curso, List<Membro> membro, List<Visitante> visitante, List<ListaPresencaEBD> listaPresencaEBD, List<EBDCurso> ebdCurso) {
 	        this.id = curso.getId();
 	        this.nome = curso.getNome();
 	        this.url =curso.getUrl();
+	        this.ebdCurso = ebdCurso.stream()
+		            .map(EBDCurso-> new EBDCursoDTO(EBDCurso)) 
+		            .collect(Collectors.toList());
+	        
 	        this.membro = membro.stream()
 	            .map(Membro -> new MembroDTO(Membro))  
 	            .collect(Collectors.toList());
+	       
+	        
 	        this.visitante = visitante.stream()
 		            .map(Visitante -> new VisitanteDTO(Visitante)) 
 		            .collect(Collectors.toList());
+	       
 	        this.listaPresencaEBD = listaPresencaEBD.stream()
 		            .map(ListaPresencaEBD -> new ListaPresencaEBDDTO(ListaPresencaEBD)) 
 		            .collect(Collectors.toList());
+	        
+	        
 	    }
 
 	public Long getId() {
@@ -113,16 +120,9 @@ public class CursoDTO implements Serializable{
 
 
 
-
-
-
 	public void setVisitante(List<VisitanteDTO> visitante) {
 		this.visitante = visitante;
 	}
-
-
-
-
 
 
 
@@ -143,6 +143,15 @@ public class CursoDTO implements Serializable{
 		this.listaPresencaEBD = listaPresencaEBD;
 	}
 
+
+	public List<EBDCursoDTO> getEbdCurso() {
+		return ebdCurso;
+	}
+
+
+	public void setEbdCurso(List<EBDCursoDTO> ebdCurso) {
+		this.ebdCurso = ebdCurso;
+	}
 
 
 	@Override
