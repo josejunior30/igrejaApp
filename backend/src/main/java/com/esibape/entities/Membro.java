@@ -53,7 +53,12 @@ public class Membro implements Serializable {
 	@JoinColumn(name= "curso_id")
 	@JsonBackReference
     private Curso curso;
-
+	
+	@ManyToOne()
+	@JoinColumn(name= "ebd_curso_id")
+	@JsonBackReference
+    private EBDCurso ebdCurso;
+	
 	@OneToMany(mappedBy = "membro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
 	
@@ -74,10 +79,9 @@ public class Membro implements Serializable {
 	
 
 
-
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
-			String cidade, String complemento, String url, Boolean status, Curso curso,
+			String cidade, String complemento, String url, Boolean status, Curso curso, EBDCurso ebdCurso,
 			List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto) {
 		super();
 		this.id = id;
@@ -98,6 +102,7 @@ public class Membro implements Serializable {
 		this.url = url;
 		this.status = status;
 		this.curso = curso;
+		this.ebdCurso = ebdCurso;
 		this.listaPresencaEBD = listaPresencaEBD;
 		this.foto = foto;
 	}
@@ -282,6 +287,18 @@ public class Membro implements Serializable {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
+
+
+
+	public EBDCurso getEbdCurso() {
+		return ebdCurso;
+	}
+
+
+	public void setEbdCurso(EBDCurso ebdCurso) {
+		this.ebdCurso = ebdCurso;
+	}
+
 
 	@Override
 	public int hashCode() {

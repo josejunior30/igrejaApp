@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import com.esibape.entities.Curso;
 import com.esibape.entities.EBDCurso;
 import com.esibape.entities.EbdEstudos;
+import com.esibape.entities.Membro;
 
 
 public class EBDCursoDTO implements Serializable{
@@ -20,7 +21,7 @@ public class EBDCursoDTO implements Serializable{
 	private String nome;
     private Curso curso;
 	private List <EbdEstudosDTO> ebdEstudos = new ArrayList<>();
-
+	private List<MembroDTO> membro = new ArrayList<>();
 
 	public EBDCursoDTO() {
 		
@@ -41,14 +42,21 @@ public class EBDCursoDTO implements Serializable{
 		this.id= entity.getId();
 		this.nome=entity.getNome();
 		this.curso =entity.getCurso();
+	
 		
 	}
 
-	public EBDCursoDTO(EBDCurso entity, List<EbdEstudos> ebdEstudos) {
+	public EBDCursoDTO(EBDCurso entity, List<EbdEstudos> ebdEstudos , List<Membro>membro) {
 	
 		   this.ebdEstudos =ebdEstudos.stream()
 		            .map(EbdEstudos-> new EbdEstudosDTO(EbdEstudos))  
 		            .collect(Collectors.toList());
+		   
+
+		   this.membro =membro.stream()
+		            .map(Membro-> new MembroDTO(Membro))  
+		            .collect(Collectors.toList());
+		 
 		 
 	}
 	 
@@ -75,6 +83,20 @@ public class EBDCursoDTO implements Serializable{
 
 	public List<EbdEstudosDTO> getEbdEstudos() {
 		return ebdEstudos;
+	}
+
+
+
+
+	public List<MembroDTO> getMembro() {
+		return membro;
+	}
+
+
+
+
+	public void setMembro(List<MembroDTO> membro) {
+		this.membro = membro;
 	}
 
 

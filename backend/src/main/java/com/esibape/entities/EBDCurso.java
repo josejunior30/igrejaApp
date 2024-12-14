@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 @Entity
 @Table(name="tb_EBD_curso")
@@ -28,7 +31,13 @@ public class EBDCurso implements Serializable{
 	@JoinColumn(name= "curso_id")
     private Curso curso;
 	
+	@OneToMany(mappedBy = "ebdCurso")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Membro> membro = new ArrayList<>();
+
+	
 	@OneToMany(mappedBy ="ebdCurso")
+	 @JsonIgnore
 	private List <EbdEstudos> ebdEstudos = new ArrayList<>();
 	public EBDCurso() {
 		
@@ -36,11 +45,15 @@ public class EBDCurso implements Serializable{
 	}
 
 
-	public EBDCurso(Long id, String nome, Curso curso, List<EbdEstudos> ebdEstudos) {
+
+
+
+	public EBDCurso(Long id, String nome, Curso curso, List<Membro> membro, List<EbdEstudos> ebdEstudos) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.curso = curso;
+		this.membro = membro;
 		this.ebdEstudos = ebdEstudos;
 	}
 
@@ -89,6 +102,22 @@ public class EBDCurso implements Serializable{
 	public void setEbdEstudos(List<EbdEstudos> ebdEstudos) {
 		this.ebdEstudos = ebdEstudos;
 	}
+
+
+	public List<Membro> getMembro() {
+		return membro;
+	}
+
+
+
+
+
+	public void setMembro(List<Membro> membro) {
+		this.membro = membro;
+	}
+
+
+
 
 
 	@Override

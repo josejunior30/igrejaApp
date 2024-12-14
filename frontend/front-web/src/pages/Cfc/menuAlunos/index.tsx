@@ -1,31 +1,32 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../../components/Header";
-import { curso as CursoModel } from "../../../models/trilha";
+import { cursoDTO as CursoModel } from "../../../models/trilha";
 import * as trilhoService from "../../../service/trilhoService";
 import "./styles.css";
 
 const MenuOpcao = () => {
   const [curso, setCurso] = useState<CursoModel | null>(null);
+  const [selectedCursoId, setSelectedCursoId] = useState<number | null>(null); // Estado para armazenar o ID selecionado
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("ID recebido em MenuOpcao:", id); // Adiciona log para depurar o ID recebido
+    console.log("ID recebido em MenuOpcao:", id); // Log do ID recebido
     if (id) {
       loadCurso(id);
     } else {
-      console.error("ID inválido ou ausente."); // Log se o ID for inválido
+      console.error("ID inválido ou ausente."); // Log do ID inválido
     }
   }, [id]);
 
   const loadCurso = (id: string) => {
-    console.log("Carregando curso com ID:", id); // Log do ID antes da chamada da API
+    console.log("Carregando curso com ID:", id); // Log antes da chamada da API
     trilhoService
       .findById(Number(id))
       .then((response) => {
-        console.log("Detalhes do curso recebidos:", response.data); // Log dos detalhes do curso
+        console.log("Detalhes do curso recebidos:", response.data); // Log dos dados recebidos
         setCurso(response.data);
       })
       .catch((error) => {
@@ -36,19 +37,24 @@ const MenuOpcao = () => {
       });
   };
 
+  const handleCheckboxChange = (id: number) => {
+    setSelectedCursoId((prevId) => (prevId === id ? null : id)); // Alterna entre selecionar e desmarcar
+  };
+
   const handleInscrever = () => {
-    if (curso) {
-      console.log("Navegando para inscrição com curso ID:", curso.id); // Log do ID do curso antes da navegação
-      navigate(`/trilho/inscrever/${curso.id}`);
+    if (selectedCursoId) {
+      console.log("Navegando para inscrição com EBDCurso ID:", selectedCursoId);
+      navigate(`/trilho/inscrever/${selectedCursoId}`);
     } else {
-      alert("Curso não encontrado. Tente novamente.");
+      alert("Selecione um curso antes de prosseguir.");
     }
   };
+
   const handleAreaProfessor = () => {
     if (curso) {
       navigate(`/trilho/${curso.id}`);
     } else {
-      alert("Nao foi possivel abrir o painel.");
+      alert("Não foi possível abrir o painel.");
     }
   };
 
@@ -80,6 +86,32 @@ const MenuOpcao = () => {
             </p>
           </div>
         </div>
+
+        <div className="row justify-content-center">
+          <div className="section-curso col-7 offset-4 mt-3">
+            <h3>Escolha o curso disponível:</h3>
+
+            {curso?.ebdCurso && curso.ebdCurso.length > 0 ? (
+              <ul>
+                {curso.ebdCurso.map((ebdCurso) => (
+                  <li key={ebdCurso.id}>
+                    <label className="checkbox-label">
+                      <input
+                        type="checkbox"
+                        checked={selectedCursoId === ebdCurso.id}
+                        onChange={() => handleCheckboxChange(ebdCurso.id)}
+                      />
+                      {ebdCurso.nome}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>Nenhum curso disponível.</p>
+            )}
+          </div>
+        </div>
+
         <div className="row justify-content-center">
           <div className="botoes mt-5 col-12 mx-auto mb-5">
             <button className="inscrever" onClick={handleInscrever}>

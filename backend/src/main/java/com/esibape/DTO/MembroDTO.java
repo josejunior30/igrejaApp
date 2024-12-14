@@ -12,6 +12,7 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 import com.esibape.entities.Curso;
+import com.esibape.entities.EBDCurso;
 import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
 import com.esibape.entities.MembroEstado;
@@ -43,24 +44,23 @@ public class MembroDTO implements Serializable{
 	private String url;
 	private Boolean status =true;
 	private Curso curso;
+	private EBDCurso ebdCurso;
+	   
 	private List<ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
+	
 	public MembroDTO() {
 		
 	}
 
 	
-	
 
 	
-
-
-
 	public MembroDTO(Long id,
 			@Size(min = 3, message = "O nome deve ter no minimo 3 caracteres") @NotEmpty(message = "campo não poe ser nulo ou vazio") String nome,
 			String sobrenome, @Email(message = "Deve ser um Email Valido") String email,
 			@PastOrPresent(message = "escolha uma data válida") LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
-			String cidade, String complemento, String url, Boolean status, Curso curso,
+			String cidade, String complemento, String url, Boolean status, Curso curso, EBDCurso ebdCurso,
 			List<ListaPresencaEBDDTO> listaPresencaEBD) {
 		super();
 		this.id = id;
@@ -81,8 +81,10 @@ public class MembroDTO implements Serializable{
 		this.url = url;
 		this.status = status;
 		this.curso = curso;
+		this.ebdCurso = ebdCurso;
 		this.listaPresencaEBD = listaPresencaEBD;
 	}
+
 
 
 
@@ -124,6 +126,7 @@ public class MembroDTO implements Serializable{
 		this.url=entity.getUrl();
 		this.status = entity.getStatus();
 		this.curso = entity.getCurso();
+		this.ebdCurso =entity.getEbdCurso();
 		
 	}
 	public MembroDTO(Membro entity, List<ListaPresencaEBD>listaPresencaEBD) {
@@ -187,6 +190,34 @@ public class MembroDTO implements Serializable{
 	public Boolean getStatus() {
 		return status;
 	}
+
+
+
+
+	public EBDCurso getEbdCurso() {
+		return ebdCurso;
+	}
+
+
+
+
+	public void setEbdCurso(EBDCurso ebdCurso) {
+		this.ebdCurso = ebdCurso;
+	}
+
+
+
+
+	public List<ListaPresencaEBDDTO> getListaPresencaEBD() {
+		return listaPresencaEBD;
+	}
+
+
+
+	public void setListaPresencaEBD(List<ListaPresencaEBDDTO> listaPresencaEBD) {
+		this.listaPresencaEBD = listaPresencaEBD;
+	}
+
 
 
 	public void setStatus(Boolean status) {

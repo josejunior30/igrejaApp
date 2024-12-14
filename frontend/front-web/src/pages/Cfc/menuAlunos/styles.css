@@ -10,6 +10,29 @@
 .sobre-trilha {
   font-size: 20px;
 }
+.section-curso li {
+  background-color: var(--color-turquoise);
+  cursor: pointer;
+  padding: 10px; /* Aumenta a área clicável */
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-curso ul {
+  display: flex;
+  gap: 20px;
+  color: white;
+}
+.section-curso h3 {
+  color: white;
+}
+.checkbox-label {
+  width: 100%; /* Faz o label ocupar toda a área do li */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 .inscrever {
   width: 160px;
   height: 40px;

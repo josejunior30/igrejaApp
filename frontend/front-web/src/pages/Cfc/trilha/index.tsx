@@ -65,6 +65,13 @@ const TrilhaId = () => {
       alert("Nao foi possivel abrir o painel.");
     }
   };
+  const handleInserirEstudo = () => {
+    if (curso) {
+      navigate(`/trilho/estudo`);
+    } else {
+      alert("Nao foi possivel abrir o painel.");
+    }
+  };
   return (
     <>
       <Header />
@@ -85,7 +92,9 @@ const TrilhaId = () => {
               </h1>
 
               <div className="botoes-container col-10 mx-auto">
-                <button className="Painel-Menu">Inserir Estudo</button>
+                <button className="Painel-Menu" onClick={handleInserirEstudo}>
+                  Inserir Estudo
+                </button>
                 <button className="Painel-Menu" onClick={handleAreaProfessor}>
                   Lista de Presenca
                 </button>

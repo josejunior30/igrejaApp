@@ -7,15 +7,19 @@ import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.ResourceAccessException;
 
 import com.esibape.DTO.MembroDTO;
 import com.esibape.entities.Curso;
+import com.esibape.entities.EBDCurso;
 import com.esibape.entities.Membro;
 import com.esibape.repository.CursoRepository;
+import com.esibape.repository.EBDCursoRepository;
 import com.esibape.repository.MembroRepository;
 
 
@@ -28,6 +32,8 @@ public class MembroService {
 
     @Autowired
     private CursoRepository cursoRepository;
+    @Autowired
+    private EBDCursoRepository ebdCursoRepository;
     
     @Transactional(readOnly = true)
     public List<MembroDTO> findAll() {
@@ -65,22 +71,28 @@ public class MembroService {
     }
     public void delete(Long id) {
     	repository.deleteById(id);
- 
     }
-    @Transactional
-    public void patchUpdateCurso(Long membroId, Long cursoId) {
-        // Busca o membro pelo ID
-        Membro membro = repository.findById(membroId)
-                                  .orElseThrow(() -> new ResourceAccessException("Membro não encontrado"));
+    	@Transactional
+    	public void patchUpdateCurso(Long membroId, Long cursoId, Long ebdCursoId) {
+    	    // Busca o membro pelo ID
+    	    Membro membro = repository.findById(membroId)
+    	                              .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado"));
 
-        // Busca o curso pelo ID
-        Curso curso = cursoRepository.findById(cursoId)
-                                     .orElseThrow(() -> new ResourceAccessException("Curso não encontrado"));
+    	    // Busca o curso pelo ID
+    	    Curso curso = cursoRepository.findById(cursoId)
+    	                                 .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
 
-        // Atualiza o curso do membro
-        membro.setCurso(curso);
-        repository.save(membro);
-    }
+    	    // Busca o EBDCurso pelo ID
+    	    EBDCurso ebdCurso = ebdCursoRepository.findById(ebdCursoId)
+    	                                          .orElseThrow(() -> new EntityNotFoundException("EBDCurso não encontrado"));
+
+    	    // Associa o membro ao curso e ao EBDCurso
+    	    membro.setCurso(curso);
+    	    membro.setEbdCurso(ebdCurso);
+
+    	    // Persistência ocorre automaticamente se o membro é uma entidade gerenciada
+    	}
+
     private void copyDtoToEntity(MembroDTO dto, Membro entity) {
     	atualizarIdade(dto);
 		entity.setNome(dto.getNome());
@@ -100,6 +112,7 @@ public class MembroService {
 		entity.setUrl(dto.getUrl());
 		entity.setStatus(dto.getStatus());
 		entity.setCurso(dto.getCurso());
+		entity.setEbdCurso(dto.getEbdCurso());
 
 	}	
     

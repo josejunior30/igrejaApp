@@ -43,6 +43,7 @@ import Inscrever from "./pages/Cfc/Inscrever";
 import InserirPresencaEBD from "./pages/Cfc/ListaPresenca/Inserir";
 import HistoricoChamadaEBD from "./pages/Cfc/ListaPresenca/Exibir";
 import Estudo from "./pages/Cfc/Estudo";
+import ExibirPdfs from "./pages/Cfc/Estudo/exibir";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -246,6 +247,7 @@ function App() {
           />
 
           <Route path="trilho/estudo" element={<Estudo />} />
+          <Route path="trilho/estudo/exibir" element={<ExibirPdfs />} />
         </Routes>
       </Router>
     </ContextToken.Provider>

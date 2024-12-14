@@ -74,10 +74,22 @@ public class MembroController {
 			List<MembroDTO> result= service.findByNomeIgnoreCaseContaining(nome);
 			return ResponseEntity.ok(result);
 		}
-		  @PatchMapping("/{membroId}/curso/{cursoId}")
-		    public ResponseEntity<Void> updateCurso(@PathVariable Long membroId, @PathVariable Long cursoId) {
-		        service.patchUpdateCurso(membroId, cursoId);
-		        return ResponseEntity.noContent().build();
+		@PatchMapping("/{membroId}/curso/{cursoId}/ebdCurso/{ebdCursoId}")
+		public ResponseEntity<Void> updateCurso(
+		        @PathVariable Long membroId,
+		        @PathVariable Long cursoId,
+		        @PathVariable Long ebdCursoId) {
+
+		    // Validação de entradas
+		    if (membroId <= 0 || cursoId <= 0 || ebdCursoId <= 0) {
+		        throw new IllegalArgumentException("IDs devem ser positivos e maiores que zero.");
 		    }
-		  
+
+		    // Delegando a lógica para o serviço
+		    service.patchUpdateCurso(membroId, cursoId, ebdCursoId);
+
+		    // Retorno de sucesso sem conteúdo
+		    return ResponseEntity.noContent().build();
+		}
+
 }

@@ -31,6 +31,7 @@ public class Curso implements Serializable{
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy ="curso")
 	private List <ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy ="curso")
 	private List <EBDCurso> ebdCurso = new ArrayList<>();
 	public Curso() {

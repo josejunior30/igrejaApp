@@ -6,7 +6,9 @@ export function findAll() {
 }
 
 export function downloadPdf(id: number) {
-  return axios.get(`${BASE_URL}/ebd-cursos/${id}/download-pdf`);
+  return axios.get(`${BASE_URL}/ebd-cursos/${id}/download-pdf`, {
+    responseType: "blob", // Para garantir que o conteúdo seja tratado como binário
+  });
 }
 
 export async function uploadPdf(id: number, file: File, nome: string) {

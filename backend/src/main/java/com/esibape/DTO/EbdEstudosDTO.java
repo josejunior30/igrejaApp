@@ -14,7 +14,6 @@ public class EbdEstudosDTO implements Serializable{
 
     private Long id;
     private String nome;
-    private byte[] pdfDeEstudo; // Para armazenar o PDF em formato binário.
     private EBDCurso ebdCurso;
     
     public EbdEstudosDTO() {
@@ -23,11 +22,10 @@ public class EbdEstudosDTO implements Serializable{
     }
 
 
-	public EbdEstudosDTO(Long id, String nome, byte[] pdfDeEstudo, EBDCurso ebdCurso) {
+	public EbdEstudosDTO(Long id, String nome, EBDCurso ebdCurso) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.pdfDeEstudo = pdfDeEstudo;
 		this.ebdCurso = ebdCurso;
 	}
 
@@ -40,7 +38,6 @@ public class EbdEstudosDTO implements Serializable{
 		
 		this.id = entity.getId();
 		this.nome = entity.getNome();
-		this.pdfDeEstudo= entity.getPdfDeEstudo();
 		this.ebdCurso = entity.getEbdCurso();
 	}
 
@@ -62,18 +59,6 @@ public class EbdEstudosDTO implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-
-	public byte[] getPdfDeEstudo() {
-		return pdfDeEstudo;
-	}
-
-
-	public void setPdfDeEstudo(byte[] pdfDeEstudo) {
-		this.pdfDeEstudo = pdfDeEstudo;
-	}
-
-
 
 
 	public EBDCurso getEbdCurso() {

@@ -94,7 +94,13 @@ const InserirPresencaEBD = () => {
           id: 0,
           data: new Date(dataPresenca),
           chamadaVisitante: 1,
-          curso: { id: curso.id, nome: curso.nome, membro: [], visitante: [] },
+          curso: {
+            id: curso.id,
+            nome: curso.nome,
+            membro: [],
+            visitante: [],
+            EBDCurso: [],
+          },
           visitante: { id: participant.id, nome: participant.nome },
         }));
 
@@ -108,7 +114,13 @@ const InserirPresencaEBD = () => {
         id: 0,
         data: new Date(dataPresenca),
         chamadaMembro: 1,
-        curso: { id: curso.id, nome: curso.nome, membro: [], visitante: [] },
+        curso: {
+          id: curso.id,
+          nome: curso.nome,
+          membro: [],
+          visitante: [],
+          EBDCurso: [],
+        },
         membro: { id: participant.id, nome: participant.nome },
         visitante: null,
       }));

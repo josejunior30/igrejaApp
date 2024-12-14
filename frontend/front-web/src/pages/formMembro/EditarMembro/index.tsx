@@ -23,6 +23,7 @@ const FormularioUpdate = () => {
       nome: "",
       visitante: [],
       membro: [],
+      EBDCurso: [],
     },
 
     status: true,

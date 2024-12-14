@@ -42,14 +42,14 @@ public class EbdEstudosService {
 
         // Retornar DTO
         return new EbdEstudosDTO(savedEbdEstudo.getId(), savedEbdEstudo.getNome(),
-                savedEbdEstudo.getPdfDeEstudo(), savedEbdEstudo.getEbdCurso());
+                 savedEbdEstudo.getEbdCurso());
     }
 
     // Obter todos os EbdCursos
     public List<EbdEstudosDTO> findAllEbdCursos() {
         List<EbdEstudos> ebdCursos = ebdEstudoRepository.findAll();
         return ebdCursos.stream()
-                .map(estudo -> new EbdEstudosDTO(estudo.getId(), estudo.getNome(), estudo.getPdfDeEstudo(), estudo.getEbdCurso()))
+                .map(estudo -> new EbdEstudosDTO(estudo.getId(), estudo.getNome(), estudo.getEbdCurso()))
                 .collect(Collectors.toList());
     }
 
@@ -59,7 +59,7 @@ public class EbdEstudosService {
         if (ebdEstudo.isEmpty()) {
             throw new RuntimeException("EbdCurso não encontrado.");
         }
-        return new EbdEstudosDTO(ebdEstudo.get().getId(), ebdEstudo.get().getNome(), ebdEstudo.get().getPdfDeEstudo(),ebdEstudo.get().getEbdCurso());
+        return new EbdEstudosDTO(ebdEstudo.get().getId(), ebdEstudo.get().getNome(),ebdEstudo.get().getEbdCurso());
     }
 
 
