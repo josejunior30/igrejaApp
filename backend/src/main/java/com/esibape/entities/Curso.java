@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name="tb_curso")
@@ -22,17 +25,21 @@ public class Curso implements Serializable{
 	private Long id;
 	private String nome;
 	private String url;
-	@OneToMany(mappedBy = "curso")
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "curso-membro")
     private List<Membro> membro = new ArrayList<>();
-	@OneToMany(mappedBy = "curso")
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
+	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "curso-visitante")
     private List<Visitante> visitante = new ArrayList<>();
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	
+
 	@OneToMany(mappedBy ="curso")
 	private List <ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToMany(mappedBy ="curso")
+	
+
+	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "curso-ebdcurso")
 	private List <EBDCurso> ebdCurso = new ArrayList<>();
 	public Curso() {
 		

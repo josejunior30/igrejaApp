@@ -43,8 +43,8 @@ public class MembroDTO implements Serializable{
 	private String complemento;
 	private String url;
 	private Boolean status =true;
-	private Curso curso;
-	private EBDCurso ebdCurso;
+	private Long cursoId; // ID do Curso para evitar referência completa
+	private Long ebdCursoId; // ID do EBDCurso para evitar referência completa
 	   
 	private List<ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
 	
@@ -54,13 +54,12 @@ public class MembroDTO implements Serializable{
 
 	
 
-	
 	public MembroDTO(Long id,
 			@Size(min = 3, message = "O nome deve ter no minimo 3 caracteres") @NotEmpty(message = "campo não poe ser nulo ou vazio") String nome,
 			String sobrenome, @Email(message = "Deve ser um Email Valido") String email,
 			@PastOrPresent(message = "escolha uma data válida") LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
-			String cidade, String complemento, String url, Boolean status, Curso curso, EBDCurso ebdCurso,
+			String cidade, String complemento, String url, Boolean status, Long cursoId, Long ebdCursoId,
 			List<ListaPresencaEBDDTO> listaPresencaEBD) {
 		super();
 		this.id = id;
@@ -80,30 +79,35 @@ public class MembroDTO implements Serializable{
 		this.complemento = complemento;
 		this.url = url;
 		this.status = status;
-		this.curso = curso;
-		this.ebdCurso = ebdCurso;
+		this.cursoId = cursoId;
+		this.ebdCursoId = ebdCursoId;
 		this.listaPresencaEBD = listaPresencaEBD;
 	}
 
 
 
 
-
-
-
-
-
-	public Curso getCurso() {
-		return curso;
+	public Long getCursoId() {
+		return cursoId;
 	}
 
 
 
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
+	public void setCursoId(Long cursoId) {
+		this.cursoId = cursoId;
 	}
 
+
+
+	public Long getEbdCursoId() {
+		return ebdCursoId;
+	}
+
+
+
+	public void setEbdCursoId(Long ebdCursoId) {
+		this.ebdCursoId = ebdCursoId;
+	}
 
 
 
@@ -125,8 +129,8 @@ public class MembroDTO implements Serializable{
 		this.numero=entity.getNumero();
 		this.url=entity.getUrl();
 		this.status = entity.getStatus();
-		this.curso = entity.getCurso();
-		this.ebdCurso =entity.getEbdCurso();
+		 this.cursoId = entity.getCurso() != null ? entity.getCurso().getId() : null;
+	        this.ebdCursoId = entity.getEbdCurso() != null ? entity.getEbdCurso().getId() : null;
 		
 	}
 	public MembroDTO(Membro entity, List<ListaPresencaEBD>listaPresencaEBD) {
@@ -190,21 +194,6 @@ public class MembroDTO implements Serializable{
 	public Boolean getStatus() {
 		return status;
 	}
-
-
-
-
-	public EBDCurso getEbdCurso() {
-		return ebdCurso;
-	}
-
-
-
-
-	public void setEbdCurso(EBDCurso ebdCurso) {
-		this.ebdCurso = ebdCurso;
-	}
-
 
 
 

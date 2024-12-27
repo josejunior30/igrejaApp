@@ -14,10 +14,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 
 @Entity
 @Table(name="tb_lista_presenca_Visitante_Ebd")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ListaPresencaVisitanteEBD implements Serializable{
 	private static final long serialVersionUID = 1L;
 		
@@ -34,7 +39,6 @@ public class ListaPresencaVisitanteEBD implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name= "curso_id")
-
 	private Curso curso; 
 	
 	public ListaPresencaVisitanteEBD(){

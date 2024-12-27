@@ -22,8 +22,6 @@ import com.esibape.repository.CursoRepository;
 import com.esibape.repository.EBDCursoRepository;
 import com.esibape.repository.MembroRepository;
 
-
-
 @Service
 public class MembroService {
     
@@ -54,8 +52,7 @@ public class MembroService {
     @Transactional
     public MembroDTO insert( MembroDTO dto) {
     		Membro entity =  new Membro();
-    		copyDtoToEntity(dto, entity);
-    		
+    		copyDtoToEntity(dto, entity);	
     		entity = repository.save(entity);
     		return new MembroDTO(entity);
     	
@@ -72,6 +69,8 @@ public class MembroService {
     public void delete(Long id) {
     	repository.deleteById(id);
     }
+    
+    
     	@Transactional
     	public void patchUpdateCurso(Long membroId, Long cursoId, Long ebdCursoId) {
     	    // Busca o membro pelo ID
@@ -111,12 +110,8 @@ public class MembroService {
 		entity.setEstadoCivil(dto.getEstadoCivil());
 		entity.setUrl(dto.getUrl());
 		entity.setStatus(dto.getStatus());
-		entity.setCurso(dto.getCurso());
-		entity.setEbdCurso(dto.getEbdCurso());
-
+	  
 	}	
-    
-   
     
     @Transactional(readOnly = true)
 	public List<MembroDTO> findByNomeIgnoreCaseContaining(String nome) {

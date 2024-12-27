@@ -11,6 +11,7 @@ import com.esibape.entities.EBDCurso;
 import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
 import com.esibape.entities.Visitante;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 public class CursoDTO implements Serializable{
@@ -20,6 +21,7 @@ public class CursoDTO implements Serializable{
 	private String url;
 	private List<MembroDTO> membro = new ArrayList<>();
 	private List<VisitanteDTO> visitante = new ArrayList<>();
+	@JsonIgnore
 	private List <ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
 	private List <EBDCursoDTO> ebdCurso = new ArrayList<>();
 

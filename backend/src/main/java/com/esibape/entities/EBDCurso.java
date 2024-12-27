@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -29,16 +30,22 @@ public class EBDCurso implements Serializable{
 	
 	@ManyToOne()
 	@JoinColumn(name= "curso_id")
+	@JsonBackReference(value = "curso-ebdcurso")
     private Curso curso;
 	
 	@OneToMany(mappedBy = "ebdCurso")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Membro> membro = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "ebdCursoVisitante")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Visitante> visitante = new ArrayList<>();
 
 	
 	@OneToMany(mappedBy ="ebdCurso")
-	 @JsonIgnore
+	@JsonIgnore
 	private List <EbdEstudos> ebdEstudos = new ArrayList<>();
+	
 	public EBDCurso() {
 		
 		
@@ -46,18 +53,16 @@ public class EBDCurso implements Serializable{
 
 
 
-
-
-	public EBDCurso(Long id, String nome, Curso curso, List<Membro> membro, List<EbdEstudos> ebdEstudos) {
+	public EBDCurso(Long id, String nome, Curso curso, List<Membro> membro, List<Visitante> visitante,
+			List<EbdEstudos> ebdEstudos) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.curso = curso;
 		this.membro = membro;
+		this.visitante = visitante;
 		this.ebdEstudos = ebdEstudos;
 	}
-
-
 
 
 
@@ -117,6 +122,16 @@ public class EBDCurso implements Serializable{
 	}
 
 
+
+	public List<Visitante> getVisitante() {
+		return visitante;
+	}
+
+
+
+	public void setVisitante(List<Visitante> visitante) {
+		this.visitante = visitante;
+	}
 
 
 

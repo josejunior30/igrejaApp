@@ -16,7 +16,8 @@
   padding: 10px; /* Aumenta a área clicável */
   border-radius: 5px;
   display: flex;
-  align-items: center;
+  width: 150px;
+  justify-content: center;
   gap: 10px;
 }
 .section-curso ul {
@@ -27,12 +28,46 @@
 .section-curso h3 {
   color: white;
 }
+.escolha {
+  color: white;
+}
 .checkbox-label {
   width: 100%; /* Faz o label ocupar toda a área do li */
   display: flex;
   align-items: center;
   cursor: pointer;
+  appearance: none;
 }
+
+.custom-checkbox {
+  appearance: none;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+}
+.curso-item {
+  background-color: var(--color-darkslategray);
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.curso-item.active {
+  background-color: var(--color-dimgray);
+  appearance: none;
+}
+
+.custom-checkbox {
+  appearance: none;
+}
+
 .inscrever {
   width: 160px;
   height: 40px;

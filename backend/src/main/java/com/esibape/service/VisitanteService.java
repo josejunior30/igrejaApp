@@ -1,95 +1,113 @@
 package com.esibape.service;
 
 import java.util.List;
-import java.util.Optional;
+
 import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.ResourceAccessException;
 import com.esibape.DTO.VisitanteDTO;
 import com.esibape.entities.Curso;
+import com.esibape.entities.EBDCurso;
 import com.esibape.entities.Visitante;
 import com.esibape.repository.CursoRepository;
+import com.esibape.repository.EBDCursoRepository;
 import com.esibape.repository.VisitanteRepository;
-
-
 
 @Service
 public class VisitanteService {
 
-	@Autowired
+    @Autowired
     private VisitanteRepository repository;
-	
-	   @Autowired
-	    private CursoRepository cursoRepository;
 
-	@Transactional(readOnly = true)
-	public List<VisitanteDTO> findAll() {
-        List<Visitante> list = repository.findAll();
-        
-        return  list.stream()
-	               .map(x -> new VisitanteDTO(x))
-	               .collect(Collectors.toList());
+    @Autowired
+    private CursoRepository cursoRepository;
+
+    @Autowired
+    private EBDCursoRepository ebdCursoRepository;
+
+    @Transactional(readOnly = true)
+    public List<VisitanteDTO> findAll() {
+        return repository.findAll().stream()
+                         .map(VisitanteDTO::new)
+                         .collect(Collectors.toList());
     }
-	@Transactional(readOnly = true)
+
+    @Transactional(readOnly = true)
     public VisitanteDTO findById(Long id) {
-    	Optional<Visitante> membro = repository.findById(id);
-    	Visitante entity = membro.get();
-    	return  new VisitanteDTO(entity) ;
+        Visitante entity = repository.findById(id)
+                                     .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
+        return new VisitanteDTO(entity);
     }
+
     @Transactional
-    public VisitanteDTO insert( VisitanteDTO dto) {
-    		Visitante entity =  new Visitante();
-    		copyDtoToEntity(dto, entity);
-    		entity = repository.save(entity);
-    		return new VisitanteDTO(entity);
-    	
+    public VisitanteDTO insert(@Valid VisitanteDTO dto) {
+        Visitante entity = new Visitante();
+        copyDtoToEntity(dto, entity);
+        entity = repository.save(entity);
+        return new VisitanteDTO(entity);
     }
+
     @Transactional
-    public VisitanteDTO update(Long id, VisitanteDTO dto) {
-    	Visitante entity=repository.getReferenceById(id);
-    	copyDtoToEntity(dto, entity);
-    	entity = repository.save(entity);
-		return new VisitanteDTO(entity);
+    public VisitanteDTO update(Long id, @Valid VisitanteDTO dto) {
+        Visitante entity = repository.findById(id)
+                                      .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
+        copyDtoToEntity(dto, entity);
+        entity = repository.save(entity);
+        return new VisitanteDTO(entity);
     }
-    
-    
+
+    @Transactional
     public void delete(Long id) {
-    	repository.deleteById(id);
- 
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException("Visitante não encontrado");
+        }
+        repository.deleteById(id);
     }
+
     @Transactional
-    public void patchUpdateCurso(Long visitanteId, Long cursoId) {
-        // Busca o membro pelo ID
+    public void patchUpdateCurso(Long visitanteId, Long cursoId, Long ebdCursoId) {
         Visitante visitante = repository.findById(visitanteId)
-                                  .orElseThrow(() -> new ResourceAccessException("Visitante não encontrado"));
+                                         .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
 
-        // Busca o curso pelo ID
-        Curso curso = cursoRepository.findById(cursoId)
-                                     .orElseThrow(() -> new ResourceAccessException("Curso não encontrado"));
-
-        // Atualiza o curso do visitante
-        visitante.setCurso(curso);
+        visitante.setCurso(findCursoById(cursoId));
+        visitante.setEbdCursoVisitante(findEbdCursoById(ebdCursoId));
         repository.save(visitante);
     }
-    private void copyDtoToEntity(VisitanteDTO dto, Visitante entity) {
-		entity.setNome(dto.getNome());
-		entity.setSobrenome(dto.getSobrenome());
-	entity.setDataNascimento(dto.getDataNascimento());
-	entity.setEmail(dto.getEmail());
-	entity.setTelefone(dto.getTelefone());
-	entity.setCurso(dto.getCurso());
-		entity.setTelefone(dto.getTelefone());
-		
-	}
-    
-    @Transactional(readOnly = true)
-  	public List<VisitanteDTO> findByNomeIgnoreCaseContaining(String nome) {
-  		List<Visitante> result = repository.findByNomeIgnoreCaseContaining(nome);
-  		 return  result.stream().map(x -> new VisitanteDTO(x)).toList();
-  		
-  	}
-	
-}
 
+    @Transactional(readOnly = true)
+    public List<VisitanteDTO> findByNomeIgnoreCaseContaining(String nome) {
+        return repository.findByNomeIgnoreCaseContaining(nome).stream()
+                         .map(VisitanteDTO::new)
+                         .collect(Collectors.toList());
+    }
+
+    private void copyDtoToEntity(VisitanteDTO dto, Visitante entity) {
+        entity.setNome(dto.getNome());
+        entity.setSobrenome(dto.getSobrenome());
+        entity.setDataNascimento(dto.getDataNascimento());
+        entity.setEmail(dto.getEmail());
+        entity.setTelefone(dto.getTelefone());
+
+        if (dto.getCursoId() != null) {
+            entity.setCurso(findCursoById(dto.getCursoId()));
+        }
+
+        if (dto.getEbdCursoId() != null) {
+            entity.setEbdCursoVisitante(findEbdCursoById(dto.getEbdCursoId()));
+        }
+    }
+
+    private Curso findCursoById(Long id) {
+        return cursoRepository.findById(id)
+                              .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
+    }
+
+    private EBDCurso findEbdCursoById(Long id) {
+        return ebdCursoRepository.findById(id)
+                                  .orElseThrow(() -> new EntityNotFoundException("EBDCurso não encontrado"));
+    }
+}

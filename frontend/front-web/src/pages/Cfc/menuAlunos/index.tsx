@@ -7,26 +7,23 @@ import "./styles.css";
 
 const MenuOpcao = () => {
   const [curso, setCurso] = useState<CursoModel | null>(null);
-  const [selectedCursoId, setSelectedCursoId] = useState<number | null>(null); // Estado para armazenar o ID selecionado
+  const [selectedCursoId, setSelectedCursoId] = useState<number | null>(null); // Gerencia o item selecionado
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("ID recebido em MenuOpcao:", id); // Log do ID recebido
     if (id) {
       loadCurso(id);
     } else {
-      console.error("ID inválido ou ausente."); // Log do ID inválido
+      console.error("ID inválido ou ausente.");
     }
   }, [id]);
 
   const loadCurso = (id: string) => {
-    console.log("Carregando curso com ID:", id); // Log antes da chamada da API
     trilhoService
       .findById(Number(id))
       .then((response) => {
-        console.log("Detalhes do curso recebidos:", response.data); // Log dos dados recebidos
         setCurso(response.data);
       })
       .catch((error) => {
@@ -37,24 +34,16 @@ const MenuOpcao = () => {
       });
   };
 
-  const handleCheckboxChange = (id: number) => {
-    setSelectedCursoId((prevId) => (prevId === id ? null : id)); // Alterna entre selecionar e desmarcar
+  const handleItemClick = (ebdCursoId: number) => {
+    // Atualiza o item selecionado e alterna o estado
+    setSelectedCursoId((prevId) => (prevId === ebdCursoId ? null : ebdCursoId));
   };
 
   const handleInscrever = () => {
     if (selectedCursoId) {
-      console.log("Navegando para inscrição com EBDCurso ID:", selectedCursoId);
       navigate(`/trilho/inscrever/${selectedCursoId}`);
     } else {
       alert("Selecione um curso antes de prosseguir.");
-    }
-  };
-
-  const handleAreaProfessor = () => {
-    if (curso) {
-      navigate(`/trilho/${curso.id}`);
-    } else {
-      alert("Não foi possível abrir o painel.");
     }
   };
 
@@ -62,20 +51,12 @@ const MenuOpcao = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-2">
-        <button
-          className="btn btn-danger text-center mt-5 ms-5"
-          onClick={handleAreaProfessor}
-        >
-          Área do Professor
-        </button>
-
-        <h1 className="titulo-curso text-center">
+        <h1 className="titulo-curso text-center pt-5 mt-5">
           O que é o trilho{" "}
           <span className="curso-trilha">
             {loading ? "carregando..." : curso?.nome ?? "não encontrado"}?
           </span>
         </h1>
-
         <div className="row justify-content-center">
           <div className="section-trilho col-7 text-center align-self-center mt-3">
             <p className="sobre-trilha">
@@ -86,23 +67,28 @@ const MenuOpcao = () => {
             </p>
           </div>
         </div>
-
         <div className="row justify-content-center">
-          <div className="section-curso col-7 offset-4 mt-3">
-            <h3>Escolha o curso disponível:</h3>
-
+          <h3 className="text-center escolha mt-3">
+            Escolha o curso disponível:
+          </h3>
+          <div className="section-curso col-7  mt-3">
             {curso?.ebdCurso && curso.ebdCurso.length > 0 ? (
-              <ul>
+              <ul className="justify-content-center">
                 {curso.ebdCurso.map((ebdCurso) => (
-                  <li key={ebdCurso.id}>
-                    <label className="checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={selectedCursoId === ebdCurso.id}
-                        onChange={() => handleCheckboxChange(ebdCurso.id)}
-                      />
-                      {ebdCurso.nome}
-                    </label>
+                  <li
+                    key={ebdCurso.id}
+                    className={`curso-item ${
+                      selectedCursoId === ebdCurso.id ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick(ebdCurso.id)}
+                  >
+                    <input
+                      className="custom-checkbox"
+                      type="checkbox"
+                      checked={selectedCursoId === ebdCurso.id}
+                      onChange={() => handleItemClick(ebdCurso.id)}
+                    />
+                    {ebdCurso.nome}
                   </li>
                 ))}
               </ul>

@@ -3,7 +3,7 @@ import * as membroService from "../../../service/membroService";
 import * as visitanteService from "../../../service/visitanteService";
 import * as trilhoService from "../../../service/trilhoService";
 import Header from "../../../components/Header";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import { MembroDTO } from "../../../models/membro";
 import { visitante } from "../../../models/visitante";
@@ -24,15 +24,21 @@ const Inscrever: React.FC = () => {
   const [cadastroEmail, setCadastroEmail] = useState<string>("");
 
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
-  const cursoId = id ? Number(id) : NaN;
+
+  // Recuperar cursoId e ebdCursoId do localStorage
+  const cursoId = parseInt(localStorage.getItem("cursoId") || "0", 10);
+  const ebdCursoId = parseInt(
+    localStorage.getItem("selectedEbdCursoId") || "0",
+    10
+  );
 
   useEffect(() => {
-    if (isNaN(cursoId)) {
-      alert("Curso inválido. Retornando à página anterior.");
+    if (isNaN(cursoId) || isNaN(ebdCursoId)) {
+      alert("IDs inválidos. Retornando à página anterior.");
       navigate("/trilho");
       return;
     }
+
     trilhoService
       .findById(cursoId)
       .then((response) => setNomeCurso(response.data.nome))
@@ -40,7 +46,7 @@ const Inscrever: React.FC = () => {
         alert("Erro ao carregar os detalhes do curso.");
         navigate("/trilho");
       });
-  }, [cursoId, navigate]);
+  }, [cursoId, ebdCursoId, navigate]);
 
   useEffect(() => {
     membroService
@@ -64,7 +70,11 @@ const Inscrever: React.FC = () => {
     }
 
     try {
-      await membroService.patchUpdateCurso(parseInt(selectedMembroId), cursoId);
+      await membroService.patchUpdateCurso(
+        parseInt(selectedMembroId),
+        cursoId,
+        ebdCursoId
+      );
       alert("Inscrição realizada com sucesso!");
       navigate("/trilho");
     } catch (error) {
@@ -83,7 +93,8 @@ const Inscrever: React.FC = () => {
     try {
       await visitanteService.patchUpdateCurso(
         parseInt(selectedVisitanteId),
-        cursoId
+        cursoId,
+        ebdCursoId
       );
       alert("Inscrição realizada com sucesso!");
       navigate("/trilho");
@@ -113,9 +124,8 @@ const Inscrever: React.FC = () => {
         telefone: cadastroCelular,
         email: cadastroEmail,
         cursoId,
+        ebdCursoId,
       };
-
-      console.log("Dados do visitante enviados:", visitanteData);
 
       await visitanteService.insertVisitante(visitanteData);
       alert("Cadastro realizado e inscrição no curso efetuada com sucesso!");
@@ -245,68 +255,64 @@ const Inscrever: React.FC = () => {
 
               {/* Se o usuário não tem cadastro */}
               {!isVisitor && isVisitor !== null && (
-                <div className="container col-md-8 offset-2 mt-5 mb-5 ">
-                  {!isVisitor && isVisitor !== null && (
-                    <div className="container col-md-9 offset-2 mt-5 mb-5 ">
-                      <form
-                        className="row g-4 px-4 pb-4 form-visitante mb-5"
-                        onSubmit={handleCadastroVisitante}
-                      >
-                        <h2>Cadastre-se</h2>
-                        <div className="col-md-8 ">
-                          <label className="form-label dados-visitante">
-                            Nome Completo
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={cadastroNome}
-                            onChange={(e) => setCadastroNome(e.target.value)}
-                          />
-                        </div>
-                        <div className="col-md-4">
-                          <label className="form-label dados-visitante">
-                            Data de Nascimento
-                          </label>
-                          <input
-                            type="date"
-                            className="form-control"
-                            value={cadastroDataNascimento}
-                            onChange={(e) =>
-                              setCadastroDataNascimento(e.target.value)
-                            }
-                          />
-                        </div>
-                        <div className="col-md-6">
-                          <label className="form-label dados-visitante">
-                            Celular
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={cadastroCelular}
-                            onChange={(e) => setCadastroCelular(e.target.value)}
-                          />
-                        </div>
-                        <div className="col-md-6 ">
-                          <label className="form-label dados-visitante">
-                            Email
-                          </label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            value={cadastroEmail}
-                            onChange={(e) => setCadastroEmail(e.target.value)}
-                          />
-                        </div>
-                        <div className="col-12 mt-5 mx-auto">
-                          <button type="submit" className="btn-inscricao">
-                            Concluir
-                          </button>
-                        </div>
-                      </form>
+                <div className="container col-md-8 offset-2 mt-5 mb-5">
+                  <form
+                    className="row g-4 px-4 pb-4 form-visitante mb-5"
+                    onSubmit={handleCadastroVisitante}
+                  >
+                    <h2>Cadastre-se</h2>
+                    <div className="col-md-8 ">
+                      <label className="form-label dados-visitante">
+                        Nome Completo
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={cadastroNome}
+                        onChange={(e) => setCadastroNome(e.target.value)}
+                      />
                     </div>
-                  )}
+                    <div className="col-md-4">
+                      <label className="form-label dados-visitante">
+                        Data de Nascimento
+                      </label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        value={cadastroDataNascimento}
+                        onChange={(e) =>
+                          setCadastroDataNascimento(e.target.value)
+                        }
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label dados-visitante">
+                        Celular
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={cadastroCelular}
+                        onChange={(e) => setCadastroCelular(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-6 ">
+                      <label className="form-label dados-visitante">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        value={cadastroEmail}
+                        onChange={(e) => setCadastroEmail(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-12 mt-5 mx-auto">
+                      <button type="submit" className="btn-inscricao">
+                        Concluir
+                      </button>
+                    </div>
+                  </form>
                 </div>
               )}
             </>

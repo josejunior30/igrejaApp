@@ -51,12 +51,12 @@ public class Membro implements Serializable {
 	 
 	@ManyToOne()
 	@JoinColumn(name= "curso_id")
-	@JsonBackReference
+	@JsonBackReference(value = "curso-membro")
     private Curso curso;
 	
 	@ManyToOne()
 	@JoinColumn(name= "ebd_curso_id")
-	@JsonBackReference
+	@JsonBackReference(value = "ebdcurso-membro")
     private EBDCurso ebdCurso;
 	
 	@OneToMany(mappedBy = "membro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

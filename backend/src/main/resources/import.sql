@@ -65,16 +65,16 @@ INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone
 
 
 
-INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Elias ','Jamal Soares','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
-INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Lucas ','Damasco Figueira','(21)970323353','juneba@gmail.com', '1988-10-07', 32, 1);
-INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Claudio ','Luiz Coutinho','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
-INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Gabril ','Ventura Teixeira','(21)970323353','juneba@gmail.com', '1988-10-07',32, 2);
-INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Roberto' , 'Rodrigues da cruz','(21)970323353','juneba@gmail.com', '1988-10-07', 32, 2);
-INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Josue ','Henrique do Carmo','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
-INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Amarildo ', 'Miguel Ribeiro','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
-INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Carla ','Henrique Vieira','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
-INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Bruna ','Homer Silva','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
-INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id ) VALUES ('Ana Cristina ','Henrique Vieira','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1);
+INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Elias ','Jamal Soares','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1, 1);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Lucas ','Damasco Figueira','(21)970323353','juneba@gmail.com', '1988-10-07', 32, 1, 2);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Claudio ','Luiz Coutinho','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1, 1);
+INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Gabril ','Ventura Teixeira','(21)970323353','juneba@gmail.com', '1988-10-07',32, 2, 1);
+INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Roberto' , 'Rodrigues da cruz','(21)970323353','juneba@gmail.com', '1988-10-07', 32, 2, 1);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Josue ','Henrique do Carmo','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1, 2);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Amarildo ', 'Miguel Ribeiro','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1, 4);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Carla ','Henrique Vieira','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1,2);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Bruna ','Homer Silva','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1, 3);
+INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Ana Cristina ','Henrique Vieira','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1, 2);
 
 
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (1, 'Identidade')

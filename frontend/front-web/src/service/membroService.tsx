@@ -22,6 +22,12 @@ export function findByNome(nome: string) {
   return axios.get(`${BASE_URL}/membro/search?nome=${nome}`);
 }
 
-export function patchUpdateCurso(membroId: number, cursoId: number) {
-  return axios.patch(`${BASE_URL}/membro/${membroId}/curso/${cursoId}`);
+export function patchUpdateCurso(
+  membroId: number,
+  cursoId: number,
+  ebdMembroId: number
+) {
+  return axios.patch(
+    `${BASE_URL}/membro/${membroId}/curso/${cursoId}/ebdCurso/${ebdMembroId}`
+  );
 }

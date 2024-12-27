@@ -81,9 +81,9 @@ public class MembroController {
 		        @PathVariable Long ebdCursoId) {
 
 		    // Validação de entradas
-		    if (membroId <= 0 || cursoId <= 0 || ebdCursoId <= 0) {
-		        throw new IllegalArgumentException("IDs devem ser positivos e maiores que zero.");
-		    }
+			 if (membroId <= 0 || cursoId <= 0 || ebdCursoId <= 0) {
+			        throw new IllegalArgumentException("IDs devem ser positivos e maiores que zero.");
+			    }
 
 		    // Delegando a lógica para o serviço
 		    service.patchUpdateCurso(membroId, cursoId, ebdCursoId);

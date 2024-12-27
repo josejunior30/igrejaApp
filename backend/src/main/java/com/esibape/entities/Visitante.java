@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,13 +14,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 
 
 @Entity
 @Table(name="tb_visitante")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Visitante {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +37,14 @@ public class Visitante {
 	
 	@ManyToOne()
 	@JoinColumn(name= "curso_id")
-	@JsonBackReference
+	@JsonBackReference(value = "curso-visitante")
     private Curso curso;
+	
+
+	@ManyToOne()
+	@JoinColumn(name= "ebd_curso_id")
+	@JsonBackReference(value = "ebdcurso-visitante")
+	private EBDCurso ebdCursoVisitante;
 	
 	@OneToMany(mappedBy = "visitante", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD = new ArrayList<>();
@@ -46,12 +54,9 @@ public class Visitante {
 		
 	}
 
-
-	
-
-
 	public Visitante(Long id, String nome, String sobrenome, Integer idade, String email, String telefone,
-			LocalDate dataNascimento, Curso curso, List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD) {
+			LocalDate dataNascimento, Curso curso, EBDCurso ebdCursoVisitante,
+			List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -61,9 +66,21 @@ public class Visitante {
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
 		this.curso = curso;
+		this.ebdCursoVisitante = ebdCursoVisitante;
 		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
 	}
 
+
+
+	public EBDCurso getEbdCursoVisitante() {
+		return ebdCursoVisitante;
+	}
+
+
+
+	public void setEbdCursoVisitante(EBDCurso ebdCursoVisitante) {
+		this.ebdCursoVisitante = ebdCursoVisitante;
+	}
 
 
 
@@ -129,6 +146,9 @@ public class Visitante {
 	public Curso getCurso() {
 		return curso;
 	}
+
+
+
 
 
 	public List<ListaPresencaVisitanteEBD> getListaPresencaVisitanteEBD() {

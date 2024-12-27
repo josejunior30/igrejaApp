@@ -4,155 +4,167 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import com.esibape.entities.Curso;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+
 import com.esibape.entities.ListaPresencaVisitanteEBD;
 import com.esibape.entities.Visitante;
 
+
 public class VisitanteDTO {
-		private Long id;
-		private String nome;
-		private String sobrenome;
-		private Integer idade;
-		private String email;
-		private String telefone;
-		private LocalDate dataNascimento;
-	    private Curso curso;
-	    private List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD = new ArrayList<>();
-		
-	public VisitanteDTO() {
-			
-			
-		}
-	
 
+    private Long id;
+	@Size(min=3, message="O nome deve ter no minimo 3 caracteres")
+    @NotEmpty(message="campo não poe ser nulo ou vazio")
+    private String nome;
+    private String sobrenome;
+    private Integer idade;
+	@Email(message="Deve ser um Email Valido")
+    private String email;
+    private String telefone;
+	@PastOrPresent(message="escolha uma data válida") 
+    private LocalDate dataNascimento;
+    private Long cursoId; // ID do Curso para evitar referência completa
+    private Long ebdCursoId; // ID do EBDCurso para evitar referência completa
+    private List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD = new ArrayList<>();
 
+    // Construtor padrão
+    public VisitanteDTO() {
+    }
 
-	public VisitanteDTO(Long id, String nome, String sobrenome, Integer idade, String email, String telefone,
-			LocalDate dataNascimento, Curso curso, List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.sobrenome = sobrenome;
-		this.idade = idade;
-		this.email = email;
-		this.telefone = telefone;
-		this.dataNascimento = dataNascimento;
-		this.curso = curso;
-		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
-	}
+    // Construtor com parâmetros
+    public VisitanteDTO(Long id, String nome, String sobrenome, Integer idade, String email, String telefone,
+                        LocalDate dataNascimento, Long cursoId, Long ebdCursoId,
+                        List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD) {
+        this.id = id;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.idade = idade;
+        this.email = email;
+        this.telefone = telefone;
+        this.dataNascimento = dataNascimento;
+        this.cursoId = cursoId;
+        this.ebdCursoId = ebdCursoId;
+        this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
+    }
 
+    // Construtor com entidade
+    public VisitanteDTO(Visitante entity) {
+        this.id = entity.getId();
+        this.nome = entity.getNome();
+        this.sobrenome = entity.getSobrenome();
+        this.dataNascimento = entity.getDataNascimento();
+        this.email = entity.getEmail();
+        this.telefone = entity.getTelefone();
+        this.idade = entity.getIdade();
+        this.cursoId = entity.getCurso() != null ? entity.getCurso().getId() : null;
+        this.ebdCursoId = entity.getEbdCursoVisitante() != null ? entity.getEbdCursoVisitante().getId() : null;
+    }
 
+    // Construtor com lista adicional
+    public VisitanteDTO(Visitante entity, List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD) {
+        this(entity);
+        if (listaPresencaVisitanteEBD != null) {
+            listaPresencaVisitanteEBD.forEach(pg -> this.listaPresencaVisitanteEBD.add(new ListaPresencaVisitanteEBDDTO(pg)));
+        }
+    }
 
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
 
-	public VisitanteDTO(Visitante entity) {
-		this.id= entity.getId();
-		this.nome= entity.getNome();
-		this.sobrenome =entity.getSobrenome();
-		this.dataNascimento = entity.getDataNascimento();
-		this.email = entity.getEmail();
-		this.telefone=entity.getTelefone();
-		this.idade = entity.getIdade();
-		
-	}
-	public VisitanteDTO(Visitante entity, List<ListaPresencaVisitanteEBD>listaPresencaVisitanteEBD) {
-		 this(entity);
-		  if (listaPresencaVisitanteEBD !=null) {
-			  listaPresencaVisitanteEBD.forEach(pg-> this.listaPresencaVisitanteEBD.add(new ListaPresencaVisitanteEBDDTO(pg)));
-	        }
-		
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getNome() {
+        return nome;
+    }
 
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
-	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public String getSobrenome() {
-		return sobrenome;
-	}
+    public String getSobrenome() {
+        return sobrenome;
+    }
 
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
-	}
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
 
-	public Integer getIdade() {
-		return idade;
-	}
+    public Integer getIdade() {
+        return idade;
+    }
 
-	public void setIdade(Integer idade) {
-		this.idade = idade;
-	}
+    public void setIdade(Integer idade) {
+        this.idade = idade;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
+    public String getTelefone() {
+        return telefone;
+    }
 
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
 
-	public Curso getCurso() {
-		return curso;
-	}
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
 
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
 
-	public String getTelefone() {
-		return telefone;
-	}
+    public Long getCursoId() {
+        return cursoId;
+    }
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
+    public void setCursoId(Long cursoId) {
+        this.cursoId = cursoId;
+    }
 
+    public Long getEbdCursoId() {
+        return ebdCursoId;
+    }
 
-	public List<ListaPresencaVisitanteEBDDTO> getListaPresencaVisitanteEBD() {
-		return listaPresencaVisitanteEBD;
-	}
+    public void setEbdCursoId(Long ebdCursoId) {
+        this.ebdCursoId = ebdCursoId;
+    }
 
-	public void setListaPresencaVisitanteEBD(List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD) {
-		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
-	}
+    public List<ListaPresencaVisitanteEBDDTO> getListaPresencaVisitanteEBD() {
+        return listaPresencaVisitanteEBD;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+    public void setListaPresencaVisitanteEBD(List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD) {
+        this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		VisitanteDTO other = (VisitanteDTO) obj;
-		return Objects.equals(id, other.id);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
-	
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        VisitanteDTO other = (VisitanteDTO) obj;
+        return Objects.equals(id, other.id);
+    }
+}

@@ -35,7 +35,6 @@ public class ListaPresencaEBD implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name= "curso_id")
-
 	private Curso curso; 
 	
 	public ListaPresencaEBD(){

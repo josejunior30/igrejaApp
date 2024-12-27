@@ -3,7 +3,10 @@ package com.esibape.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,8 +28,6 @@ import com.esibape.service.VisitanteService;
 @RequestMapping(value = "/visitante")
 public class VisitanteController {
 	
-
-		
 		@Autowired
 		private VisitanteService service;
 	
@@ -42,14 +43,16 @@ public class VisitanteController {
 				VisitanteDTO visitante = service.findById(id);
 				return ResponseEntity.ok().body(visitante);
 			}
-			
-			@PostMapping
-			public ResponseEntity<VisitanteDTO> insert(@RequestBody VisitanteDTO dto){
-				dto= service.insert(dto);
-				URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-						.buildAndExpand(dto.getId()).toUri();
-				return ResponseEntity.created(uri).body(dto);		
-	}		
+		    @PostMapping
+			public ResponseEntity<VisitanteDTO> insert(@Valid @RequestBody VisitanteDTO dto) {
+			    dto = service.insert(dto);
+			    URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+			                                         .path("/{id}")
+			                                         .buildAndExpand(dto.getId())
+			                                         .toUri();
+			    return ResponseEntity.created(uri).body(dto);
+			}
+
 			@PutMapping(value="/{id}")
 			public ResponseEntity<VisitanteDTO>update (@PathVariable Long id, @RequestBody VisitanteDTO dto){
 				 dto =service.update(id, dto);
@@ -66,9 +69,20 @@ public class VisitanteController {
 				List<VisitanteDTO> result= service.findByNomeIgnoreCaseContaining(nome);
 				return ResponseEntity.ok(result);
 			}
-			  @PatchMapping("/{visitanteId}/curso/{cursoId}")
-			    public ResponseEntity<Void> updateCurso(@PathVariable Long visitanteId, @PathVariable Long cursoId) {
-			        service.patchUpdateCurso(visitanteId, cursoId);
-			        return ResponseEntity.noContent().build();
+			
+			  @PatchMapping("/{visitanteId}/curso/{cursoId}/ebdCurso/{ebdCursoId}")
+			    public ResponseEntity<Void> updateCurso(
+			    		@PathVariable Long visitanteId, 
+			    		@PathVariable Long cursoId,
+			    		@PathVariable Long ebdCursoId) {
+				  // Validação de entradas
+					 if (visitanteId <= 0 || cursoId <= 0 || ebdCursoId <= 0) {
+					        throw new IllegalArgumentException("IDs devem ser positivos e maiores que zero.");
+					    }
+					 // Delegando a lógica para o serviço
+					    service.patchUpdateCurso(visitanteId, cursoId, ebdCursoId);
+
+					    // Retorno de sucesso sem conteúdo
+					    return ResponseEntity.noContent().build();
 			    }
 }

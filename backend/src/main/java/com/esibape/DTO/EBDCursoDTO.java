@@ -5,13 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-
-
-import com.esibape.entities.Curso;
 import com.esibape.entities.EBDCurso;
 import com.esibape.entities.EbdEstudos;
 import com.esibape.entities.Membro;
+import com.esibape.entities.Visitante;
 
 
 public class EBDCursoDTO implements Serializable{
@@ -19,19 +16,17 @@ public class EBDCursoDTO implements Serializable{
 	
 	private Long id;
 	private String nome;
-    private Curso curso;
+    private CursoDTO curso;
 	private List <EbdEstudosDTO> ebdEstudos = new ArrayList<>();
 	private List<MembroDTO> membro = new ArrayList<>();
+	private List<VisitanteDTO> visitante = new ArrayList<>();
 
 	public EBDCursoDTO() {
 		
 		
 	}
 
-
-
-
-	public void setCurso(Curso curso) {
+	public void setCurso(CursoDTO curso) {
 		this.curso = curso;
 	}
 
@@ -41,13 +36,13 @@ public class EBDCursoDTO implements Serializable{
 	public EBDCursoDTO(EBDCurso entity) {
 		this.id= entity.getId();
 		this.nome=entity.getNome();
-		this.curso =entity.getCurso();
+	    this.curso = new CursoDTO(entity.getCurso());
 	
 		
 	}
 
-	public EBDCursoDTO(EBDCurso entity, List<EbdEstudos> ebdEstudos , List<Membro>membro) {
-	
+	public EBDCursoDTO(EBDCurso entity, List<EbdEstudos> ebdEstudos , List<Membro>membro, List<Visitante>visitante) {
+		 this(entity);
 		   this.ebdEstudos =ebdEstudos.stream()
 		            .map(EbdEstudos-> new EbdEstudosDTO(EbdEstudos))  
 		            .collect(Collectors.toList());
@@ -57,6 +52,10 @@ public class EBDCursoDTO implements Serializable{
 		            .map(Membro-> new MembroDTO(Membro))  
 		            .collect(Collectors.toList());
 		 
+
+		   this.visitante =visitante.stream()
+		            .map(Visitante-> new VisitanteDTO(Visitante))  
+		            .collect(Collectors.toList());
 		 
 	}
 	 
@@ -88,10 +87,17 @@ public class EBDCursoDTO implements Serializable{
 
 
 
+	public List<VisitanteDTO> getVisitante() {
+		return visitante;
+	}
+
+	public void setVisitante(List<VisitanteDTO> visitante) {
+		this.visitante = visitante;
+	}
+
 	public List<MembroDTO> getMembro() {
 		return membro;
 	}
-
 
 
 
@@ -101,20 +107,15 @@ public class EBDCursoDTO implements Serializable{
 
 
 
-
 	public void setEbdEstudos(List<EbdEstudosDTO> ebdEstudos) {
 		this.ebdEstudos = ebdEstudos;
 	}
 
 
 
-
-	public Curso getCurso() {
+	public CursoDTO getCurso() {
 		return curso;
 	}
-
-
-
 
 	@Override
 	public int hashCode() {
