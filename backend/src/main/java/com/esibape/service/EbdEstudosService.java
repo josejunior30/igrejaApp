@@ -6,8 +6,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.esibape.DTO.CursoDTO;
 import com.esibape.DTO.EbdEstudosDTO;
+import com.esibape.entities.Curso;
 import com.esibape.entities.EBDCurso;
 import com.esibape.entities.EbdEstudos;
 import com.esibape.repository.EBDCursoRepository;
@@ -45,15 +48,20 @@ public class EbdEstudosService {
                  savedEbdEstudo.getEbdCurso());
     }
 
-    // Obter todos os EbdCursos
-    public List<EbdEstudosDTO> findAllEbdCursos() {
+  
+
+	@Transactional(readOnly = true)
+    public List<EbdEstudosDTO> findAll() {
         List<EbdEstudos> ebdCursos = ebdEstudoRepository.findAll();
         return ebdCursos.stream()
-                .map(estudo -> new EbdEstudosDTO(estudo.getId(), estudo.getNome(), estudo.getEbdCurso()))
+                .map(x -> new EbdEstudosDTO(x))
                 .collect(Collectors.toList());
     }
+	
 
     // Obter um EbdCurso pelo ID
+
+	@Transactional(readOnly = true)
     public EbdEstudosDTO findByEbdCurso(Long id) {
         Optional<EbdEstudos> ebdEstudo = ebdEstudoRepository.findById(id);
         if (ebdEstudo.isEmpty()) {

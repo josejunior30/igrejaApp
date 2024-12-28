@@ -1,18 +1,44 @@
+import React, { useEffect, useState } from "react";
+import { uploadPdf } from "../../../service/estudosService";
+import { findAllCurso } from "../../../service/cursoTrilhoService";
+import { EbdEstudo } from "../../../models/EbdEstudo";
 import Header from "../../../components/Header";
 import "./styles.css";
-import { useState } from "react";
-import { uploadPdf } from "../../../service/estudosService";
+import { ebdCurso } from "../../../models/trilha";
 
 const Estudo = () => {
   const [cursoId, setCursoId] = useState<number | null>(null);
+  const [ebdCurso, setEbdCurso] = useState<ebdCurso[]>([]);
   const [nomeEstudo, setNomeEstudo] = useState<string>("");
   const [arquivo, setArquivo] = useState<File | null>(null);
   const [mensagem, setMensagem] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingCursos, setIsLoadingCursos] = useState<boolean>(true);
+
+  // Carregar lista de cursos do backend
+  useEffect(() => {
+    const fetchCursos = async () => {
+      try {
+        setIsLoadingCursos(true);
+        const response = await findAllCurso();
+        setEbdCurso(response.data); // Atualiza o estado com os cursos recebidos
+      } catch (error: any) {
+        console.error("Erro ao carregar cursos:", error.message);
+        setMensagem(
+          error.response?.data?.message || "Erro ao carregar a lista de cursos."
+        );
+        setEbdCurso([]);
+      } finally {
+        setIsLoadingCursos(false);
+      }
+    };
+
+    fetchCursos();
+  }, []);
 
   const handleCursoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    setCursoId(value === "selecione" ? null : parseInt(value));
+    setCursoId(value === "selecione" ? null : parseInt(value, 10));
   };
 
   const handleArquivoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +63,11 @@ const Estudo = () => {
       const resultado = await uploadPdf(cursoId, arquivo, nomeEstudo);
       console.log("Estudo criado:", resultado);
 
-      // Exibir ou manipular os dados recebidos
+      // Exibe um alert de sucesso
+      alert(
+        `Estudo '${resultado.nome}' enviado com sucesso! ID: ${resultado.id}`
+      );
+
       setMensagem(
         `Estudo '${resultado.nome}' enviado com sucesso! ID: ${resultado.id}`
       );
@@ -56,18 +86,27 @@ const Estudo = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5 text-center">
-        <div className="row d-flex mt-5">
+        <div className="row d-flex mt-5 justify-content-center">
           <div className="col-3 curso">
             <h3>Escolha o Curso</h3>
-            <select
-              className="form-select"
-              value={cursoId || "selecione"}
-              onChange={handleCursoChange}
-            >
-              <option value="selecione">Selecione</option>
-              <option value="1">Curso Gênesis</option>
-              <option value="2">Salmos</option>
-            </select>
+            {isLoadingCursos ? (
+              <p>Carregando cursos...</p>
+            ) : ebdCurso.length > 0 ? (
+              <select
+                className="form-select"
+                value={cursoId || "selecione"}
+                onChange={handleCursoChange}
+              >
+                <option value="selecione">Selecione</option>
+                {ebdCurso.map((curso) => (
+                  <option key={curso.id} value={curso.id}>
+                    {curso.nome}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <p>Nenhum curso disponível.</p>
+            )}
           </div>
         </div>
         <div className="row pt-5 mt-5">

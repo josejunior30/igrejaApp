@@ -13,7 +13,7 @@ const ExibirPdfs = () => {
         const response = await findAll();
         const dadosCorrigidos = response.data.map((estudo: EbdEstudo) => ({
           ...estudo,
-          EBDCurso: estudo.EBDCurso || [],
+          EBDCurso: estudo.ebdCurso || [],
         }));
         setEstudos(dadosCorrigidos);
         setLoading(false);
@@ -62,8 +62,8 @@ const ExibirPdfs = () => {
           {estudos.map((estudo) => (
             <tr key={estudo.id}>
               <td>
-                {Array.isArray(estudo.EBDCurso)
-                  ? estudo.EBDCurso.map((curso) => curso.nome).join(", ")
+                {Array.isArray(estudo.ebdCurso)
+                  ? estudo.ebdCurso.map((curso) => curso.nome).join(", ")
                   : "Sem cursos"}
               </td>
               <td>{estudo.nome}</td>

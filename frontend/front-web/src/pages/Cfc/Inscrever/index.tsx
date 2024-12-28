@@ -33,7 +33,18 @@ const Inscrever: React.FC = () => {
   );
 
   useEffect(() => {
-    if (isNaN(cursoId) || isNaN(ebdCursoId)) {
+    const cursoId = parseInt(localStorage.getItem("cursoId") || "0", 10);
+    const ebdCursoId = parseInt(
+      localStorage.getItem("selectedEbdCursoId") || "0",
+      10
+    );
+
+    if (
+      isNaN(cursoId) ||
+      isNaN(ebdCursoId) ||
+      cursoId <= 0 ||
+      ebdCursoId <= 0
+    ) {
       alert("IDs inválidos. Retornando à página anterior.");
       navigate("/trilho");
       return;
@@ -46,7 +57,7 @@ const Inscrever: React.FC = () => {
         alert("Erro ao carregar os detalhes do curso.");
         navigate("/trilho");
       });
-  }, [cursoId, ebdCursoId, navigate]);
+  }, [navigate]);
 
   useEffect(() => {
     membroService

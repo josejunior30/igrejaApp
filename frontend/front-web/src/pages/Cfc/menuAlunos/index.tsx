@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../../../components/Header";
 import { cursoDTO as CursoModel } from "../../../models/trilha";
 import * as trilhoService from "../../../service/trilhoService";
+import { downloadPdf } from "../../../service/estudosService";
 import "./styles.css";
+import { TiArrowBack } from "react-icons/ti";
 
 const MenuOpcao = () => {
   const [curso, setCurso] = useState<CursoModel | null>(null);
-  const [selectedCursoId, setSelectedCursoId] = useState<number | null>(null); // Gerencia o item selecionado
+  const [selectedCursoId, setSelectedCursoId] = useState<number | null>(null);
+  const [menuPosition, setMenuPosition] = useState<{
+    top: number;
+    left: number;
+  } | null>(null); // Gerencia a posição do menu
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -34,8 +40,28 @@ const MenuOpcao = () => {
       });
   };
 
-  const handleItemClick = (ebdCursoId: number) => {
-    // Atualiza o item selecionado e alterna o estado
+  const handleItemClick = (ebdCursoId: number, event: React.MouseEvent) => {
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    const cursoId = curso?.id;
+
+    if (!cursoId || cursoId <= 0) {
+      alert("Curso inválido.");
+      return;
+    }
+
+    setSelectedCursoId((prevId) => (prevId === ebdCursoId ? null : ebdCursoId));
+    setMenuPosition({
+      top: rect.bottom + window.scrollY,
+      left: rect.left + window.scrollX - 80,
+    });
+
+    if (selectedCursoId !== ebdCursoId) {
+      localStorage.setItem("selectedEbdCursoId", ebdCursoId.toString());
+      localStorage.setItem("cursoId", cursoId.toString());
+    }
+  };
+
+  const handleCheckboxChange = (ebdCursoId: number) => {
     setSelectedCursoId((prevId) => (prevId === ebdCursoId ? null : ebdCursoId));
   };
 
@@ -47,11 +73,51 @@ const MenuOpcao = () => {
     }
   };
 
+  const handleAreaProfessor = () => {
+    if (curso) {
+      navigate(`/trilho/${curso.id}`);
+    } else {
+      alert("Não foi possível abrir o painel.");
+    }
+  };
+
+  const handleDownload = () => {
+    if (selectedCursoId) {
+      downloadPdf(selectedCursoId)
+        .then((response: { data: BlobPart }) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", `curso-${selectedCursoId}.pdf`);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch((error) => {
+          console.error("Erro ao baixar o PDF:", error);
+          alert("Não foi possível baixar o PDF. Tente novamente mais tarde.");
+        });
+    } else {
+      alert("Selecione um curso antes de baixar.");
+    }
+  };
+
   return (
     <>
       <Header />
-      <div className="container-fluid mt-5 pt-2">
-        <h1 className="titulo-curso text-center pt-5 mt-5">
+      <div className="container-fluid mt-5 pt-2 mb-5">
+        <button
+          className="btn btn-danger text-center mt-5 ms-5"
+          onClick={handleAreaProfessor}
+        >
+          Área do Professor
+        </button>
+        <div className="voltar-projetos-detalhes ">
+          <Link to="/trilho">
+            <TiArrowBack /> Voltar
+          </Link>
+        </div>
+        <h1 className="titulo-curso text-center pt-5 ">
           O que é o trilho{" "}
           <span className="curso-trilha">
             {loading ? "carregando..." : curso?.nome ?? "não encontrado"}?
@@ -67,11 +133,11 @@ const MenuOpcao = () => {
             </p>
           </div>
         </div>
-        <div className="row justify-content-center">
+        <div className="row justify-content-center mb-5">
           <h3 className="text-center escolha mt-3">
             Escolha o curso disponível:
           </h3>
-          <div className="section-curso col-7  mt-3">
+          <div className="section-curso col-12  mt-3">
             {curso?.ebdCurso && curso.ebdCurso.length > 0 ? (
               <ul className="justify-content-center">
                 {curso.ebdCurso.map((ebdCurso) => (
@@ -80,13 +146,13 @@ const MenuOpcao = () => {
                     className={`curso-item ${
                       selectedCursoId === ebdCurso.id ? "active" : ""
                     }`}
-                    onClick={() => handleItemClick(ebdCurso.id)}
+                    onClick={(event) => handleItemClick(ebdCurso.id, event)}
                   >
                     <input
                       className="custom-checkbox"
                       type="checkbox"
                       checked={selectedCursoId === ebdCurso.id}
-                      onChange={() => handleItemClick(ebdCurso.id)}
+                      onChange={() => handleCheckboxChange(ebdCurso.id)}
                     />
                     {ebdCurso.nome}
                   </li>
@@ -96,20 +162,31 @@ const MenuOpcao = () => {
               <p>Nenhum curso disponível.</p>
             )}
           </div>
-        </div>
-
-        <div className="row justify-content-center">
-          <div className="botoes mt-5 col-12 mx-auto mb-5">
-            <button className="inscrever" onClick={handleInscrever}>
-              Inscrever-se
-            </button>
-            <button
-              className="voltar btn btn-primary ms-5"
-              onClick={() => navigate(-1)}
+          {menuPosition && selectedCursoId && (
+            <div
+              className="menu-curso "
+              style={{
+                position: "absolute",
+                top: menuPosition.top,
+                left: menuPosition.left,
+              }}
             >
-              Voltar
-            </button>
-          </div>
+              <p className="pt-4">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
+                sed culpa assumenda, aliquam porro aspernatur molestias
+                architecto quas quod vero voluptas non eos laboriosam quibusdam
+                veritatis quos eligendi deserunt blanditiis!
+              </p>
+              <div className="d-flex botoes-menu mb-5">
+                <button className="inscrever" onClick={handleInscrever}>
+                  Inscrever-se
+                </button>
+                <button className="baixar" onClick={handleDownload}>
+                  Baixar
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

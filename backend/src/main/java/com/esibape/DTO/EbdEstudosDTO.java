@@ -15,7 +15,6 @@ public class EbdEstudosDTO implements Serializable{
     private Long id;
     private String nome;
     private EBDCurso ebdCurso;
-    
     public EbdEstudosDTO() {
     	
     	

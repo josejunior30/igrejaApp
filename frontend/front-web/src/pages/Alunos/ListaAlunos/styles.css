@@ -1,48 +1,45 @@
-
-
-#barra-pesquisa-secretaria-radio    {
+#barra-pesquisa-secretaria-radio {
   background-color: var(--color-darkslategray);
-color:white;
-border-radius: 10px;
-margin-bottom: 10px;
-}
-
-#barra-pesquisa-secretaria    {
-    background-color: var(--color-darkslategray);
-  
+  color: white;
   border-radius: 10px;
+  margin-bottom: 10px;
+}
+.inativos {
+  color: white;
+}
+#barra-pesquisa-secretaria {
+  background-color: var(--color-darkslategray);
+
+  border-radius: 10px;
+}
+#btn-pesquisa {
+  background-color: var(--color-coral);
+  border-color: var(--color-coral);
+}
+.text-danger {
+  color: red !important;
+}
+.text-abandono {
+  color: rgb(255, 88, 88) !important;
+}
+@media (max-width: 768px) {
+  #botoes button {
+    font-size: 14px;
   }
-  #btn-pesquisa{
-   background-color: var(--color-coral);
-   border-color: var(--color-coral);
+  #barra-pesquisa-secretaria input {
+    font-size: 14px;
   }
-  .text-danger {
-    color: red!important;
+
+  #barra-pesquisa-secretaria {
+    margin-left: 10px;
   }
-  .text-abandono {
-    color: rgb(255, 88, 88)!important;
+  .img-print-membro button {
+    font-size: 11px;
   }
-  @media (max-width: 768px) {
-   
-    #botoes button{
-      font-size: 14px;
-    }
-    #barra-pesquisa-secretaria input{
-      font-size: 14px;
-    }
-  
-  
-    #barra-pesquisa-secretaria {
-  margin-left: 10px;  }
-    .img-print-membro button{
-      font-size: 11px;
-      
-     
-    }
-   .table a{
+  .table a {
     font-size: 9px;
-   }
-   .table {
-    font-size: 9px;
-   }
   }
+  .table {
+    font-size: 9px;
+  }
+}

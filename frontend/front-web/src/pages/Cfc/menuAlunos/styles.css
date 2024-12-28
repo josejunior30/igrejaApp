@@ -69,15 +69,42 @@
 }
 
 .inscrever {
-  width: 160px;
+  width: 140px;
   height: 40px;
   background-color: var(--color-coral);
   color: white;
   border-radius: 10px;
 }
+.baixar {
+  width: 140px;
+  height: 40px;
+  background-color: var(--color-darkslategray);
+  color: white;
+  border-radius: 10px;
+}
+.menu-curso.hidden {
+  display: none;
+}
+.menu-curso.visible {
+  display: block;
+}
+
+.botoes-menu {
+  gap: 20px;
+}
+
 .voltar {
   width: 160px;
   height: 40px;
+}
+.menu-curso {
+  color: white;
+  text-align: center;
+}
+.menu-curso p {
+  color: white;
+  text-align: center;
+  width: 300px;
 }
 .curso-trilha {
   color: var(--color-coral);

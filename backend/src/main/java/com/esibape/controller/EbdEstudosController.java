@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.esibape.DTO.AlunosDTO;
 import com.esibape.DTO.EbdEstudosDTO;
 import com.esibape.service.EbdEstudosService;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -80,11 +81,10 @@ public class EbdEstudosController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EbdEstudosDTO>> getAllEbdCursos() {
-        List<EbdEstudosDTO> ebdCursos = ebdEstudoService.findAllEbdCursos();
-        return new ResponseEntity<>(ebdCursos, HttpStatus.OK);
+    public ResponseEntity <List<EbdEstudosDTO>>findAll(){
+    	List<EbdEstudosDTO> ebdCursos =  ebdEstudoService.findAll();
+    	return ResponseEntity.ok().body(ebdCursos);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEbdCurso(@PathVariable Long id) {
     	ebdEstudoService.deleteEbdCurso(id);
