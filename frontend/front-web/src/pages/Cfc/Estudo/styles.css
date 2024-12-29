@@ -12,6 +12,13 @@
   border-radius: 20px;
   width: 200px;
 }
+.voltar-botao {
+  background: none;
+  color: white;
+  position: absolute;
+  margin-left: 70px;
+  margin-top: 20px;
+}
 .btn-inscricao {
   width: 150px;
   height: 40px;

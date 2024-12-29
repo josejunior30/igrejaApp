@@ -59,12 +59,11 @@ const FormularioUpdate = () => {
       membroService
         .updateMembro(Number(id), MembroDTO)
         .then((response) => {
-          console.log("Membro atualizado com sucesso:", response.data);
+          alert("Membro atualizado com sucesso!");
           setIsModalVisible(true);
         })
         .catch((error) => {
-          console.error("Erro ao atualizar membro:", error);
-          // Adicione algum feedback de erro, se necessário
+          alert("Erro ao atualizar aluno");
         });
     }
   };
@@ -107,6 +106,25 @@ const FormularioUpdate = () => {
           >
             <div className="col-md-12">
               <h3>Dados pessoais </h3>
+            </div>
+            <div className="col-md-6">
+              <label htmlFor="ativo" className="form-label">
+                Status:
+              </label>
+              <select
+                className="form-select"
+                name="ativo"
+                value={MembroDTO.status ? "true" : "false"}
+                onChange={(e) =>
+                  setMembroDTO({
+                    ...MembroDTO,
+                    status: e.target.value === "true",
+                  })
+                }
+              >
+                <option value="true">ativo</option>
+                <option value="false">afastada</option>
+              </select>
             </div>
             <div className="col-md-6">
               <label htmlFor="nome" className="form-label">

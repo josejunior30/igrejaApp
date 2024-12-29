@@ -81,7 +81,7 @@ const EditarAlunos = () => {
           navigate("/alunos");
         })
         .catch((error) => {
-          console.error("Erro ao atualizar membro:", error);
+          alert("Erro ao atualizar aluno");
         });
     }
   };
@@ -111,7 +111,7 @@ const EditarAlunos = () => {
                 onChange={(e) =>
                   setAlunosDTO({
                     ...alunosDTO,
-                    ativo: e.target.value === "true",
+                    ativo: e.target.value === "true", // Converte para booleano
                   })
                 }
               >

@@ -97,8 +97,8 @@ public class AlunosService {
     @Transactional
     public AlunosDTO update(Long id, AlunosDTO dto) {
     	atualizarIdade(dto);
-        Alunos entity = repository.findByIdAndAtivoTrue(id)
-                .orElseThrow(() -> new NoSuchElementException("Aluno não encontrado ou inativo"));
+        Alunos entity = repository.getReferenceById(id);
+            
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
         return new AlunosDTO(entity);

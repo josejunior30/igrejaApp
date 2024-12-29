@@ -5,6 +5,8 @@ import { EbdEstudo } from "../../../models/EbdEstudo";
 import Header from "../../../components/Header";
 import "./styles.css";
 import { ebdCurso } from "../../../models/trilha";
+import { useNavigate } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
 
 const Estudo = () => {
   const [cursoId, setCursoId] = useState<number | null>(null);
@@ -14,7 +16,7 @@ const Estudo = () => {
   const [mensagem, setMensagem] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingCursos, setIsLoadingCursos] = useState<boolean>(true);
-
+  const navigator = useNavigate();
   // Carregar lista de cursos do backend
   useEffect(() => {
     const fetchCursos = async () => {
@@ -81,12 +83,18 @@ const Estudo = () => {
       setIsLoading(false);
     }
   };
+  const handleGoBack = () => {
+    navigator(-1);
+  };
 
   return (
     <>
       <Header />
-      <div className="container-fluid mt-5 pt-5 text-center">
-        <div className="row d-flex mt-5 justify-content-center">
+      <div className="container-fluid mt-5 pt-5">
+        <button className="voltar-botao " onClick={handleGoBack}>
+          <TiArrowBack /> Voltar
+        </button>
+        <div className="row d-flex mt-5 justify-content-center text-center">
           <div className="col-3 curso">
             <h3>Escolha o Curso</h3>
             {isLoadingCursos ? (
@@ -123,14 +131,16 @@ const Estudo = () => {
               type="file"
               onChange={handleArquivoChange}
             />
-            <button
-              className="btn btn-primary mt-3"
-              onClick={handleEnviar}
-              disabled={isLoading}
-            >
-              {isLoading ? "Enviando..." : "Enviar"}
-            </button>
-            {mensagem && <p className="mt-3">{mensagem}</p>}
+            <div className="justify-content-center text-center">
+              <button
+                className="btn btn-primary mt-3 "
+                onClick={handleEnviar}
+                disabled={isLoading}
+              >
+                {isLoading ? "Enviando..." : "Enviar"}
+              </button>
+              {mensagem && <p className="mt-3">{mensagem}</p>}
+            </div>
           </div>
         </div>
       </div>
