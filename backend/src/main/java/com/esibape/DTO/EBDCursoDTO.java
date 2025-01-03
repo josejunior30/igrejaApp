@@ -7,8 +7,10 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import com.esibape.entities.EBDCurso;
 import com.esibape.entities.EbdEstudos;
+import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
 import com.esibape.entities.Visitante;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 public class EBDCursoDTO implements Serializable{
@@ -20,7 +22,8 @@ public class EBDCursoDTO implements Serializable{
 	private List <EbdEstudosDTO> ebdEstudos = new ArrayList<>();
 	private List<MembroDTO> membro = new ArrayList<>();
 	private List<VisitanteDTO> visitante = new ArrayList<>();
-
+	@JsonIgnore
+	private List<ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
 	public EBDCursoDTO() {
 		
 		
@@ -41,7 +44,7 @@ public class EBDCursoDTO implements Serializable{
 		
 	}
 
-	public EBDCursoDTO(EBDCurso entity, List<EbdEstudos> ebdEstudos , List<Membro>membro, List<Visitante>visitante) {
+	public EBDCursoDTO(EBDCurso entity, List<EbdEstudos> ebdEstudos , List<Membro>membro, List<Visitante>visitante, List<ListaPresencaEBD> listaPresencaEBD) {
 		 this(entity);
 		   this.ebdEstudos =ebdEstudos.stream()
 		            .map(EbdEstudos-> new EbdEstudosDTO(EbdEstudos))  
@@ -55,6 +58,10 @@ public class EBDCursoDTO implements Serializable{
 
 		   this.visitante =visitante.stream()
 		            .map(Visitante-> new VisitanteDTO(Visitante))  
+		            .collect(Collectors.toList());
+		   
+		   this.listaPresencaEBD = listaPresencaEBD.stream()
+		            .map(ListaPresencaEBD -> new ListaPresencaEBDDTO(ListaPresencaEBD)) 
 		            .collect(Collectors.toList());
 		 
 	}
@@ -85,7 +92,13 @@ public class EBDCursoDTO implements Serializable{
 	}
 
 
+	public List<ListaPresencaEBDDTO> getListaPresencaEBD() {
+		return listaPresencaEBD;
+	}
 
+	public void setListaPresencaEBD(List<ListaPresencaEBDDTO> listaPresencaEBD) {
+		this.listaPresencaEBD = listaPresencaEBD;
+	}
 
 	public List<VisitanteDTO> getVisitante() {
 		return visitante;

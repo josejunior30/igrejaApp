@@ -3,9 +3,8 @@ package com.esibape.DTO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-
 import com.esibape.entities.ChamadaMembro;
-import com.esibape.entities.Curso;
+import com.esibape.entities.EBDCurso;
 import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
 
@@ -17,7 +16,7 @@ public class ListaPresencaEBDDTO implements Serializable{
 	private Long id;
 	private LocalDate data; 
 	private MembroDTO membro ;
-	private CursoDTO curso; 
+	private EBDCursoDTO ebdCurso; 
 	  private ChamadaMembro chamadaMembro; 
 	
 	  ListaPresencaEBDDTO(){
@@ -33,10 +32,10 @@ public class ListaPresencaEBDDTO implements Serializable{
 		this.chamadaMembro = entity.getChamadaMembro();
 
 	}
-	public ListaPresencaEBDDTO(ListaPresencaEBD entity, Membro membro, Curso curso) {
+	public ListaPresencaEBDDTO(ListaPresencaEBD entity, Membro membro, EBDCurso ebdCurso) {
 		this(entity);
 		this.membro = new MembroDTO(membro);
-		this.curso = new CursoDTO(curso);
+		this.ebdCurso = new EBDCursoDTO(ebdCurso);
 
 	}
 
@@ -63,15 +62,14 @@ public class ListaPresencaEBDDTO implements Serializable{
 
 
 
-
-	public CursoDTO getCurso() {
-		return curso;
+	public EBDCursoDTO getEbdCurso() {
+		return ebdCurso;
 	}
 
 
 
-	public void setCurso(CursoDTO curso) {
-		this.curso = curso;
+	public void setEbdCurso(EBDCursoDTO ebdCurso) {
+		this.ebdCurso = ebdCurso;
 	}
 
 

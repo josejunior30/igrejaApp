@@ -34,23 +34,21 @@ public class ListaPresencaEBD implements Serializable{
 	private Membro membro ;
 	
 	@ManyToOne
-	@JoinColumn(name= "curso_id")
-	private Curso curso; 
+	@JoinColumn(name= "ebdCurso_id")
+	private EBDCurso ebdCurso; 
 	
 	public ListaPresencaEBD(){
 		
 	}
 
 
-
-	public ListaPresencaEBD(Long id, LocalDate data, ChamadaMembro chamadaMembro,
-			Membro membro, Curso curso) {
+	public ListaPresencaEBD(Long id, LocalDate data, ChamadaMembro chamadaMembro, Membro membro, EBDCurso ebdCurso) {
 		super();
 		this.id = id;
 		this.data = data;
 		this.chamadaMembro = chamadaMembro;
 		this.membro = membro;
-		this.curso = curso;
+		this.ebdCurso = ebdCurso;
 	}
 
 
@@ -84,19 +82,15 @@ public class ListaPresencaEBD implements Serializable{
 	}
 
 
-	public Curso getCurso() {
-		return curso;
+	
+	public EBDCurso getEbdCurso() {
+		return ebdCurso;
 	}
 
 
-
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
+	public void setEbdCurso(EBDCurso ebdCurso) {
+		this.ebdCurso = ebdCurso;
 	}
-
-
-
 
 
 	public Membro getMembro() {

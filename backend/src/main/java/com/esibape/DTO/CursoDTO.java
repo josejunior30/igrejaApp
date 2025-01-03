@@ -7,11 +7,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import com.esibape.entities.Curso;
 import com.esibape.entities.EBDCurso;
-
-import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
 import com.esibape.entities.Visitante;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 public class CursoDTO implements Serializable{
@@ -21,8 +19,6 @@ public class CursoDTO implements Serializable{
 	private String url;
 	private List<MembroDTO> membro = new ArrayList<>();
 	private List<VisitanteDTO> visitante = new ArrayList<>();
-	@JsonIgnore
-	private List <ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
 	private List <EBDCursoDTO> ebdCurso = new ArrayList<>();
 
 	
@@ -32,17 +28,18 @@ public class CursoDTO implements Serializable{
 	}
 
 
+
 	public CursoDTO(Long id, String nome, String url, List<MembroDTO> membro, List<VisitanteDTO> visitante,
-			List<ListaPresencaEBDDTO> listaPresencaEBD, List<EBDCursoDTO> ebdCurso) {
+			List<EBDCursoDTO> ebdCurso) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.url = url;
 		this.membro = membro;
 		this.visitante = visitante;
-		this.listaPresencaEBD = listaPresencaEBD;
 		this.ebdCurso = ebdCurso;
 	}
+
 
 
 	public String getUrl() {
@@ -62,7 +59,7 @@ public class CursoDTO implements Serializable{
 		;
 	}
 	
-	   public CursoDTO(Curso curso, List<Membro> membro, List<Visitante> visitante, List<ListaPresencaEBD> listaPresencaEBD, List<EBDCurso> ebdCurso) {
+	   public CursoDTO(Curso curso, List<Membro> membro, List<Visitante> visitante, List<EBDCurso> ebdCurso) {
 	        this.id = curso.getId();
 	        this.nome = curso.getNome();
 	        this.url =curso.getUrl();
@@ -79,10 +76,6 @@ public class CursoDTO implements Serializable{
 		            .map(Visitante -> new VisitanteDTO(Visitante)) 
 		            .collect(Collectors.toList());
 	       
-	        this.listaPresencaEBD = listaPresencaEBD.stream()
-		            .map(ListaPresencaEBD -> new ListaPresencaEBDDTO(ListaPresencaEBD)) 
-		            .collect(Collectors.toList());
-	        
 	        
 	    }
 
@@ -130,19 +123,6 @@ public class CursoDTO implements Serializable{
 
 	public void setMembro(List<MembroDTO> membro) {
 		this.membro = membro;
-	}
-
-
-
-
-	public List<ListaPresencaEBDDTO> getListaPresencaEBD() {
-		return listaPresencaEBD;
-	}
-
-
-
-	public void setListaPresencaEBD(List<ListaPresencaEBDDTO> listaPresencaEBD) {
-		this.listaPresencaEBD = listaPresencaEBD;
 	}
 
 

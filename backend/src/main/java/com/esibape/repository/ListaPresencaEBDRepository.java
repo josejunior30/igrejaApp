@@ -12,14 +12,16 @@ import com.esibape.entities.ListaPresencaEBD;
 public interface ListaPresencaEBDRepository extends JpaRepository<ListaPresencaEBD, Long>{
 
 
+
 	 @Query("SELECT l FROM ListaPresencaEBD l " +
-	           "WHERE FUNCTION('YEAR', l.data) = :year " +
-	           "AND FUNCTION('MONTH', l.data) = :month " +
-	           "AND l.curso.id = :cursoId")
-	    List<ListaPresencaEBD> findByMonthAndCurso(
-	            @Param("year") int year,
-	            @Param("month") int month,
-	            @Param("cursoId") Long cursoId);
+		       "WHERE YEAR(l.data) = :year " +
+		       "AND MONTH(l.data) = :month " +
+		       "AND l.ebdCurso.id = :cursoId")
+		List<ListaPresencaEBD> findByMonthAndCurso(
+		        @Param("year") int year,
+		        @Param("month") int month,
+		        @Param("cursoId") Long cursoId);
+
 
 	    @Query("SELECT l.chamadaMembro FROM ListaPresencaEBD l " +
 	           "WHERE l.membro.id = :membroId " +

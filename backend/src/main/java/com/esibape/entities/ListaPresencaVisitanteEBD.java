@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -38,26 +36,23 @@ public class ListaPresencaVisitanteEBD implements Serializable{
 	private Visitante visitante;
 	
 	@ManyToOne
-	@JoinColumn(name= "curso_id")
-	private Curso curso; 
-	
+	@JoinColumn(name= "ebdCurso_id")
+	private EBDCurso ebdCurso; 
 	public ListaPresencaVisitanteEBD(){
 		
 	}
 
 
 
-	public ListaPresencaVisitanteEBD(Long id, LocalDate data, ChamadaVisitante chamadaVisitante,
-		 Visitante visitante, Curso curso) {
+	public ListaPresencaVisitanteEBD(Long id, LocalDate data, ChamadaVisitante chamadaVisitante, Visitante visitante,
+			EBDCurso ebdCurso) {
 		super();
 		this.id = id;
 		this.data = data;
 		this.chamadaVisitante = chamadaVisitante;
 		this.visitante = visitante;
-		this.curso = curso;
+		this.ebdCurso = ebdCurso;
 	}
-
-
 
 
 
@@ -91,15 +86,16 @@ public class ListaPresencaVisitanteEBD implements Serializable{
 	}
 
 
-	public Curso getCurso() {
-		return curso;
+
+
+	public EBDCurso getEbdCurso() {
+		return ebdCurso;
 	}
 
 
 
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
+	public void setEbdCurso(EBDCurso ebdCurso) {
+		this.ebdCurso = ebdCurso;
 	}
 
 

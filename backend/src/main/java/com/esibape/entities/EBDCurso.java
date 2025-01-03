@@ -41,6 +41,11 @@ public class EBDCurso implements Serializable{
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Visitante> visitante = new ArrayList<>();
 
+	@OneToMany(mappedBy ="ebdCurso")
+	private List <ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
+	
+	@OneToMany(mappedBy ="ebdCurso")
+	private List <ListaPresencaEBD> listaPresencaVisitanteEBD = new ArrayList<>();
 	
 	@OneToMany(mappedBy ="ebdCurso")
 	@JsonIgnore
@@ -54,13 +59,14 @@ public class EBDCurso implements Serializable{
 
 
 	public EBDCurso(Long id, String nome, Curso curso, List<Membro> membro, List<Visitante> visitante,
-			List<EbdEstudos> ebdEstudos) {
+			List<ListaPresencaEBD> listaPresencaEBD, List<EbdEstudos> ebdEstudos) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.curso = curso;
 		this.membro = membro;
 		this.visitante = visitante;
+		this.listaPresencaEBD = listaPresencaEBD;
 		this.ebdEstudos = ebdEstudos;
 	}
 
@@ -114,6 +120,18 @@ public class EBDCurso implements Serializable{
 	}
 
 
+
+
+
+	public List<ListaPresencaEBD> getListaPresencaEBD() {
+		return listaPresencaEBD;
+	}
+
+
+
+	public void setListaPresencaEBD(List<ListaPresencaEBD> listaPresencaEBD) {
+		this.listaPresencaEBD = listaPresencaEBD;
+	}
 
 
 

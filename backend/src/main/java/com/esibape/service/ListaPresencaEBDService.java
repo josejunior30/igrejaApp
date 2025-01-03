@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.esibape.DTO.CursoDTO;
+import com.esibape.DTO.EBDCursoDTO;
 import com.esibape.DTO.ListaPresencaEBDDTO;
 import com.esibape.DTO.MembroDTO;
 import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
-import com.esibape.entities.Curso;
-import com.esibape.repository.CursoRepository;
+import com.esibape.entities.EBDCurso;
+import com.esibape.repository.EBDCursoRepository;
 import com.esibape.repository.ListaPresencaEBDRepository;
 import com.esibape.repository.MembroRepository;
 
@@ -30,13 +30,13 @@ public class ListaPresencaEBDService {
 
 	
 	@Autowired
-	private CursoRepository cursoRepository;
+	private EBDCursoRepository ebdCursoRepository;
 	
 	@Transactional(readOnly = true)
 	public List<ListaPresencaEBDDTO> findAll() {
 		List <ListaPresencaEBD> entity = repository.findAll();
 		return  entity.stream()
-	               .map(x -> new ListaPresencaEBDDTO(x, x.getMembro(), x.getCurso()))
+	               .map(x -> new ListaPresencaEBDDTO(x, x.getMembro(), x.getEbdCurso()))
 	               .collect(Collectors.toList());
 	}
 	
@@ -44,7 +44,7 @@ public class ListaPresencaEBDService {
 	    public ListaPresencaEBDDTO findById(Long id) {
 	    	Optional<ListaPresencaEBD> ListaPresencaEBD = repository.findById(id);
 	    	ListaPresencaEBD entity = ListaPresencaEBD.get();
-	    	return  new ListaPresencaEBDDTO(entity, entity.getMembro(),entity.getCurso()) ;
+	    	return  new ListaPresencaEBDDTO(entity, entity.getMembro(),entity.getEbdCurso()) ;
 	    }
 	 @Transactional
 	    public ListaPresencaEBDDTO insert(ListaPresencaEBDDTO dto){
@@ -60,7 +60,7 @@ public class ListaPresencaEBDService {
 	        int month = yearMonth.getMonthValue();
 	        List<ListaPresencaEBD> entities = repository.findByMonthAndCurso(year, month, cursoId);
 	        return entities.stream()
-	                       .map(entity -> new ListaPresencaEBDDTO(entity, entity.getMembro(), entity.getCurso()))
+	                       .map(entity -> new ListaPresencaEBDDTO(entity, entity.getMembro(), entity.getEbdCurso()))
 	                       .collect(Collectors.toList());
 	    }
 
@@ -70,9 +70,9 @@ public class ListaPresencaEBDService {
 			MembroDTO AlDTO = dto.getMembro();
 			Membro membro = membroRepository.getReferenceById(AlDTO.getId());
 			entity.setMembro(membro);
-			CursoDTO CurDTO = dto.getCurso();
-			Curso curso = cursoRepository.getReferenceById(CurDTO.getId());
-			entity.setCurso(curso);
+			EBDCursoDTO CurDTO = dto.getEbdCurso();
+			EBDCurso curso = ebdCursoRepository.getReferenceById(CurDTO.getId());
+			entity.setEbdCurso(curso);
 	    }
 			
 }
