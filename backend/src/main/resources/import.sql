@@ -25,20 +25,19 @@ INSERT INTO tb_curso(nome, url, resumo) VALUES ( 'Fundamentos', 'https://i.posti
 INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Biblia e Teologia', 'https://i.postimg.cc/vmMwgLSb/5.png', 'O trilho de Bíblia & Teologia oferece uma formação voltada àqueles que desejam aprofundar o conhecimento bíblico e teológico.');
 INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Vida Cristã', 'https://i.postimg.cc/J0TzKYvN/4.png', 'O trilho de Vida Cristã oferece uma formação que visa equipar os crentes para o enfrentamento dos desafios diários da caminhada cristã.');
 INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Capacitação Ministerial', 'https://i.postimg.cc/mZF4nDMx/7.png','O módulo de Capacitação Ministerial oferece uma formação que visa equipar os crentes para o ministério e a liderança cristã.');
-INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Crianças', 'https://i.postimg.cc/5tvj13QJ/3.png', 'O Grupo de Trabalho e Desenvolvimento de Projetos visa oferecer um espaço para o desenvolvimento de novas soluções ministeriais.');
-INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Palavra & Vida','https://i.postimg.cc/hvMf6tz7/1.png', 'O Grupo de Trabalho e Desenvolvimento de Projetos visa oferecer um espaço para o desenvolvimento de novas soluções ministeriais.');
-INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Adolescentes', 'https://i.postimg.cc/XYrp13Vp/2.png', 'O Grupo de Trabalho e Desenvolvimento de Projetos visa oferecer um espaço para o desenvolvimento de novas soluções ministeriais.');
+INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Crianças','https://i.postimg.cc/J0TzKYvN/4.png', 'Voltado para as crianças');
+INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Palavra & Vida','https://i.postimg.cc/hvMf6tz7/1.png', 'O Trilho Palavra e Vida segue o curriculo de formaçao proposto pela Convençao Batista Fluminense. Os temas de Biblia, vida crista e ministerio sao trabalhados concomitantemente.');
+INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Adolescentes', 'https://i.postimg.cc/XYrp13Vp/2.png', 'Voltados para adolescentes.');
+INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'GT de Projetos', 'https://i.postimg.cc/XYrp13Vp/2.png', 'O Grupo de Trabalho e Desenvolvimento de Projetos visa oferecer um espaço para o desenvolvimento de novas soluções ministeriais.');
 
 
-INSERT INTO tb_EBD_curso(nome, curso_id) VALUES ( 'genesis', '1');
-INSERT INTO tb_EBD_curso(nome, curso_id) VALUES ( 'Lucas', '1');
-INSERT INTO tb_EBD_curso(nome, curso_id) VALUES ( 'Cristo', '1');
-INSERT INTO tb_EBD_curso(nome, curso_id) VALUES ( 'Moises', '1');
-INSERT INTO tb_EBD_curso(nome, curso_id) VALUES ( 'Exodo', '2');
-INSERT INTO tb_EBD_curso(nome, curso_id) VALUES ( 'Cristo', '3');
-INSERT INTO tb_EBD_curso(nome, curso_id) VALUES ( 'Cristo', '4');
-INSERT INTO tb_EBD_curso(nome, curso_id) VALUES ( 'Cristo', '5');
-INSERT INTO tb_EBD_curso(nome, curso_id) VALUES ( 'Cristo', '6');
+INSERT INTO tb_EBD_curso(nome, curso_id, resumo) VALUES ( 'Fundamentos', '1', 'A conversão a Cristo; Encontrando Deus; As práticas da nova vida; A consolidação da nova vida; Vivendo em vitória; Entrando na presença de Deus; Orando a Deus; Crescendo em força e autoridade espiritual; Fé ousada; Jejum e oraçãoE muito mais...');
+INSERT INTO tb_EBD_curso(nome, curso_id,resumo) VALUES ( 'Imersao Biblica', '2', 'Introdução à Teologia;Revelação, inspiração e iluminação;O conhecimento de Deus;Deus no período patriarcal;Deus na tradição mosaica; Deus na liga tribal e monarquia;Deus no exílio e pós-exílio; Deus no Novo Testamento; A Trindade divina; Os atributos de Deus; E muito mais...');
+INSERT INTO tb_EBD_curso(nome, curso_id, resumo) VALUES ( 'Vida com propositos', '3', 'O que dirige a sua vida?A razão de tudo;Planejado para agradar a Deus;Tornando-se amigo de Deus;Adoração que agrada a Deus;Um lugar ao qual pertencer;Criado para se tornar semelhante a Cristo;Crescendo pela provação;Formado para servir a Deus;Entendendo a sua FORMA; E muito mais...');
+INSERT INTO tb_EBD_curso(nome, curso_id, resumo) VALUES ( 'Batalha Espiritual', '3', 'Conheça o inimigo;Possessão demoníaca e libertação;Opressão;Tentação;As armas do inimigo;Manifestações satânicas;Ministério de libertação;Jejum e oração como estratégia;Lidando com as obras da carne;E muito mais...');
+INSERT INTO tb_EBD_curso(nome, curso_id, resumo) VALUES ( 'Isaias', '6', 'O Evangelho do Antigo Testamento;O Livro do Emanuel;Juízo e Condenação;Promessa de Restauração;Um futuro de benção;A grandeza de Deus na consolação;A Graça de Deus na Salvação;A Glória de Deus na restauração;E muito mais...');
+INSERT INTO tb_EBD_curso(nome, curso_id, resumo) VALUES ( 'Igreja Multiplicadora', '8', 'Dinâmica dos PG’s;Estrutura dos PG’s;Fundamentação Bíblica dos PG’s;Liderança de PG’s;Condução dos encontros;Roteiro de PG;O que não pode faltar no PG?Formação de líderes no PG;Eventos ponte no PG;Discipulado no PG;Implantação do PG;E muito mais...');
+
 
 
 

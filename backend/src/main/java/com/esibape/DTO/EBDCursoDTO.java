@@ -19,6 +19,7 @@ public class EBDCursoDTO implements Serializable{
 	private Long id;
 	private String nome;
     private CursoDTO curso;
+    private String resumo;
 	private List <EbdEstudosDTO> ebdEstudos = new ArrayList<>();
 	private List<MembroDTO> membro = new ArrayList<>();
 	private List<VisitanteDTO> visitante = new ArrayList<>();
@@ -39,9 +40,9 @@ public class EBDCursoDTO implements Serializable{
 	public EBDCursoDTO(EBDCurso entity) {
 		this.id= entity.getId();
 		this.nome=entity.getNome();
+		this.resumo=entity.getResumo();
 	    this.curso = new CursoDTO(entity.getCurso());
 	
-		
 	}
 
 	public EBDCursoDTO(EBDCurso entity, List<EbdEstudos> ebdEstudos , List<Membro>membro, List<Visitante>visitante, List<ListaPresencaEBD> listaPresencaEBD) {
@@ -86,6 +87,14 @@ public class EBDCursoDTO implements Serializable{
 	}
 
 
+
+	public String getResumo() {
+		return resumo;
+	}
+
+	public void setResumo(String resumo) {
+		this.resumo = resumo;
+	}
 
 	public List<EbdEstudosDTO> getEbdEstudos() {
 		return ebdEstudos;

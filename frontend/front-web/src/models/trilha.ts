@@ -21,4 +21,5 @@ export type cursoDTO = {
 export type ebdCurso = {
   id: number;
   nome: string;
+  resumo: string;
 };

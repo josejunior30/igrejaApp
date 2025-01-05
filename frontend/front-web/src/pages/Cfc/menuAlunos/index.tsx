@@ -164,21 +164,28 @@ const MenuOpcao = () => {
                 position: "absolute",
                 top: menuPosition.top,
                 left: menuPosition.left,
+                maxWidth: "700px", // Restrições de largura
+                minWidth: "600px",
+                maxHeight: "400px", // Restrições de altura
+                overflow: "hidden", // Rolagem se necessário
               }}
             >
-              <p className="pt-4">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
-                sed culpa assumenda, aliquam porro aspernatur molestias
-                architecto quas quod vero voluptas non eos laboriosam quibusdam
-                veritatis quos eligendi deserunt blanditiis!
-              </p>
-              <div className="d-flex botoes-menu mb-5">
-                <button className="inscrever" onClick={handleInscrever}>
-                  Inscrever-se
-                </button>
-                <button className="baixar" onClick={handleDownload}>
-                  Baixar
-                </button>
+              {curso?.ebdCurso
+                .filter((ebdCurso) => ebdCurso.id === selectedCursoId)
+                .map((ebdCurso) => (
+                  <p className="pt-4">
+                    • {ebdCurso.resumo.replace(/;/g, ";\n• ")}
+                  </p>
+                ))}
+              <div className="row">
+                <div className=" col-7 d-flex botoes-menu mb-5">
+                  <button className="inscrever" onClick={handleInscrever}>
+                    Inscrever-se
+                  </button>
+                  <button className="baixar" onClick={handleDownload}>
+                    Baixar
+                  </button>
+                </div>
               </div>
             </div>
           )}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +34,9 @@ public class EBDCurso implements Serializable{
 	@JsonBackReference(value = "curso-ebdcurso")
     private Curso curso;
 	
+	@Column(columnDefinition = "TEXT")
+	private String resumo;
+	
 	@OneToMany(mappedBy = "ebdCurso")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Membro> membro = new ArrayList<>();
@@ -60,17 +64,22 @@ public class EBDCurso implements Serializable{
 
 
 
-	public EBDCurso(Long id, String nome, Curso curso, List<Membro> membro, List<Visitante> visitante,
-			List<ListaPresencaEBD> listaPresencaEBD, List<EbdEstudos> ebdEstudos) {
+	public EBDCurso(Long id, String nome, Curso curso, String resumo, List<Membro> membro, List<Visitante> visitante,
+			List<ListaPresencaEBD> listaPresencaEBD, List<ListaPresencaEBD> listaPresencaVisitanteEBD,
+			List<EbdEstudos> ebdEstudos) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.curso = curso;
+		this.resumo = resumo;
 		this.membro = membro;
 		this.visitante = visitante;
 		this.listaPresencaEBD = listaPresencaEBD;
+		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
 		this.ebdEstudos = ebdEstudos;
 	}
+
+
 
 
 
@@ -104,6 +113,18 @@ public class EBDCurso implements Serializable{
 		this.curso = curso;
 	}
 
+
+
+
+	public String getResumo() {
+		return resumo;
+	}
+
+
+
+	public void setResumo(String resumo) {
+		this.resumo = resumo;
+	}
 
 
 
