@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ public class Curso implements Serializable{
 	private Long id;
 	private String nome;
 	private String url;
+	@Column(columnDefinition = "TEXT")
 	private String resumo;
 	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "curso-membro")

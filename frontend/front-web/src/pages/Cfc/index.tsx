@@ -10,6 +10,8 @@ const Fundamentos = "https://i.postimg.cc/pLGkCGmq/6-20241110-150139-0005.png";
 const PalavaVida = "https://i.postimg.cc/G2YQcbq5/1-20241110-150138-0000.png";
 const Adolescentes = "https://i.postimg.cc/m2TwsfMm/2-20241110-150138-0001.png";
 const crianca = "https://i.postimg.cc/Cx1sRGcD/3-20241110-150138-0002.png";
+const suporte =
+  "https://i.postimg.cc/CM2S1527/C-pia-de-Projeto-Final-CFC-SIBAPE-Story.png";
 const Trilha = () => {
   const navigator = useNavigate();
   const handleGoBack = () => {
@@ -70,6 +72,16 @@ const Trilha = () => {
                 <img
                   src={BibliaTeologia}
                   alt="Biblia"
+                  className="img-fluid"
+                  id="img-menu"
+                />
+              </Link>
+            </div>
+            <div className="col-9 col-md-3" id="container-img">
+              <Link to="/trilho/opcao/8">
+                <img
+                  src={suporte}
+                  alt="suporte"
                   className="img-fluid"
                   id="img-menu"
                 />

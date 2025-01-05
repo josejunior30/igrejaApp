@@ -68,22 +68,25 @@ public class EbdEstudosService {
     }
 
 
-    // Deletar um EbdCurso
-    public void deleteEbdCurso(Long id) {
+    // Deletar um EbdEstudos
+    public void deleteEbdEstudos(Long id) {
     	ebdEstudoRepository.deleteById(id);
     }
     
-    public byte[] downloadPdf(Long id) {
-        Optional<EbdEstudos> optionalEbdCurso = ebdEstudoRepository.findById(id);
-        if (optionalEbdCurso.isEmpty()) {
-            throw new RuntimeException("EbdCurso não encontrado.");
-        }
+    public byte[] downloadPdfByCursoId(Long cursoId) {
+        // Buscar o curso pelo ID
+        EBDCurso ebdCurso = ebdCursoRepository.findById(cursoId)
+                .orElseThrow(() -> new RuntimeException("Curso não encontrado."));
 
-        byte[] pdf = optionalEbdCurso.get().getPdfDeEstudo();
+        // Buscar o estudo associado ao curso
+        EbdEstudos ebdEstudo = ebdEstudoRepository.findByEbdCurso(ebdCurso)
+                .orElseThrow(() -> new RuntimeException("Estudo não encontrado para este curso."));
+
+        // Retornar o PDF
+        byte[] pdf = ebdEstudo.getPdfDeEstudo();
         if (pdf == null || pdf.length == 0) {
-            throw new RuntimeException("PDF não encontrado para este curso.");
+            throw new RuntimeException("PDF não encontrado para este estudo.");
         }
-
         return pdf;
     }
 }

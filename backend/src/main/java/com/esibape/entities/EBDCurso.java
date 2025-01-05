@@ -42,9 +42,11 @@ public class EBDCurso implements Serializable{
     private List<Visitante> visitante = new ArrayList<>();
 
 	@OneToMany(mappedBy ="ebdCurso")
+	@JsonIgnore
 	private List <ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
 	
 	@OneToMany(mappedBy ="ebdCurso")
+	@JsonIgnore
 	private List <ListaPresencaEBD> listaPresencaVisitanteEBD = new ArrayList<>();
 	
 	@OneToMany(mappedBy ="ebdCurso")

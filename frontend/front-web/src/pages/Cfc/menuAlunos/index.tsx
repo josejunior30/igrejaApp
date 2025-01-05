@@ -125,12 +125,7 @@ const MenuOpcao = () => {
         </h1>
         <div className="row justify-content-center">
           <div className="section-trilho col-7 text-center align-self-center mt-3">
-            <p className="sobre-trilha">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
-              perspiciatis animi. Expedita accusamus cum quas enim temporibus,
-              architecto voluptate iste! Eum voluptatibus adipisci ut quaerat
-              hic tempora molestiae obcaecati et.
-            </p>
+            <p className="sobre-trilha">{curso?.resumo}</p>
           </div>
         </div>
         <div className="row justify-content-center mb-5">

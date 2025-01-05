@@ -21,13 +21,13 @@ INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 2, 1);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 3, 2);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 4, 2);
 
-INSERT INTO tb_curso(nome, url) VALUES ( 'Fundamentos', 'https://i.postimg.cc/13SywQfk/6.png');
-INSERT INTO tb_curso(nome, url) VALUES ( 'Biblia e Teologia', 'https://i.postimg.cc/vmMwgLSb/5.png');
-INSERT INTO tb_curso(nome, url) VALUES ( 'Vida Cristã', 'https://i.postimg.cc/J0TzKYvN/4.png');
-INSERT INTO tb_curso(nome, url) VALUES ( 'Capacitação Ministerial', 'https://i.postimg.cc/mZF4nDMx/7.png');
-INSERT INTO tb_curso(nome, url) VALUES ( 'Crianças', 'https://i.postimg.cc/5tvj13QJ/3.png');
-INSERT INTO tb_curso(nome, url) VALUES ( 'Palavra & Vida','https://i.postimg.cc/hvMf6tz7/1.png');
-INSERT INTO tb_curso(nome, url) VALUES ( 'Adolescentes', 'https://i.postimg.cc/XYrp13Vp/2.png');
+INSERT INTO tb_curso(nome, url, resumo) VALUES ( 'Fundamentos', 'https://i.postimg.cc/13SywQfk/6.png','O trilho de Fundamentos oferece uma formação voltada àqueles que desejam conhecer os princípios basilares da Fé Cristã.');
+INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Biblia e Teologia', 'https://i.postimg.cc/vmMwgLSb/5.png', 'O trilho de Bíblia & Teologia oferece uma formação voltada àqueles que desejam aprofundar o conhecimento bíblico e teológico.');
+INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Vida Cristã', 'https://i.postimg.cc/J0TzKYvN/4.png', 'O trilho de Vida Cristã oferece uma formação que visa equipar os crentes para o enfrentamento dos desafios diários da caminhada cristã.');
+INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Capacitação Ministerial', 'https://i.postimg.cc/mZF4nDMx/7.png','O módulo de Capacitação Ministerial oferece uma formação que visa equipar os crentes para o ministério e a liderança cristã.');
+INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Crianças', 'https://i.postimg.cc/5tvj13QJ/3.png', 'O Grupo de Trabalho e Desenvolvimento de Projetos visa oferecer um espaço para o desenvolvimento de novas soluções ministeriais.');
+INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Palavra & Vida','https://i.postimg.cc/hvMf6tz7/1.png', 'O Grupo de Trabalho e Desenvolvimento de Projetos visa oferecer um espaço para o desenvolvimento de novas soluções ministeriais.');
+INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Adolescentes', 'https://i.postimg.cc/XYrp13Vp/2.png', 'O Grupo de Trabalho e Desenvolvimento de Projetos visa oferecer um espaço para o desenvolvimento de novas soluções ministeriais.');
 
 
 INSERT INTO tb_EBD_curso(nome, curso_id) VALUES ( 'genesis', '1');

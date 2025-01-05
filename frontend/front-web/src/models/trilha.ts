@@ -12,6 +12,7 @@ export type curso = {
 export type cursoDTO = {
   id: number;
   nome: string;
+  resumo: string;
   membro: MembroDTO[];
   visitante: visitante[];
   ebdCurso: ebdCurso[];

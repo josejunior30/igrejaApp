@@ -16,13 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.esibape.DTO.AlunosDTO;
 import com.esibape.DTO.EbdEstudosDTO;
 import com.esibape.service.EbdEstudosService;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/ebd-cursos")
+@RequestMapping("/ebd-estudos")
 public class EbdEstudosController {
 
     @Autowired
@@ -61,17 +59,18 @@ public class EbdEstudosController {
         EbdEstudosDTO ebdCurso = ebdEstudoService.findByEbdCurso(id);
         return new ResponseEntity<>(ebdCurso, HttpStatus.OK);
     }
-    @GetMapping("/{id}/download-pdf")
-    public ResponseEntity<byte[]> downloadPdf(@PathVariable Long id) {
+    
+    @GetMapping("/ebdCurso/{cursoId}/download-pdf")
+    public ResponseEntity<byte[]> downloadPdfByCursoId(@PathVariable Long cursoId) {
         try {
-            byte[] pdf = ebdEstudoService.downloadPdf(id);
+            byte[] pdf = ebdEstudoService.downloadPdfByCursoId(cursoId);
 
             if (pdf == null || pdf.length == 0) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "attachment; filename=ebd_curso_" + id + ".pdf");
+            headers.add("Content-Disposition", "attachment; filename=ebd_curso_" + cursoId + ".pdf");
             headers.add("Content-Type", "application/pdf");
 
             return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
@@ -87,7 +86,7 @@ public class EbdEstudosController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEbdCurso(@PathVariable Long id) {
-    	ebdEstudoService.deleteEbdCurso(id);
+    	ebdEstudoService.deleteEbdEstudos(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

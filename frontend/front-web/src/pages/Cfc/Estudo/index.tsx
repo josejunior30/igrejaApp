@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { uploadPdf } from "../../../service/estudosService";
 import { findAllCurso } from "../../../service/cursoTrilhoService";
-import { EbdEstudo } from "../../../models/EbdEstudo";
 import Header from "../../../components/Header";
 import "./styles.css";
 import { ebdCurso } from "../../../models/trilha";
@@ -17,13 +16,13 @@ const Estudo = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingCursos, setIsLoadingCursos] = useState<boolean>(true);
   const navigator = useNavigate();
-  // Carregar lista de cursos do backend
+
   useEffect(() => {
     const fetchCursos = async () => {
       try {
         setIsLoadingCursos(true);
         const response = await findAllCurso();
-        setEbdCurso(response.data); // Atualiza o estado com os cursos recebidos
+        setEbdCurso(response.data);
       } catch (error: any) {
         console.error("Erro ao carregar cursos:", error.message);
         setMensagem(
@@ -65,14 +64,9 @@ const Estudo = () => {
       const resultado = await uploadPdf(cursoId, arquivo, nomeEstudo);
       console.log("Estudo criado:", resultado);
 
-      // Exibe um alert de sucesso
-      alert(
-        `Estudo '${resultado.nome}' enviado com sucesso! ID: ${resultado.id}`
-      );
+      alert(`Estudo '${resultado.nome}' enviado com sucesso!`);
 
-      setMensagem(
-        `Estudo '${resultado.nome}' enviado com sucesso! ID: ${resultado.id}`
-      );
+      setMensagem(`Estudo '${resultado.nome}' enviado com sucesso! `);
       setCursoId(null);
       setArquivo(null);
       setNomeEstudo("");

@@ -6,6 +6,8 @@
   background-color: white;
   border-radius: 10px;
   padding: 30px;
+  max-height: 200px;
+  overflow-y: auto !important;
 }
 .sobre-trilha {
   font-size: 20px;

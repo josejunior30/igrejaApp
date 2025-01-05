@@ -2,12 +2,12 @@ import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
 
 export function findAll() {
-  return axios.get(`${BASE_URL}/ebd-cursos`);
+  return axios.get(`${BASE_URL}/ebd-estudos`);
 }
 
 export function downloadPdf(id: number) {
-  return axios.get(`${BASE_URL}/ebd-cursos/${id}/download-pdf`, {
-    responseType: "blob", // Para garantir que o conteúdo seja tratado como binário
+  return axios.get(`${BASE_URL}/ebd-estudos/ebdCurso/${id}/download-pdf`, {
+    responseType: "blob",
   });
 }
 
@@ -26,7 +26,7 @@ export async function uploadPdf(id: number, file: File, nome: string) {
   formData.append("nome", nome);
 
   try {
-    const response = await axios.post(`${BASE_URL}/ebd-cursos`, formData, {
+    const response = await axios.post(`${BASE_URL}/ebd-estudos`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
