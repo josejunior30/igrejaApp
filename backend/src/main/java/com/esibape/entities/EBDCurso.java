@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
-@Table(name="tb_EBD_curso")
+@Table(name="tb_ebd_curso")
 public class EBDCurso implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
