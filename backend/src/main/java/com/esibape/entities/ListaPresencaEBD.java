@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="tb_lista_presenca_Ebd")
+@Table(name="tb_lista_presenca_ebd")
 public class ListaPresencaEBD implements Serializable{
 	private static final long serialVersionUID = 1L;
 		

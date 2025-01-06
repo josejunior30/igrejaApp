@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity
-@Table(name="tb_lista_presenca_Visitante_Ebd")
+@Table(name="tb_lista_presenca_visitante_ebd")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ListaPresencaVisitanteEBD implements Serializable{
 	private static final long serialVersionUID = 1L;
