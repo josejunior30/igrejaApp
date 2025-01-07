@@ -57,26 +57,3 @@ h3 {
   font-size: 18px;
   color: white;
 }
-.linha-menu {
-}
-@media (max-width: 768px) {
-  #img-menu {
-    margin-top: 20px;
-  }
-  #linha-menu {
-    margin-top: 10px;
-  }
-  #container-img button {
-    font-size: 10px;
-    width: 100px;
-    margin-right: 120px;
-  }
-  #container-img h3 {
-    font-size: 12px;
-  }
-}
-@media (min-width: 768px) and (max-width: 1024px) {
-  #container-img button {
-    margin-left: 29%;
-  }
-}

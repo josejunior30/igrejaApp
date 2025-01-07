@@ -33,7 +33,7 @@ const Trilha = () => {
         </div>
         <div className="container  justify-content-center">
           <div className="row  mb-2 justify-content-center linha-menu">
-            <div className="col-7 col-md-1" id="container-img">
+            <div className="col-2 col-md-1" id="container-img">
               <Link to="/trilho/opcao/5">
                 <img
                   src={crianca}
@@ -43,7 +43,7 @@ const Trilha = () => {
                 />
               </Link>
             </div>
-            <div className="col-7 col-md-1 " id="container-img">
+            <div className="col-2 col-md-1 " id="container-img">
               <Link to="/trilho/opcao/7">
                 <img
                   src={Adolescentes}

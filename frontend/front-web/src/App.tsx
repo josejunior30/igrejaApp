@@ -239,11 +239,19 @@ function App() {
           <Route path="trilho/inscrever/:id" element={<Inscrever />} />
           <Route
             path="trilho/presenca/inserir/:id"
-            element={<InserirPresencaEBD />}
+            element={
+              <PrivateRoute>
+                <InserirPresencaEBD />
+              </PrivateRoute>
+            }
           />
           <Route
             path="trilho/presenca/historicoChamada"
-            element={<HistoricoChamadaEBD />}
+            element={
+              <PrivateRoute>
+                <HistoricoChamadaEBD />
+              </PrivateRoute>
+            }
           />
 
           <Route path="trilho/estudo" element={<Estudo />} />
