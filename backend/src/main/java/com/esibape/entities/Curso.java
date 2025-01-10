@@ -29,11 +29,11 @@ public class Curso implements Serializable{
 	@Column(columnDefinition = "TEXT")
 	private String resumo;
 	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "curso-membro")
+
     private List<Membro> membro = new ArrayList<>();
 
 	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "curso-visitante")
+
     private List<Visitante> visitante = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

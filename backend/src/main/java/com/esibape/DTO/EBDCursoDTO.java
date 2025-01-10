@@ -20,6 +20,7 @@ public class EBDCursoDTO implements Serializable{
 	private String nome;
     private CursoDTO curso;
     private String resumo;
+    private int quantidade;
 	private List <EbdEstudosDTO> ebdEstudos = new ArrayList<>();
 	private List<MembroDTO> membro = new ArrayList<>();
 	private List<VisitanteDTO> visitante = new ArrayList<>();
@@ -37,13 +38,18 @@ public class EBDCursoDTO implements Serializable{
 
 
 
-	public EBDCursoDTO(EBDCurso entity) {
-		this.id= entity.getId();
-		this.nome=entity.getNome();
-		this.resumo=entity.getResumo();
-	    this.curso = new CursoDTO(entity.getCurso());
-	
-	}
+	public EBDCursoDTO(EBDCurso ebdCurso) {
+        this.id = ebdCurso.getId();
+        this.nome = ebdCurso.getNome();
+        this.resumo = ebdCurso.getResumo();
+        this.membro = ebdCurso.getMembro().stream()
+                .map(MembroDTO::new)
+                .collect(Collectors.toList());
+        this.visitante = ebdCurso.getVisitante().stream()
+                .map(VisitanteDTO::new)
+                .collect(Collectors.toList());
+        this.quantidade = membro.size() + visitante.size(); // Soma de tamanhos
+    }
 
 	public EBDCursoDTO(EBDCurso entity, List<EbdEstudos> ebdEstudos , List<Membro>membro, List<Visitante>visitante, List<ListaPresencaEBD> listaPresencaEBD) {
 		 this(entity);
@@ -87,6 +93,14 @@ public class EBDCursoDTO implements Serializable{
 	}
 
 
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
 
 	public String getResumo() {
 		return resumo;

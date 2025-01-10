@@ -71,26 +71,26 @@ public class MembroService {
     }
     
     
-    	@Transactional
-    	public void patchUpdateCurso(Long membroId, Long cursoId, Long ebdCursoId) {
-    	    // Busca o membro pelo ID
-    	    Membro membro = repository.findById(membroId)
-    	                              .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado"));
+    @Transactional
+	public void patchUpdateCurso(Long membroId, Long cursoId, Long ebdCursoId) {
+	    // Busca o membro pelo ID
+	    Membro membro = repository.findById(membroId)
+	                              .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado"));
 
-    	    // Busca o curso pelo ID
-    	    Curso curso = cursoRepository.findById(cursoId)
-    	                                 .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
+	    // Busca o curso pelo ID
+	    Curso curso = cursoRepository.findById(cursoId)
+	                                 .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
 
-    	    // Busca o EBDCurso pelo ID
-    	    EBDCurso ebdCurso = ebdCursoRepository.findById(ebdCursoId)
-    	                                          .orElseThrow(() -> new EntityNotFoundException("EBDCurso não encontrado"));
+	    // Busca o EBDCurso pelo ID
+	    EBDCurso ebdCurso = ebdCursoRepository.findById(ebdCursoId)
+	                                          .orElseThrow(() -> new EntityNotFoundException("EBDCurso não encontrado"));
 
-    	    // Associa o membro ao curso e ao EBDCurso
-    	    membro.setCurso(curso);
-    	    membro.setEbdCurso(ebdCurso);
+	    // Associa o membro ao curso e ao EBDCurso
+	    membro.setCurso(curso);
+	    membro.setEbdCurso(ebdCurso);
 
-    	    // Persistência ocorre automaticamente se o membro é uma entidade gerenciada
-    	}
+	    // Persistência ocorre automaticamente se o membro é uma entidade gerenciada
+	}
 
     private void copyDtoToEntity(MembroDTO dto, Membro entity) {
     	atualizarIdade(dto);

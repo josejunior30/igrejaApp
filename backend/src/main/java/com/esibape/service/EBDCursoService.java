@@ -32,7 +32,7 @@ public class EBDCursoService {
 	    Optional<EBDCurso> optionalCurso = repository.findById(id);
 	    if (optionalCurso.isPresent()) {
 	    	EBDCurso ebdCurso= optionalCurso.get();
-	        return new EBDCursoDTO(ebdCurso);
+	        return new EBDCursoDTO(ebdCurso, ebdCurso.getEbdEstudos(), ebdCurso.getMembro(), ebdCurso.getVisitante(), ebdCurso.getListaPresencaEBD());
 	    } else {
 	        // You can return null or throw an exception if you prefer
 	        return null;

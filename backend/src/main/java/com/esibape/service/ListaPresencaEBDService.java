@@ -27,8 +27,6 @@ public class ListaPresencaEBDService {
 	@Autowired
 	private MembroRepository membroRepository;
 	
-
-	
 	@Autowired
 	private EBDCursoRepository ebdCursoRepository;
 	
