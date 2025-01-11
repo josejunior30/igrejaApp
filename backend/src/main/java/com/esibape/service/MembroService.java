@@ -132,7 +132,13 @@ public class MembroService {
         }
     }
         
-        
+    @Transactional(readOnly = true)
+    public List<MembroDTO> findByMonthOfBirth(int mes) {
+        List<Membro> result = repository.findByMonthOfBirth(mes);
+        return result.stream()
+                     .map(MembroDTO::new)
+                     .collect(Collectors.toList());
+    } 
     
     
 }

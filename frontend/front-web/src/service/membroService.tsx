@@ -31,3 +31,7 @@ export function patchUpdateCurso(
     `${BASE_URL}/membro/${membroId}/curso/${cursoId}/ebdCurso/${ebdMembroId}`
   );
 }
+
+export function findByMonthOfBirth(mes: number) {
+  return axios.get(`${BASE_URL}/membro/por-mes?mes=${mes}`);
+}

@@ -91,5 +91,13 @@ public class MembroController {
 		    // Retorno de sucesso sem conteúdo
 		    return ResponseEntity.noContent().build();
 		}
+		  @GetMapping(value = "/por-mes")
+		    public ResponseEntity<List<MembroDTO>> findByMonthOfBirth(@RequestParam(name = "mes") int mes) {
+		        if (mes < 1 || mes > 12) {
+		            throw new IllegalArgumentException("O mês deve ser entre 1 e 12.");
+		        }
+		        List<MembroDTO> result = service.findByMonthOfBirth(mes);
+		        return ResponseEntity.ok(result);
+		    }
 
 }
