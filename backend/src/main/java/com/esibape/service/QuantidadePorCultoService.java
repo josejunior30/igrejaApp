@@ -75,8 +75,7 @@ public class QuantidadePorCultoService {
         entity.setTotal(dto.getTotal());
         entity.setData(dto.getData());
         entity.setTipoCulto(dto.getTipoCulto());
-        entity.setNumeroHomem(dto.getNumeroHomem());
-        entity.setNumeroMulher(dto.getNumeroMulher());
+     entity.setResumo(dto.getResumo());
     }
 }
 

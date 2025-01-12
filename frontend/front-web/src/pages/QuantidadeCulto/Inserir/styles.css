@@ -1,16 +1,15 @@
-
-#quantidade{
-  color:white;
+#quantidade {
+  color: white;
 }
 
-#totalCulto{
-  color:white;
+#totalCulto {
+  color: white;
 }
-#QuantidadeTitulo{
-  color:white;
+#QuantidadeTitulo {
+  color: white;
   margin-left: 10%;
 }
-.btn-EnviarQuantiade{
+.btn-EnviarQuantiade {
   background-color: var(--color-coral);
   color: white;
   border: none;
@@ -18,4 +17,15 @@
   border-radius: 5px;
   cursor: pointer;
   margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  .voltar-projetos-menu {
+    font-size: 14px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .voltar-projetos-menu {
+    font-size: 14px;
+  }
 }

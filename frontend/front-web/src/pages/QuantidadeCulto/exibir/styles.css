@@ -1,23 +1,22 @@
 .total-verde {
-    color: rgb(1, 255, 1)!important;
-    font-weight: bold!important;
-  }
+  color: rgb(1, 255, 1) !important;
+  font-weight: bold !important;
+}
 
-  #filtro-mes{
-    color: white;
-    color: #02fcfc;
-    color: #386c01;
-  }
-  #escolha-mes{
-    color: white;
-   }
-  .chart-container {
-    width: 250px!important; 
-    height: 250px!important; 
-    margin: 0 auto; 
-    overflow: hidden;
-    transition: max-height 0.5s ease-out;
-    
+#filtro-mes {
+  color: white;
+  color: #02fcfc;
+  color: #386c01;
+}
+#escolha-mes {
+  color: white;
+}
+.chart-container {
+  width: 250px !important;
+  height: 250px !important;
+  margin: 0 auto;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
 }
 .grafico-info {
   display: flex;
@@ -29,7 +28,7 @@
 .titulo-grafico {
   flex: 1;
   margin-top: 120px;
-  color: white!important;
+  color: white !important;
 }
 
 .grafico-homens-mulheres {
@@ -39,20 +38,38 @@
 
 .chart-container {
   max-width: 400px;
-
 }
-.btn-inserir-numeros{
+.btn-inserir-numeros {
   margin-left: 20px;
-  padding:  7px 20px;
+  padding: 7px 20px;
   background-color: var(--color-coral);
   border-radius: 5px;
   color: #ffffff;
 }
-.btn-inserir-numeros:hover{
-background-color: rgb(255, 102, 47);
+.btn-inserir-numeros:hover {
+  background-color: rgb(255, 102, 47);
 }
-.chart-container-torre{
+.chart-container-torre {
   padding-top: 5%;
-  width: 400px!important; 
-  height: 300px!important; 
+  width: 400px !important;
+  height: 300px !important;
+}
+
+@media (max-width: 768px) {
+  .chart-container-torre {
+    display: none;
+  }
+  .d-flex {
+    flex-direction: column; /* Empilha os gráficos verticalmente */
+    align-items: center; /* Centraliza os gráficos */
+  }
+  .chart-container {
+    max-width: 300px;
+    margin-bottom: 20px;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    justify-self: center;
+    margin-left: -20px;
+  }
 }

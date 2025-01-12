@@ -7,6 +7,7 @@ public enum TipoCulto  {
     BATISMO("batismo"),
     ANIVERSARIO("aniversário"),
     ORDENACAO("ordenação");
+	
 
     private final String descricao;
 

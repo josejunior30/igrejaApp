@@ -3,6 +3,8 @@ package com.esibape.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,8 +22,8 @@ public class QuantidadePorCulto implements  Serializable{
 	private Integer membro;
 	private Integer total;
 	private LocalDate data;
-	private Integer numeroMulher;
-	private Integer numeroHomem;
+	@Column(columnDefinition = "TEXT")
+	private String resumo;
 	TipoCulto TipoCulto;
 	
 	
@@ -29,19 +31,37 @@ public class QuantidadePorCulto implements  Serializable{
 		
 	}
 
-	public QuantidadePorCulto(Long id, Integer visitante, Integer membro, Integer total, Integer numeroMulher, Integer numeroHomem,LocalDate data,
-			TipoCulto tipoCulto) {
+
+
+
+	public QuantidadePorCulto(Long id, Integer visitante, Integer membro, Integer total, LocalDate data, String resumo,
+			com.esibape.entities.TipoCulto tipoCulto) {
 		super();
 		this.id = id;
 		this.visitante = visitante;
 		this.membro = membro;
 		this.total = total;
 		this.data = data;
+		this.resumo = resumo;
 		TipoCulto = tipoCulto;
-		
-		this.numeroHomem = numeroHomem;
-		this.numeroMulher =numeroMulher;
 	}
+
+
+
+
+	public String getResumo() {
+		return resumo;
+	}
+
+
+
+
+	public void setResumo(String resumo) {
+		this.resumo = resumo;
+	}
+
+
+
 
 	public Long getId() {
 		return id;
@@ -83,21 +103,6 @@ public class QuantidadePorCulto implements  Serializable{
 		this.data = data;
 	}
 
-	public Integer getNumeroMulher() {
-		return numeroMulher;
-	}
-
-	public void setNumeroMulher(Integer numeroMulher) {
-		this.numeroMulher = numeroMulher;
-	}
-
-	public Integer getNumeroHomem() {
-		return numeroHomem;
-	}
-
-	public void setNumeroHomem(Integer numeroHomem) {
-		this.numeroHomem = numeroHomem;
-	}
 
 	public TipoCulto getTipoCulto() {
 		return TipoCulto;

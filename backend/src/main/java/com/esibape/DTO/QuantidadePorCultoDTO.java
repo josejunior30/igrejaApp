@@ -11,13 +11,12 @@ import com.esibape.entities.TipoCulto;
 public class QuantidadePorCultoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	Long id;
-	Integer visitante;
-	Integer membro;
-	Integer total;
-	LocalDate data;
-	private Integer numeroMulher;
-	private Integer numeroHomem;
+	private Long id;
+	private Integer visitante;
+	private Integer membro;
+	private Integer total;
+	private LocalDate data;
+	private String resumo;;
 	TipoCulto TipoCulto;
 
 	
@@ -35,8 +34,7 @@ public class QuantidadePorCultoDTO implements Serializable {
 		this.data = data;
 		this.TipoCulto = tipoCulto;
 		
-		this.numeroHomem= numeroHomem;
-		this.numeroMulher =numeroMulher;
+
 	}
 
 	public QuantidadePorCultoDTO(QuantidadePorCulto entity) {
@@ -46,8 +44,7 @@ public class QuantidadePorCultoDTO implements Serializable {
 		total = entity.getTotal();
 		data = entity.getData();
 		TipoCulto = entity.getTipoCulto();
-		numeroMulher = entity.getNumeroMulher();
-		numeroHomem = entity.getNumeroHomem();
+	resumo=entity.getResumo();
 	}
 	
 	
@@ -91,20 +88,13 @@ public class QuantidadePorCultoDTO implements Serializable {
 		this.data = data;
 	}
 
-	public Integer getNumeroMulher() {
-		return numeroMulher;
+
+	public String getResumo() {
+		return resumo;
 	}
 
-	public void setNumeroMulher(Integer numeroMulher) {
-		this.numeroMulher = numeroMulher;
-	}
-
-	public Integer getNumeroHomem() {
-		return numeroHomem;
-	}
-
-	public void setNumeroHomem(Integer numeroHomem) {
-		this.numeroHomem = numeroHomem;
+	public void setResumo(String resumo) {
+		this.resumo = resumo;
 	}
 
 	public TipoCulto getTipoCulto() {
