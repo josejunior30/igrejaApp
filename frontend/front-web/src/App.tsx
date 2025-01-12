@@ -160,14 +160,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/quantidade"
-            element={
-              <PrivateRoute>
-                <InsertQuantidade />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/quantidade" element={<InsertQuantidade />} />
           <Route
             path="/relatorio"
             element={
@@ -225,14 +218,7 @@ function App() {
             path="/requerimentoAprovar/:id"
             element={<RequerimentoAprovar />}
           />
-          <Route
-            path="/numeroculto"
-            element={
-              <PrivateRoute>
-                <NumeroCulto />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/numeroculto" element={<NumeroCulto />} />
           <Route path="/trilho" element={<Trilha />} />
           <Route path="/trilho/:id" element={<TrilhaId />} />
           <Route path="trilho/opcao/:id" element={<MenuOpcao />} />
