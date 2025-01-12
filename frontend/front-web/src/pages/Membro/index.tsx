@@ -15,6 +15,7 @@ const Membro = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filterAtivo, setFilterAtivo] = useState<boolean>(false);
   const [filterAfastado, setFilterAfastado] = useState<boolean>(false);
+  const [selectedMonth, setSelectedMonth] = useState<number | "">("");
 
   useEffect(() => {
     membroService
@@ -38,11 +39,24 @@ const Membro = () => {
     }
   };
 
+  const handleMonthFilter = async (month: number) => {
+    if (!month) {
+      // Se nenhum mês for selecionado, reseta para todos os membros
+      setFilteredMembroDTO(MembroDTO);
+      return;
+    }
+    try {
+      const response = await membroService.findByMonthOfBirth(month);
+      setFilteredMembroDTO(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar membros por mês:", error);
+    }
+  };
+
   function formatPhoneNumber(phone: string | null | undefined): string {
     if (!phone) {
       return ""; // Retorna uma string vazia se `phone` for `null` ou `undefined`
     }
-    // Adicione uma verificação para garantir que `phone` é uma string
     return phone
       .replace(/[^0-9]/g, "")
       .replace(/(\d{2})(\d{4,5})(\d{4})/, "($1) $2-$3");
@@ -66,37 +80,40 @@ const Membro = () => {
     doc.save("membros.pdf");
   };
 
-  // Função para aplicar os filtros "Ativo" ou "Afastado"
   const applyFilters = (members: MembroDTO[]) => {
     let filtered = members;
 
     if (filterAtivo) {
-      // Exibe apenas membros ativos
       filtered = members.filter((membro) => membro.status === true);
     } else if (filterAfastado) {
-      // Exibe apenas membros afastados
       filtered = members.filter((membro) => membro.status === false);
     }
+
+    // Ordena a lista por nome antes de atualizar o estado
+    filtered = filtered.sort((a, b) => {
+      const nomeA = `${a.nome} ${a.sobrenome}`.toLowerCase();
+      const nomeB = `${b.nome} ${b.sobrenome}`.toLowerCase();
+      return nomeA.localeCompare(nomeB);
+    });
 
     setFilteredMembroDTO(filtered);
   };
 
-  // Lida com a mudança na checkbox "Ativo" e "Afastado"
   const handleFilterChange = (filterType: string) => {
     if (filterType === "ativo") {
-      setFilterAtivo(!filterAtivo); // Alterna o estado do filtro "Ativo"
-      setFilterAfastado(false); // Desativa o filtro "Afastado" se "Ativo" for marcado
+      setFilterAtivo(!filterAtivo);
+      setFilterAfastado(false);
     } else if (filterType === "afastado") {
-      setFilterAfastado(!filterAfastado); // Alterna o estado do filtro "Afastado"
-      setFilterAtivo(false); // Desativa o filtro "Ativo" se "Afastado" for marcado
+      setFilterAfastado(!filterAfastado);
+      setFilterAtivo(false);
     }
 
-    applyFilters(MembroDTO); // Aplica o filtro imediatamente após a mudança
+    applyFilters(MembroDTO);
   };
 
   useEffect(() => {
-    applyFilters(MembroDTO); // Aplica o filtro toda vez que os estados mudarem
-  }, [filterAtivo, filterAfastado, MembroDTO]); // Observa as mudanças nos filtros e na lista de membros
+    applyFilters(MembroDTO);
+  }, [filterAtivo, filterAfastado, MembroDTO]);
 
   return (
     <>
@@ -169,6 +186,39 @@ const Membro = () => {
                       >
                         Mostrar Afastado
                       </label>
+                    </div>
+
+                    <div className="form-check form-check-inline dataNascimento">
+                      <label htmlFor="monthFilter">
+                        Filtrar por Mês de Nascimento
+                      </label>
+                      <select
+                        id="monthFilter"
+                        className="form-control"
+                        value={selectedMonth}
+                        onChange={(e) => {
+                          const value =
+                            e.target.value === ""
+                              ? ""
+                              : parseInt(e.target.value);
+                          setSelectedMonth(value);
+                          handleMonthFilter(value as number);
+                        }}
+                      >
+                        <option value="">Todos os meses</option>
+                        <option value="1">Janeiro</option>
+                        <option value="2">Fevereiro</option>
+                        <option value="3">Março</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maio</option>
+                        <option value="6">Junho</option>
+                        <option value="7">Julho</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Setembro</option>
+                        <option value="10">Outubro</option>
+                        <option value="11">Novembro</option>
+                        <option value="12">Dezembro</option>
+                      </select>
                     </div>
                   </div>
                 </div>
