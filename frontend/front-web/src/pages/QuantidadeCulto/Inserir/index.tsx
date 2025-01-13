@@ -94,11 +94,10 @@ const InsertQuantidade: React.FC = () => {
             >
               <label htmlFor="TipoCulto">Tipo de Culto:</label>
               <select
-                name="TipoCulto"
+                name="tipoCulto"
                 className="form-select"
                 value={quantidadePorCulto.tipoCulto}
                 onChange={handleChange}
-                required
               >
                 <option value="">Selecione</option>
                 <option value="0">Culto de Manhã</option>
