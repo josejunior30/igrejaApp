@@ -23,10 +23,13 @@ const InsertQuantidade: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     let newValue: any = value;
-    if (name === "TipoCulto") {
-      newValue = Number(value);
+
+    if (name === "tipoCulto") {
+      newValue = Number(value); // Converte para número
     } else if (["visitante", "membro"].includes(name)) {
-      newValue = Number(value);
+      newValue = Number(value); // Converte para número
+    } else if (name === "data") {
+      newValue = new Date(value); // Converte string para Date
     }
 
     setQuantidadePorCulto((prevState) => ({
