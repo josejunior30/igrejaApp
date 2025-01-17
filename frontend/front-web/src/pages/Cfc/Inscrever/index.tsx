@@ -273,12 +273,13 @@ const Inscrever: React.FC = () => {
                 </select>
               </div>
 
-              <div className="col-3 mt-4 mb-5 mx-auto">
-                <label className="form-label labelApostla">
+              <div className="col-4 mt-4 mb-5 mx-auto">
+                <label className="form-label labelApostla ">
                   Marque se quiser Apostila impressa
                 </label>
                 <input
                   type="checkbox"
+                  className="checkbox-apostila"
                   checked={selectedApostila}
                   onChange={(e) => setSelectedApostila(e.target.checked)}
                 />
@@ -364,6 +365,7 @@ const Inscrever: React.FC = () => {
                     </label>
                     <input
                       type="checkbox"
+                      className="checkbox-apostila"
                       checked={selectedApostila}
                       onChange={(e) => setSelectedApostila(e.target.checked)}
                     />

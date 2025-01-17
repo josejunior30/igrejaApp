@@ -9,7 +9,7 @@
 }
 .labelApostla {
   color: var(--color-coral);
-  margin-right: 10px;
+  margin-right: 20px;
 }
 .curso-selecionado {
   color: white;
@@ -33,6 +33,11 @@
 }
 .opcao-membro {
   color: white;
+}
+.checkbox-apostila {
+  transform: scale(1.7); /* Aumenta o tamanho do checkbox */
+  margin-right: 10px; /* Mantém o espaçamento ao lado do texto */
+  cursor: pointer; /* Adiciona um cursor de ponteiro para interatividade */
 }
 .Sim {
   margin-right: 10px;
