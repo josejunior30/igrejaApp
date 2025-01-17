@@ -4,6 +4,7 @@ package com.esibape.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -99,5 +100,28 @@ public class MembroController {
 		        List<MembroDTO> result = service.findByMonthOfBirth(mes);
 		        return ResponseEntity.ok(result);
 		    }
+		    @PatchMapping(value = "/{id}/opcao-curso")
+		    public ResponseEntity<Void> patchOpcao(@PathVariable Long id, @RequestBody String opcaoCurso) {
+		        service.patchOpcao(id, opcaoCurso);
+		        return ResponseEntity.noContent().build();
+		    }
+		    
+		    @PatchMapping(value = "/{id}/opcao-apostila")
+		    public ResponseEntity<Void> patchUApostila(
+		            @PathVariable Long id, 
+		            @RequestBody Map<String, Boolean> body) {
+
+		        // Extrai o valor de 'apostila' do corpo da requisição
+		        Boolean apostila = body.get("apostila");
+		        if (apostila == null) {
+		            throw new IllegalArgumentException("O campo 'apostila' é obrigatório.");
+		        }
+
+		        // Chama o serviço para atualizar o campo 'apostila'
+		        service.patchApostila(id, apostila);
+		        return ResponseEntity.noContent().build();
+		    }
+
+		    
 
 }

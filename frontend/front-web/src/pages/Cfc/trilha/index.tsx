@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { curso } from "../../../models/trilha";
-import * as trilhoService from "../../../service/trilhoService";
+import { ebdCurso } from "../../../models/trilha";
+import * as cursoTrilhoService from "../../../service/cursoTrilhoService";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../../../components/Header";
 import "./styles.css";
 import { TiArrowBack } from "react-icons/ti";
 
 const TrilhaId = () => {
-  const [curso, setCurso] = useState<curso | null>(null);
+  const [curso, setCurso] = useState<ebdCurso | null>(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>() ?? { id: "" };
   const navigate = useNavigate();
 
   const loadCurso = (id: string) => {
-    trilhoService
+    cursoTrilhoService
       .findById(Number(id))
       .then((response) => {
         console.log("Detalhes do curso:", response.data);

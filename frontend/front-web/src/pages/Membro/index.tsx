@@ -61,23 +61,24 @@ const Membro = () => {
       .replace(/[^0-9]/g, "")
       .replace(/(\d{2})(\d{4,5})(\d{4})/, "($1) $2-$3");
   }
-
   const handlePrint = () => {
     const doc = new jsPDF();
     //@ts-ignore
     doc.autoTable({
-      head: [["Data de Nascimento", "Nome", "Idade", "Email", "Telefone"]],
-      body: MembroDTO.map((membro) => [
+      head: [["Índice", "Data de Nascimento", "Nome", "Status", "Telefone"]],
+      body: filteredMembroDTO.map((membro, index) => [
+        index + 1,
         membro.dataNascimento
           ? new Date(membro.dataNascimento).toLocaleDateString()
           : "Data de Nascimento Não Disponível",
         `${membro.nome} ${membro.sobrenome}`,
-        membro.idade,
-        membro.email,
-        membro.telefone,
+        membro.status ? "Ativo" : "Afastado",
+        formatPhoneNumber(membro.telefone),
       ]),
+      startY: 20, // Ajusta o ponto inicial da tabela no PDF
     });
-    doc.save("membros.pdf");
+    doc.text("Tabela de Membros", 14, 10); // Adiciona título ao PDF
+    doc.save("membros_tabela.pdf");
   };
 
   const applyFilters = (members: MembroDTO[]) => {
@@ -156,10 +157,10 @@ const Membro = () => {
             <div className="row pt-2 justify-content-center ">
               <div className="col-11 col-md-11">
                 <h3 className="text-center mt-5" id="membros">
-                  Membros
+                  Lista de Membros
                 </h3>
                 <div className="row justify-content-center">
-                  <div className="col-md-10">
+                  <div className="col-md-12 text-center pt-3">
                     <div className="form-check form-check-inline mb-3 mt-3">
                       <input
                         type="checkbox"
@@ -169,7 +170,7 @@ const Membro = () => {
                         onChange={() => handleFilterChange("ativo")}
                       />
                       <label className="form-check-label" htmlFor="filterAtivo">
-                        Mostrar Ativo
+                        Ativo
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
@@ -184,13 +185,13 @@ const Membro = () => {
                         className="form-check-label"
                         htmlFor="filterAfastado"
                       >
-                        Mostrar Afastado
+                        Afastado
                       </label>
                     </div>
 
                     <div className="form-check form-check-inline dataNascimento">
                       <label htmlFor="monthFilter">
-                        Filtrar por Mês de Nascimento
+                        Filtrar por Mês de Aniversário
                       </label>
                       <select
                         id="monthFilter"
@@ -220,6 +221,9 @@ const Membro = () => {
                         <option value="12">Dezembro</option>
                       </select>
                     </div>
+                    <button className="btn btn-success" onClick={handlePrint}>
+                      <PiPrinterFill /> Imprimir Tabela
+                    </button>
                   </div>
                 </div>
                 <table className="table table-striped text-center">

@@ -31,3 +31,20 @@ export function patchUpdateCurso(
     `${BASE_URL}/visitante/${visitanteId}/curso/${cursoId}/ebdCurso/${ebdMembroId}`
   );
 }
+export function patchUpdateOpcao(visitanteId: number, opcaoCurso: string) {
+  return axios.patch(
+    `${BASE_URL}/visitante/${visitanteId}/opcao-curso`,
+    opcaoCurso
+  );
+}
+export function patchUpdateApostila(visitanteId: number, apostila: boolean) {
+  return axios.patch(
+    `${BASE_URL}/visitante/${visitanteId}/opcao-apostila`,
+    { apostila }, // Envia o booleano como parte de um objeto
+    {
+      headers: {
+        "Content-Type": "application/json", // Garante o cabeçalho correto
+      },
+    }
+  );
+}

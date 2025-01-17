@@ -4,6 +4,13 @@
 .curso {
   color: white;
 }
+.labelOpcao {
+  color: var(--color-coral);
+}
+.labelApostla {
+  color: var(--color-coral);
+  margin-right: 10px;
+}
 .curso-selecionado {
   color: white;
   font-weight: bold;

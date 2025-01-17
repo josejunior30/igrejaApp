@@ -34,6 +34,8 @@ const FormularioUpdate = () => {
     cep: "",
     numero: 0,
     cidade: "",
+    apostila: false,
+    opcaoCurso: "",
     complemento: "",
   });
 

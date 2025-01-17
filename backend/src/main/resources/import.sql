@@ -39,8 +39,6 @@ INSERT INTO tb_EBD_curso(nome, curso_id, resumo) VALUES ( 'Isaias', '6', 'O Evan
 INSERT INTO tb_EBD_curso(nome, curso_id, resumo) VALUES ( 'Igreja Multiplicadora', '8', 'Dinâmica dos PG’s;Estrutura dos PG’s;Fundamentação Bíblica dos PG’s;Liderança de PG’s;Condução dos encontros;Roteiro de PG;O que não pode faltar no PG?Formação de líderes no PG;Eventos ponte no PG;Discipulado no PG;Implantação do PG;E muito mais...');
 
 
-
-
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil, rua, bairro, numero, cidade, complemento, cep, status, curso_id, ebd_curso_id) VALUES ('José Luiz', 'Ribeiro Junior', 'junior@gmail.com', '1988-10-07', 35, 21970312251, '123.789.964-67', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 3, 4);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep , status, curso_id, ebd_curso_id) VALUES ('Marcus', 'Fereira Duarte', 'marcus@gmail.com', '1987-05-11', 37, '21970312251', '923.289.964-12' ,0, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 3, 4);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id, ebd_curso_id) VALUES ('Jaline', 'Pereira Fonseca', 'jaline@gmail.com', '1991-06-22', 30, '21970312251', '954.789.964-99', 3, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 1, 3);
@@ -60,9 +58,6 @@ INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id, ebd_curso_id) VALUES ('Karol', 'Machado Galvão', 'ricardo@gmail.com', '1967-01-14', 70, '21970312251', '712.308.317-76', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202',' 24110221', true, 1, 1);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id, ebd_curso_id) VALUES ( 'Joel', 'Pinheiro', 'ricardo@gmail.com', '1967-01-14', 70, '21970312251', '828.908.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 2, 1 );
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, status, curso_id, ebd_curso_id) VALUES ('Ricardo', 'Chavier Galvão', 'ricardo@gmail.com', '1967-01-14', 70, '21970312251', '128.308.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', true, 1, 1);
-
-
-
 
 INSERT INTO tb_visitante (nome, sobrenome, telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Elias ','Jamal Soares','(21)970323353','juneba@gmail.com', '1988-10-07',32, 1, 1);
 INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, curso_id, ebd_curso_id ) VALUES ('Lucas ','Damasco Figueira','(21)970323353','juneba@gmail.com', '1988-10-07', 32, 1, 2);

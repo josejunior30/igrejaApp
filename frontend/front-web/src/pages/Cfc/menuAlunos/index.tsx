@@ -74,8 +74,8 @@ const MenuOpcao = () => {
   };
 
   const handleAreaProfessor = () => {
-    if (curso) {
-      navigate(`/trilho/${curso.id}`);
+    if (selectedCursoId) {
+      navigate(`/trilho/${selectedCursoId}`);
     } else {
       alert("Não foi possível abrir o painel.");
     }

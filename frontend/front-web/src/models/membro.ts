@@ -18,6 +18,8 @@ export type MembroDTO = {
   numero: number;
   status: boolean;
   curso: curso;
+  opcaoCurso: string;
+  apostila: boolean;
 };
 export type MembrosDTO = {
   id: number;

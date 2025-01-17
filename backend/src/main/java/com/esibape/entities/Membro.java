@@ -48,7 +48,8 @@ public class Membro implements Serializable {
 	private String complemento;
 	private String url;
 	private Boolean status =true;
-	 
+	private String opcaoCurso;
+	private Boolean apostila = false;
 	@ManyToOne()
 	@JoinColumn(name= "curso_id")
 	@JsonBackReference(value = "curso-membro")
@@ -78,11 +79,10 @@ public class Membro implements Serializable {
 
 	
 
-
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
-			String cidade, String complemento, String url, Boolean status, Curso curso, EBDCurso ebdCurso,
-			List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto) {
+			String cidade, String complemento, String url, Boolean status, String opcaoCurso, Boolean apostila,
+			Curso curso, EBDCurso ebdCurso, List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -101,6 +101,8 @@ public class Membro implements Serializable {
 		this.complemento = complemento;
 		this.url = url;
 		this.status = status;
+		this.opcaoCurso = opcaoCurso;
+		this.apostila = apostila;
 		this.curso = curso;
 		this.ebdCurso = ebdCurso;
 		this.listaPresencaEBD = listaPresencaEBD;
@@ -136,6 +138,16 @@ public class Membro implements Serializable {
 		this.status = status;
 	}
 
+	public Boolean getApostila() {
+		return apostila;
+	}
+
+
+	public void setApostila(Boolean apostila) {
+		this.apostila = apostila;
+	}
+
+
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}
@@ -163,6 +175,16 @@ public class Membro implements Serializable {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	public String getOpcaoCurso() {
+		return opcaoCurso;
+	}
+
+
+	public void setOpcaoCurso(String opcaoCurso) {
+		this.opcaoCurso = opcaoCurso;
+	}
+
 
 	public LocalDate getDataNascimento() {
 		return dataNascimento;

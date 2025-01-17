@@ -34,7 +34,7 @@ public class Visitante {
 	private String email;
 	private String telefone;
 	private LocalDate dataNascimento;
-	
+	private Boolean apostila = false;
 	@ManyToOne()
 	@JoinColumn(name= "curso_id")
 	@JsonBackReference(value = "curso-visitante")
@@ -46,6 +46,8 @@ public class Visitante {
 	@JsonBackReference(value = "ebdcurso-visitante")
 	private EBDCurso ebdCursoVisitante;
 	
+	private String opcaoCurso;
+	
 	@OneToMany(mappedBy = "visitante", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD = new ArrayList<>();
 	
@@ -54,8 +56,9 @@ public class Visitante {
 		
 	}
 
+
 	public Visitante(Long id, String nome, String sobrenome, Integer idade, String email, String telefone,
-			LocalDate dataNascimento, Curso curso, EBDCurso ebdCursoVisitante,
+			LocalDate dataNascimento, Boolean apostila, Curso curso, EBDCurso ebdCursoVisitante, String opcaoCurso,
 			List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD) {
 		super();
 		this.id = id;
@@ -65,11 +68,12 @@ public class Visitante {
 		this.email = email;
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
+		this.apostila = apostila;
 		this.curso = curso;
 		this.ebdCursoVisitante = ebdCursoVisitante;
+		this.opcaoCurso = opcaoCurso;
 		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
 	}
-
 
 
 	public EBDCurso getEbdCursoVisitante() {
@@ -83,6 +87,14 @@ public class Visitante {
 	}
 
 
+	public Boolean getApostila() {
+		return apostila;
+	}
+
+
+	public void setApostila(Boolean apostila) {
+		this.apostila = apostila;
+	}
 
 
 	public Long getId() {
@@ -102,7 +114,16 @@ public class Visitante {
 	}
 
 
-	
+	public String getOpcaoCurso() {
+		return opcaoCurso;
+	}
+
+
+	public void setOpcaoCurso(String opcaoCurso) {
+		this.opcaoCurso = opcaoCurso;
+	}
+
+
 	public Integer getIdade() {
 		return idade;
 	}

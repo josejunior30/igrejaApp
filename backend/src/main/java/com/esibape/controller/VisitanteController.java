@@ -2,11 +2,11 @@ package com.esibape.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.esibape.DTO.VisitanteDTO;
 import com.esibape.service.VisitanteService;
 
@@ -52,6 +53,26 @@ public class VisitanteController {
 			                                         .toUri();
 			    return ResponseEntity.created(uri).body(dto);
 			}
+		    @PatchMapping(value = "/{id}/opcao-curso")
+		    public ResponseEntity<Void> patchUpdateOpcao(@PathVariable Long id, @RequestBody String opcaoCurso) {
+		        service.patchUpdateOpcao(id, opcaoCurso);
+		        return ResponseEntity.noContent().build();
+		    }
+		    @PatchMapping(value = "/{id}/opcao-apostila")
+		    public ResponseEntity<Void> patchUpdateApostila(
+		            @PathVariable Long id, 
+		            @RequestBody Map<String, Boolean> body) {
+
+		        // Extrai o valor de 'apostila' do corpo da requisição
+		        Boolean apostila = body.get("apostila");
+		        if (apostila == null) {
+		            throw new IllegalArgumentException("O campo 'apostila' é obrigatório.");
+		        }
+
+		        // Chama o serviço para atualizar o campo 'apostila'
+		        service.patchUpdateApostila(id, apostila);
+		        return ResponseEntity.noContent().build();
+		    }
 
 			@PutMapping(value="/{id}")
 			public ResponseEntity<VisitanteDTO>update (@PathVariable Long id, @RequestBody VisitanteDTO dto){

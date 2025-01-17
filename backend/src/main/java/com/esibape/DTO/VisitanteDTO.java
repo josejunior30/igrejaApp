@@ -27,6 +27,8 @@ public class VisitanteDTO {
     private String telefone;
 	@PastOrPresent(message="escolha uma data válida") 
     private LocalDate dataNascimento;
+	private String opcaoCurso;
+	private Boolean apostila = false;
     private Long cursoId; // ID do Curso para evitar referência completa
     private Long ebdCursoId; // ID do EBDCurso para evitar referência completa
     private List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD = new ArrayList<>();
@@ -36,20 +38,7 @@ public class VisitanteDTO {
     }
 
     // Construtor com parâmetros
-    public VisitanteDTO(Long id, String nome, String sobrenome, Integer idade, String email, String telefone,
-                        LocalDate dataNascimento, Long cursoId, Long ebdCursoId,
-                        List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD) {
-        this.id = id;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.idade = idade;
-        this.email = email;
-        this.telefone = telefone;
-        this.dataNascimento = dataNascimento;
-        this.cursoId = cursoId;
-        this.ebdCursoId = ebdCursoId;
-        this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
-    }
+  
 
     // Construtor com entidade
     public VisitanteDTO(Visitante entity) {
@@ -60,6 +49,8 @@ public class VisitanteDTO {
         this.email = entity.getEmail();
         this.telefone = entity.getTelefone();
         this.idade = entity.getIdade();
+        this.opcaoCurso =entity.getOpcaoCurso();
+        this.apostila = entity.getApostila();
         this.cursoId = entity.getCurso() != null ? entity.getCurso().getId() : null;
         this.ebdCursoId = entity.getEbdCursoVisitante() != null ? entity.getEbdCursoVisitante().getId() : null;
     }
@@ -93,7 +84,15 @@ public class VisitanteDTO {
         return sobrenome;
     }
 
-    public void setSobrenome(String sobrenome) {
+    public Boolean getApostila() {
+		return apostila;
+	}
+
+	public void setApostila(Boolean apostila) {
+		this.apostila = apostila;
+	}
+
+	public void setSobrenome(String sobrenome) {
         this.sobrenome = sobrenome;
     }
 
@@ -145,7 +144,15 @@ public class VisitanteDTO {
         this.ebdCursoId = ebdCursoId;
     }
 
-    public List<ListaPresencaVisitanteEBDDTO> getListaPresencaVisitanteEBD() {
+    public String getOpcaoCurso() {
+		return opcaoCurso;
+	}
+
+	public void setOpcaoCurso(String opcaoCurso) {
+		this.opcaoCurso = opcaoCurso;
+	}
+
+	public List<ListaPresencaVisitanteEBDDTO> getListaPresencaVisitanteEBD() {
         return listaPresencaVisitanteEBD;
     }
 

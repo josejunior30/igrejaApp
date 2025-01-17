@@ -22,4 +22,6 @@ export type ebdCurso = {
   id: number;
   nome: string;
   resumo: string;
+  visitante: visitante[];
+  membro: MembroDTO[];
 };

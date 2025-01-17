@@ -69,6 +69,31 @@ public class VisitanteService {
     }
 
     @Transactional
+    public void patchUpdateOpcao(Long visitanteId, String opcaoCurso) {
+        // Localiza o Visitante pelo ID, lança exceção se não encontrar
+        Visitante visitante = repository.findById(visitanteId)
+                                         .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
+
+        // Atualiza a opção do curso
+        visitante.setOpcaoCurso(opcaoCurso);
+
+        // Salva o visitante atualizado no banco
+        repository.save(visitante);
+    }
+    @Transactional
+    public void patchUpdateApostila(Long visitanteId, Boolean apostila) {
+        // Localiza o Visitante pelo ID, lança exceção se não encontrar
+        Visitante visitante = repository.findById(visitanteId)
+                                         .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
+
+        // Atualiza o campo 'apostila'
+        visitante.setApostila(apostila != null ? apostila : false); // Garante um valor booleano válido
+
+        // Salva o visitante atualizado no banco
+        repository.save(visitante);
+    }
+
+    @Transactional
     public void patchUpdateCurso(Long visitanteId, Long cursoId, Long ebdCursoId) {
         Visitante visitante = repository.findById(visitanteId)
                                          .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
@@ -77,6 +102,7 @@ public class VisitanteService {
         visitante.setEbdCursoVisitante(findEbdCursoById(ebdCursoId));
         repository.save(visitante);
     }
+
 
     @Transactional(readOnly = true)
     public List<VisitanteDTO> findByNomeIgnoreCaseContaining(String nome) {
@@ -91,6 +117,8 @@ public class VisitanteService {
         entity.setDataNascimento(dto.getDataNascimento());
         entity.setEmail(dto.getEmail());
         entity.setTelefone(dto.getTelefone());
+        entity.setOpcaoCurso(dto.getOpcaoCurso());
+        entity.setApostila(dto.getApostila());
 
         if (dto.getCursoId() != null) {
             entity.setCurso(findCursoById(dto.getCursoId()));

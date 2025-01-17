@@ -107,6 +107,7 @@ public class MembroService {
 		entity.setComplemento(dto.getComplemento());
 		entity.setRua(dto.getRua());
 		entity.setNumero(dto.getNumero());
+		entity.setOpcaoCurso(dto.getOpcaoCurso());
 		entity.setEstadoCivil(dto.getEstadoCivil());
 		entity.setUrl(dto.getUrl());
 		entity.setStatus(dto.getStatus());
@@ -139,7 +140,31 @@ public class MembroService {
                      .map(MembroDTO::new)
                      .collect(Collectors.toList());
     } 
-    
+    @Transactional
+    public void patchOpcao(Long membroId, String opcaoCurso) {
+        // Localiza o membro pelo ID, lança exceção se não encontrar
+        Membro membro = repository.findById(membroId)
+                                         .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
+
+        // Atualiza a opção do curso
+        membro.setOpcaoCurso(opcaoCurso);
+
+        // Salva o visitante atualizado no banco
+        repository.save(membro);
+    }
+    @Transactional
+    public void patchApostila(Long membroId, Boolean apostila) {
+        // Localiza o Visitante pelo ID, lança exceção se não encontrar
+        Membro membro = repository.findById(membroId)
+                                         .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
+
+        // Atualiza o campo 'apostila'
+        membro.setApostila(apostila != null ? apostila : false); // Garante um valor booleano válido
+
+        // Salva o visitante atualizado no banco
+        repository.save(membro);
+    }
+
     
 }
 

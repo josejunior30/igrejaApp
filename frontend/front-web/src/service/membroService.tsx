@@ -32,6 +32,22 @@ export function patchUpdateCurso(
   );
 }
 
+export function patchOpcao(membroId: number, opcaoCurso: string) {
+  return axios.patch(`${BASE_URL}/membro/${membroId}/opcao-curso`, opcaoCurso);
+}
+
 export function findByMonthOfBirth(mes: number) {
   return axios.get(`${BASE_URL}/membro/por-mes?mes=${mes}`);
+}
+
+export function patchApostila(membroId: number, apostila: boolean) {
+  return axios.patch(
+    `${BASE_URL}/membro/${membroId}/opcao-apostila`,
+    { apostila }, // Envia o booleano como parte de um objeto
+    {
+      headers: {
+        "Content-Type": "application/json", // Garante o cabeçalho correto
+      },
+    }
+  );
 }

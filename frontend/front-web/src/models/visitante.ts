@@ -9,4 +9,6 @@ export type visitante = {
   telefone: string;
   dataNascimento: Date;
   curso: curso;
+  opcaoCurso: string;
+  apostila: boolean;
 };

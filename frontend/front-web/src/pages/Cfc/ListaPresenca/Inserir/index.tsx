@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
-import * as trilhoService from "../../../../service/trilhoService";
+import * as cursoTrilhoService from "../../../../service/cursoTrilhoService";
 import * as presencaEBDService from "../../../../service/presencaEBDService";
 import "./styles.css";
-import { curso } from "../../../../models/trilha";
+import { ebdCurso } from "../../../../models/trilha";
 import Header from "../../../../components/Header";
 import * as presencaVisitanteEBDService from "../../../../service/presencaVisitanteEBDService ";
 import { ListaChamadaEBD } from "../../../../models/ListaChamadaEBD";
 import { ListaChamadaVisitanteEBD } from "../../../../models/ListaChamadaVisitanteEBD";
 
 const InserirPresencaEBD = () => {
-  const [curso, setCurso] = useState<curso | null>(null);
+  const [curso, setCurso] = useState<ebdCurso | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const InserirPresencaEBD = () => {
 
   // Carregar detalhes do curso
   const loadCurso = (id: string) => {
-    trilhoService
+    cursoTrilhoService
       .findById(Number(id))
       .then((response) => {
         setCurso(response.data);

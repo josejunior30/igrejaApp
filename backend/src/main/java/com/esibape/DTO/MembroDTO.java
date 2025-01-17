@@ -42,6 +42,8 @@ public class MembroDTO implements Serializable{
 	private String cidade;
 	private String complemento;
 	private String url;
+	private Boolean apostila = false;
+	private String opcaoCurso;
 	private Boolean status =true;
 	private Long cursoId; // ID do Curso para evitar referência completa
 	private Long ebdCursoId; // ID do EBDCurso para evitar referência completa
@@ -57,7 +59,7 @@ public class MembroDTO implements Serializable{
 	public MembroDTO(Long id,
 			@Size(min = 3, message = "O nome deve ter no minimo 3 caracteres") @NotEmpty(message = "campo não poe ser nulo ou vazio") String nome,
 			String sobrenome, @Email(message = "Deve ser um Email Valido") String email,
-			@PastOrPresent(message = "escolha uma data válida") LocalDate dataNascimento, Integer idade,
+			@PastOrPresent(message = "escolha uma data válida") LocalDate dataNascimento, Integer idade, String opcaoCurso,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
 			String cidade, String complemento, String url, Boolean status, Long cursoId, Long ebdCursoId,
 			List<ListaPresencaEBDDTO> listaPresencaEBD) {
@@ -79,6 +81,7 @@ public class MembroDTO implements Serializable{
 		this.complemento = complemento;
 		this.url = url;
 		this.status = status;
+		this.opcaoCurso =opcaoCurso;
 		this.cursoId = cursoId;
 		this.ebdCursoId = ebdCursoId;
 		this.listaPresencaEBD = listaPresencaEBD;
@@ -111,6 +114,18 @@ public class MembroDTO implements Serializable{
 
 
 
+	public String getOpcaoCurso() {
+		return opcaoCurso;
+	}
+
+
+
+	public void setOpcaoCurso(String opcaoCurso) {
+		this.opcaoCurso = opcaoCurso;
+	}
+
+
+
 	public MembroDTO(Membro entity) {
 		this.id= entity.getId();
 		this.nome=entity.getNome();
@@ -127,7 +142,9 @@ public class MembroDTO implements Serializable{
 		this.complemento= entity.getComplemento();
 		this.rua=entity.getRua();
 		this.numero=entity.getNumero();
+		this.opcaoCurso =entity.getOpcaoCurso();
 		this.url=entity.getUrl();
+		this.apostila= entity.getApostila();
 		this.status = entity.getStatus();
 		 this.cursoId = entity.getCurso() != null ? entity.getCurso().getId() : null;
 	        this.ebdCursoId = entity.getEbdCurso() != null ? entity.getEbdCurso().getId() : null;
@@ -144,6 +161,18 @@ public class MembroDTO implements Serializable{
 	public Long getId() {
 		return id;
 	}
+
+
+	public Boolean getApostila() {
+		return apostila;
+	}
+
+
+
+	public void setApostila(Boolean apostila) {
+		this.apostila = apostila;
+	}
+
 
 
 	public void setId(Long id) {
