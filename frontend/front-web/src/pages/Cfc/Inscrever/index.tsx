@@ -21,6 +21,7 @@ const Inscrever: React.FC = () => {
   const [selectedOpcaoCurso, setSelectedOpcaoCurso] = useState<string>("");
   const [selectedApostila, setSelectedApostila] = useState<boolean>(false);
   const [cadastroNome, setCadastroNome] = useState<string>("");
+  const [cadastroSobrenome, setCadastroSobrenome] = useState<string>("");
   const [cadastroDataNascimento, setCadastroDataNascimento] =
     useState<string>("");
   const [cadastroCelular, setCadastroCelular] = useState<string>("");
@@ -167,6 +168,7 @@ const Inscrever: React.FC = () => {
       !cadastroDataNascimento ||
       !cadastroOpcao ||
       !cadastroCelular ||
+      !cadastroSobrenome ||
       !cadastroApostila ||
       !cadastroEmail
     ) {
@@ -177,11 +179,12 @@ const Inscrever: React.FC = () => {
     try {
       const visitanteData = {
         nome: cadastroNome,
+        sobrenome: cadastroSobrenome,
         dataNascimento: cadastroDataNascimento,
         telefone: cadastroCelular,
         email: cadastroEmail,
-        apostila: false,
-        opcaoCurso: cursoId,
+        apostila: cadastroApostila,
+        opcaoCurso: cadastroOpcao,
         ebdCursoId,
       };
 
@@ -384,10 +387,8 @@ const Inscrever: React.FC = () => {
                     onSubmit={handleCadastroVisitante}
                   >
                     <h2>Cadastre-se</h2>
-                    <div className="col-md-8 ">
-                      <label className="form-label dados-visitante">
-                        Nome Completo
-                      </label>
+                    <div className="col-md-4 ">
+                      <label className="form-label dados-visitante">Nome</label>
                       <input
                         type="text"
                         className="form-control"
@@ -395,7 +396,18 @@ const Inscrever: React.FC = () => {
                         onChange={(e) => setCadastroNome(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-5 ">
+                      <label className="form-label dados-visitante">
+                        Sobrenome
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={cadastroSobrenome}
+                        onChange={(e) => setCadastroSobrenome(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-2">
                       <label className="form-label dados-visitante">
                         Data de Nascimento
                       </label>
@@ -408,7 +420,7 @@ const Inscrever: React.FC = () => {
                         }
                       />
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-2">
                       <label className="form-label dados-visitante">
                         Celular
                       </label>
@@ -419,7 +431,7 @@ const Inscrever: React.FC = () => {
                         onChange={(e) => setCadastroCelular(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-6 ">
+                    <div className="col-md-2 ">
                       <label className="form-label dados-visitante">
                         Email
                       </label>
@@ -430,7 +442,7 @@ const Inscrever: React.FC = () => {
                         onChange={(e) => setCadastroEmail(e.target.value)}
                       />
                     </div>
-                    <div className="col-4 mt-4 mb-5 mx-auto">
+                    <div className="col-md-3 mt-4 ">
                       <label className="form-label labelOpcao">
                         Segunda opção de Curso
                       </label>
@@ -450,7 +462,7 @@ const Inscrever: React.FC = () => {
                         ))}
                       </select>
                     </div>
-                    <div className="col-md-6 mt-5 pt-3">
+                    <div className="col-md-4 mt-5 pt-3">
                       <label className="form-label  pe-3 dados-visitante">
                         Marque se quiser Apostila impressa
                       </label>

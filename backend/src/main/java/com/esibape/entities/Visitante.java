@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -45,7 +46,7 @@ public class Visitante {
 	@JoinColumn(name= "ebd_curso_id")
 	@JsonBackReference(value = "ebdcurso-visitante")
 	private EBDCurso ebdCursoVisitante;
-	
+	@Column(name="opcao_curso")
 	private String opcaoCurso;
 	
 	@OneToMany(mappedBy = "visitante", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
