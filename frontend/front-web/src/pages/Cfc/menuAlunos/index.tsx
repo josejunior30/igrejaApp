@@ -77,7 +77,7 @@ const MenuOpcao = () => {
     if (selectedCursoId) {
       navigate(`/trilho/${selectedCursoId}`);
     } else {
-      alert("Não foi possível abrir o painel.");
+      alert("Selecione um curso antes de prosseguir.");
     }
   };
 
