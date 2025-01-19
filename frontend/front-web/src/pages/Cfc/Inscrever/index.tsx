@@ -169,7 +169,6 @@ const Inscrever: React.FC = () => {
       !cadastroOpcao ||
       !cadastroCelular ||
       !cadastroSobrenome ||
-      !cadastroApostila ||
       !cadastroEmail
     ) {
       alert("Por favor, preencha todos os campos.");

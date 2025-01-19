@@ -28,6 +28,7 @@ public class EbdEstudos implements Serializable{
     private String nome;
 
     @Lob
+    @Column(name = "pdfdeestudo") 
     private byte[] pdfDeEstudo; 
     
 	@ManyToOne()
