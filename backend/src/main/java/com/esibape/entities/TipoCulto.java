@@ -20,4 +20,17 @@ public enum TipoCulto  {
     public String getDescricao() {
         return descricao;
     }
+
+
+
+// Convert from String to Enum
+public static TipoCulto fromDescricao(String descricao) {
+    for (TipoCulto tipoCulto : values()) {
+        if (tipoCulto.getDescricao().equalsIgnoreCase(descricao)) {
+            return tipoCulto;
+        }
+    }
+    throw new IllegalArgumentException("Valor inválido para ChamadaMembro: " + descricao);
 }
+}
+

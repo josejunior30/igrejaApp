@@ -4,6 +4,6 @@ export type QuantidadePorCulto = {
   data: Date;
   membro: number;
   total: number;
-  tipoCulto: number;
+  tipoCulto: string;
   resumo: string;
 };

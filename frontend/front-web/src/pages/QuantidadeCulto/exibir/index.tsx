@@ -103,7 +103,11 @@ const NumeroCulto = () => {
     const meses = dados.map((dado) =>
       new Date(dado.data).toLocaleDateString("pt-BR", { month: "long" })
     );
+
     const totais = dados.map((dado) => dado.total);
+
+    // Aplicando cores conforme o tipo de culto
+    const colors = dados.map((dado) => getColorByTipoCulto(dado.tipoCulto));
 
     return {
       labels: meses,
@@ -111,12 +115,23 @@ const NumeroCulto = () => {
         {
           label: "Total por Mês",
           data: totais,
-          backgroundColor: "#02fcfc",
+          backgroundColor: colors, // Usando cores dinâmicas para cada barra
           borderColor: "#ffffff",
           borderWidth: 1,
         },
       ],
     };
+  };
+
+  const getColorByTipoCulto = (tipoCulto: string) => {
+    switch (tipoCulto) {
+      case "CULTO_DA_MANHA":
+        return "#fcba03"; // Azul para culto da manhã
+      case "CULTO_DA_NOITE":
+        return "#134190"; // Amarelo para culto da noite
+      default:
+        return "#02fcfc"; // Cor padrão
+    }
   };
 
   const dadosGrafico =
@@ -274,7 +289,7 @@ const NumeroCulto = () => {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={5}>Carregando dados...</td>
+                    <td colSpan={6}>Carregando dados...</td>
                   </tr>
                 ) : quantidadePorCulto.length > 0 ? (
                   quantidadePorCulto.map((quantidade, index) => (
@@ -282,18 +297,36 @@ const NumeroCulto = () => {
                       <td>{index + 1}</td>
                       <td>
                         {quantidade.data
-                          ? new Date(quantidade.data).toLocaleDateString()
+                          ? new Date(quantidade.data).toLocaleDateString(
+                              "pt-BR"
+                            )
                           : "Data Não Disponível"}
                       </td>
                       <td>{quantidade.visitante}</td>
                       <td>{quantidade.membro}</td>
-                      <td>{quantidade.tipoCulto}</td>
+                      <td
+                        style={{
+                          color: "#fff",
+                          backgroundColor: getColorByTipoCulto(
+                            quantidade.tipoCulto
+                          ),
+                          fontWeight: "bold",
+                          padding: "8px",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        {quantidade.tipoCulto === "CULTO_DA_MANHA"
+                          ? "Culto da Manhã"
+                          : quantidade.tipoCulto === "CULTO_DA_NOITE"
+                          ? "Culto da Noite"
+                          : quantidade.tipoCulto}
+                      </td>
                       <td className="total-verde">{quantidade.total}</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={5}>Nenhum dado encontrado.</td>
+                    <td colSpan={6}>Nenhum dado encontrado.</td>
                   </tr>
                 )}
               </tbody>

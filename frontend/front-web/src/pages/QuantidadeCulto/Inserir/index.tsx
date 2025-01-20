@@ -14,7 +14,7 @@ const InsertQuantidade: React.FC = () => {
       data: new Date(),
       membro: 0,
       total: 0,
-      tipoCulto: 0,
+      tipoCulto: "",
       resumo: "",
     });
 
@@ -50,7 +50,7 @@ const InsertQuantidade: React.FC = () => {
         data: new Date(),
         membro: 0,
         total: 0,
-        tipoCulto: 0,
+        tipoCulto: "",
         resumo: "",
       });
     } catch (error) {
