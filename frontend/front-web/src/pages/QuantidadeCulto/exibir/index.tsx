@@ -267,6 +267,7 @@ const NumeroCulto = () => {
                   <th scope="col">Data</th>
                   <th scope="col">Visitante</th>
                   <th scope="col">Membros</th>
+                  <th scope="col">Tipo</th>
                   <th scope="col">Total</th>
                 </tr>
               </thead>
@@ -286,6 +287,7 @@ const NumeroCulto = () => {
                       </td>
                       <td>{quantidade.visitante}</td>
                       <td>{quantidade.membro}</td>
+                      <td>{quantidade.tipoCulto}</td>
                       <td className="total-verde">{quantidade.total}</td>
                     </tr>
                   ))

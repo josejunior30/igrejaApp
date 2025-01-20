@@ -205,16 +205,16 @@ INSERT INTO tb_entrada (entrada, valor, forma_pagamento, mes_referencia) VALUES 
 INSERT INTO tb_entrada (entrada, valor, forma_pagamento, mes_referencia) VALUES ('Atrasado maio', 50, 'PIX', 'JULHO')
 
 
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 10, '2024-07-07' , 32 ,17, 15, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 20, '2024-07-14' , 42 ,27, 15, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 30, 20, '2024-07-21' , 50 ,27, 23, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 10, '2024-07-28' , 32 ,17, 15, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 10, '2024-08-07' , 32 ,17, 15, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 22, 30, '2024-08-14' , 52 ,30, 12, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 70, 50, '2024-09-21' , 120 ,50, 70, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 40, 55, '2024-09-28' , 95 , 45, 50, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 35, 55, '2024-09-28' , 90 , 40, 50, 1 );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,numero_Mulher, numero_Homem, Tipo_Culto ) VALUES ( 60, 50, '2024-09-28' , 110 , 55, 55, 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 10, '2024-07-07' , 32 , 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 20, '2024-07-14' , 42 , 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,Tipo_Culto ) VALUES ( 30, 20, '2024-07-21' , 50 , 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 10, '2024-07-28' , 32 , 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 22, 10, '2024-08-07' , 32 , 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 22, 30, '2024-08-14' , 52 , 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 70, 50, '2024-09-21' , 120 , 0 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 40, 55, '2024-09-28' , 95 , 1 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 35, 55, '2024-09-28' , 90 , 0 );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,Tipo_Culto ) VALUES ( 60, 50, '2024-09-28' , 110 , 1 );
 
 
 INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, email_Responsavel ,local, Total ) VALUES ( '2024-07-07', '2024-07-07', '2024-09-28' , '2024-09-28' , 'APROVADO','festa da roça', 'comunhao da igreja', 'Junior', 'junebajuneba@gmail.com' ,'Igreja', 187.37);
