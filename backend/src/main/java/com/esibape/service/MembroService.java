@@ -31,19 +31,19 @@ public class MembroService {
     @Transactional(readOnly = true)
     public List<MembroDTO> findAll() {
         List<Membro> list = repository.findAll();
+        list.forEach(this::atualizarIdade);
         return list.stream()
-                   .map(x -> new MembroDTO(x)) 
+                   .map(MembroDTO::new)
                    .collect(Collectors.toList());
     }
 
- 
     @Transactional(readOnly = true)
     public MembroDTO findById(Long id) {
-    	Optional<Membro> membro = repository.findById(id);
-    	Membro entity = membro.get();
-    	return  new MembroDTO(entity, entity.getEbdCurso());
+        Membro membro = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado"));
+        atualizarIdade(membro);
+        return new MembroDTO(membro, membro.getEbdCurso());
     }
-   
     @Transactional
     public MembroDTO insert( MembroDTO dto) {
     		Membro entity =  new Membro();
@@ -81,27 +81,28 @@ public class MembroService {
     }
     
 
+
     private void copyDtoToEntity(MembroDTO dto, Membro entity) {
-    	atualizarIdade(dto);
-		entity.setNome(dto.getNome());
-		entity.setSobrenome(dto.getSobrenome());
-		entity.setEmail(dto.getEmail());
-		entity.setDataNascimento(dto.getDataNascimento());
-		entity.setIdade(dto.getIdade());
-		entity.setTelefone(dto.getTelefone());
-		entity.setCpf(dto.getCpf());
-		entity.setBairro(dto.getBairro());
-		entity.setCep(dto.getCep());
-		entity.setCidade(dto.getCidade());
-		entity.setComplemento(dto.getComplemento());
-		entity.setRua(dto.getRua());
-		entity.setNumero(dto.getNumero());
-		entity.setOpcaoCurso(dto.getOpcaoCurso());
-		entity.setEstadoCivil(dto.getEstadoCivil());
-		entity.setUrl(dto.getUrl());
-		entity.setStatus(dto.getStatus());
-	  
-	}	
+        
+        entity.setNome(dto.getNome());
+        entity.setSobrenome(dto.getSobrenome());
+        entity.setEmail(dto.getEmail());
+        entity.setDataNascimento(dto.getDataNascimento());
+        entity.setIdade(dto.getIdade());
+        entity.setTelefone(dto.getTelefone());
+        entity.setCpf(dto.getCpf());
+        entity.setBairro(dto.getBairro());
+        entity.setCep(dto.getCep());
+        entity.setCidade(dto.getCidade());
+        entity.setComplemento(dto.getComplemento());
+        entity.setRua(dto.getRua());
+        entity.setNumero(dto.getNumero());
+        entity.setOpcaoCurso(dto.getOpcaoCurso());
+        entity.setEstadoCivil(dto.getEstadoCivil());
+        entity.setUrl(dto.getUrl());
+        entity.setStatus(dto.getStatus());
+    }
+    
     
     @Transactional(readOnly = true)
 	public List<MembroDTO> findByNomeIgnoreCaseContaining(String nome) {
@@ -109,18 +110,16 @@ public class MembroService {
 		 return  result.stream().map(x -> new MembroDTO(x)).toList();
 		
 	}
- 
-    public void atualizarIdade(MembroDTO dto) {
-        LocalDate dataNascimento = dto.getDataNascimento();
-        Integer idadeAtual = dto.getIdade(); 
+    public void atualizarIdade(Membro membro) {
+        LocalDate dataNascimento = membro.getDataNascimento();
         
-        // Calcula a idade apenas se a idade estiver vazia
-        if (dataNascimento != null && idadeAtual == null) {
+        if (dataNascimento != null) {
             LocalDate dataAtual = LocalDate.now();
             Period periodo = Period.between(dataNascimento, dataAtual);
-            dto.setIdade(periodo.getYears());
+            membro.setIdade(periodo.getYears());
         }
     }
+
         
     @Transactional(readOnly = true)
     public List<MembroDTO> findByMonthOfBirth(int mes) {

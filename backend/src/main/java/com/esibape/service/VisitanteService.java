@@ -15,6 +15,7 @@ import com.esibape.DTO.MembroDTO;
 import com.esibape.DTO.VisitanteDTO;
 import com.esibape.entities.Curso;
 import com.esibape.entities.EBDCurso;
+import com.esibape.entities.Membro;
 import com.esibape.entities.Visitante;
 import com.esibape.repository.CursoRepository;
 import com.esibape.repository.EBDCursoRepository;
@@ -32,18 +33,21 @@ public class VisitanteService {
     @Autowired
     private EBDCursoRepository ebdCursoRepository;
 
+ 
     @Transactional(readOnly = true)
     public List<VisitanteDTO> findAll() {
-        return repository.findAll().stream()
-        	    .map(x -> new VisitanteDTO(x, x.getEbdCursoVisitante()))
-                         .collect(Collectors.toList());
+        List<Visitante> list = repository.findAll();
+        list.forEach(this::atualizarIdade);
+        return list.stream()
+                   .map(VisitanteDTO::new)
+                   .collect(Collectors.toList());
     }
-
     @Transactional(readOnly = true)
     public VisitanteDTO findById(Long id) {
-        Visitante entity = repository.findById(id)
-                                     .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
-        return new VisitanteDTO(entity, entity.getEbdCursoVisitante());
+        Visitante visitante = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado"));
+        atualizarIdade(visitante);
+        return new VisitanteDTO(visitante, visitante.getEbdCursoVisitante());
     }
     @Transactional
     public VisitanteDTO insertWithEbdCurso(VisitanteDTO dto, Long cursoId) {
@@ -120,6 +124,7 @@ public class VisitanteService {
     }
 
     private void copyDtoToEntity(VisitanteDTO dto, Visitante entity,  Long cursoId) {
+   
         entity.setNome(dto.getNome());
         entity.setSobrenome(dto.getSobrenome());
         entity.setDataNascimento(dto.getDataNascimento());
@@ -140,18 +145,16 @@ public class VisitanteService {
         return ebdCursoRepository.findById(id)
                                  .orElseThrow(() -> new EntityNotFoundException("EBDCurso não encontrado"));
     }
-    public void atualizarIdade(VisitanteDTO dto) {
-        LocalDate dataNascimento = dto.getDataNascimento();
-        Integer idadeAtual = dto.getIdade(); 
+    public void atualizarIdade(Visitante visitante) {
+        LocalDate dataNascimento = visitante.getDataNascimento();
         
-        // Calcula a idade apenas se a idade estiver vazia
-        if (dataNascimento != null && idadeAtual == null) {
+        if (dataNascimento != null) {
             LocalDate dataAtual = LocalDate.now();
             Period periodo = Period.between(dataNascimento, dataAtual);
-            dto.setIdade(periodo.getYears());
+            visitante.setIdade(periodo.getYears());
         }
     }
-        
+   
 	private Curso findCursoById(Long id) {
         return cursoRepository.findById(id)
                               .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));

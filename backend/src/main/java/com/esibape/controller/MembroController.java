@@ -49,7 +49,6 @@ public class MembroController {
 	
 		@PostMapping
 		public ResponseEntity<MembroDTO> insert(@RequestBody MembroDTO dto){
-			service.atualizarIdade(dto);
 			MembroDTO entity = service.insert(dto);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 					.buildAndExpand(entity.getId()).toUri();
