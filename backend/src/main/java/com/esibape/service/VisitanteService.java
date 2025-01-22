@@ -1,5 +1,7 @@
 package com.esibape.service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import java.util.stream.Collectors;
@@ -8,6 +10,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.esibape.DTO.MembroDTO;
 import com.esibape.DTO.VisitanteDTO;
 import com.esibape.entities.Curso;
 import com.esibape.entities.EBDCurso;
@@ -136,7 +140,18 @@ public class VisitanteService {
         return ebdCursoRepository.findById(id)
                                  .orElseThrow(() -> new EntityNotFoundException("EBDCurso não encontrado"));
     }
-
+    public void atualizarIdade(VisitanteDTO dto) {
+        LocalDate dataNascimento = dto.getDataNascimento();
+        Integer idadeAtual = dto.getIdade(); 
+        
+        // Calcula a idade apenas se a idade estiver vazia
+        if (dataNascimento != null && idadeAtual == null) {
+            LocalDate dataAtual = LocalDate.now();
+            Period periodo = Period.between(dataNascimento, dataAtual);
+            dto.setIdade(periodo.getYears());
+        }
+    }
+        
 	private Curso findCursoById(Long id) {
         return cursoRepository.findById(id)
                               .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
