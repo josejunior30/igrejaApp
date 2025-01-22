@@ -36,6 +36,10 @@ export function patchOpcao(membroId: number, opcaoCurso: string) {
   return axios.patch(`${BASE_URL}/membro/${membroId}/opcao-curso`, opcaoCurso);
 }
 
+export function addEbdCurso(membroId: number, cursoId: number) {
+  return axios.post(`${BASE_URL}/membro/${membroId}/curso/${cursoId}`);
+}
+
 export function findByMonthOfBirth(mes: number) {
   return axios.get(`${BASE_URL}/membro/por-mes?mes=${mes}`);
 }

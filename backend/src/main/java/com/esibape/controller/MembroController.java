@@ -75,23 +75,16 @@ public class MembroController {
 			List<MembroDTO> result= service.findByNomeIgnoreCaseContaining(nome);
 			return ResponseEntity.ok(result);
 		}
-		@PatchMapping("/{membroId}/curso/{cursoId}/ebdCurso/{ebdCursoId}")
-		public ResponseEntity<Void> updateCurso(
-		        @PathVariable Long membroId,
-		        @PathVariable Long cursoId,
-		        @PathVariable Long ebdCursoId) {
 
-		    // Validação de entradas
-			 if (membroId <= 0 || cursoId <= 0 || ebdCursoId <= 0) {
-			        throw new IllegalArgumentException("IDs devem ser positivos e maiores que zero.");
-			    }
-
-		    // Delegando a lógica para o serviço
-		    service.patchUpdateCurso(membroId, cursoId, ebdCursoId);
-
-		    // Retorno de sucesso sem conteúdo
-		    return ResponseEntity.noContent().build();
-		}
+		
+	    @PostMapping("/{membroId}/curso/{cursoId}")
+	    public ResponseEntity<MembroDTO> addEbdCurso(@PathVariable Long membroId, @PathVariable Long cursoId) {
+	        MembroDTO dto = service.addEbdCursoToMembro(membroId, cursoId);
+	        return ResponseEntity.ok().body(dto);
+	    }
+	    
+		
+		
 		  @GetMapping(value = "/por-mes")
 		    public ResponseEntity<List<MembroDTO>> findByMonthOfBirth(@RequestParam(name = "mes") int mes) {
 		        if (mes < 1 || mes > 12) {

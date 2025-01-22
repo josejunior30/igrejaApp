@@ -7,8 +7,14 @@ import "./styles.css";
 import { ebdCurso } from "../../../../models/trilha";
 import Header from "../../../../components/Header";
 import * as presencaVisitanteEBDService from "../../../../service/presencaVisitanteEBDService ";
-import { ListaChamadaEBD } from "../../../../models/ListaChamadaEBD";
-import { ListaChamadaVisitanteEBD } from "../../../../models/ListaChamadaVisitanteEBD";
+import {
+  ListaChamadaEBD,
+  ChamadaMembro,
+} from "../../../../models/ListaChamadaEBD";
+import {
+  ChamadaVisitante,
+  ListaChamadaVisitanteEBD,
+} from "../../../../models/ListaChamadaVisitanteEBD";
 
 const InserirPresencaEBD = () => {
   const [curso, setCurso] = useState<ebdCurso | null>(null);
@@ -85,48 +91,45 @@ const InserirPresencaEBD = () => {
 
     const listaPresencaVisitantes: ListaChamadaVisitanteEBD[] =
       sortedParticipants
-        .filter(
-          (participant) =>
-            participant.status === "Visitante" &&
-            presencas[participant.uniqueId] === "presente"
-        )
+        .filter((participant) => participant.status === "Visitante")
         .map((participant) => ({
           id: 0,
           data: new Date(dataPresenca),
-          chamadaVisitante: 1,
-          curso: {
+          chamadaVisitante:
+            presencas[participant.uniqueId] === "presente"
+              ? ChamadaVisitante.PRESENTE
+              : ChamadaVisitante.AUSENTE,
+          ebdCurso: {
             id: curso.id,
             nome: curso.nome,
             membro: [],
             visitante: [],
-            EBDCurso: [],
+            resumo: curso.resumo,
           },
           visitante: { id: participant.id, nome: participant.nome },
         }));
 
     const listaPresencaMembros: ListaChamadaEBD[] = sortedParticipants
-      .filter(
-        (participant) =>
-          participant.status === "Membro" &&
-          presencas[participant.uniqueId] === "presente"
-      )
+      .filter((participant) => participant.status === "Membro")
       .map((participant) => ({
         id: 0,
         data: new Date(dataPresenca),
-        chamadaMembro: 1,
-        curso: {
+        chamadaMembro:
+          presencas[participant.uniqueId] === "presente"
+            ? ChamadaMembro.PRESENTE
+            : ChamadaMembro.AUSENTE,
+        ebdCurso: {
           id: curso.id,
           nome: curso.nome,
           membro: [],
           visitante: [],
-          EBDCurso: [],
+          resumo: curso.resumo,
         },
         membro: { id: participant.id, nome: participant.nome },
         visitante: null,
       }));
 
     setIsSubmitting(true);
-
     try {
       await Promise.all(
         listaPresencaVisitantes.map((presenca) =>
@@ -147,6 +150,7 @@ const InserirPresencaEBD = () => {
       setIsSubmitting(false);
     }
   };
+
   const handleHistorico = () => {
     if (curso) {
       navigate(`/trilho/presenca/historicoChamada`);

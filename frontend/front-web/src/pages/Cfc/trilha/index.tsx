@@ -33,11 +33,6 @@ const TrilhaId = () => {
     }
   }, [id]);
 
-  const formatPhoneNumber = (phoneNumber: any) => {
-    phoneNumber.replace(/\D/g, "");
-    return `55${phoneNumber}`;
-  };
-
   // Helper function to merge and sort participants
   const getSortedParticipants = () => {
     if (!curso) return [];
@@ -72,6 +67,27 @@ const TrilhaId = () => {
       alert("Nao foi possivel abrir o painel.");
     }
   };
+  const formatPhoneNumber = (phoneNumber: string): string => {
+    // Remove caracteres não numéricos
+    const cleaned = phoneNumber.replace(/\D/g, "");
+
+    // Verifica se o número tem ao menos 10 ou 11 dígitos (DDD + número)
+    if (cleaned.length === 10) {
+      // Formato: (XX) XXXX-XXXX
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 6)}-${cleaned.slice(
+        6
+      )}`;
+    } else if (cleaned.length === 11) {
+      // Formato: (XX) XXXXX-XXXX
+      return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(
+        7
+      )}`;
+    }
+
+    // Retorna o número original caso não seja válido
+    return phoneNumber;
+  };
+
   return (
     <>
       <Header />
@@ -105,6 +121,7 @@ const TrilhaId = () => {
                   <table className="table table-striped">
                     <thead>
                       <tr>
+                        <th>#</th>
                         <th>Nome</th>
                         <th>Idade</th>
                         <th>Telefone</th>
@@ -113,11 +130,11 @@ const TrilhaId = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {getSortedParticipants().map((participant) => (
+                      {getSortedParticipants().map((participant, index) => (
                         <tr key={`${participant.status}-${participant.id}`}>
-                          <td>
-                            {`${participant.nome} ${participant.sobrenome}`}
-                          </td>
+                          {/* Adicione uma coluna para o índice */}
+                          <td>{index + 1}</td>
+                          <td>{`${participant.nome} ${participant.sobrenome}`}</td>
                           <td>{`${participant.idade}`}</td>
                           <td>
                             <Link
@@ -126,7 +143,7 @@ const TrilhaId = () => {
                               )}`}
                             >
                               <i className="bi bi-whatsapp"></i>{" "}
-                              {participant.telefone}
+                              {formatPhoneNumber(participant.telefone)}
                             </Link>
                           </td>
                           <td>{participant.email}</td>

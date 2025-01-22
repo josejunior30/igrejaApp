@@ -2,22 +2,23 @@ package com.esibape.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 
 @Entity
@@ -36,21 +37,19 @@ public class EBDCurso implements Serializable{
 	
 	@Column(columnDefinition = "TEXT")
 	private String resumo;
-	
-	@OneToMany(mappedBy = "ebdCurso")
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
+	@ManyToMany(mappedBy = "ebdCurso")
     private List<Membro> membro = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "ebdCursoVisitante")
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Visitante> visitante = new ArrayList<>();
 
+	@ManyToMany(mappedBy = "ebdCursoVisitante")
+	private Set<Visitante> visitante = new HashSet<>(); 
+	
+	
 	@OneToMany(mappedBy ="ebdCurso")
-	@JsonIgnore
 	private List <ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
 	
 	@OneToMany(mappedBy ="ebdCurso")
-	@JsonIgnore
 	private List <ListaPresencaEBD> listaPresencaVisitanteEBD = new ArrayList<>();
 	
 	@OneToMany(mappedBy ="ebdCurso")
@@ -63,8 +62,7 @@ public class EBDCurso implements Serializable{
 	}
 
 
-
-	public EBDCurso(Long id, String nome, Curso curso, String resumo, List<Membro> membro, List<Visitante> visitante,
+	public EBDCurso(Long id, String nome, Curso curso, String resumo, List<Membro> membro, Set<Visitante> visitante,
 			List<ListaPresencaEBD> listaPresencaEBD, List<ListaPresencaEBD> listaPresencaVisitanteEBD,
 			List<EbdEstudos> ebdEstudos) {
 		super();
@@ -163,16 +161,31 @@ public class EBDCurso implements Serializable{
 	}
 
 
-
-	public List<Visitante> getVisitante() {
+	public Set<Visitante> getVisitante() {
 		return visitante;
 	}
 
 
-
-	public void setVisitante(List<Visitante> visitante) {
+	public void setVisitante(Set<Visitante> visitante) {
 		this.visitante = visitante;
 	}
+
+
+	public List<ListaPresencaEBD> getListaPresencaVisitanteEBD() {
+		return listaPresencaVisitanteEBD;
+	}
+
+
+
+
+
+
+	public void setListaPresencaVisitanteEBD(List<ListaPresencaEBD> listaPresencaVisitanteEBD) {
+		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
+	}
+
+
+
 
 
 

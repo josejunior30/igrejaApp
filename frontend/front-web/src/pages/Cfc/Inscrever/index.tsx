@@ -104,11 +104,7 @@ const Inscrever: React.FC = () => {
 
     try {
       // Atualizar o curso principal do membro
-      await membroService.patchUpdateCurso(
-        parseInt(selectedMembroId),
-        cursoId,
-        ebdCursoId
-      );
+      await membroService.addEbdCurso(parseInt(selectedMembroId), cursoId);
 
       // Atualizar a opção de curso do membro
       await membroService.patchOpcao(
@@ -137,10 +133,9 @@ const Inscrever: React.FC = () => {
     }
 
     try {
-      await visitanteService.patchUpdateCurso(
+      await visitanteService.addEbdCurso(
         parseInt(selectedVisitanteId),
-        cursoId,
-        ebdCursoId
+        cursoId
       );
 
       await visitanteService.patchUpdateOpcao(
@@ -187,7 +182,7 @@ const Inscrever: React.FC = () => {
         ebdCursoId,
       };
 
-      await visitanteService.insertVisitante(visitanteData);
+      await visitanteService.insertVisitante(visitanteData, ebdCursoId);
       alert("Cadastro realizado e inscrição no curso efetuada com sucesso!");
       navigate("/trilho");
     } catch (error) {

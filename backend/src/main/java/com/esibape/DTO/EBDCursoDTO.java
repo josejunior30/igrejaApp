@@ -2,8 +2,10 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import com.esibape.entities.EBDCurso;
 import com.esibape.entities.EbdEstudos;
@@ -18,12 +20,15 @@ public class EBDCursoDTO implements Serializable{
 	
 	private Long id;
 	private String nome;
+
     private CursoDTO curso;
     private String resumo;
     private int quantidade;
 	private List <EbdEstudosDTO> ebdEstudos = new ArrayList<>();
-	private List<MembroDTO> membro = new ArrayList<>();
-	private List<VisitanteDTO> visitante = new ArrayList<>();
+	private Set<MembroDTO> membro = new HashSet<>();
+    private Set<VisitanteDTO> visitante = new HashSet<>();
+	
+		
 	@JsonIgnore
 	private List<ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
 	public EBDCursoDTO() {
@@ -44,34 +49,31 @@ public class EBDCursoDTO implements Serializable{
         this.resumo = ebdCurso.getResumo();
         this.membro = ebdCurso.getMembro().stream()
                 .map(MembroDTO::new)
-                .collect(Collectors.toList());
-        this.visitante = ebdCurso.getVisitante().stream()
-                .map(VisitanteDTO::new)
-                .collect(Collectors.toList());
-        this.quantidade = membro.size() + visitante.size(); // Soma de tamanhos
+                .collect(Collectors.toSet());
+        this.visitante=ebdCurso.getVisitante().stream()
+        		.map(VisitanteDTO::new)
+        		.collect(Collectors.toSet());
+ 
     }
 
-	public EBDCursoDTO(EBDCurso entity, List<EbdEstudos> ebdEstudos , List<Membro>membro, List<Visitante>visitante, List<ListaPresencaEBD> listaPresencaEBD) {
-		 this(entity);
-		   this.ebdEstudos =ebdEstudos.stream()
-		            .map(EbdEstudos-> new EbdEstudosDTO(EbdEstudos))  
-		            .collect(Collectors.toList());
-		   
+	public EBDCursoDTO(EBDCurso entity, List<EbdEstudos> ebdEstudos, List<Membro> membro, Set<Visitante> visitante, List<ListaPresencaEBD> listaPresencaEBD) {
+	    this(entity);
 
-		   this.membro =membro.stream()
-		            .map(Membro-> new MembroDTO(Membro))  
-		            .collect(Collectors.toList());
-		 
+	    // Mapeamento de EbdEstudos para EbdEstudosDTO
+	    this.ebdEstudos = ebdEstudos.stream()
+	            .map(EbdEstudos -> new EbdEstudosDTO(EbdEstudos))
+	            .collect(Collectors.toList());
 
-		   this.visitante =visitante.stream()
-		            .map(Visitante-> new VisitanteDTO(Visitante))  
-		            .collect(Collectors.toList());
-		   
-		   this.listaPresencaEBD = listaPresencaEBD.stream()
-		            .map(ListaPresencaEBD -> new ListaPresencaEBDDTO(ListaPresencaEBD)) 
-		            .collect(Collectors.toList());
-		 
+
+	    
+        visitante.forEach(cat-> this.visitante.add(new VisitanteDTO(cat)));
+        
+	    // Mapeamento de ListaPresencaEBD para ListaPresencaEBDDTO
+	    this.listaPresencaEBD = listaPresencaEBD.stream()
+	            .map(ListaPresencaEBD -> new ListaPresencaEBDDTO(ListaPresencaEBD))
+	            .collect(Collectors.toList());
 	}
+
 	 
 
 	public Long getId() {
@@ -123,25 +125,24 @@ public class EBDCursoDTO implements Serializable{
 		this.listaPresencaEBD = listaPresencaEBD;
 	}
 
-	public List<VisitanteDTO> getVisitante() {
+
+	public Set<VisitanteDTO> getVisitante() {
 		return visitante;
 	}
 
-	public void setVisitante(List<VisitanteDTO> visitante) {
+	public void setVisitante(Set<VisitanteDTO> visitante) {
 		this.visitante = visitante;
 	}
 
-	public List<MembroDTO> getMembro() {
+	
+
+	public Set<MembroDTO> getMembro() {
 		return membro;
 	}
 
-
-
-	public void setMembro(List<MembroDTO> membro) {
+	public void setMembro(Set<MembroDTO> membro) {
 		this.membro = membro;
 	}
-
-
 
 	public void setEbdEstudos(List<EbdEstudosDTO> ebdEstudos) {
 		this.ebdEstudos = ebdEstudos;

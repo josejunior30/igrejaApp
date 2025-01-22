@@ -28,13 +28,7 @@ public class Curso implements Serializable{
 	private String url;
 	@Column(columnDefinition = "TEXT")
 	private String resumo;
-	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 
-    private List<Membro> membro = new ArrayList<>();
-
-	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-
-    private List<Visitante> visitante = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "curso-ebdcurso")
@@ -45,15 +39,13 @@ public class Curso implements Serializable{
 	}
 
 
-	public Curso(Long id, String nome, String url, String resumo, List<Membro> membro, List<Visitante> visitante,
+	public Curso(Long id, String nome, String url, String resumo,
 			List<EBDCurso> ebdCurso) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.url = url;
 		this.resumo = resumo;
-		this.membro = membro;
-		this.visitante = visitante;
 		this.ebdCurso = ebdCurso;
 	}
 
@@ -90,10 +82,6 @@ public class Curso implements Serializable{
 
 
 
-	public List<Membro> getMembro() {
-		return membro;
-	}
-
 
 	public List<EBDCurso> getEbdCurso() {
 		return ebdCurso;
@@ -114,24 +102,6 @@ public class Curso implements Serializable{
 
 	public void setEbdCurso(List<EBDCurso> ebdCurso) {
 		this.ebdCurso = ebdCurso;
-	}
-
-
-
-
-	public void setMembro(List<Membro> membro) {
-		this.membro = membro;
-	}
-
-
-	public List<Visitante> getVisitante() {
-		return visitante;
-	}
-
-
-
-	public void setVisitante(List<Visitante> visitante) {
-		this.visitante = visitante;
 	}
 
 

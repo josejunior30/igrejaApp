@@ -2,15 +2,15 @@ package com.esibape.DTO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
-
-import com.esibape.entities.ListaPresencaVisitanteEBD;
+import com.esibape.entities.EBDCurso;
 import com.esibape.entities.Visitante;
 
 
@@ -29,8 +29,7 @@ public class VisitanteDTO {
     private LocalDate dataNascimento;
 	private String opcaoCurso;
 	private Boolean apostila = false;
-    private Long cursoId; // ID do Curso para evitar referência completa
-    private Long ebdCursoId; // ID do EBDCurso para evitar referência completa
+	Set<EBDCursoDTO>ebdCursoVisitante = new HashSet<>();
     private List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD = new ArrayList<>();
 
     // Construtor padrão
@@ -51,17 +50,18 @@ public class VisitanteDTO {
         this.idade = entity.getIdade();
         this.opcaoCurso =entity.getOpcaoCurso();
         this.apostila = entity.getApostila();
-        this.cursoId = entity.getCurso() != null ? entity.getCurso().getId() : null;
-        this.ebdCursoId = entity.getEbdCursoVisitante() != null ? entity.getEbdCursoVisitante().getId() : null;
+    
+       
     }
 
-    // Construtor com lista adicional
-    public VisitanteDTO(Visitante entity, List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD) {
+ // Construtor com entidade e listas adicionais
+    public VisitanteDTO(Visitante entity, Set<EBDCurso>ebdCursoVisitante) {
         this(entity);
-        if (listaPresencaVisitanteEBD != null) {
-            listaPresencaVisitanteEBD.forEach(pg -> this.listaPresencaVisitanteEBD.add(new ListaPresencaVisitanteEBDDTO(pg)));
+      
+        ebdCursoVisitante.forEach(cat-> this.ebdCursoVisitante.add(new EBDCursoDTO(cat)));
+      
         }
-    }
+    
 
     // Getters e Setters
     public Long getId() {
@@ -128,23 +128,16 @@ public class VisitanteDTO {
         this.dataNascimento = dataNascimento;
     }
 
-    public Long getCursoId() {
-        return cursoId;
-    }
 
-    public void setCursoId(Long cursoId) {
-        this.cursoId = cursoId;
-    }
+	public Set<EBDCursoDTO> getEbdCursoVisitante() {
+		return ebdCursoVisitante;
+	}
 
-    public Long getEbdCursoId() {
-        return ebdCursoId;
-    }
+	public void setEbdCursoVisitante(Set<EBDCursoDTO> ebdCursoVisitante) {
+		this.ebdCursoVisitante = ebdCursoVisitante;
+	}
 
-    public void setEbdCursoId(Long ebdCursoId) {
-        this.ebdCursoId = ebdCursoId;
-    }
-
-    public String getOpcaoCurso() {
+	public String getOpcaoCurso() {
 		return opcaoCurso;
 	}
 

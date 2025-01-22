@@ -2,8 +2,11 @@ package com.esibape.entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +15,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -36,17 +40,14 @@ public class Visitante {
 	private String telefone;
 	private LocalDate dataNascimento;
 	private Boolean apostila = false;
-	@ManyToOne()
-	@JoinColumn(name= "curso_id")
-	@JsonBackReference(value = "curso-visitante")
-    private Curso curso;
-	
 
-	@ManyToOne()
-	@JoinColumn(name= "ebd_curso_id")
-	@JsonBackReference(value = "ebdcurso-visitante")
-	private EBDCurso ebdCursoVisitante;
-	@Column(name="opcao_curso")
+	@ManyToMany
+	@JoinTable(name="tb_ebd_curso_visitante", joinColumns = 
+	@JoinColumn(name= "visitante_id"), inverseJoinColumns = @JoinColumn(name="ebd_curso_id"))
+	Set<EBDCurso>ebdCursoVisitante = new HashSet<>();
+	
+	
+    @Column(name="opcao_curso")
 	private String opcaoCurso;
 	
 	@OneToMany(mappedBy = "visitante", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -59,7 +60,7 @@ public class Visitante {
 
 
 	public Visitante(Long id, String nome, String sobrenome, Integer idade, String email, String telefone,
-			LocalDate dataNascimento, Boolean apostila, Curso curso, EBDCurso ebdCursoVisitante, String opcaoCurso,
+			LocalDate dataNascimento, Boolean apostila, Set<EBDCurso> ebdCursoVisitante, String opcaoCurso,
 			List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD) {
 		super();
 		this.id = id;
@@ -70,20 +71,20 @@ public class Visitante {
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
 		this.apostila = apostila;
-		this.curso = curso;
 		this.ebdCursoVisitante = ebdCursoVisitante;
 		this.opcaoCurso = opcaoCurso;
 		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
 	}
 
 
-	public EBDCurso getEbdCursoVisitante() {
+
+
+	public Set<EBDCurso> getEbdCursoVisitante() {
 		return ebdCursoVisitante;
 	}
 
 
-
-	public void setEbdCursoVisitante(EBDCurso ebdCursoVisitante) {
+	public void setEbdCursoVisitante(Set<EBDCurso> ebdCursoVisitante) {
 		this.ebdCursoVisitante = ebdCursoVisitante;
 	}
 
@@ -165,12 +166,6 @@ public class Visitante {
 	}
 
 
-	public Curso getCurso() {
-		return curso;
-	}
-
-
-
 
 
 	public List<ListaPresencaVisitanteEBD> getListaPresencaVisitanteEBD() {
@@ -183,14 +178,6 @@ public class Visitante {
 
 	public void setListaPresencaVisitanteEBD(List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD) {
 		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
-	}
-
-
-
-
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
 	}
 
 

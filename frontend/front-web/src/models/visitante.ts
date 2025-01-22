@@ -1,5 +1,3 @@
-import { curso } from "./trilha";
-
 export type visitante = {
   id: number;
   nome: string;
@@ -8,7 +6,7 @@ export type visitante = {
   idade: number;
   telefone: string;
   dataNascimento: Date;
-  curso: curso;
+  ebdCursoVisitante: [];
   opcaoCurso: string;
   apostila: boolean;
 };

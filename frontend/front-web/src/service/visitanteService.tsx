@@ -8,8 +8,8 @@ export function findAll() {
 export function findById(id: number) {
   return axios.get(`${BASE_URL}/visitante/${id}`);
 }
-export function insertVisitante(visitante: any) {
-  return axios.post(`${BASE_URL}/visitante`, visitante);
+export function insertVisitante(visitante: any, cursoId: number) {
+  return axios.post(`${BASE_URL}/visitante/com-curso/${cursoId}`, visitante);
 }
 
 export function updateVisitante(id: number, visitante: any) {
@@ -31,6 +31,10 @@ export function patchUpdateCurso(
     `${BASE_URL}/visitante/${visitanteId}/curso/${cursoId}/ebdCurso/${ebdMembroId}`
   );
 }
+export function addEbdCurso(visitanteId: number, cursoId: number) {
+  return axios.post(`${BASE_URL}/visitante/${visitanteId}/curso/${cursoId}`);
+}
+
 export function patchUpdateOpcao(visitanteId: number, opcaoCurso: string) {
   return axios.patch(
     `${BASE_URL}/visitante/${visitanteId}/opcao-curso`,

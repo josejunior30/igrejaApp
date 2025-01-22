@@ -7,8 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import com.esibape.entities.Curso;
 import com.esibape.entities.EBDCurso;
-import com.esibape.entities.Membro;
-import com.esibape.entities.Visitante;
+
 
 
 
@@ -18,7 +17,6 @@ public class CursoDTO implements Serializable{
 	private String nome;
 	private String url;
 	private String resumo;
-	private List<MembroDTO> membro = new ArrayList<>();
 	private List<VisitanteDTO> visitante = new ArrayList<>();
 	private List <EBDCursoDTO> ebdCurso = new ArrayList<>();
 
@@ -29,14 +27,13 @@ public class CursoDTO implements Serializable{
 	}
 
 	
-	public CursoDTO(Long id, String nome, String url, String resumo, List<MembroDTO> membro,
+	public CursoDTO(Long id, String nome, String url, String resumo,
 			List<VisitanteDTO> visitante, List<EBDCursoDTO> ebdCurso) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.url = url;
 		this.resumo = resumo;
-		this.membro = membro;
 		this.visitante = visitante;
 		this.ebdCurso = ebdCurso;
 	}
@@ -61,7 +58,7 @@ public class CursoDTO implements Serializable{
 		
 	}
 	
-	   public CursoDTO(Curso curso, List<Membro> membro, List<Visitante> visitante, List<EBDCurso> ebdCurso) {
+	   public CursoDTO(Curso curso, List<EBDCurso> ebdCurso) {
 	        this.id = curso.getId();
 	        this.nome = curso.getNome();
 	        this.resumo=curso.getResumo();
@@ -69,16 +66,7 @@ public class CursoDTO implements Serializable{
 	        this.ebdCurso = ebdCurso.stream()
 		            .map(EBDCurso-> new EBDCursoDTO(EBDCurso)) 
 		            .collect(Collectors.toList());
-	        
-	        this.membro = membro.stream()
-	            .map(Membro -> new MembroDTO(Membro))  
-	            .collect(Collectors.toList());
-	       
-	        
-	        this.visitante = visitante.stream()
-		            .map(Visitante -> new VisitanteDTO(Visitante)) 
-		            .collect(Collectors.toList());
-	       
+	   
 	        
 	    }
 
@@ -112,11 +100,6 @@ public class CursoDTO implements Serializable{
 	}
 
 
-	public List<MembroDTO> getMembro() {
-		return membro;
-	}
-
-
 
 
 	public List<VisitanteDTO> getVisitante() {
@@ -130,11 +113,6 @@ public class CursoDTO implements Serializable{
 		this.visitante = visitante;
 	}
 
-
-
-	public void setMembro(List<MembroDTO> membro) {
-		this.membro = membro;
-	}
 
 
 	public List<EBDCursoDTO> getEbdCurso() {

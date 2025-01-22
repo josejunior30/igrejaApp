@@ -44,15 +44,23 @@ public class VisitanteController {
 				VisitanteDTO visitante = service.findById(id);
 				return ResponseEntity.ok().body(visitante);
 			}
-		    @PostMapping
-			public ResponseEntity<VisitanteDTO> insert(@Valid @RequestBody VisitanteDTO dto) {
-			    dto = service.insert(dto);
-			    URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-			                                         .path("/{id}")
-			                                         .buildAndExpand(dto.getId())
-			                                         .toUri();
-			    return ResponseEntity.created(uri).body(dto);
-			}
+		
+		    @PostMapping("/com-curso/{cursoId}")
+		    public ResponseEntity<VisitanteDTO> insertWithCurso(@Valid @RequestBody VisitanteDTO dto, @PathVariable Long cursoId) {
+		        VisitanteDTO newDto = service.insertWithEbdCurso(dto, cursoId);
+		        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+		                                             .path("/{id}")
+		                                             .buildAndExpand(newDto.getId())
+		                                             .toUri();
+		        return ResponseEntity.created(uri).body(newDto);
+		    }
+		    
+		    @PostMapping("/{visitanteId}/curso/{cursoId}")
+		    public ResponseEntity<VisitanteDTO> addEbdCurso(@PathVariable Long visitanteId, @PathVariable Long cursoId) {
+		        VisitanteDTO dto = service.addEbdCursoToVisitante(visitanteId, cursoId);
+		        return ResponseEntity.ok().body(dto);
+		    }
+		    
 		    @PatchMapping(value = "/{id}/opcao-curso")
 		    public ResponseEntity<Void> patchUpdateOpcao(@PathVariable Long id, @RequestBody String opcaoCurso) {
 		        service.patchUpdateOpcao(id, opcaoCurso);
@@ -74,11 +82,7 @@ public class VisitanteController {
 		        return ResponseEntity.noContent().build();
 		    }
 
-			@PutMapping(value="/{id}")
-			public ResponseEntity<VisitanteDTO>update (@PathVariable Long id, @RequestBody VisitanteDTO dto){
-				 dto =service.update(id, dto);
-				return ResponseEntity.ok().body(dto);
-			}
+		
 			@DeleteMapping(value="/{id}")
 			public ResponseEntity<VisitanteDTO>delete(@PathVariable Long id){
 				 service.delete(id);
@@ -91,19 +95,4 @@ public class VisitanteController {
 				return ResponseEntity.ok(result);
 			}
 			
-			  @PatchMapping("/{visitanteId}/curso/{cursoId}/ebdCurso/{ebdCursoId}")
-			    public ResponseEntity<Void> updateCurso(
-			    		@PathVariable Long visitanteId, 
-			    		@PathVariable Long cursoId,
-			    		@PathVariable Long ebdCursoId) {
-				  // Validação de entradas
-					 if (visitanteId <= 0 || cursoId <= 0 || ebdCursoId <= 0) {
-					        throw new IllegalArgumentException("IDs devem ser positivos e maiores que zero.");
-					    }
-					 // Delegando a lógica para o serviço
-					    service.patchUpdateCurso(visitanteId, cursoId, ebdCursoId);
-
-					    // Retorno de sucesso sem conteúdo
-					    return ResponseEntity.noContent().build();
-			    }
 }

@@ -3,8 +3,10 @@ package com.esibape.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,12 +15,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
@@ -50,15 +51,12 @@ public class Membro implements Serializable {
 	private Boolean status =true;
 	private String opcaoCurso;
 	private Boolean apostila = false;
-	@ManyToOne()
-	@JoinColumn(name= "curso_id")
-	@JsonBackReference(value = "curso-membro")
-    private Curso curso;
+
 	
-	@ManyToOne()
-	@JoinColumn(name= "ebd_curso_id")
-	@JsonBackReference(value = "ebdcurso-membro")
-    private EBDCurso ebdCurso;
+	@ManyToMany
+	@JoinTable(name="tb_ebd_curso_membro", joinColumns =
+	@JoinColumn(name= "membro_id"), inverseJoinColumns = @JoinColumn(name= "ebd_curso_id"))
+	Set<EBDCurso>ebdCurso = new HashSet<>();
 	
 	@OneToMany(mappedBy = "membro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
@@ -71,18 +69,12 @@ public class Membro implements Serializable {
 	}
 	
 
-	  @JsonProperty("curso")
-	    public CursoResumo getCursoResumo() {
-	      
-	        return curso != null ? new CursoResumo(curso.getId(), curso.getNome()) : null;
-	    }
+
 
 	
-
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
-			String cidade, String complemento, String url, Boolean status, String opcaoCurso, Boolean apostila,
-			Curso curso, EBDCurso ebdCurso, List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto) {
+			String cidade, String complemento, String url, Boolean status, String opcaoCurso, Boolean apostila, Set<EBDCurso> ebdCurso, List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -103,7 +95,6 @@ public class Membro implements Serializable {
 		this.status = status;
 		this.opcaoCurso = opcaoCurso;
 		this.apostila = apostila;
-		this.curso = curso;
 		this.ebdCurso = ebdCurso;
 		this.listaPresencaEBD = listaPresencaEBD;
 		this.foto = foto;
@@ -189,23 +180,6 @@ public class Membro implements Serializable {
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
-
-
-
-
-
-
-	public Curso getCurso() {
-		return curso;
-	}
-
-
-
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-
 
 
 
@@ -312,12 +286,12 @@ public class Membro implements Serializable {
 
 
 
-	public EBDCurso getEbdCurso() {
+	public Set<EBDCurso> getEbdCurso() {
 		return ebdCurso;
 	}
 
 
-	public void setEbdCurso(EBDCurso ebdCurso) {
+	public void setEbdCurso(Set<EBDCurso> ebdCurso) {
 		this.ebdCurso = ebdCurso;
 	}
 

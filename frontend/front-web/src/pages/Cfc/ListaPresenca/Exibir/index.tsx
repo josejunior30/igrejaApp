@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { findVisitanteByMonthAndCurso } from "../../../../service/presencaVisitanteEBDService ";
 import { findMembroByMonthAndCurso } from "../../../../service/presencaEBDService";
-import { findAll } from "../../../../service/trilhoService";
+import { findAllCurso } from "../../../../service/cursoTrilhoService";
 import Header from "../../../../components/Header";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
+import { ebdCurso } from "../../../../models/trilha";
 
 interface Curso {
   id: number;
@@ -22,7 +23,7 @@ const HistoricoChamadaEBD = () => {
   const [mes, setMes] = useState<number | null>(null);
   const [ano, setAno] = useState<number | null>(null);
   const [cursoId, setCursoId] = useState<number | null>(null);
-  const [cursos, setCursos] = useState<Curso[]>([]);
+  const [cursos, setCursos] = useState<ebdCurso[]>([]);
   const [loading, setLoading] = useState(false);
   const [presencas, setPresencas] = useState<Presenca[]>([]);
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const HistoricoChamadaEBD = () => {
 
   const buscarCursos = async () => {
     try {
-      const response = await findAll();
+      const response = await findAllCurso();
       setCursos(response.data);
     } catch (error) {
       console.error("Erro ao buscar os cursos:", error);

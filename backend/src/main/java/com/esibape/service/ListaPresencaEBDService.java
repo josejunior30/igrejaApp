@@ -3,17 +3,20 @@ package com.esibape.service;
 
 import java.time.YearMonth;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.esibape.DTO.EBDCursoDTO;
 import com.esibape.DTO.ListaPresencaEBDDTO;
 import com.esibape.DTO.MembroDTO;
+import com.esibape.entities.EBDCurso;
 import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
-import com.esibape.entities.EBDCurso;
 import com.esibape.repository.EBDCursoRepository;
 import com.esibape.repository.ListaPresencaEBDRepository;
 import com.esibape.repository.MembroRepository;
@@ -38,12 +41,13 @@ public class ListaPresencaEBDService {
 	               .collect(Collectors.toList());
 	}
 	
-	 @Transactional(readOnly = true)
-	    public ListaPresencaEBDDTO findById(Long id) {
-	    	Optional<ListaPresencaEBD> ListaPresencaEBD = repository.findById(id);
-	    	ListaPresencaEBD entity = ListaPresencaEBD.get();
-	    	return  new ListaPresencaEBDDTO(entity, entity.getMembro(),entity.getEbdCurso()) ;
-	    }
+	@Transactional(readOnly = true)
+	public ListaPresencaEBDDTO findById(Long id) {
+	    ListaPresencaEBD entity = repository.findById(id)
+	        .orElseThrow(() -> new EntityNotFoundException("Lista de presença com ID " + id + " não encontrada"));
+	    return new ListaPresencaEBDDTO(entity, entity.getMembro(), entity.getEbdCurso());
+	}
+
 	 @Transactional
 	    public ListaPresencaEBDDTO insert(ListaPresencaEBDDTO dto){
 		 ListaPresencaEBD entity = new ListaPresencaEBD();
@@ -68,9 +72,14 @@ public class ListaPresencaEBDService {
 			MembroDTO AlDTO = dto.getMembro();
 			Membro membro = membroRepository.getReferenceById(AlDTO.getId());
 			entity.setMembro(membro);
+			
 			EBDCursoDTO CurDTO = dto.getEbdCurso();
 			EBDCurso curso = ebdCursoRepository.getReferenceById(CurDTO.getId());
 			entity.setEbdCurso(curso);
 	    }
+	 
+	
+	
+	
 			
 }

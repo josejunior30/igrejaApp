@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +31,7 @@ public class VisitanteService {
     @Transactional(readOnly = true)
     public List<VisitanteDTO> findAll() {
         return repository.findAll().stream()
-                         .map(VisitanteDTO::new)
+        	    .map(x -> new VisitanteDTO(x, x.getEbdCursoVisitante()))
                          .collect(Collectors.toList());
     }
 
@@ -40,26 +39,17 @@ public class VisitanteService {
     public VisitanteDTO findById(Long id) {
         Visitante entity = repository.findById(id)
                                      .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
-        return new VisitanteDTO(entity);
+        return new VisitanteDTO(entity, entity.getEbdCursoVisitante());
     }
-
     @Transactional
-    public VisitanteDTO insert(@Valid VisitanteDTO dto) {
+    public VisitanteDTO insertWithEbdCurso(VisitanteDTO dto, Long cursoId) {
         Visitante entity = new Visitante();
-        copyDtoToEntity(dto, entity);
+        copyDtoToEntity(dto, entity, cursoId);
         entity = repository.save(entity);
-        return new VisitanteDTO(entity);
+        return new VisitanteDTO(entity, entity.getEbdCursoVisitante());
     }
 
-    @Transactional
-    public VisitanteDTO update(Long id, @Valid VisitanteDTO dto) {
-        Visitante entity = repository.findById(id)
-                                      .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
-        copyDtoToEntity(dto, entity);
-        entity = repository.save(entity);
-        return new VisitanteDTO(entity);
-    }
-
+    
     @Transactional
     public void delete(Long id) {
         if (!repository.existsById(id)) {
@@ -68,6 +58,21 @@ public class VisitanteService {
         repository.deleteById(id);
     }
 
+    @Transactional
+    public VisitanteDTO addEbdCursoToVisitante(Long visitanteId, Long cursoId) {
+        Visitante visitante = repository.findById(visitanteId)
+            .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
+
+        EBDCurso curso = ebdCursoRepository.findById(cursoId)
+            .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
+
+        visitante.getEbdCursoVisitante().add(curso);
+        repository.save(visitante);
+
+        return new VisitanteDTO(visitante, visitante.getEbdCursoVisitante());
+    }
+    
+    
     @Transactional
     public void patchUpdateOpcao(Long visitanteId, String opcaoCurso) {
         // Localiza o Visitante pelo ID, lança exceção se não encontrar
@@ -80,6 +85,7 @@ public class VisitanteService {
         // Salva o visitante atualizado no banco
         repository.save(visitante);
     }
+    
     @Transactional
     public void patchUpdateApostila(Long visitanteId, Boolean apostila) {
         // Localiza o Visitante pelo ID, lança exceção se não encontrar
@@ -94,12 +100,10 @@ public class VisitanteService {
     }
 
     @Transactional
-    public void patchUpdateCurso(Long visitanteId, Long cursoId, Long ebdCursoId) {
+    public void patchUpdateCurso(Long visitanteId, Long ebdCursoId) {
         Visitante visitante = repository.findById(visitanteId)
                                          .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
 
-        visitante.setCurso(findCursoById(cursoId));
-        visitante.setEbdCursoVisitante(findEbdCursoById(ebdCursoId));
         repository.save(visitante);
     }
 
@@ -111,7 +115,7 @@ public class VisitanteService {
                          .collect(Collectors.toList());
     }
 
-    private void copyDtoToEntity(VisitanteDTO dto, Visitante entity) {
+    private void copyDtoToEntity(VisitanteDTO dto, Visitante entity,  Long cursoId) {
         entity.setNome(dto.getNome());
         entity.setSobrenome(dto.getSobrenome());
         entity.setDataNascimento(dto.getDataNascimento());
@@ -119,23 +123,24 @@ public class VisitanteService {
         entity.setTelefone(dto.getTelefone());
         entity.setOpcaoCurso(dto.getOpcaoCurso());
         entity.setApostila(dto.getApostila());
+        
 
-        if (dto.getCursoId() != null) {
-            entity.setCurso(findCursoById(dto.getCursoId()));
-        }
 
-        if (dto.getEbdCursoId() != null) {
-            entity.setEbdCursoVisitante(findEbdCursoById(dto.getEbdCursoId()));
-        }
+        EBDCurso curso = ebdCursoRepository.findById(cursoId)
+            .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
+        entity.getEbdCursoVisitante().add(curso);
     }
 
-    private Curso findCursoById(Long id) {
+    
+    private EBDCurso findEbdCursoById(Long id) {
+        return ebdCursoRepository.findById(id)
+                                 .orElseThrow(() -> new EntityNotFoundException("EBDCurso não encontrado"));
+    }
+
+	private Curso findCursoById(Long id) {
         return cursoRepository.findById(id)
                               .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
     }
 
-    private EBDCurso findEbdCursoById(Long id) {
-        return ebdCursoRepository.findById(id)
-                                  .orElseThrow(() -> new EntityNotFoundException("EBDCurso não encontrado"));
-    }
+   
 }

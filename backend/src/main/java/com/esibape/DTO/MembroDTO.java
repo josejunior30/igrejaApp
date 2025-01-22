@@ -3,15 +3,14 @@ package com.esibape.DTO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
-
-import com.esibape.entities.Curso;
 import com.esibape.entities.EBDCurso;
 import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
@@ -45,86 +44,14 @@ public class MembroDTO implements Serializable{
 	private Boolean apostila = false;
 	private String opcaoCurso;
 	private Boolean status =true;
-	private Long cursoId; // ID do Curso para evitar referência completa
-	private Long ebdCursoId; // ID do EBDCurso para evitar referência completa
+
+	Set<EBDCursoDTO>ebdCurso = new HashSet<>();
 	   
 	private List<ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
 	
 	public MembroDTO() {
 		
 	}
-
-	
-
-	public MembroDTO(Long id,
-			@Size(min = 3, message = "O nome deve ter no minimo 3 caracteres") @NotEmpty(message = "campo não poe ser nulo ou vazio") String nome,
-			String sobrenome, @Email(message = "Deve ser um Email Valido") String email,
-			@PastOrPresent(message = "escolha uma data válida") LocalDate dataNascimento, Integer idade, String opcaoCurso,
-			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
-			String cidade, String complemento, String url, Boolean status, Long cursoId, Long ebdCursoId,
-			List<ListaPresencaEBDDTO> listaPresencaEBD) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.sobrenome = sobrenome;
-		this.email = email;
-		this.dataNascimento = dataNascimento;
-		this.idade = idade;
-		this.telefone = telefone;
-		this.cpf = cpf;
-		this.estadoCivil = estadoCivil;
-		this.rua = rua;
-		this.cep = cep;
-		this.numero = numero;
-		this.bairro = bairro;
-		this.cidade = cidade;
-		this.complemento = complemento;
-		this.url = url;
-		this.status = status;
-		this.opcaoCurso =opcaoCurso;
-		this.cursoId = cursoId;
-		this.ebdCursoId = ebdCursoId;
-		this.listaPresencaEBD = listaPresencaEBD;
-	}
-
-
-
-
-	public Long getCursoId() {
-		return cursoId;
-	}
-
-
-
-	public void setCursoId(Long cursoId) {
-		this.cursoId = cursoId;
-	}
-
-
-
-	public Long getEbdCursoId() {
-		return ebdCursoId;
-	}
-
-
-
-	public void setEbdCursoId(Long ebdCursoId) {
-		this.ebdCursoId = ebdCursoId;
-	}
-
-
-
-	public String getOpcaoCurso() {
-		return opcaoCurso;
-	}
-
-
-
-	public void setOpcaoCurso(String opcaoCurso) {
-		this.opcaoCurso = opcaoCurso;
-	}
-
-
 
 	public MembroDTO(Membro entity) {
 		this.id= entity.getId();
@@ -146,10 +73,42 @@ public class MembroDTO implements Serializable{
 		this.url=entity.getUrl();
 		this.apostila= entity.getApostila();
 		this.status = entity.getStatus();
-		 this.cursoId = entity.getCurso() != null ? entity.getCurso().getId() : null;
-	        this.ebdCursoId = entity.getEbdCurso() != null ? entity.getEbdCurso().getId() : null;
+
+	     
 		
 	}
+	
+	 public MembroDTO(Membro entity, Set<EBDCurso>ebdCurso) {
+	        this(entity);
+	      
+	        ebdCurso.forEach(cat-> this.ebdCurso.add(new EBDCursoDTO(cat)));
+	      
+	        }
+	    
+
+
+
+	public Set<EBDCursoDTO> getEbdCurso() {
+		return ebdCurso;
+	}
+
+	public void setEbdCurso(Set<EBDCursoDTO> ebdCurso) {
+		this.ebdCurso = ebdCurso;
+	}
+
+	public String getOpcaoCurso() {
+		return opcaoCurso;
+	}
+
+
+
+	public void setOpcaoCurso(String opcaoCurso) {
+		this.opcaoCurso = opcaoCurso;
+	}
+
+
+
+
 	public MembroDTO(Membro entity, List<ListaPresencaEBD>listaPresencaEBD) {
 		 this(entity);
 		  if (listaPresencaEBD !=null) {

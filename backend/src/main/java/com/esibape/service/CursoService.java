@@ -20,7 +20,7 @@ public class CursoService {
 	    List<Curso> list = repository.findAll();
 
 	    return list.stream()
-	        .map(x -> new CursoDTO(x, x.getMembro(), x.getVisitante(),x.getEbdCurso()))
+	        .map(x -> new CursoDTO(x,x.getEbdCurso()))
 	        .collect(Collectors.toList());
 	}
 
@@ -29,7 +29,7 @@ public class CursoService {
 	    Optional<Curso> optionalCurso = repository.findById(id);
 	    if (optionalCurso.isPresent()) {
 	        Curso curso = optionalCurso.get();
-	        return new CursoDTO(curso, curso.getMembro() ,curso.getVisitante(), curso.getEbdCurso());
+	        return new CursoDTO(curso, curso.getEbdCurso());
 	    } else {
 	        // You can return null or throw an exception if you prefer
 	        return null;
