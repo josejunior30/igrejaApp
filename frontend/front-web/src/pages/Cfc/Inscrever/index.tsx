@@ -161,7 +161,6 @@ const Inscrever: React.FC = () => {
     if (
       !cadastroNome ||
       !cadastroDataNascimento ||
-      !cadastroOpcao ||
       !cadastroCelular ||
       !cadastroSobrenome ||
       !cadastroEmail
