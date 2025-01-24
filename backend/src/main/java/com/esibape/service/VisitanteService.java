@@ -124,7 +124,7 @@ public class VisitanteService {
     }
 
     private void copyDtoToEntity(VisitanteDTO dto, Visitante entity,  Long cursoId) {
-   
+    	 atualizarIdade(entity);
         entity.setNome(dto.getNome());
         entity.setSobrenome(dto.getSobrenome());
         entity.setDataNascimento(dto.getDataNascimento());

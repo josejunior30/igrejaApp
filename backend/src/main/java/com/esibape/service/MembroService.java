@@ -83,7 +83,7 @@ public class MembroService {
 
 
     private void copyDtoToEntity(MembroDTO dto, Membro entity) {
-        
+    	 atualizarIdade(entity);
         entity.setNome(dto.getNome());
         entity.setSobrenome(dto.getSobrenome());
         entity.setEmail(dto.getEmail());
