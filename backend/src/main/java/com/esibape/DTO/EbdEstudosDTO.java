@@ -14,18 +14,18 @@ public class EbdEstudosDTO implements Serializable{
 
     private Long id;
     private String nome;
-    private EBDCurso ebdCurso;
+    private Long cursoId; 
     public EbdEstudosDTO() {
     	
     	
     }
 
 
-	public EbdEstudosDTO(Long id, String nome, EBDCurso ebdCurso) {
+	public EbdEstudosDTO(Long id, String nome, Long cursoId) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.ebdCurso = ebdCurso;
+		this.cursoId =cursoId;
 	}
 
 
@@ -37,7 +37,7 @@ public class EbdEstudosDTO implements Serializable{
 		
 		this.id = entity.getId();
 		this.nome = entity.getNome();
-		this.ebdCurso = entity.getEbdCurso();
+		this.cursoId = entity.getEbdCurso().getId();
 	}
 
 	public Long getId() {
@@ -60,13 +60,16 @@ public class EbdEstudosDTO implements Serializable{
 	}
 
 
-	public EBDCurso getEbdCurso() {
-		return ebdCurso;
+
+
+
+	public Long getCursoId() {
+		return cursoId;
 	}
 
 
-	public void setEbdCurso(EBDCurso ebdCurso) {
-		this.ebdCurso = ebdCurso;
+	public void setCursoId(Long cursoId) {
+		this.cursoId = cursoId;
 	}
 
 

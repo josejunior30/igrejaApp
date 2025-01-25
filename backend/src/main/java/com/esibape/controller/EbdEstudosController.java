@@ -2,6 +2,7 @@ package com.esibape.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.esibape.DTO.EbdEstudosDTO;
 import com.esibape.service.EbdEstudosService;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -66,18 +68,22 @@ public class EbdEstudosController {
             byte[] pdf = ebdEstudoService.downloadPdfByCursoId(cursoId);
 
             if (pdf == null || pdf.length == 0) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
             }
 
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "attachment; filename=ebd_curso_" + cursoId + ".pdf");
-            headers.add("Content-Type", "application/pdf");
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=ebd_curso_" + cursoId + ".pdf");
+            headers.add(HttpHeaders.CONTENT_TYPE, "application/pdf");
 
-            return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok().headers(headers).body(pdf);
+
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
 
     @GetMapping
     public ResponseEntity <List<EbdEstudosDTO>>findAll(){

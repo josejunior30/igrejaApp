@@ -20,32 +20,31 @@ public class EbdEstudosService {
     private EbdEstudosRepository ebdEstudoRepository;
     @Autowired
     private EBDCursoRepository ebdCursoRepository;
+    
+    
+    
     // Criar um novo EbdCurso
+
+    @Transactional
     public EbdEstudosDTO createEbdEstudo(String nome, byte[] pdfDeEstudo, Long cursoId) {
-        // Validações
         if (cursoId == null) {
             throw new IllegalArgumentException("O curso associado é obrigatório.");
         }
 
-        // Buscar curso no repositório
         EBDCurso ebdCurso = ebdCursoRepository.findById(cursoId)
             .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado com o ID especificado."));
 
-        // Criar e configurar a entidade
         EbdEstudos ebdEstudos = new EbdEstudos();
         ebdEstudos.setNome(nome);
         ebdEstudos.setPdfDeEstudo(pdfDeEstudo);
         ebdEstudos.setEbdCurso(ebdCurso);
 
-        // Salvar no banco
         EbdEstudos savedEbdEstudo = ebdEstudoRepository.save(ebdEstudos);
 
-        // Retornar DTO
         return new EbdEstudosDTO(savedEbdEstudo.getId(), savedEbdEstudo.getNome(),
-                 savedEbdEstudo.getEbdCurso());
+                 savedEbdEstudo.getEbdCurso().getId());  // Pegando apenas o ID
     }
 
-  
 
 	@Transactional(readOnly = true)
     public List<EbdEstudosDTO> findAll() {
@@ -59,13 +58,13 @@ public class EbdEstudosService {
     // Obter um EbdCurso pelo ID
 
 	@Transactional(readOnly = true)
-    public EbdEstudosDTO findByEbdCurso(Long id) {
-        Optional<EbdEstudos> ebdEstudo = ebdEstudoRepository.findById(id);
-        if (ebdEstudo.isEmpty()) {
-            throw new RuntimeException("EbdCurso não encontrado.");
-        }
-        return new EbdEstudosDTO(ebdEstudo.get().getId(), ebdEstudo.get().getNome(),ebdEstudo.get().getEbdCurso());
-    }
+	public EbdEstudosDTO findByEbdCurso(Long id) {
+	    EbdEstudos ebdEstudo = ebdEstudoRepository.findById(id)
+	        .orElseThrow(() -> new RuntimeException("EbdCurso não encontrado."));
+	    
+	    return new EbdEstudosDTO(ebdEstudo.getId(), ebdEstudo.getNome(),
+	             ebdEstudo.getEbdCurso().getId());  // Pegando apenas o ID
+	}
 
 
     // Deletar um EbdEstudos
@@ -74,19 +73,17 @@ public class EbdEstudosService {
     }
     
     public byte[] downloadPdfByCursoId(Long cursoId) {
-        // Buscar o curso pelo ID
-        EBDCurso ebdCurso = ebdCursoRepository.findById(cursoId)
-                .orElseThrow(() -> new RuntimeException("Curso não encontrado."));
-
-        // Buscar o estudo associado ao curso
-        EbdEstudos ebdEstudo = ebdEstudoRepository.findByEbdCurso(ebdCurso)
+        // Buscar o estudo associado ao curso diretamente
+        EbdEstudos ebdEstudo = ebdEstudoRepository.findByCursoId(cursoId)
                 .orElseThrow(() -> new RuntimeException("Estudo não encontrado para este curso."));
 
-        // Retornar o PDF
         byte[] pdf = ebdEstudo.getPdfDeEstudo();
+        
         if (pdf == null || pdf.length == 0) {
             throw new RuntimeException("PDF não encontrado para este estudo.");
         }
+
         return pdf;
     }
+
 }
