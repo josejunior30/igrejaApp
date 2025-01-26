@@ -44,6 +44,7 @@ public class Visitante {
 	@ManyToMany
 	@JoinTable(name="tb_ebd_curso_visitante", joinColumns = 
 	@JoinColumn(name= "visitante_id"), inverseJoinColumns = @JoinColumn(name="ebd_curso_id"))
+
 	Set<EBDCurso>ebdCursoVisitante = new HashSet<>();
 	
 	

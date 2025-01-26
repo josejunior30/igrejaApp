@@ -30,43 +30,33 @@ const Inscrever: React.FC = () => {
   const [cadastroApostila, setCadastroApostila] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // Recuperar cursoId e ebdCursoId do localStorage
-  const cursoId = parseInt(localStorage.getItem("cursoId") || "0", 10);
+  // Recuperar ebdCursoId do localStorage
+
   const ebdCursoId = parseInt(
     localStorage.getItem("selectedEbdCursoId") || "0",
     10
   );
 
   useEffect(() => {
-    const cursoId = parseInt(localStorage.getItem("cursoId") || "0", 10);
-    const ebdCursoId = parseInt(
-      localStorage.getItem("selectedEbdCursoId") || "0",
-      10
-    );
-
-    if (
-      isNaN(cursoId) ||
-      isNaN(ebdCursoId) ||
-      cursoId <= 0 ||
-      ebdCursoId <= 0
-    ) {
-      alert("IDs inválidos. Retornando à página anterior.");
+    if (isNaN(ebdCursoId) || ebdCursoId <= 0) {
+      alert("ID inválido. Retornando à página anterior.");
       navigate("/trilho");
       return;
     }
+
     cursoTrilhoService
       .findAllCurso()
       .then((response) => setEbdCursos(response.data))
       .catch(() => alert("Erro ao carregar lista de cursos EBD."));
 
     trilhoService
-      .findById(cursoId)
+      .findById(ebdCursoId)
       .then((response) => setNomeCurso(response.data.nome))
       .catch(() => {
         alert("Erro ao carregar os detalhes do curso.");
         navigate("/trilho");
       });
-  }, [navigate]);
+  }, [navigate, ebdCursoId]);
 
   useEffect(() => {
     membroService
@@ -104,7 +94,7 @@ const Inscrever: React.FC = () => {
 
     try {
       // Atualizar o curso principal do membro
-      await membroService.addEbdCurso(parseInt(selectedMembroId), cursoId);
+      await membroService.addEbdCurso(parseInt(selectedMembroId), ebdCursoId);
 
       // Atualizar a opção de curso do membro
       await membroService.patchOpcao(
@@ -135,7 +125,7 @@ const Inscrever: React.FC = () => {
     try {
       await visitanteService.addEbdCurso(
         parseInt(selectedVisitanteId),
-        cursoId
+        ebdCursoId
       );
 
       await visitanteService.patchUpdateOpcao(
