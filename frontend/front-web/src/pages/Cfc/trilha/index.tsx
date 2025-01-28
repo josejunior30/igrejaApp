@@ -5,7 +5,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../../../components/Header";
 import "./styles.css";
 import { TiArrowBack } from "react-icons/ti";
-
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import { PiPrinterFill } from "react-icons/pi";
 const TrilhaId = () => {
   const [curso, setCurso] = useState<ebdCurso | null>(null);
   const [loading, setLoading] = useState(true);
@@ -87,6 +89,40 @@ const TrilhaId = () => {
     // Retorna o número original caso não seja válido
     return phoneNumber;
   };
+  const handlePrint = () => {
+    if (!curso) {
+      alert("Não há dados para imprimir.");
+      return;
+    }
+
+    const doc = new jsPDF();
+
+    // Título do documento
+    doc.setFontSize(18);
+    doc.text(`Participantes da Trilha: ${curso.nome}`, 10, 10);
+
+    // Dados da tabela
+    const tableColumn = ["#", "Nome", "Idade", "Telefone", "Email", "Status"];
+    const tableRows = getSortedParticipants().map((participant, index) => [
+      index + 1,
+      `${participant.nome} ${participant.sobrenome}`,
+      participant.idade,
+      formatPhoneNumber(participant.telefone),
+      participant.email,
+      participant.status,
+    ]);
+
+    // Adiciona a tabela ao PDF
+    //@ts-ignore
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 20, // Posição da tabela no PDF
+    });
+
+    // Salva o arquivo
+    doc.save(`Participantes_Trilha_${curso.nome}.pdf`);
+  };
 
   return (
     <>
@@ -101,7 +137,7 @@ const TrilhaId = () => {
           {loading ? (
             <p>Carregando detalhes do curso...</p>
           ) : curso ? (
-            <div className="col-md-8 col-10 m-3 md-5 pb-3 text-center">
+            <div className="col-md-10 col-10 m-3 md-5 pb-3 text-center">
               <h1 className="title">
                 <span className="trilho-titulo">Trilha : </span>
                 {curso.nome}
@@ -118,6 +154,11 @@ const TrilhaId = () => {
               </div>
               {curso.membro?.length || curso.visitante?.length ? (
                 <div>
+                  <div className="form-check form-check-inline offset-9 mb-3 dataNascimento  ">
+                    <button className="btn btn-success " onClick={handlePrint}>
+                      <PiPrinterFill /> Imprimir Tabela
+                    </button>
+                  </div>
                   <table className="table table-striped">
                     <thead>
                       <tr>
