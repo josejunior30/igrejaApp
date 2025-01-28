@@ -10,6 +10,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -48,9 +50,14 @@ public class Membro implements Serializable {
 	private String cidade;
 	private String complemento;
 	private String url;
-	private Boolean status =true;
+	private LocalDate desligamento;
+	private Integer ano;
 	private String opcaoCurso;
 	private Boolean apostila = false;
+	 @Enumerated(EnumType.STRING)
+	private MembroStatus membroStatus;
+	 @Enumerated(EnumType.STRING)
+		private MembroTipo membroTipo;
 
 	
 	@ManyToMany
@@ -71,10 +78,11 @@ public class Membro implements Serializable {
 
 
 
-	
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
-			String cidade, String complemento, String url, Boolean status, String opcaoCurso, Boolean apostila, Set<EBDCurso> ebdCurso, List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto) {
+			String cidade, String complemento, String url, LocalDate desligamento, Integer ano, String opcaoCurso,
+			Boolean apostila, MembroStatus membroStatus, MembroTipo membroTipo, Set<EBDCurso> ebdCurso,
+			List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -92,13 +100,22 @@ public class Membro implements Serializable {
 		this.cidade = cidade;
 		this.complemento = complemento;
 		this.url = url;
-		this.status = status;
+		this.desligamento = desligamento;
+		this.ano = ano;
 		this.opcaoCurso = opcaoCurso;
 		this.apostila = apostila;
+		this.membroStatus = membroStatus;
+		this.membroTipo = membroTipo;
 		this.ebdCurso = ebdCurso;
 		this.listaPresencaEBD = listaPresencaEBD;
 		this.foto = foto;
 	}
+
+
+
+
+
+
 
 
 	public Long getId() {
@@ -121,13 +138,84 @@ public class Membro implements Serializable {
 		return sobrenome;
 	}
 
-	public Boolean getStatus() {
-		return status;
+	
+
+	public LocalDate getDesligamento() {
+		return desligamento;
 	}
 
-	public void setStatus(Boolean status) {
-		this.status = status;
+
+
+
+
+
+	public MembroTipo getMembroTipo() {
+		return membroTipo;
 	}
+
+
+
+
+
+
+
+
+	public void setMembroTipo(MembroTipo membroTipo) {
+		this.membroTipo = membroTipo;
+	}
+
+
+
+
+
+
+
+
+	public void setDesligamento(LocalDate desligamento) {
+		this.desligamento = desligamento;
+	}
+
+
+
+
+
+
+
+	public Integer getAno() {
+		return ano;
+	}
+
+
+
+
+	public void setAno(Integer ano) {
+		this.ano = ano;
+	}
+
+
+
+
+	public MembroStatus getMembroStatus() {
+		return membroStatus;
+	}
+
+
+
+
+
+
+
+
+	public void setMembroStatus(MembroStatus membroStatus) {
+		this.membroStatus = membroStatus;
+	}
+
+
+
+
+
+
+
 
 	public Boolean getApostila() {
 		return apostila;

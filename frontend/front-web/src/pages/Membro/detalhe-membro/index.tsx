@@ -98,7 +98,16 @@ const Detalhes = () => {
     }
   };
   const inputRef = useRef<HTMLInputElement>(null);
-
+  const getColorByStauts = (tipoCulto: string) => {
+    switch (tipoCulto) {
+      case "AFASTADO":
+        return "#fcba03";
+      case "DESLIGADO":
+        return "#c70909";
+      default:
+        return "#28a745";
+    }
+  };
   return (
     <>
       <Header />
@@ -121,6 +130,17 @@ const Detalhes = () => {
                   ref={inputRef}
                   style={{ display: "none" }}
                 />
+                <span
+                  className="status"
+                  style={{ color: getColorByStauts(MembroDTO.membroStatus) }}
+                >
+                  {MembroDTO.membroStatus}
+                </span>
+                {MembroDTO?.desligamento && (
+                  <span className="desligamento">
+                    {new Date(MembroDTO.desligamento).toLocaleDateString()}
+                  </span>
+                )}
 
                 <span className="nome-id">
                   {MembroDTO.nome} {MembroDTO.sobrenome}
@@ -149,7 +169,10 @@ const Detalhes = () => {
                     <span>Trilho:</span> {MembroDTO.curso.nome}
                   </p>
                 )}
-
+                <p className="dados">
+                  <span>Membro por: </span> {MembroDTO.membroTipo}{" "}
+                  <span>Ano: </span> {MembroDTO.ano}
+                </p>
                 <div className="botoes-container">
                   <Link to={`/membro/atualizar/${id}`}>
                     <button className="botao-editar">Editar</button>

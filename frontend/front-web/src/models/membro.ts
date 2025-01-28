@@ -16,7 +16,10 @@ export type MembroDTO = {
   bairro: string;
   cidade: string;
   numero: number;
-  status: boolean;
+  desligamento: Date;
+  ano: number;
+  membroStatus: string;
+  membroTipo: string;
   curso: curso;
   opcaoCurso: string;
   apostila: boolean;
@@ -36,4 +39,6 @@ export type MembrosDTO = {
   bairro: string;
   cidade: string;
   numero: number;
+  ano: number;
+  membroTipo: string;
 };

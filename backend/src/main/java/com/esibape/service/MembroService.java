@@ -5,7 +5,6 @@ package com.esibape.service;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
@@ -100,7 +99,10 @@ public class MembroService {
         entity.setOpcaoCurso(dto.getOpcaoCurso());
         entity.setEstadoCivil(dto.getEstadoCivil());
         entity.setUrl(dto.getUrl());
-        entity.setStatus(dto.getStatus());
+        entity.setDesligamento(dto.getDesligamento());
+        entity.setAno(dto.getAno());
+        entity.setMembroTipo(dto.getMembroTipo());
+        entity.setMembroStatus(dto.getMembroStatus());
     }
     
     

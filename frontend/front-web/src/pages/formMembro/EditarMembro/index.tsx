@@ -26,7 +26,10 @@ const FormularioUpdate = () => {
       EBDCurso: [],
     },
 
-    status: true,
+    membroStatus: "",
+    ano: 0,
+    desligamento: new Date(),
+    membroTipo: "",
     cpf: "",
     estadoCivil: 0,
     rua: "",
@@ -87,11 +90,11 @@ const FormularioUpdate = () => {
     setMembroDTO((prevMembroDTO) => ({
       ...prevMembroDTO,
       [name]:
-        name === "dataNascimento"
+        name === "dataNascimento" || name === "desligamento"
           ? value
             ? new Date(value)
-            : new Date() // Verificar se value é válido
-          : name === "estadoCivil" || name === "pequenoGrupo"
+            : null // Permite valores nulos para datas
+          : name === "estadoCivil" || name === "numero"
           ? Number(value)
           : value,
     }));
@@ -107,26 +110,81 @@ const FormularioUpdate = () => {
             id="add-alunos"
           >
             <div className="col-md-12">
-              <h3>Dados pessoais </h3>
+              <h3>Registro </h3>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-3">
               <label htmlFor="ativo" className="form-label">
                 Status:
               </label>
               <select
                 className="form-select"
                 name="ativo"
-                value={MembroDTO.status ? "true" : "false"}
+                value={MembroDTO.membroStatus}
                 onChange={(e) =>
                   setMembroDTO({
                     ...MembroDTO,
-                    status: e.target.value === "true",
+                    membroStatus: e.target.value,
                   })
                 }
               >
-                <option value="true">ativo</option>
-                <option value="false">afastada</option>
+                <option value="ATIVO">Ativo</option>
+                <option value="AFASTADO">Afastada</option>
+                <option value="DESLIGADO">Desligado</option>
               </select>
+            </div>
+            <div className="col-md-3">
+              <label htmlFor="data" className="form-label">
+                Data de Desligamento
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                name="desligamento"
+                value={
+                  MembroDTO.desligamento instanceof Date &&
+                  !isNaN(MembroDTO.desligamento.getTime())
+                    ? MembroDTO.desligamento.toISOString().split("T")[0]
+                    : ""
+                }
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-md-3">
+              <label htmlFor="membroTipo" className="form-label">
+                Afiliação
+              </label>
+              <select
+                className="form-select"
+                name="membroTipo"
+                value={MembroDTO.membroTipo}
+                onChange={(e) =>
+                  setMembroDTO({
+                    ...MembroDTO,
+                    membroTipo: e.target.value,
+                  })
+                }
+              >
+                <option value="BATISMO">Batismo</option>
+                <option value="TRANSFERENCIA">Transferência</option>
+                <option value="ACLAMACAO">Aclamação</option>
+              </select>
+            </div>
+            <div className="col-md-2">
+              <label htmlFor="sobrenome" className="form-label">
+                Ano de Afiliação
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="ano"
+                value={MembroDTO.ano}
+                onChange={(e) =>
+                  setMembroDTO({ ...MembroDTO, ano: Number(e.target.value) })
+                }
+              />
+            </div>
+            <div className="col-md-12">
+              <h3>Dados pessoais </h3>
             </div>
             <div className="col-md-6">
               <label htmlFor="nome" className="form-label">

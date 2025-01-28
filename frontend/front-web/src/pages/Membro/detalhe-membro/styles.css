@@ -28,11 +28,35 @@
   padding-top: 10px;
   text-decoration: underline;
 }
+.status {
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  padding-top: 10px;
+  text-decoration: underline;
+  position: absolute;
+  right: 53vw;
+  margin-top: -70px;
+}
+
+.desligamento {
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  padding-top: 10px;
+  color: #c70909;
+  text-decoration: underline;
+  position: absolute;
+  right: 53vw;
+  margin-top: -50px;
+}
 
 .dados {
   margin-top: 10px;
+
   color: #0b1f34;
 }
+
 .dados-trilho {
   background-color: var(--color-coral);
   width: 20vw;

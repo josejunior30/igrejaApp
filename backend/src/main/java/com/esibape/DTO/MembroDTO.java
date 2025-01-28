@@ -15,6 +15,8 @@ import com.esibape.entities.EBDCurso;
 import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
 import com.esibape.entities.MembroEstado;
+import com.esibape.entities.MembroStatus;
+import com.esibape.entities.MembroTipo;
 
 
 
@@ -43,8 +45,12 @@ public class MembroDTO implements Serializable{
 	private String url;
 	private Boolean apostila = false;
 	private String opcaoCurso;
-	private Boolean status =true;
-
+	private LocalDate desligamento;
+	private Integer ano;
+	
+	private MembroStatus membroStatus;
+	
+	private MembroTipo membroTipo;
 	Set<EBDCursoDTO>ebdCurso = new HashSet<>();
 	   
 	private List<ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
@@ -72,7 +78,10 @@ public class MembroDTO implements Serializable{
 		this.opcaoCurso =entity.getOpcaoCurso();
 		this.url=entity.getUrl();
 		this.apostila= entity.getApostila();
-		this.status = entity.getStatus();
+		this.desligamento=entity.getDesligamento();
+		this.membroStatus =entity.getMembroStatus();
+		this.ano =entity.getAno();
+		this.membroTipo= entity.getMembroTipo();
 
 	     
 		
@@ -179,12 +188,6 @@ public class MembroDTO implements Serializable{
 	}
 
 
-	public Boolean getStatus() {
-		return status;
-	}
-
-
-
 	public List<ListaPresencaEBDDTO> getListaPresencaEBD() {
 		return listaPresencaEBD;
 	}
@@ -197,11 +200,33 @@ public class MembroDTO implements Serializable{
 
 
 
-	public void setStatus(Boolean status) {
-		this.status = status;
+
+	public LocalDate getDesligamento() {
+		return desligamento;
+	}
+
+	public void setDesligamento(LocalDate desligamento) {
+		this.desligamento = desligamento;
 	}
 
 
+	public Integer getAno() {
+		return ano;
+	}
+
+	public void setAno(Integer ano) {
+		this.ano = ano;
+	}
+
+	public MembroStatus getMembroStatus() {
+		return membroStatus;
+	}
+
+	public void setMembroStatus(MembroStatus membroStatus) {
+		this.membroStatus = membroStatus;
+	}
+
+	
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
@@ -212,6 +237,14 @@ public class MembroDTO implements Serializable{
 	}
 	
 	
+
+	public MembroTipo getMembroTipo() {
+		return membroTipo;
+	}
+
+	public void setMembroTipo(MembroTipo membroTipo) {
+		this.membroTipo = membroTipo;
+	}
 
 	public Integer getIdade() {
 		return idade;

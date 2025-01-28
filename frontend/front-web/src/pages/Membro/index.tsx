@@ -13,8 +13,7 @@ const Membro = () => {
   const [MembroDTO, setMembroDTO] = useState<MembroDTO[]>([]);
   const [filteredMembroDTO, setFilteredMembroDTO] = useState<MembroDTO[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [filterAtivo, setFilterAtivo] = useState<boolean>(false);
-  const [filterAfastado, setFilterAfastado] = useState<boolean>(false);
+  const [filterStatus, setFilterStatus] = useState<string>("");
   const [selectedMonth, setSelectedMonth] = useState<number | "">("");
 
   useEffect(() => {
@@ -72,25 +71,28 @@ const Membro = () => {
           ? new Date(membro.dataNascimento).toLocaleDateString()
           : "Data de Nascimento Não Disponível",
         `${membro.nome} ${membro.sobrenome}`,
-        membro.status ? "Ativo" : "Afastado",
+        membro.membroStatus,
         formatPhoneNumber(membro.telefone),
       ]),
-      startY: 20, // Ajusta o ponto inicial da tabela no PDF
+      startY: 20,
     });
-    doc.text("Tabela de Membros", 14, 10); // Adiciona título ao PDF
+    doc.text("Tabela de Membros", 14, 10);
     doc.save("membros_tabela.pdf");
+  };
+
+  const handleFilterChange = (status: string) => {
+    setFilterStatus((prevStatus) => (prevStatus === status ? "" : status));
   };
 
   const applyFilters = (members: MembroDTO[]) => {
     let filtered = members;
 
-    if (filterAtivo) {
-      filtered = members.filter((membro) => membro.status === true);
-    } else if (filterAfastado) {
-      filtered = members.filter((membro) => membro.status === false);
+    if (filterStatus) {
+      filtered = members.filter(
+        (membro) => membro.membroStatus === filterStatus
+      );
     }
 
-    // Ordena a lista por nome antes de atualizar o estado
     filtered = filtered.sort((a, b) => {
       const nomeA = `${a.nome} ${a.sobrenome}`.toLowerCase();
       const nomeB = `${b.nome} ${b.sobrenome}`.toLowerCase();
@@ -100,22 +102,17 @@ const Membro = () => {
     setFilteredMembroDTO(filtered);
   };
 
-  const handleFilterChange = (filterType: string) => {
-    if (filterType === "ativo") {
-      setFilterAtivo(!filterAtivo);
-      setFilterAfastado(false);
-    } else if (filterType === "afastado") {
-      setFilterAfastado(!filterAfastado);
-      setFilterAtivo(false);
-    }
-
-    applyFilters(MembroDTO);
-  };
-
   useEffect(() => {
     applyFilters(MembroDTO);
-  }, [filterAtivo, filterAfastado, MembroDTO]);
-
+  }, [filterStatus, MembroDTO]);
+  const getColorByTipoCulto = (tipoCulto: string) => {
+    switch (tipoCulto) {
+      case "AFASTADO":
+        return "#fcba03"; // Azul para culto da manhã
+      case "DESLIGADO":
+        return "#c70909"; // Amarelo para culto da noite
+    }
+  };
   return (
     <>
       <Header />
@@ -166,8 +163,8 @@ const Membro = () => {
                         type="checkbox"
                         id="filterAtivo"
                         className="form-check-input"
-                        checked={filterAtivo}
-                        onChange={() => handleFilterChange("ativo")}
+                        checked={filterStatus === "ATIVO"}
+                        onChange={() => handleFilterChange("ATIVO")}
                       />
                       <label className="form-check-label" htmlFor="filterAtivo">
                         Ativo
@@ -178,8 +175,8 @@ const Membro = () => {
                         type="checkbox"
                         id="filterAfastado"
                         className="form-check-input"
-                        checked={filterAfastado}
-                        onChange={() => handleFilterChange("afastado")}
+                        checked={filterStatus === "AFASTADO"}
+                        onChange={() => handleFilterChange("AFASTADO")}
                       />
                       <label
                         className="form-check-label"
@@ -188,7 +185,21 @@ const Membro = () => {
                         Afastado
                       </label>
                     </div>
-
+                    <div className="form-check form-check-inline">
+                      <input
+                        type="checkbox"
+                        id="filterDesligado"
+                        className="form-check-input"
+                        checked={filterStatus === "DESLIGADO"}
+                        onChange={() => handleFilterChange("DESLIGADO")}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="filterDesligado"
+                      >
+                        Desligado
+                      </label>
+                    </div>
                     <div className="form-check form-check-inline dataNascimento">
                       <label htmlFor="monthFilter">
                         Filtrar por Mês de Aniversário
@@ -227,7 +238,7 @@ const Membro = () => {
                   </div>
                 </div>
                 <table className="table table-striped text-center">
-                  <thead className="thead">
+                  <thead className="thead ">
                     <tr>
                       <th scope="col">Índice</th>
                       <th scope="col">Data de Nascimento</th>
@@ -239,10 +250,7 @@ const Membro = () => {
                   <tbody>
                     {filteredMembroDTO.length > 0 ? (
                       filteredMembroDTO.map((membro, index) => (
-                        <tr
-                          key={membro.id}
-                          className={membro.status === false ? "afastado" : ""}
-                        >
+                        <tr key={membro.id}>
                           <td>
                             <Link to={`${membro.id}`} className="name-link">
                               {index + 1}
@@ -262,10 +270,22 @@ const Membro = () => {
                               {membro.nome} {membro.sobrenome}
                             </Link>
                           </td>
-                          <td>
-                            <Link to={`${membro.id}`} className="name-link">
-                              {membro.status ? "ativo" : "afastado"}
-                            </Link>
+                          <td
+                            style={{
+                              color: "#fff",
+                              backgroundColor: getColorByTipoCulto(
+                                membro.membroStatus
+                              ),
+                              fontWeight: "bold",
+                              padding: "8px",
+                              borderRadius: "5px",
+                            }}
+                          >
+                            {membro.membroStatus === "AFASTADO"
+                              ? "Afastado"
+                              : membro.membroStatus === "DESLIGADO"
+                              ? "Desligado"
+                              : membro.membroStatus}
                           </td>
                           <td>
                             <Link
