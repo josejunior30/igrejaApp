@@ -97,6 +97,49 @@ const Visitante = () => {
         return "#00c2f3";
     }
   };
+  const handlePrint = () => {
+    const doc = new jsPDF();
+
+    // Título do documento
+    doc.setFontSize(16);
+    doc.text("Relatório de Visitantes", 14, 20);
+
+    // Definição das colunas e dados
+    const tableColumn = [
+      "Índice",
+      "Data de Nascimento",
+      "Nome",
+      "Telefone",
+      "Status",
+    ];
+    const tableRows: any[] = [];
+
+    filteredVisitanteDTO.forEach((visitante, index) => {
+      const rowData = [
+        index + 1,
+        visitante.dataNascimento
+          ? new Date(visitante.dataNascimento).toLocaleDateString()
+          : "Data de Nascimento Não Disponível",
+        `${visitante.nome} ${visitante.sobrenome}`,
+        formatPhoneNumber(visitante.telefone),
+        visitante.visitanteStatus,
+      ];
+      tableRows.push(rowData);
+    });
+
+    // Gerando a tabela
+    (doc as any).autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 30,
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: [41, 128, 185] }, // Cor de fundo do cabeçalho
+    });
+
+    // Baixar o PDF
+    doc.save("visitantes.pdf");
+  };
+
   return (
     <>
       <Header />
@@ -241,7 +284,7 @@ const Visitante = () => {
                         <option value="12">Dezembro</option>
                       </select>
                     </div>
-                    <button className="btn btn-success">
+                    <button className="btn btn-success" onClick={handlePrint}>
                       <PiPrinterFill /> Imprimir Tabela
                     </button>
                   </div>
