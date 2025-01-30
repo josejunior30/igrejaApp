@@ -9,7 +9,7 @@ import Detalhes from "./pages/Membro/detalhe-membro";
 import Formulario from "./pages/formMembro/adcionarMembro";
 import Inicial from "./pages/Inicial";
 import FormularioUpdate from "./pages/formMembro/EditarMembro";
-import Visitante from "./pages/Visitante";
+
 import Projetos from "./pages/Projetos";
 import DetalheProjetos from "./pages/Projetos/detalhe-projeto";
 import Alunos from "./pages/Alunos/ListaAlunos";
@@ -44,6 +44,10 @@ import InserirPresencaEBD from "./pages/Cfc/ListaPresenca/Inserir";
 import HistoricoChamadaEBD from "./pages/Cfc/ListaPresenca/Exibir";
 import Estudo from "./pages/Cfc/Estudo";
 import ExibirPdfs from "./pages/Cfc/Estudo/exibir";
+import Visitante from "./pages/Visitante/findAll";
+import AddVistante from "./pages/Visitante/Insert";
+import VisitanteEdite from "./pages/Visitante/EditarVisitante";
+import DetalhesVisitante from "./pages/Visitante/Detalhes";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -80,6 +84,38 @@ function App() {
             }
           />
           <Route
+            path="/visitante"
+            element={
+              <PrivateRoute>
+                <Visitante />
+              </PrivateRoute>
+            }
+          />{" "}
+          <Route
+            path="/visitante/insert"
+            element={
+              <PrivateRoute>
+                <AddVistante />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/visitante/:id"
+            element={
+              <PrivateRoute>
+                <DetalhesVisitante />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/visitante/editar/:id"
+            element={
+              <PrivateRoute>
+                <VisitanteEdite />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/membro/:id"
             element={
               <PrivateRoute roles={["ROLE_ADMIN"]}>
@@ -103,7 +139,6 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/visitante" element={<Visitante />} />
           <Route
             path="/projetos"
             element={
@@ -219,7 +254,6 @@ function App() {
             path="/requerimentoAprovar/:id"
             element={<RequerimentoAprovar />}
           />
-
           <Route path="/trilho" element={<Trilha />} />
           <Route path="/trilho/:id" element={<TrilhaId />} />
           <Route path="trilho/opcao/:id" element={<MenuOpcao />} />
@@ -240,7 +274,6 @@ function App() {
               </PrivateRoute>
             }
           />
-
           <Route path="trilho/estudo" element={<Estudo />} />
           <Route path="trilho/estudo/exibir" element={<ExibirPdfs />} />
         </Routes>

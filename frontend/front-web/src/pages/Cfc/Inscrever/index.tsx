@@ -148,13 +148,7 @@ const Inscrever: React.FC = () => {
   const handleCadastroVisitante = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      !cadastroNome ||
-      !cadastroDataNascimento ||
-      !cadastroCelular ||
-      !cadastroSobrenome ||
-      !cadastroEmail
-    ) {
+    if (!cadastroNome || !cadastroDataNascimento || !cadastroSobrenome) {
       alert("Por favor, preencha todos os campos.");
       return;
     }

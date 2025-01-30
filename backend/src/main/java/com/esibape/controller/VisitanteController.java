@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.esibape.DTO.VisitanteDTO;
 import com.esibape.service.VisitanteService;
 
@@ -81,8 +80,23 @@ public class VisitanteController {
 		        service.patchUpdateApostila(id, apostila);
 		        return ResponseEntity.noContent().build();
 		    }
-
+			@PostMapping
+			public ResponseEntity<VisitanteDTO> insert(@RequestBody VisitanteDTO dto){
+				VisitanteDTO entity = service.insertSemCurso(dto);
+				URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+						.buildAndExpand(entity.getId()).toUri();
+				
+				return ResponseEntity.created(uri).body(entity);
+			}	
 		
+			
+			@PutMapping(value="/{id}")
+			public ResponseEntity<VisitanteDTO>update (@PathVariable Long id, @RequestBody VisitanteDTO dto){
+				 dto =service.update(id, dto);
+				return ResponseEntity.ok().body(dto);
+			}
+			
+			
 			@DeleteMapping(value="/{id}")
 			public ResponseEntity<VisitanteDTO>delete(@PathVariable Long id){
 				 service.delete(id);

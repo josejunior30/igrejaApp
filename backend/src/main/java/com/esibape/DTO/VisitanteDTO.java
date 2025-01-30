@@ -11,7 +11,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import com.esibape.entities.EBDCurso;
+import com.esibape.entities.MembroEstado;
 import com.esibape.entities.Visitante;
+import com.esibape.entities.VisitanteStatus;
 
 
 public class VisitanteDTO {
@@ -31,6 +33,20 @@ public class VisitanteDTO {
 	private Boolean apostila = false;
 	Set<EBDCursoDTO>ebdCursoVisitante = new HashSet<>();
     private List<ListaPresencaVisitanteEBDDTO> listaPresencaVisitanteEBD = new ArrayList<>();
+    
+    private String cpf;
+	private MembroEstado estadoCivil;
+	private String rua;
+	private String cep;
+	private String numero;
+	private String bairro;
+	private String cidade;
+	private String complemento;
+	private String url;
+
+	
+	private VisitanteStatus visitanteStatus;
+
 
     // Construtor padrão
     public VisitanteDTO() {
@@ -50,6 +66,15 @@ public class VisitanteDTO {
         this.idade = entity.getIdade();
         this.opcaoCurso =entity.getOpcaoCurso();
         this.apostila = entity.getApostila();
+        this.cidade = entity.getCidade();
+        this.bairro = entity.getBairro();
+        this.rua = entity.getRua();
+        this.numero= entity.getNumero();
+        this.cep = entity.getCep();
+        this.visitanteStatus = entity.getVisitanteStatus();
+        this.estadoCivil = entity.getEstadoCivil();
+        this.complemento = entity.getComplemento();
+        this.url = entity.getUrl();
     
        
     }
@@ -153,7 +178,87 @@ public class VisitanteDTO {
         this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
     }
 
-    @Override
+    public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public MembroEstado getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(MembroEstado estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public VisitanteStatus getVisitanteStatus() {
+		return visitanteStatus;
+	}
+
+	public void setVisitanteStatus(VisitanteStatus visitanteStatus) {
+		this.visitanteStatus = visitanteStatus;
+	}
+
+	@Override
     public int hashCode() {
         return Objects.hash(id);
     }

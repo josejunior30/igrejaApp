@@ -9,4 +9,14 @@ export type visitante = {
   ebdCursoVisitante: [];
   opcaoCurso: string;
   apostila: boolean;
+  visitanteStatus: string;
+  cpf: string;
+  estadoCivil: number;
+  rua: string;
+  cep: string;
+  numero: number;
+  bairro: string;
+  cidade: string;
+  complemento: string;
+  url: string;
 };

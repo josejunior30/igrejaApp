@@ -3,21 +3,14 @@ package com.esibape.service;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-
 import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.esibape.DTO.MembroDTO;
 import com.esibape.DTO.VisitanteDTO;
-import com.esibape.entities.Curso;
 import com.esibape.entities.EBDCurso;
-import com.esibape.entities.Membro;
 import com.esibape.entities.Visitante;
-import com.esibape.repository.CursoRepository;
 import com.esibape.repository.EBDCursoRepository;
 import com.esibape.repository.VisitanteRepository;
 
@@ -27,8 +20,7 @@ public class VisitanteService {
     @Autowired
     private VisitanteRepository repository;
 
-    @Autowired
-    private CursoRepository cursoRepository;
+ 
 
     @Autowired
     private EBDCursoRepository ebdCursoRepository;
@@ -56,7 +48,24 @@ public class VisitanteService {
         entity = repository.save(entity);
         return new VisitanteDTO(entity, entity.getEbdCursoVisitante());
     }
-
+    @Transactional
+    public VisitanteDTO insertSemCurso( VisitanteDTO dto) {
+    	 Visitante entity =  new Visitante();
+    	 copyDtoToEntityNotCUrso(dto, entity);	
+    		entity = repository.save(entity);
+    		return new VisitanteDTO(entity);
+    	
+    }
+    @Transactional
+    public VisitanteDTO update(Long id, VisitanteDTO dto) {
+    	Visitante entity=repository.getReferenceById(id);
+    	copyDtoToEntityNotCUrso(dto, entity);
+    	
+    	entity = repository.save(entity);
+		return new VisitanteDTO(entity);
+    }
+ 
+    
     
     @Transactional
     public void delete(Long id) {
@@ -132,6 +141,16 @@ public class VisitanteService {
         entity.setTelefone(dto.getTelefone());
         entity.setOpcaoCurso(dto.getOpcaoCurso());
         entity.setApostila(dto.getApostila());
+        entity.setCidade(dto.getCidade());
+        entity.setBairro(dto.getBairro());
+        entity.setRua(dto.getRua());
+        entity.setComplemento(dto.getComplemento());
+        entity.setCep(dto.getCep());
+        entity.setUrl(dto.getUrl());
+        entity.setNumero(dto.getNumero());
+        entity.setEstadoCivil(dto.getEstadoCivil());
+        entity.setVisitanteStatus(dto.getVisitanteStatus());
+        
         
 
 
@@ -140,11 +159,26 @@ public class VisitanteService {
         entity.getEbdCursoVisitante().add(curso);
     }
 
-    
-    private EBDCurso findEbdCursoById(Long id) {
-        return ebdCursoRepository.findById(id)
-                                 .orElseThrow(() -> new EntityNotFoundException("EBDCurso não encontrado"));
+    private void copyDtoToEntityNotCUrso(VisitanteDTO dto, Visitante entity) {
+   	 atualizarIdade(entity);
+       entity.setNome(dto.getNome());
+       entity.setSobrenome(dto.getSobrenome());
+       entity.setDataNascimento(dto.getDataNascimento());
+       entity.setEmail(dto.getEmail());
+       entity.setTelefone(dto.getTelefone());
+       entity.setOpcaoCurso(dto.getOpcaoCurso());
+       entity.setApostila(dto.getApostila());
+       entity.setCidade(dto.getCidade());
+       entity.setBairro(dto.getBairro());
+       entity.setRua(dto.getRua());
+       entity.setComplemento(dto.getComplemento());
+       entity.setCep(dto.getCep());
+       entity.setUrl(dto.getUrl());
+       entity.setNumero(dto.getNumero());
+       entity.setEstadoCivil(dto.getEstadoCivil());
+       entity.setVisitanteStatus(dto.getVisitanteStatus());
     }
+
     public void atualizarIdade(Visitante visitante) {
         LocalDate dataNascimento = visitante.getDataNascimento();
         
@@ -155,10 +189,7 @@ public class VisitanteService {
         }
     }
    
-	private Curso findCursoById(Long id) {
-        return cursoRepository.findById(id)
-                              .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
-    }
+	
 
    
 }

@@ -1,0 +1,84 @@
+#membros {
+  color: white;
+}
+td .afastado a {
+  background-color: rgb(255, 238, 0);
+  font-weight: bold;
+}
+.dataNascimento {
+  color: white;
+}
+
+.legenda {
+  color: white;
+  margin-bottom: 20px;
+}
+.cor1 {
+  background-color: #010727;
+  padding: 30;
+  width: 50px;
+  height: 30px;
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
+
+.cor2 {
+  background-color: #0056b3;
+  padding: 30;
+  width: 50px;
+  height: 30px;
+  margin-right: 10px;
+}
+.cor3 {
+  background-color: #00c2f3;
+  padding: 30;
+  width: 50px;
+  height: 30px;
+  margin-right: 10px;
+}
+@media print {
+  .img-print-membro {
+    display: none;
+  }
+  #btn-pesquisa {
+    font-size: 11px;
+    padding: 5px;
+  }
+  #botoes button {
+    font-size: 14px;
+    padding: 5px;
+  }
+  #barra-pesquisa-secretaria input {
+    font-size: 10px;
+  }
+
+  #barra-pesquisa-secretaria {
+    margin-left: 10px;
+  }
+  .img-print-membro button {
+    font-size: 11px;
+  }
+  .table a {
+    font-size: 10px;
+  }
+  .table {
+    font-size: 10px;
+  }
+}
+
+.img-print-membro {
+  margin-left: 90%;
+  text-align: center;
+  font-size: 22px;
+}
+.img-print-membro button {
+  background: none;
+  color: white;
+  font-size: 18px;
+}
+@media (max-width: 768px) {
+  #botoes button {
+    font-size: 10px;
+    padding: 5px;
+  }
+}

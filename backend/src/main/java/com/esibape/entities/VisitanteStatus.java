@@ -3,9 +3,9 @@ package com.esibape.entities;
 
 
 public enum VisitanteStatus {
-    AFASTADO("Afastado"),
-    ATIVO("Ativo"),
-    DESLIGADO("Desligado");
+   NIVEL_1("nivel 1"),
+   NIVEL_2("nivel 2"),
+    NIVEL_3("nivel 3");
 
     private final String status;
 
@@ -19,11 +19,11 @@ public enum VisitanteStatus {
 
     // Convert from String to Enum
     public static VisitanteStatus fromValor(String status) {
-        for (VisitanteStatus chamada : values()) {
-            if (chamada.getStatus().equalsIgnoreCase(status)) {
-                return chamada;
+        for (VisitanteStatus visitanteStatus : values()) {
+            if (visitanteStatus.getStatus().equalsIgnoreCase(status)) {
+                return visitanteStatus;
             }
         }
-        throw new IllegalArgumentException("Valor inválido para membro: " + status);
+        throw new IllegalArgumentException("Valor inválido para vistante: " + status);
     }
 }

@@ -11,15 +11,21 @@ export function findById(id: number) {
 export function insertVisitante(visitante: any, cursoId: number) {
   return axios.post(`${BASE_URL}/visitante/com-curso/${cursoId}`, visitante);
 }
+export function insertVisitanteNotCurso(visitante: any) {
+  return axios.post(`${BASE_URL}/visitante`, visitante);
+}
 
 export function updateVisitante(id: number, visitante: any) {
   return axios.put(`${BASE_URL}/visitante/${id}`, visitante);
 }
-export function deleteMembro(id: number) {
+export function deleteVisitante(id: number) {
   return axios.delete(`${BASE_URL}/visitante/${id}`);
 }
 export function findByNome(nome: string) {
   return axios.get(`${BASE_URL}/visitante/search?nome=${nome}`);
+}
+export function findByMonthOfBirth(mes: number) {
+  return axios.get(`${BASE_URL}/visitante/por-mes?mes=${mes}`);
 }
 
 export function patchUpdateCurso(
