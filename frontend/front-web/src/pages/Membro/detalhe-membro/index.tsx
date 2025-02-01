@@ -113,15 +113,16 @@ const Detalhes = () => {
       <Header />
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center text-center ">
-          <div className="col-md-4 col-7 m-5 md-5 pb-3 text-center" id="dados">
+          <div
+            className="col-md-3 col-7 m-5 md-5 pb-3 text-center"
+            id="dadosMembros"
+          >
             {MembroDTO ? (
               <>
                 <img
-                  src={Foto?.fileDownloadUri}
+                  src={MembroDTO.url}
                   alt="Foto do Membro"
-                  className="img-fluid mb-3 rounded mx-auto d-block "
-                  id="foto-membro"
-                  onClick={() => inputRef.current?.click()}
+                  className="img-fluid mb-3 rounded mx-auto d-block foto-membro "
                 />
                 <input
                   type="file"
@@ -142,7 +143,7 @@ const Detalhes = () => {
                   </span>
                 )}
 
-                <span className="nome-id">
+                <span className="nome-id-membro">
                   {MembroDTO.nome} {MembroDTO.sobrenome}
                 </span>
                 <p className="dados">

@@ -1,5 +1,4 @@
-
-#endereço{
+#endereço {
   background-color: white;
   border-radius: 10px;
   border: solid 5px;
@@ -10,28 +9,26 @@
   margin-top: 20%;
 }
 
-#dados img{
-border-radius: 20px;
-display: block;
-height: 100px;
-width: 100px;
-margin-top: 5%;
-border: solid 5px;
+#dados img {
+  border-radius: 20px;
+  display: block;
+  height: 100px;
+  width: 100px;
+  margin-top: 5%;
+  border: solid 5px;
 
-
-
-  border-color: var( --color-form);
+  border-color: var(--color-form);
 }
-.dados-Projeto{
-font-size: 14px;
-font-weight: bold;
-background-color: var(--color-form);
-border-radius: 10px;
-padding: 5px;
-color: white;
+.dados-Projeto {
+  font-size: 14px;
+  font-weight: bold;
+  background-color: var(--color-form);
+  border-radius: 10px;
+  padding: 5px;
+  color: white;
 }
 
-.text-h2{
+.text-h2 {
   background-color: var(--color-form);
   font-size: 16px;
   border-radius: 10px;
@@ -39,33 +36,29 @@ color: white;
   padding: 5px;
   color: white;
   margin-top: 1px;
-  
 }
-#dados{
+#dados {
   background-color: white;
   border-radius: 10px;
   border: solid 5px;
   border-color: var(--color-form);
   font-size: 14px;
- 
-  
 }
 
-td i{
-color: #4CAF50;
+td i {
+  color: #4caf50;
 }
 
-.botao-gerar-pdf{
+.botao-gerar-pdf {
   margin-left: 2%;
-  background-color: #0b1f34;;
+  background-color: #0b1f34;
   border-radius: 5px;
   padding-left: 10px;
   padding-right: 10px;
   color: white;
- 
 }
 
-#dados .nome-id{
+#dados .nome-id {
   background-color: var(--color-form);
   border-radius: 10px;
   color: white;
@@ -73,228 +66,205 @@ color: #4CAF50;
   text-decoration: none;
 }
 .dados-doença {
-color: #f44336;
+  color: #f44336;
 }
 @media (max-width: 768px) {
-
-  #dados{
+  #dados {
     margin-top: 10px;
-  
   }
-  #dados span{
-   font-size: 14px;
-  
+  #dados span {
+    font-size: 14px;
   }
-  #dados img{
-margin-bottom: 10px;
-margin-left: 35%;
-margin-right: 35%;
+  #dados img {
+    margin-bottom: 10px;
+    margin-left: 35%;
+    margin-right: 35%;
   }
-  
-  #voltar-alunos button{
-   margin-left: 40%;
+
+  #voltar-alunos button {
+    margin-left: 40%;
   }
-  .text-h2{
- margin-top: 20px;
+  .text-h2 {
+    margin-top: 20px;
   }
-#endereço span{
-  font-size: 14px;
+  #endereço span {
+    font-size: 14px;
+  }
 }
-
-}
-
-
-
-
-
-
-
 
 .membro-container {
   margin-top: 40px;
-    display: flex;
-    justify-content: space-between; 
-  }
-  
-  
-  
-  .conteudo-centralizado {
-    text-align: center; 
-  }
-  
-  .foto-membro {
-    width: 100px; 
-    height: 100px; 
-    border-radius: 50%; 
-    margin: 0 auto;
-    display: block;
-  }
-  
-  .nome-id {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #0b1f34;
-    padding-top: 10px;
-    text-decoration: underline;
-  }
-  
-  .dados {
-    margin-top: 10px;
-   color: #0b1f34;
-  }
-  .botoes-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .botao-editar,
-  .botao-deletar {
-    margin: 0 10px;
-    padding: 10px 20px;
-    background-color: #4CAF50; 
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .botao-deletar {
-    background-color: #f44336; 
-  }
-  .btn-aluno-detalhe-voltar {
-    margin-top: 350px; /* Adiciona margem no topo do botão */
-    background-color: #0056b3;
-    color: white;
-    border: none;
-   
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 10px 20px;
-    margin-right: 35%;
-    width: 10%; 
-  }
- 
+  display: flex;
+  justify-content: space-between;
+}
 
+.conteudo-centralizado {
+  text-align: center;
+}
 
-  .pg{
-    font-weight: bold;
-  }
-  .setas {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    left: 15%;
-    right: 10%;
-    top: 50%;
-    transform: translateY(-50%);
-    color: white;
-    
-   
-  }
+.foto-membro {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: block;
+}
 
-  .btn-left,
-  .btn-right {
-    font-size: 50px;
-    padding: 10px;
-    background-color: transparent;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    color: white;
-  }
-  .pg-id1 {
-    color: blue;
-  }
-  
-  .pg-id2 {
-    color: green;
-  }
-  .pg-id3 {
-    color:yellow;
-  }
-  .pg-id4 {
-    color: indigo;
-  }
+.nome-id {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #0b1f34;
+  padding-top: 10px;
+  text-decoration: underline;
+}
 
-  .modal-confirm {
- 
- margin-top: 10%;
-    width: 400px; 
-  max-width:70%;
+.dados {
+  margin-top: 10px;
+  color: #0b1f34;
+}
+.botoes-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.botao-editar,
+.botao-deletar {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.botao-deletar {
+  background-color: #f44336;
+}
+.btn-aluno-detalhe-voltar {
+  margin-top: 350px; /* Adiciona margem no topo do botão */
+  background-color: #0056b3;
+  color: white;
+  border: none;
+
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin-right: 35%;
+  width: 10%;
+}
+
+.pg {
+  font-weight: bold;
+}
+.setas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  left: 15%;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+}
+
+.btn-left,
+.btn-right {
+  font-size: 50px;
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  color: white;
+}
+.pg-id1 {
+  color: blue;
+}
+
+.pg-id2 {
+  color: green;
+}
+.pg-id3 {
+  color: yellow;
+}
+.pg-id4 {
+  color: indigo;
+}
+
+.modal-confirm {
+  margin-top: 10%;
+  width: 400px;
+  max-width: 70%;
   position: fixed;
 
-    background-color: white;
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    z-index: 1000;
-  }
-  
-  .icone-confirma {
-    font-size: 40px;
-    color: red;
-    margin-bottom: 10px;
-  }
-  
-  .msg {
-   color: black;
-    margin-bottom: 15px;
-  
-    margin-top: 5px;
-  }
-  
-  .btn-confirma {
-    background-color: red;
-    color: white;
-    padding: 10px 20px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    
-  }
-  
+  background-color: white;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 1000;
+}
 
-  
-  .detalhe-container-endereço {
-    background-color: white;
-    margin-left: 15%;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    position: absolute;
-    flex: 1;
-    padding: 10px;
-    
-  }
-  .detalhe-container {
-    background-color: white;
-    padding: 20px;
-    margin: auto;
-    margin-left: 58%;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    position: absolute;
-  }
-    
-  
-  .conteudo-centralizado-endereço {
-    text-align: center; 
-  }
+.icone-confirma {
+  font-size: 40px;
+  color: red;
+  margin-bottom: 10px;
+}
 
-  .membro-container-endereço {
-    margin-bottom: 100px;
-    display: flex;
-    justify-content: center;
-    position: relative; 
-  }
-    .text-h2{
-      font-weight: bold;
-     text-decoration: underline;
-    }
+.msg {
+  color: black;
+  margin-bottom: 15px;
+
+  margin-top: 5px;
+}
+
+.btn-confirma {
+  background-color: red;
+  color: white;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.detalhe-container-endereço {
+  background-color: white;
+  margin-left: 15%;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  position: absolute;
+  flex: 1;
+  padding: 10px;
+}
+.detalhe-container {
+  background-color: white;
+  padding: 20px;
+  margin: auto;
+  margin-left: 58%;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  position: absolute;
+}
+
+.conteudo-centralizado-endereço {
+  text-align: center;
+}
+
+.membro-container-endereço {
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.text-h2 {
+  font-weight: bold;
+  text-decoration: underline;
+}

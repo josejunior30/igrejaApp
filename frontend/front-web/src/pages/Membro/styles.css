@@ -8,6 +8,9 @@ td .afastado a {
 .dataNascimento {
   color: white;
 }
+.foto-membro {
+  width: 200px;
+}
 @media print {
   .img-print-membro {
     display: none;

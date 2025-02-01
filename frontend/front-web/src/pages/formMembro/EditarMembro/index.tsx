@@ -36,6 +36,7 @@ const FormularioUpdate = () => {
     bairro: "",
     cep: "",
     numero: 0,
+    url: "",
     cidade: "",
     apostila: false,
     opcaoCurso: "",

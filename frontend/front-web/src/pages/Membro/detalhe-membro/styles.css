@@ -10,16 +10,6 @@
   text-align: center;
 }
 
-.foto-membro {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
-  border-radius: 50%;
-  margin: 0 auto;
-  display: block;
-  cursor: pointer;
-}
-
 .nome-id {
   margin-top: 20px;
   font-size: 12px;
@@ -29,26 +19,24 @@
   text-decoration: underline;
 }
 .status {
-  margin-top: 20px;
-  font-size: 12px;
+  margin-top: 40px;
+  font-size: 14px;
   font-weight: bold;
   padding-top: 10px;
   text-decoration: underline;
   position: absolute;
-  right: 53vw;
-  margin-top: -70px;
+  right: 55vw;
 }
 
 .desligamento {
-  margin-top: 20px;
-  font-size: 12px;
+  margin-top: 55px;
+  font-size: 16px;
   font-weight: bold;
   padding-top: 10px;
   color: #c70909;
   text-decoration: underline;
   position: absolute;
-  right: 53vw;
-  margin-top: -50px;
+  right: 55vw;
 }
 
 .dados {
@@ -187,7 +175,31 @@
   background-color: #f5f5f5;
   display: none;
 }
+#dadosMembros img {
+  border-radius: 20px;
+  display: block;
+  height: 200px;
+  width: 200px;
+  margin-top: 3%;
+  border: solid 5px;
 
+  border-color: var(--color-form);
+}
+#dadosMembros {
+  background-color: white;
+  border-radius: 10px;
+  border: solid 5px;
+  border-color: var(--color-form);
+  font-size: 14px;
+}
+
+.nome-id-membro {
+  background-color: var(--color-form);
+  border-radius: 10px;
+  color: white;
+  padding: 7px;
+  text-decoration: none;
+}
 @media (max-width: 768px) {
   #voltar-membro button {
     margin-left: 18%;

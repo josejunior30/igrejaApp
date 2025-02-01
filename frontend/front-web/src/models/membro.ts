@@ -16,6 +16,7 @@ export type MembroDTO = {
   bairro: string;
   cidade: string;
   numero: number;
+  url: string;
   desligamento: Date;
   ano: number;
   membroStatus: string;
