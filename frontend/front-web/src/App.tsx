@@ -48,6 +48,10 @@ import Visitante from "./pages/Visitante/findAll";
 import AddVistante from "./pages/Visitante/Insert";
 import VisitanteEdite from "./pages/Visitante/EditarVisitante";
 import DetalhesVisitante from "./pages/Visitante/Detalhes";
+import KidsMembro from "./pages/kids/findAll";
+import AddKids from "./pages/kids/Inserir";
+import EditarKids from "./pages/kids/editar";
+import DetalhesKids from "./pages/kids/Detalhes";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -84,13 +88,45 @@ function App() {
             }
           />
           <Route
+            path="/kids"
+            element={
+              <PrivateRoute>
+                <KidsMembro />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/kids/editar/:id"
+            element={
+              <PrivateRoute>
+                <EditarKids />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/kids/insert"
+            element={
+              <PrivateRoute>
+                <AddKids />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/kids/:id"
+            element={
+              <PrivateRoute>
+                <DetalhesKids />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/visitante"
             element={
               <PrivateRoute>
                 <Visitante />
               </PrivateRoute>
             }
-          />{" "}
+          />
           <Route
             path="/visitante/insert"
             element={

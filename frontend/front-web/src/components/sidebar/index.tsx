@@ -4,6 +4,8 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 import { HiUserGroup } from "react-icons/hi";
 import { FaTrainSubway } from "react-icons/fa6";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChildReaching } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar: React.FC = () => {
   const [showSubmenu, setShowSubmenu] = useState(false);
@@ -30,12 +32,19 @@ const Sidebar: React.FC = () => {
               <span>Membro</span>
             </Link>
           </li>
+
           <li>
             <Link to="/visitante">
               <i>
                 <HiUserGroup />
               </i>
               <span>Visitante</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/kids">
+              <FontAwesomeIcon icon={faChildReaching} />
+              <span>Kids</span>
             </Link>
           </li>
           <li onClick={handleItemClick}>

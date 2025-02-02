@@ -71,6 +71,9 @@ INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idad
 INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, cpf ,estado_Civil, rua, bairro, numero, cidade, complemento, cep, visitante_Status) VALUES ('Ana Cristina ','Henrique Vieira','(21)970323353','juneba@gmail.com', '1988-10-07',32, '128.308.317-56', 1,'rua Dalva raposo', 'Maria Paula', '35', 'são gonçalo', 'bloco 07 ap 202', '24110221', 'NIVEL_2' );
 
 
+INSERT INTO tb_crianca (nome, sobrenome,telefone, data_Nascimento, idade , rua, bairro, numero, cidade, complemento, cep) VALUES ('Ana Cristina ','Henrique Vieira','(21)970323353', '1988-10-07',32,'rua Dalva raposo', 'Maria Paula', '35', 'são gonçalo', 'bloco 07 ap 202', '24110221' );
+
+
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (1, 'Identidade')
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (2, 'Assinatura')
 INSERT INTO tb_Aluno_Status (id, pendencia) VALUES (3, 'Horários')

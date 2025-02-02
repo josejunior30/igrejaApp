@@ -11,6 +11,10 @@
 
   font-weight: bolder;
 }
+.chebox-cfc {
+  width: 30px;
+  height: 30px;
+}
 .Painel-Menu-btn {
   width: 160px;
   height: 50px;

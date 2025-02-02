@@ -33,7 +33,7 @@ public class Crianca implements Serializable {
 	private String bairro;
 	private String cidade;
 	private String complemento;
-	private Boolean status =true;
+	
 	 
 	
 	public Crianca() {
@@ -60,9 +60,6 @@ public class Crianca implements Serializable {
 		this.complemento = complemento;
 		this.status = status;
 	}
-
-
-
 
 
 

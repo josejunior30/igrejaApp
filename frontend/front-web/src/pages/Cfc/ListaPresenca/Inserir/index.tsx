@@ -218,6 +218,7 @@ const InserirPresencaEBD = () => {
                           </td>
                           <td>
                             <input
+                              className="chebox-cfc"
                               type="checkbox"
                               checked={
                                 presencas[participant.uniqueId] === "presente"
@@ -232,6 +233,7 @@ const InserirPresencaEBD = () => {
                           </td>
                           <td>
                             <input
+                              className="chebox-cfc"
                               type="checkbox"
                               checked={
                                 presencas[participant.uniqueId] === "ausente"
