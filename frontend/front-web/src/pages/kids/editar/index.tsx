@@ -25,6 +25,9 @@ const EditarKids = () => {
     complemento: "",
     idade: 0,
     url: "",
+    membroStatus: "",
+    criancaStatus: "",
+    responsavel: "",
   });
   useEffect(() => {
     const fetchData = async () => {
@@ -101,6 +104,51 @@ const EditarKids = () => {
             className="row g-4 px-4 pb-4"
             id="add-alunos"
           >
+            <div className="col-md-12">
+              <h3>Dados do Responsável </h3>
+            </div>
+            <div className="col-md-5">
+              <label htmlFor="nome" className="form-label">
+                Nome do Responsável:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="responsavel"
+                value={KidsDTO.responsavel}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-md-3">
+              <label htmlFor="responsavel" className="form-label">
+                Tipo do Responsável:
+              </label>
+              <select
+                name="criancaStatus"
+                className="form-select"
+                value={KidsDTO.criancaStatus}
+                onChange={handleChange}
+              >
+                <option value="MEMBRO">Membro</option>
+                <option value="VISITANTE">Visitante</option>
+              </select>
+            </div>
+            <div className="col-md-3">
+              <label htmlFor="estado Civil" className="form-label">
+                Status do Responsável:
+              </label>
+              <select
+                name="membroStatus"
+                className="form-select"
+                value={KidsDTO.membroStatus}
+                onChange={handleChange}
+              >
+                <option value="ATIVO">Ativo</option>
+                <option value="AFASTADO">Afastada</option>
+                <option value="DESLIGADO">Desligado</option>
+              </select>
+            </div>
             <div className="col-md-12">
               <h3>Dados pessoais </h3>
             </div>

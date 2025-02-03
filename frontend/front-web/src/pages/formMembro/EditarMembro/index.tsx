@@ -119,7 +119,7 @@ const FormularioUpdate = () => {
               </label>
               <select
                 className="form-select"
-                name="ativo"
+                name="membroStatus"
                 value={MembroDTO.membroStatus}
                 onChange={(e) =>
                   setMembroDTO({
@@ -128,6 +128,7 @@ const FormularioUpdate = () => {
                   })
                 }
               >
+                <option>Escolha</option>
                 <option value="ATIVO">Ativo</option>
                 <option value="AFASTADO">Afastada</option>
                 <option value="DESLIGADO">Desligado</option>
@@ -165,6 +166,7 @@ const FormularioUpdate = () => {
                   })
                 }
               >
+                <option>Escolha</option>
                 <option value="BATISMO">Batismo</option>
                 <option value="TRANSFERENCIA">Transferência</option>
                 <option value="ACLAMACAO">Aclamação</option>

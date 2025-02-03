@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +35,11 @@ public class Crianca implements Serializable {
 	private String bairro;
 	private String cidade;
 	private String complemento;
+	private String responsavel;
+	@Enumerated(EnumType.STRING)
+	private CriancaStatus criancaStatus;
+	 @Enumerated(EnumType.STRING)
+	private MembroStatus membroStatus;
 	
 	 
 	
@@ -41,9 +48,11 @@ public class Crianca implements Serializable {
 	}
 	
 
+
+
 	public Crianca(Long id, String nome, String sobrenome, LocalDate dataNascimento, Integer idade, String telefone,
 			String url, String rua, String cep, String numero, String bairro, String cidade, String complemento,
-			Boolean status) {
+			String responsavel, CriancaStatus criancaStatus, MembroStatus membroStatus) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -58,7 +67,46 @@ public class Crianca implements Serializable {
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.complemento = complemento;
-		this.status = status;
+		this.responsavel = responsavel;
+		this.criancaStatus = criancaStatus;
+		this.membroStatus = membroStatus;
+	}
+
+
+
+	public MembroStatus getMembroStatus() {
+		return membroStatus;
+	}
+
+
+
+	public void setMembroStatus(MembroStatus membroStatus) {
+		this.membroStatus = membroStatus;
+	}
+
+
+
+	public void setCriancaStatus(CriancaStatus criancaStatus) {
+		this.criancaStatus = criancaStatus;
+	}
+
+
+
+	public CriancaStatus getCriancaStatus() {
+		return criancaStatus;
+	}
+
+
+
+
+	public String getResponsavel() {
+		return responsavel;
+	}
+
+
+
+	public void setResponsavel(String responsavel) {
+		this.responsavel = responsavel;
 	}
 
 
@@ -145,14 +193,7 @@ public class Crianca implements Serializable {
 		return sobrenome;
 	}
 
-	public Boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(Boolean status) {
-		this.status = status;
-	}
-
+	
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}

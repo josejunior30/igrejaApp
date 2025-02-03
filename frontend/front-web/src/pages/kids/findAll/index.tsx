@@ -109,7 +109,7 @@ const KidsMembro = () => {
                     >
                       Pesquisar
                     </button>
-                    <Link to="/membro/adicionar">
+                    <Link to="/kids/insert">
                       <button className="btn btn-primary">Adicionar</button>
                     </Link>
                   </div>

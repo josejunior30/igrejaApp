@@ -42,4 +42,5 @@ export type MembrosDTO = {
   numero: number;
   ano: number;
   membroTipo: string;
+  membroStatus: string;
 };

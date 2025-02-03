@@ -12,4 +12,7 @@ export type Kids = {
   cidade: string;
   numero: number;
   url: string;
+  membroStatus: string;
+  criancaStatus: string;
+  responsavel: string;
 };

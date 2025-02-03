@@ -145,13 +145,18 @@ const DetalhesKids = () => {
                   <span>Data de Nascimento:</span>{" "}
                   {new Date(KidsDTO.dataNascimento).toLocaleDateString()}
                 </p>
-
+                <p className="dados">
+                  <span>Responsável:</span> {KidsDTO.responsavel}
+                </p>
+                <p className="dados">
+                  <span>Tipo do Responsável:</span> {KidsDTO.criancaStatus}
+                </p>
                 <p className="dados">
                   <span>Telefone:</span> {KidsDTO.telefone}
                 </p>
 
                 <div className="botoes-container">
-                  <Link to={`/membro/atualizar/${id}`}>
+                  <Link to={`/kids/editar/${id}`}>
                     <button className="botao-editar">Editar</button>
                   </Link>
                   <button onClick={handleDeleteClick} className="botao-deletar">

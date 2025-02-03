@@ -26,6 +26,7 @@ const Formulario: React.FC = () => {
     membroTipo: "",
     cidade: "",
     complemento: "",
+    membroStatus: "ATIVO",
   });
   const navigate = useNavigate();
 
@@ -73,6 +74,7 @@ const Formulario: React.FC = () => {
         complemento: "",
         ano: 0,
         membroTipo: "",
+        membroStatus: "",
       });
 
       navigate("/membro");
@@ -100,11 +102,12 @@ const Formulario: React.FC = () => {
                 Tipo de Afilição
               </label>
               <select
-                name="membrotipo"
+                name="membroTipo"
                 className="form-select"
                 value={membroDTO.membroTipo}
                 onChange={handleChange}
               >
+                <option>Escolha</option>
                 <option value="BATISMO">Batismo</option>
                 <option value="TRANSFERENCIA">Transferência</option>
                 <option value="ACLAMACAO">Aclamação</option>

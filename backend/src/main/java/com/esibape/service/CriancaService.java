@@ -24,8 +24,9 @@ public class CriancaService {
     @Transactional(readOnly = true)
     public List<CriancaDTO> findAll() {
         List<Crianca> list = repository.findAll();
+        list.forEach(this::atualizarIdade);
         return list.stream()
-                   .map(x -> new CriancaDTO(x)) 
+                   .map(CriancaDTO::new) 
                    .collect(Collectors.toList());
     }
 
@@ -34,6 +35,7 @@ public class CriancaService {
     public CriancaDTO findById(Long id) {
     	Optional<Crianca> crianca = repository.findById(id);
     	Crianca entity = crianca.get();
+    	atualizarIdade(entity);
     	return  new CriancaDTO(entity);
     }
    
@@ -59,7 +61,7 @@ public class CriancaService {
     }
     
     private void copyDtoToEntity(CriancaDTO dto, Crianca entity) {
-    	atualizarIdade(dto);
+    	atualizarIdade(entity);
 		entity.setNome(dto.getNome());
 		entity.setSobrenome(dto.getSobrenome());
 		entity.setBairro(dto.getBairro());
@@ -72,22 +74,29 @@ public class CriancaService {
 		entity.setIdade(dto.getIdade());
 		entity.setTelefone(dto.getTelefone());
 		entity.setUrl(dto.getUrl());
-		entity.setStatus(dto.getStatus());
-	  
-	}	
+		entity.setCriancaStatus(dto.getCriancaStatus());
+	  entity.setMembroStatus(dto.getMembroStatus());
+	entity.setResponsavel(dto.getResponsavel());
+    
+    
+    }	
+    
     
    
-    public void atualizarIdade(CriancaDTO dto) {
-        LocalDate dataNascimento = dto.getDataNascimento();
-        Integer idadeAtual = dto.getIdade(); 
+    public void atualizarIdade(Crianca crianca) {
+        LocalDate dataNascimento = crianca.getDataNascimento();
+    
         
         // Calcula a idade apenas se a idade estiver vazia
-        if (dataNascimento != null && idadeAtual == null) {
+        if (dataNascimento != null) {
             LocalDate dataAtual = LocalDate.now();
             Period periodo = Period.between(dataNascimento, dataAtual);
-            dto.setIdade(periodo.getYears());
+            crianca.setIdade(periodo.getYears());
         }
     }
+    
+
+   
         
 }
 

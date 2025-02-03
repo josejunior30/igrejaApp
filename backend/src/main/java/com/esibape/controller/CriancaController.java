@@ -45,7 +45,7 @@ public class CriancaController {
 	
 		@PostMapping
 		public ResponseEntity<CriancaDTO> insert(@RequestBody CriancaDTO dto){
-			service.atualizarIdade(dto);
+
 			CriancaDTO entity = service.insert(dto);
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 					.buildAndExpand(entity.getId()).toUri();

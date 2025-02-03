@@ -3,8 +3,9 @@ package com.esibape.DTO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-
 import com.esibape.entities.Crianca;
+import com.esibape.entities.CriancaStatus;
+import com.esibape.entities.MembroStatus;
 
 
 
@@ -24,8 +25,9 @@ public class CriancaDTO implements Serializable {
 	private String bairro;
 	private String cidade;
 	private String complemento;
-	private Boolean status =true;
-	 
+	private CriancaStatus criancaStatus;
+	private MembroStatus membroStatus;
+	private String responsavel;
 	
 	public CriancaDTO() {
 		
@@ -46,7 +48,9 @@ public class CriancaDTO implements Serializable {
 		this.complemento =entity.getComplemento();
 		this.rua =entity.getRua();
 		this.numero=entity.getNumero();
-		this.status = entity.getStatus();
+		this.responsavel =entity.getResponsavel();
+		this.membroStatus =entity.getMembroStatus();
+		this.criancaStatus=entity.getCriancaStatus();
 	}
 
 
@@ -70,9 +74,6 @@ public class CriancaDTO implements Serializable {
 		return sobrenome;
 	}
 
-	public Boolean getStatus() {
-		return status;
-	}
 
 	public String getRua() {
 		return rua;
@@ -134,6 +135,30 @@ public class CriancaDTO implements Serializable {
 
 
 
+	public CriancaStatus getCriancaStatus() {
+		return criancaStatus;
+	}
+
+	public void setCriancaStatus(CriancaStatus criancaStatus) {
+		this.criancaStatus = criancaStatus;
+	}
+
+	public MembroStatus getMembroStatus() {
+		return membroStatus;
+	}
+
+	public void setMembroStatus(MembroStatus membroStatus) {
+		this.membroStatus = membroStatus;
+	}
+
+	public String getResponsavel() {
+		return responsavel;
+	}
+
+	public void setResponsavel(String responsavel) {
+		this.responsavel = responsavel;
+	}
+
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
@@ -152,12 +177,6 @@ public class CriancaDTO implements Serializable {
 		this.complemento = complemento;
 	}
 
-
-
-
-	public void setStatus(Boolean status) {
-		this.status = status;
-	}
 
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
