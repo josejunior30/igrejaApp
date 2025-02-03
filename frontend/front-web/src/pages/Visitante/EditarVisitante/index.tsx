@@ -116,6 +116,7 @@ const VisitanteEdite = () => {
                   })
                 }
               >
+                <option>selecione</option>
                 <option value="NIVEL_1">Nível 1</option>
                 <option value="NIVEL_2">Nível 2</option>
                 <option value="NIVEL_3">Nível 3</option>
