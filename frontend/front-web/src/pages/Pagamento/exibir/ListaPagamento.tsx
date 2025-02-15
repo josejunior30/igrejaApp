@@ -368,7 +368,7 @@ const ListaPagamento: React.FC = () => {
         doc.setFont('helvetica', 'lighter');
         doc.setFontSize(9);
         doc.line(coordX, lineY, coordX + lineWidth, lineY);
-        doc.text("Gilson Ornelas dos Santos", coordX + 10, lineY + 5);
+        doc.text("Samuel Lopes da Silva", coordX + 10, lineY + 5);
     
         // Linha de Secretaria
         doc.setFontSize(9);
