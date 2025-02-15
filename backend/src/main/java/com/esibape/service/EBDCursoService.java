@@ -6,11 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.esibape.DTO.CursoDTO;
 import com.esibape.DTO.EBDCursoDTO;
-import com.esibape.entities.Curso;
 import com.esibape.entities.EBDCurso;
-import com.esibape.repository.CursoRepository;
 import com.esibape.repository.EBDCursoRepository;
 
 @Service

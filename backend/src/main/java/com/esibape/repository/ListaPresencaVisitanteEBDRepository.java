@@ -7,8 +7,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.ListaPresencaVisitanteEBD;
 public interface ListaPresencaVisitanteEBDRepository extends JpaRepository<ListaPresencaVisitanteEBD, Long> {
 

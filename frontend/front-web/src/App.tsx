@@ -52,6 +52,7 @@ import KidsMembro from "./pages/kids/findAll";
 import AddKids from "./pages/kids/Inserir";
 import EditarKids from "./pages/kids/editar";
 import DetalhesKids from "./pages/kids/Detalhes";
+import CalendarioAtividade from "./pages/Calendario";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -312,6 +313,7 @@ function App() {
           />
           <Route path="trilho/estudo" element={<Estudo />} />
           <Route path="trilho/estudo/exibir" element={<ExibirPdfs />} />
+          <Route path="/calendario" element={<CalendarioAtividade />} />
         </Routes>
       </Router>
     </ContextToken.Provider>

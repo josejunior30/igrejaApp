@@ -2,8 +2,6 @@ package com.esibape.DTO;
 
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.esibape.entities.EBDCurso;
 import com.esibape.entities.EbdEstudos;
 
 

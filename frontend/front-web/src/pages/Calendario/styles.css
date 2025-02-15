@@ -1,0 +1,107 @@
+.table {
+  min-width: 50vw !important;
+  margin-top: 20px;
+  height: 100vh;
+  border-collapse: collapse;
+}
+
+.calendario-th th {
+  height: 50px;
+  background-color: rgb(14, 223, 153) !important;
+}
+.day {
+  width: 14.28%;
+  height: 80px;
+  text-align: center;
+  vertical-align: top;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}
+.day strong {
+  text-align: center;
+  display: block;
+  position: absolute;
+}
+.btn-esquerda {
+  position: absolute;
+  left: 38vw;
+}
+.btn-direita {
+  position: absolute;
+  left: 58vw;
+}
+.titulo-evento {
+  font-size: 18px;
+}
+.mes-atual {
+  color: white;
+}
+.add-evento {
+  position: absolute;
+
+  margin-left: 10vw;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+
+  background-color: var(--color-coral);
+  padding: 1px 8px;
+}
+td.day:hover {
+  background-color: #b2dbff;
+}
+
+td.empty {
+  background-color: #f8f9fa;
+  cursor: default;
+}
+
+.event {
+  padding: 6px 4px !important;
+  border-radius: 3px;
+  margin-top: 20px!important;
+  align-items: center;
+}
+
+.modal-dialog {
+  display: flex;
+  width: 30vw !important;
+  align-items: center;
+  justify-content: center;
+  background: none !important; 
+  background: transparent !important;
+}
+.evento-detalhes h5 {
+  color: white;
+  font-size: 18px;
+}
+.evento-detalhes p {
+  color: white;
+  font-size: 14px;
+}
+.evento-detalhes {
+  background-color: var(--color-coral);
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 5px;
+}
+.fade {
+  margin-top: 340px;
+background-color: transparent;
+  position: absolute;
+  margin-left: 50vw;
+ 
+}
+.modal-content {
+
+
+}
+.modal-backdrop {
+  background: none !important; /* Remove o fundo escuro */
+}
+.hoje {
+  background-color: rgb(240, 180, 180) !important; /* Fundo vermelho para o dia atual */
+  color: white !important; /* Texto branco para melhor contraste */
+  font-weight: bold;
+  border-radius: 5px;
+}
