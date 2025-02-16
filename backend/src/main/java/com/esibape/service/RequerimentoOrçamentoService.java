@@ -132,6 +132,7 @@ public class RequerimentoOrçamentoService {
         entity.setPergunta1(dto.getPergunta1());
         entity.setPergunta2(dto.getPergunta2());
         entity.setResponsavel(dto.getResponsavel());
+        entity.setQuantidade(dto.getQuantidade());
         entity.setEmailResponsavel(dto.getEmailResponsavel());
         entity.setStatusRequerimento(dto.getStatusRequerimento());
      

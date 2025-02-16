@@ -13,7 +13,6 @@ public class ProdutoDTO implements Serializable{
 	private Long id; 
 	private String nome;
 	private BigDecimal preço;
-
 	private RequerimentoOrçamentoDTO requerimento;
 	
 	public ProdutoDTO() {
@@ -26,6 +25,7 @@ public class ProdutoDTO implements Serializable{
 		id = entity.getId();
 		this.nome = entity.getNome();
 		this.preço = entity.getPreço();
+
 
 	}
 

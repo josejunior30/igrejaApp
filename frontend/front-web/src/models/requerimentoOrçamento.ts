@@ -5,6 +5,7 @@ export type requerimentoOrçamento={
 	dataRequerimento: Date;
 	dataEvento:Date;
 	dataAprovacao:Date;
+
 	statusRequerimento:StatusRequerimento;
 	dataPagamento:Date;
 	"O que vai ser feito ?": string;
@@ -12,6 +13,7 @@ export type requerimentoOrçamento={
 	responsavel: string;
 	local: string;
 	Total: number;
+	emailResponsavel:string;
     produto: Produto[];
 
 }

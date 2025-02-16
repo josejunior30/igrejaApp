@@ -99,7 +99,7 @@ const RequerimentoExibir = () => {
                         }
                       >
                         <td><Link to={`${requerimento.id}`}>  {format(new Date(requerimento.dataRequerimento), 'dd/MM/yyyy')}</Link></td>
-                        <td><Link to= "#">{requerimento.responsavel}</Link></td>
+                        <td><Link to= {`/requerimento-detalhe/${requerimento.id}`}>{requerimento.responsavel}</Link></td>
                         <td><Link to="#">{requerimento.statusRequerimento}</Link></td>
                         <td>
                           {requerimento.statusRequerimento !== "APROVADO" ? (

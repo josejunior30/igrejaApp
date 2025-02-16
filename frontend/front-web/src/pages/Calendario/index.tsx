@@ -22,7 +22,9 @@ const CalendarioAtividade = () => {
   );
   const [selectedEvento, setSelectedEvento] = useState<Calendario | null>(null);
   const [showEventoModal, setShowEventoModal] = useState(false);
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchType, setSearchType] = useState("titulo"); // Default: pesquisa por título
+  const [searchResults, setSearchResults] = useState<Calendario[]>([]);
   useEffect(() => {
     CalendarioService.findAll()
       .then((response) => {
@@ -92,37 +94,46 @@ const CalendarioAtividade = () => {
     const dias: JSX.Element[] = [];
     const primeiroDiaSemana = new Date(anoAtual, mesAtual, 1).getDay();
     const totalDias = new Date(anoAtual, mesAtual + 1, 0).getDate();
-    
+
     // Obtém a data de hoje no formato "YYYY-MM-DD"
     const hoje = new Date();
-    const dataHoje = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, "0")}-${String(hoje.getDate()).padStart(2, "0")}`;
-  
+    const dataHoje = `${hoje.getFullYear()}-${String(
+      hoje.getMonth() + 1
+    ).padStart(2, "0")}-${String(hoje.getDate()).padStart(2, "0")}`;
+
     for (let i = 0; i < primeiroDiaSemana; i++) {
       dias.push(<td key={`empty-${i}`} className="empty"></td>);
     }
-  
+
     for (let dia = 1; dia <= totalDias; dia++) {
-      const dataString = `${anoAtual}-${String(mesAtual + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
-  
+      const dataString = `${anoAtual}-${String(mesAtual + 1).padStart(
+        2,
+        "0"
+      )}-${String(dia).padStart(2, "0")}`;
+
       const eventos = calendarioDTO.filter(
         (evento) =>
           new Date(evento.data).toISOString().split("T")[0] === dataString
       );
-  
+
       const handleEventoDetalhes = (evento: Calendario) => {
         setSelectedEvento(evento);
         setShowEventoModal(true);
       };
-  
+
       dias.push(
         <td
           key={dia}
           onClick={() => handleDateClick(dataString)}
-          className={`day position-relative ${dataString === dataHoje ? "hoje" : ""}`}
+          className={`day position-relative ${
+            dataString === dataHoje ? "hoje" : ""
+          }`}
         >
           <div className="d-flex justify-content-center align-items-start flex-column position-relative">
             <div className="w-100 d-flex justify-content-center align-items-center">
-              <strong className="text-center justify-content-center">{dia}</strong>
+              <strong className="text-center justify-content-center">
+                {dia}
+              </strong>
               <button
                 className="add-evento"
                 style={{ position: "relative", zIndex: 10 }}
@@ -151,28 +162,58 @@ const CalendarioAtividade = () => {
         </td>
       );
     }
-  
+
     return dias;
   };
-  
+
   const formatarHora = (hora: string | number[]) => {
-    console.log("Hora recebida:", hora);
-  
-    if (Array.isArray(hora) && hora.length === 2) {
-      // Se for um array, converte para "HH:MM"
-      const [horas, minutos] = hora;
-      return `${String(horas).padStart(2, "0")}:${String(minutos).padStart(2, "0")}`;
-    }
-  
     if (typeof hora === "string" && hora.includes(":")) {
       const [horas, minutos] = hora.split(":");
       return `${horas.padStart(2, "0")}:${minutos.padStart(2, "0")}`;
     }
-  
+
+    if (Array.isArray(hora) && hora.length === 2) {
+      // Se for um array, converte para "HH:MM"
+      const [horas, minutos] = hora;
+      return `${String(horas).padStart(2, "0")}:${String(minutos).padStart(
+        2,
+        "0"
+      )}`;
+    }
+
     return "00:00"; // Caso esteja num formato inesperado
   };
-  
-  
+
+  const handleDeleteEvento = (id: number) => {
+    if (!window.confirm("Tem certeza que deseja excluir este evento?")) return;
+
+    CalendarioService.deleteCalendario(id)
+      .then(() => {
+        setCalendarioDTO((prev) => prev.filter((evento) => evento.id !== id));
+        setShowEventoModal(false);
+      })
+      .catch((error) => {
+        console.error("Erro ao excluir evento:", error);
+      });
+  };
+  const handleSearch = () => {
+    if (!searchTerm.trim()) {
+      setSearchResults([]);
+      return;
+    }
+
+    if (searchType === "titulo") {
+      CalendarioService.findByTitulo(searchTerm)
+        .then((response) => setSearchResults(response.data))
+        .catch((error) => console.error("Erro ao buscar por título:", error));
+    } else {
+      CalendarioService.findByResponsavel(searchTerm)
+        .then((response) => setSearchResults(response.data))
+        .catch((error) =>
+          console.error("Erro ao buscar por responsável:", error)
+        );
+    }
+  };
   return (
     <>
       <Header />
@@ -183,7 +224,7 @@ const CalendarioAtividade = () => {
               <Button className="btn-esquerda" onClick={retrocederMes}>
                 <GoChevronLeft />
               </Button>
-              <h4 className="mes-atual">
+              <h4 className="mes-atual offset-3">
                 {new Date(anoAtual, mesAtual).toLocaleString("default", {
                   month: "long",
                 })}{" "}
@@ -192,8 +233,65 @@ const CalendarioAtividade = () => {
               <Button className="btn-direita" onClick={avancarMes}>
                 <GoChevronRight />
               </Button>
+
+              <div className="col-md-2 offset-2">
+                <Form.Control
+                  type="text"
+                  placeholder={`Buscar por ${
+                    searchType === "titulo" ? "título" : "responsável"
+                  }...`}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="input-calendar"
+                />
+              </div>
+              <div className="col-md-1 seletor-calendario">
+                <Form.Select
+                  value={searchType}
+                  onChange={(e) => setSearchType(e.target.value)}
+                >
+                  <option value="titulo">Título</option>
+                  <option value="responsavel">Responsável</option>
+                </Form.Select>
+              </div>
+              <div className="col-md-2">
+                <Button variant="primary" onClick={handleSearch}>
+                  Pesquisar
+                </Button>
+   
+                <Button
+                className="btn-limpar"
+                  variant="secondary"
+                  onClick={() => {
+                    setSearchTerm("");
+                    setSearchResults([]);
+                  }}
+                >
+                  Limpar
+                </Button>
+           </div>
             </div>
-            <Table bordered className="text-center ">
+
+            {/* 📌 Resultados da Pesquisa */}
+            {searchResults.length > 0 && (
+              <div className="resultados-pesquisa col-6 text-center offset-3">
+                <h5>Resultados da Pesquisa:</h5>
+                <ul className="list-group">
+                  {searchResults.map((evento) => (
+                    <li key={evento.id} className="list-group-item">
+                      <strong>{evento.titulo}</strong> - {evento.responsavel} -{" "}
+                      {new Date(evento.data).toLocaleDateString()} -{" "}
+                      {formatarHora(evento.hora)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <Table
+              bordered
+              className="text-center tabela-calendario justify-content-center"
+            >
               <thead>
                 <tr className="calendario-th">
                   <th>Dom</th>
@@ -288,6 +386,14 @@ const CalendarioAtividade = () => {
           <Button variant="secondary" onClick={() => setShowEventoModal(false)}>
             Fechar
           </Button>
+          {selectedEvento && (
+            <Button
+              variant="danger"
+              onClick={() => handleDeleteEvento(selectedEvento.id)}
+            >
+              Excluir Evento
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>

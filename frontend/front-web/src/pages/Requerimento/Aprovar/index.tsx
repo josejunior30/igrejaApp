@@ -1,9 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Produto, requerimentoOrçamento, StatusRequerimento } from "../../../models/requerimentoOrçamento";
+import {
+  Produto,
+  requerimentoOrçamento,
+  StatusRequerimento,
+} from "../../../models/requerimentoOrçamento";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { findById, updateStatus } from "../../../service/requerimentoService";
 import Header from "../../../components/Header";
-import './styles.css';
+import "./styles.css";
 
 const RequerimentoAprovar: React.FC = () => {
   const navigate = useNavigate();
@@ -17,6 +21,8 @@ const RequerimentoAprovar: React.FC = () => {
     dataAprovacao: new Date(),
     statusRequerimento: StatusRequerimento.PENDENTE,
     responsavel: "",
+    emailResponsavel: "",
+
     local: "",
     Total: 0,
     "O que vai ser feito ?": "",
@@ -29,11 +35,11 @@ const RequerimentoAprovar: React.FC = () => {
       try {
         if (id) {
           const response = await findById(Number(id));
-          console.log("Dados do requerimento:", response.data); 
+          console.log("Dados do requerimento:", response.data);
           setRequerimento(response.data || {});
         }
       } catch (error) {
-        console.error('Erro ao carregar detalhes do requerimento:', error);
+        console.error("Erro ao carregar detalhes do requerimento:", error);
       }
     };
     fetchData();
@@ -43,38 +49,49 @@ const RequerimentoAprovar: React.FC = () => {
     e.preventDefault();
     if (id && requerimento) {
       // Aqui chamamos updateStatus em vez de updateRequerimento
-      updateStatus(Number(id), StatusRequerimento[requerimento.statusRequerimento])
-
-        .then(response => {
-          console.log("Status do requerimento atualizado com sucesso:", response.data);
-          alert("Atualização feita com sucesso!");  
-          navigate('/requerimento');  
+      updateStatus(
+        Number(id),
+        StatusRequerimento[requerimento.statusRequerimento]
+      )
+        .then((response) => {
+          console.log(
+            "Status do requerimento atualizado com sucesso:",
+            response.data
+          );
+          alert("Atualização feita com sucesso!");
+          navigate("/requerimento");
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Erro ao atualizar status do requerimento:", error);
-          alert("Erro ao atualizar status do requerimento. Tente novamente."); 
+          alert("Erro ao atualizar status do requerimento. Tente novamente.");
         });
     }
   };
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setRequerimento(prevRequerimento => ({
+    setRequerimento((prevRequerimento) => ({
       ...prevRequerimento,
-      [name]: name === 'dataEvento'
-        ? new Date(value)
-        : name === 'statusRequerimento'
+      [name]:
+        name === "dataEvento"
+          ? new Date(value)
+          : name === "statusRequerimento"
           ? Number(value)
           : value,
     }));
   };
   const formatarValor = (valor: string) => {
     const valorNumerico = valor.replace(/\D/g, "");
-    if (valorNumerico === "") return "0,00"; 
+    if (valorNumerico === "") return "0,00";
 
-    const valorFormatado = (Number(valorNumerico) / 100).toLocaleString("pt-BR", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+    const valorFormatado = (Number(valorNumerico) / 100).toLocaleString(
+      "pt-BR",
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }
+    );
 
     return valorFormatado;
   };
@@ -84,18 +101,15 @@ const RequerimentoAprovar: React.FC = () => {
   };
   const formatarDataArray = (dataArray: number[]): string => {
     if (Array.isArray(dataArray) && dataArray.length === 3) {
-    
       const data = new Date(dataArray[0], dataArray[1] - 1, dataArray[2]);
-      const dia = String(data.getDate()).padStart(2, '0');
-      const mes = String(data.getMonth() + 1).padStart(2, '0'); 
+      const dia = String(data.getDate()).padStart(2, "0");
+      const mes = String(data.getMonth() + 1).padStart(2, "0");
       const ano = data.getFullYear();
       return `${dia}/${mes}/${ano}`;
     }
-    return '';
+    return "";
   };
-  
 
-  
   return (
     <>
       <Header />
@@ -105,7 +119,9 @@ const RequerimentoAprovar: React.FC = () => {
             <h3>Relatório de Orçamento</h3>
 
             <div className="col-4 col-md-4">
-              <label htmlFor="responsavel" className="form-label">Responsável:</label>
+              <label htmlFor="responsavel" className="form-label">
+                Responsável:
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -116,7 +132,9 @@ const RequerimentoAprovar: React.FC = () => {
             </div>
 
             <div className="col-4 col-md-4">
-              <label htmlFor="local" className="form-label">Local:</label>
+              <label htmlFor="local" className="form-label">
+                Local:
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -127,18 +145,26 @@ const RequerimentoAprovar: React.FC = () => {
             </div>
 
             <div className="col-4 col-md-4">
-              <label htmlFor="dataEvento" className="form-label">Data do Evento:</label>
+              <label htmlFor="dataEvento" className="form-label">
+                Data do Evento:
+              </label>
               <input
                 type="text"
                 className="form-control"
                 name="dataEvento"
-                value={Array.isArray(requerimento.dataPagamento) ? formatarDataArray(requerimento.dataPagamento) : ''}
+                value={
+                  Array.isArray(requerimento.dataPagamento)
+                    ? formatarDataArray(requerimento.dataPagamento)
+                    : ""
+                }
                 readOnly
               />
             </div>
 
             <div className="col-12">
-              <label htmlFor="O que vai ser feito ?" className="form-label">O que vai ser feito?</label>
+              <label htmlFor="O que vai ser feito ?" className="form-label">
+                O que vai ser feito?
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -149,7 +175,12 @@ const RequerimentoAprovar: React.FC = () => {
             </div>
 
             <div className="col-12">
-              <label htmlFor="Qual o motivo de ser feito ?" className="form-label">Qual o motivo de ser feito?</label>
+              <label
+                htmlFor="Qual o motivo de ser feito ?"
+                className="form-label"
+              >
+                Qual o motivo de ser feito?
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -160,7 +191,9 @@ const RequerimentoAprovar: React.FC = () => {
             </div>
 
             <div className="mt-3">
-              <label htmlFor="produtos" className="form-label mt-3">Produtos Adicionados:</label>
+              <label htmlFor="produtos" className="form-label mt-3">
+                Produtos Adicionados:
+              </label>
               <ul className="list-group">
                 {requerimento.produto && requerimento.produto.length > 0 ? (
                   requerimento.produto.map((p: Produto, index: number) => (
@@ -169,55 +202,85 @@ const RequerimentoAprovar: React.FC = () => {
                     </li>
                   ))
                 ) : (
-                  <li className="list-group-item">Nenhum produto adicionado.</li>
+                  <li className="list-group-item">
+                    Nenhum produto adicionado.
+                  </li>
                 )}
               </ul>
             </div>
-            
 
             <div className="col-4 col-md-3 mb-5">
-  <label htmlFor="Total" className="form-label">Total:</label>
-  <input
-    type="text"
-    className="form-control"
-    name="Total"
-    value={
-      !isNaN(Number(requerimento.Total)) && requerimento.Total !== null // Verifica se é um número
-        ? Number(requerimento.Total).toLocaleString("pt-BR", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : "0,00" // Exibe "0,00" caso não seja um número válido
-    }
-    readOnly
-  />
-</div>
-            <div className="col-12 d-flex text-center justify-content-center gap-4" id="aprovacao">
-      
+              <label htmlFor="Total" className="form-label">
+                Total:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="Total"
+                value={
+                  !isNaN(Number(requerimento.Total)) &&
+                  requerimento.Total !== null // Verifica se é um número
+                    ? Number(requerimento.Total).toLocaleString("pt-BR", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                    : "0,00" // Exibe "0,00" caso não seja um número válido
+                }
+                readOnly
+              />
+            </div>
+            <div
+              className="col-12 d-flex text-center justify-content-center gap-4"
+              id="aprovacao"
+            >
               <div className="col-12 col-md-2">
-                <label htmlFor="dataAprovacao" className="form-label">Data Aprovação:</label>
+                <label htmlFor="dataAprovacao" className="form-label">
+                  Data Aprovação:
+                </label>
                 <input
                   type="date"
                   className="form-control"
                   name="dataAprovacao"
-                  value={requerimento.dataAprovacao instanceof Date ? requerimento.dataAprovacao.toISOString().split('T')[0] : ''}
-                  onChange={(e) => setRequerimento({ ...requerimento, dataAprovacao: new Date(e.target.value) })}
+                  value={
+                    requerimento.dataAprovacao instanceof Date
+                      ? requerimento.dataAprovacao.toISOString().split("T")[0]
+                      : ""
+                  }
+                  onChange={(e) =>
+                    setRequerimento({
+                      ...requerimento,
+                      dataAprovacao: new Date(e.target.value),
+                    })
+                  }
                 />
               </div>
 
               <div className="col-12 col-md-2">
-                <label htmlFor="dataPagamento" className="form-label">Data Pagamento:</label>
+                <label htmlFor="dataPagamento" className="form-label">
+                  Data Pagamento:
+                </label>
                 <input
                   type="date"
                   className="form-control"
                   name="dataPagamento"
-                  value={requerimento.dataPagamento instanceof Date ? requerimento.dataPagamento.toISOString().split('T')[0] : ''}
-                  onChange={(e) => setRequerimento({ ...requerimento, dataPagamento: new Date(e.target.value) })}
+                  value={
+                    requerimento.dataPagamento instanceof Date
+                      ? requerimento.dataPagamento.toISOString().split("T")[0]
+                      : ""
+                  }
+                  onChange={(e) =>
+                    setRequerimento({
+                      ...requerimento,
+                      dataPagamento: new Date(e.target.value),
+                    })
+                  }
                 />
               </div>
 
               <div className="col-md-2">
-                <label htmlFor="statusRequerimento" className="form-label">Status:</label>
+                <label htmlFor="statusRequerimento" className="form-label">
+                  Status:
+                </label>
                 <select
                   className="form-select"
                   name="statusRequerimento"
@@ -229,21 +292,31 @@ const RequerimentoAprovar: React.FC = () => {
                   <option value={StatusRequerimento.APROVADO}>Aprovado</option>
                 </select>
               </div>
-           
-              </div>
-           
-              <div className="col-12  mt-5 mb-5 text-center" >
-                <button type="submit" className="btn btn-primary"  style={{ backgroundColor: 'var(--color-coral)', border:'none' }}>
-                 Atualizar Status
-                </button>
-              </div>
-            
+            </div>
+
+            <div className="col-12  mt-5 mb-5 text-center">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{
+                  backgroundColor: "var(--color-coral)",
+                  border: "none",
+                }}
+              >
+                Atualizar Status
+              </button>
+            </div>
           </form>
         </div>
 
-        <div className="row justify-content-center mt-5 mb-5" id="btn-voltar-relatorio">
-          <div className="col-12 text-center" >
-            <button className="btn btn-primary"  onClick={handleGoBack}>Voltar</button>
+        <div
+          className="row justify-content-center mt-5 mb-5"
+          id="btn-voltar-relatorio"
+        >
+          <div className="col-12 text-center">
+            <button className="btn btn-primary" onClick={handleGoBack}>
+              Voltar
+            </button>
           </div>
         </div>
       </div>

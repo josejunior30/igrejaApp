@@ -203,6 +203,24 @@ INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) V
 INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,Tipo_Culto ) VALUES ( 60, 50, '2024-09-28' , 110 , 'CULTO_DA_MANHA' );
 
 
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-08-10' , 'Base de adoracao','19:00' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-06-12' , 'Ministerio das mulheres','19:30' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Encontro da Familia','Culto em formato tradicional','2025-03-14' , 'Base de adoracao','9:00' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-02-05' , 'Base de adoracao','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Assembleia','Culto em formato tradicional','2025-02-09' , 'Base de Servico','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-02-14' , 'Base de adoracao','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Retiro','Culto em formato tradicional','2025-02-18' , 'comissao de Eventos','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-05-22' , 'Base de adoracao','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Noite de Caldos','Culto em formato tradicional','2025-07-26' , 'Base de servico','19:00' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-10-14' , 'Base de servico','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Dia dos Pais','Culto em formato tradicional','2025-09-14' , 'comissao de eventos','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-02-12' , 'Base de adoracao','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Dia das Mulheres','Culto em formato tradicional','2025-03-10' , 'ministerio das mulheres','19:00' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-03-14' , 'Base de adoracao','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Festa da Primavera','Culto em formato tradicional','2025-09-14' , 'Base de adoracao','19:00' );
+
+
+
 INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, email_Responsavel ,local, Total ) VALUES ( '2024-07-07', '2024-07-07', '2024-09-28' , '2024-09-28' , 'APROVADO','festa da roça', 'comunhao da igreja', 'Junior', 'junebajuneba@gmail.com' ,'Igreja', 187.37);
 INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, email_Responsavel ,local, Total ) VALUES ( '2024-07-07', '2024-07-10', '2024-09-30' , '2024-09-20' , 'RECUSADO' ,'festa da primavera', 'comunhao da igreja', 'Aurici', 'junebajuneba@gmail.com','Igreja', 37.79);
 INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data_Pagamento, status_Requerimento , pergunta1, pergunta2, responsavel, email_Responsavel ,local, Total ) VALUES ( '2024-07-07', '2024-07-07', '2024-09-28' , '2024-09-28' , 'PENDENTE' ,'festa da roça', 'comunhao da igreja', 'Junior', 'junebajuneba@gmail.com','Igreja', 187.37);

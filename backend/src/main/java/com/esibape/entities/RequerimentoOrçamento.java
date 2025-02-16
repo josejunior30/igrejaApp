@@ -35,7 +35,7 @@ public class RequerimentoOrçamento implements Serializable {
     private String responsavel;
     private String emailResponsavel;
     private String local;
-
+    private Integer quantidade;
     @Column(nullable = false)
     private BigDecimal total = BigDecimal.ZERO;
 
@@ -44,25 +44,33 @@ public class RequerimentoOrçamento implements Serializable {
 
     public RequerimentoOrçamento() {}
 
-    public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovacao,
-                                  StatusRequerimento statusRequerimento, LocalDate dataPagamento, BigDecimal total, 
-                                  String pergunta1, String pergunta2, String responsavel, String emailResponsave ,String local, List<Produto> produto) {
-        this.id = id;
-        this.dataRequerimento = dataRequerimento;
-        this.dataEvento = dataEvento;
-        this.dataAprovacao = dataAprovacao;
-        this.statusRequerimento = statusRequerimento;
-        this.dataPagamento = dataPagamento;
-        this.pergunta1 = pergunta1;
-        this.pergunta2 = pergunta2;
-        this.responsavel = responsavel;
-        this.local = local;
-        this.produto = produto;
-        this.total = total;
-        this.emailResponsavel = emailResponsave;
-    }
 
-    public Long getId() {
+
+	public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovacao,
+			StatusRequerimento statusRequerimento, LocalDate dataPagamento, String pergunta1, String pergunta2,
+			String responsavel, String emailResponsavel, String local, Integer quantidade, BigDecimal total,
+			List<Produto> produto) {
+		super();
+		this.id = id;
+		this.dataRequerimento = dataRequerimento;
+		this.dataEvento = dataEvento;
+		this.dataAprovacao = dataAprovacao;
+		this.statusRequerimento = statusRequerimento;
+		this.dataPagamento = dataPagamento;
+		this.pergunta1 = pergunta1;
+		this.pergunta2 = pergunta2;
+		this.responsavel = responsavel;
+		this.emailResponsavel = emailResponsavel;
+		this.local = local;
+		this.quantidade = quantidade;
+		this.total = total;
+		this.produto = produto;
+	}
+
+
+
+
+	public Long getId() {
         return id;
     }
 
@@ -90,7 +98,8 @@ public class RequerimentoOrçamento implements Serializable {
         return dataRequerimento;
     }
 
-    public void setDataRequerimento(LocalDate dataRequerimento) {
+ 
+	public void setDataRequerimento(LocalDate dataRequerimento) {
         this.dataRequerimento = dataRequerimento;
     }
 
@@ -105,8 +114,21 @@ public class RequerimentoOrçamento implements Serializable {
     public LocalDate getDataAprovacao() {
         return dataAprovacao;
     }
+    
 
-    public void setDataAprovacao(LocalDate dataAprovacao) {
+    public Integer getQuantidade() {
+		return quantidade;
+	}
+
+
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+
+
+	public void setDataAprovacao(LocalDate dataAprovacao) {
         this.dataAprovacao = dataAprovacao;
     }
 

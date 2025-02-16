@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.esibape.DTO.AlunosDTO;
 import com.esibape.DTO.CalendarioDTO;
+import com.esibape.entities.Calendario;
 import com.esibape.service.CalendarioService;
 
 
@@ -55,4 +56,16 @@ public class CalendarioController {
 		 service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	// 🔍 Buscar eventos pelo título no ano atual
+    @GetMapping("/titulo/{titulo}")
+    public List<Calendario> buscarPorTitulo(@PathVariable String titulo) {
+        return service.buscarPorTitulo(titulo);
+    }
+
+    // 🔍 Buscar eventos pelo responsável no ano atual
+    @GetMapping("/responsavel/{responsavel}")
+    public List<Calendario> buscarPorResponsavel(@PathVariable String responsavel) {
+        return service.buscarPorResponsavel(responsavel);
+    }
 }

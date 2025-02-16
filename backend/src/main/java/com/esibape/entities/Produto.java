@@ -25,10 +25,12 @@ public class Produto implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "requerimento_id")
 	private RequerimentoOrçamento requerimento;
-	
+
 	public Produto() {
 		
 	}
+
+
 
 
 	public Produto(Long id, String nome, BigDecimal preço, RequerimentoOrçamento requerimento) {
@@ -37,6 +39,7 @@ public class Produto implements Serializable{
 		this.nome = nome;
 		this.preço = preço;
 		this.requerimento = requerimento;
+		
 	}
 
 

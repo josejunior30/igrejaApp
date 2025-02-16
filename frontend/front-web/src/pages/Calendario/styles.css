@@ -1,8 +1,10 @@
-.table {
-  min-width: 50vw !important;
+.tabela-calendario {
+  max-width: 60vw !important;
   margin-top: 20px;
-  height: 100vh;
+  justify-content: center !important;
+  text-align: center;
   border-collapse: collapse;
+  margin-left: 4vw;
 }
 
 .calendario-th th {
@@ -21,20 +23,26 @@
   text-align: center;
   display: block;
   position: absolute;
+  font-size: 12px;
+  margin-top: -10px;
 }
 .btn-esquerda {
   position: absolute;
-  left: 38vw;
+  left: 19vw;
+}
+.btn-limpar{
+  margin-left: 10px;
 }
 .btn-direita {
   position: absolute;
-  left: 58vw;
+  left: 40vw;
 }
 .titulo-evento {
   font-size: 18px;
 }
 .mes-atual {
   color: white;
+  text-align: center;
 }
 .add-evento {
   position: absolute;
@@ -42,7 +50,7 @@
   margin-left: 10vw;
   color: white;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 12px;
 
   background-color: var(--color-coral);
   padding: 1px 8px;
@@ -50,16 +58,22 @@
 td.day:hover {
   background-color: #b2dbff;
 }
-
+.seletor-calendario{
+  margin-left: 30px;
+  margin-right: 10px;
+}
 td.empty {
   background-color: #f8f9fa;
   cursor: default;
+}
+.input-calendar{
+  margin-left: 20px;
 }
 
 .event {
   padding: 6px 4px !important;
   border-radius: 3px;
-  margin-top: 20px!important;
+  margin-top: 20px !important;
   align-items: center;
 }
 
@@ -68,7 +82,7 @@ td.empty {
   width: 30vw !important;
   align-items: center;
   justify-content: center;
-  background: none !important; 
+  background: none !important;
   background: transparent !important;
 }
 .evento-detalhes h5 {
@@ -87,17 +101,20 @@ td.empty {
 }
 .fade {
   margin-top: 340px;
-background-color: transparent;
+  background-color: transparent;
   position: absolute;
   margin-left: 50vw;
- 
 }
 
 .modal-backdrop {
   background: none !important; /* Remove o fundo escuro */
 }
 .hoje {
-  background-color: rgb(240, 180, 180) !important; /* Fundo vermelho para o dia atual */
+  background-color: rgb(
+    240,
+    180,
+    180
+  ) !important; /* Fundo vermelho para o dia atual */
   color: white !important; /* Texto branco para melhor contraste */
   font-weight: bold;
   border-radius: 5px;

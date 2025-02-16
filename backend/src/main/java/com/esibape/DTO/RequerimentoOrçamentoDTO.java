@@ -27,6 +27,7 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	private String pergunta2;
 	private String responsavel;
 	 private String emailResponsavel;
+private Integer quantidade;
 	private String local; 
 	private BigDecimal Total;
 
@@ -52,8 +53,10 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 		pergunta1 = entity.getPergunta1();
 		pergunta2 = entity.getPergunta2();
 		responsavel = entity.getResponsavel();
+		quantidade = entity.getQuantidade();
 		local = entity.getLocal();
 		Total = entity.getTotal();
+
 		emailResponsavel= entity.getEmailResponsavel();
 		
 	}
@@ -93,6 +96,15 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 
 	public StatusRequerimento getStatusRequerimento() {
 		return statusRequerimento;
+	}
+
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	public void setStatusRequerimento(StatusRequerimento statusRequerimento) {

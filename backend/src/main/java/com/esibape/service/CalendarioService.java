@@ -1,6 +1,7 @@
 package com.esibape.service;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
@@ -60,7 +61,21 @@ public class CalendarioService {
         repository.deleteById(id);
     }
 
+ // 🔍 Buscar eventos pelo título dentro do ano atual
+    public List<Calendario> buscarPorTitulo(String titulo) {
+        LocalDate inicioAno = LocalDate.of(LocalDate.now().getYear(), 1, 1);
+        LocalDate fimAno = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+        
+        return repository.findByTituloContainingIgnoreCaseAndDataBetween(titulo, inicioAno, fimAno);
+    }
     
+    // 🔍 Buscar eventos pelo responsável dentro do ano atual
+    public List<Calendario> buscarPorResponsavel(String responsavel) {
+        LocalDate inicioAno = LocalDate.of(LocalDate.now().getYear(), 1, 1);
+        LocalDate fimAno = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+        
+        return repository.findByResponsavelContainingIgnoreCaseAndDataBetween(responsavel, inicioAno, fimAno);
+    }
     
     
     

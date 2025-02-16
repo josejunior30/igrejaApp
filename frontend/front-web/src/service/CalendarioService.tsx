@@ -19,3 +19,9 @@ export function deleteCalendario(id: number) {
   return axios.delete(`${BASE_URL}/calendario/${id}`);
 }
 
+export function findByResponsavel(responsavel: string) {
+  return axios.get(`${BASE_URL}/calendario/responsavel/${responsavel}`);
+}
+export function findByTitulo(titulo: string) {
+  return axios.get(`${BASE_URL}/calendario/titulo/${titulo}`);
+}

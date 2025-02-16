@@ -53,6 +53,7 @@ import AddKids from "./pages/kids/Inserir";
 import EditarKids from "./pages/kids/editar";
 import DetalhesKids from "./pages/kids/Detalhes";
 import CalendarioAtividade from "./pages/Calendario";
+import RequerimentoDetalhe from "./pages/Requerimento/detalhe";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -290,6 +291,10 @@ function App() {
           <Route
             path="/requerimentoAprovar/:id"
             element={<RequerimentoAprovar />}
+          />
+             <Route
+            path="/requerimento-detalhe/:id"
+            element={<RequerimentoDetalhe />}
           />
           <Route path="/trilho" element={<Trilha />} />
           <Route path="/trilho/:id" element={<TrilhaId />} />

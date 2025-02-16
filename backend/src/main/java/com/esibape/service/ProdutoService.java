@@ -68,6 +68,7 @@ public class ProdutoService {
 	      
         entity.setNome(dto.getNome());
         entity.setPreço(dto.getPreço());
+
         RequerimentoOrçamentoDTO pjDTO = dto.getRequerimento();
         RequerimentoOrçamento requerimento = requerimentoRepository.getReferenceById(pjDTO.getId());
         entity.setRequerimento(requerimento);

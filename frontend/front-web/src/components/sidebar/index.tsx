@@ -6,7 +6,7 @@ import { HiUserGroup } from "react-icons/hi";
 import { FaTrainSubway } from "react-icons/fa6";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChildReaching } from "@fortawesome/free-solid-svg-icons";
-
+import { FaCalendarAlt } from "react-icons/fa";
 const Sidebar: React.FC = () => {
   const [showSubmenu, setShowSubmenu] = useState(false);
   const handleItemClick = () => {
@@ -44,7 +44,7 @@ const Sidebar: React.FC = () => {
           <li>
             <Link to="/kids">
               <FontAwesomeIcon icon={faChildReaching} />
-              <span>Kids</span>
+              <span className="ki">Ki<span className="ds">ds</span></span>
             </Link>
           </li>
           <li onClick={handleItemClick}>
@@ -71,9 +71,9 @@ const Sidebar: React.FC = () => {
             )}
           </li>
           <li>
-            <Link to="#">
-              <i className="bi bi-heart-pulse-fill"></i>
-              <span>Voluntario</span>
+            <Link to="/calendario">
+            <FaCalendarAlt />
+              <span>Calendario</span>
             </Link>
           </li>
 
