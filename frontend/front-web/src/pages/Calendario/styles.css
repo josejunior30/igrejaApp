@@ -5,6 +5,7 @@
   text-align: center;
   border-collapse: collapse;
   margin-left: 4vw;
+  background-color: white;
 }
 
 .calendario-th th {
@@ -28,7 +29,7 @@
 }
 .btn-esquerda {
   position: absolute;
-  left: 19vw;
+  left: 21vw;
 }
 .btn-limpar{
   margin-left: 10px;
