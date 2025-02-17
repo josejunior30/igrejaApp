@@ -22,6 +22,7 @@ public class Produto implements Serializable{
 	private Long id; 
 	private String nome;
 	private BigDecimal preço;
+	private Integer quantidade;
 	@ManyToOne
 	@JoinColumn(name = "requerimento_id")
 	private RequerimentoOrçamento requerimento;
@@ -32,15 +33,15 @@ public class Produto implements Serializable{
 
 
 
-
-	public Produto(Long id, String nome, BigDecimal preço, RequerimentoOrçamento requerimento) {
+	public Produto(Long id, String nome, BigDecimal preço, Integer quantidade, RequerimentoOrçamento requerimento) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.preço = preço;
+		this.quantidade = quantidade;
 		this.requerimento = requerimento;
-		
 	}
+
 
 
 
@@ -80,6 +81,18 @@ public class Produto implements Serializable{
 	public void setRequerimento(RequerimentoOrçamento requerimento) {
 		this.requerimento = requerimento;
 	}
+
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
 
 
 	@Override

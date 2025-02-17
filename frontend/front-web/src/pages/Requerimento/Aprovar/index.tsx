@@ -36,19 +36,25 @@ const RequerimentoAprovar: React.FC = () => {
         if (id) {
           const response = await findById(Number(id));
           console.log("Dados do requerimento:", response.data);
-          setRequerimento(response.data || {});
+
+          if (response.data) {
+            setRequerimento({
+              ...response.data,
+              Total: response.data.total || 0,
+            });
+          }
         }
       } catch (error) {
         console.error("Erro ao carregar detalhes do requerimento:", error);
       }
     };
+
     fetchData();
   }, [id]);
 
   const handleUpdateClick = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (id && requerimento) {
-      // Aqui chamamos updateStatus em vez de updateRequerimento
       updateStatus(
         Number(id),
         StatusRequerimento[requerimento.statusRequerimento]
@@ -198,7 +204,8 @@ const RequerimentoAprovar: React.FC = () => {
                 {requerimento.produto && requerimento.produto.length > 0 ? (
                   requerimento.produto.map((p: Produto, index: number) => (
                     <li key={index} className="list-group-item">
-                      {p.nome} - R${p.preço.toFixed(2)}
+                      {p.nome} - R${p.preço.toFixed(2)} - quantidade:{" "}
+                      {p.quantidade}
                     </li>
                   ))
                 ) : (
@@ -218,13 +225,9 @@ const RequerimentoAprovar: React.FC = () => {
                 className="form-control"
                 name="Total"
                 value={
-                  !isNaN(Number(requerimento.Total)) &&
-                  requerimento.Total !== null // Verifica se é um número
-                    ? Number(requerimento.Total).toLocaleString("pt-BR", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })
-                    : "0,00" // Exibe "0,00" caso não seja um número válido
+                  requerimento.Total > 0
+                    ? `R$ ${requerimento.Total.toFixed(2)}`
+                    : ""
                 }
                 readOnly
               />

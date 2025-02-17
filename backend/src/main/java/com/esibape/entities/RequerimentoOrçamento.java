@@ -48,7 +48,7 @@ public class RequerimentoOrçamento implements Serializable {
 
 	public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovacao,
 			StatusRequerimento statusRequerimento, LocalDate dataPagamento, String pergunta1, String pergunta2,
-			String responsavel, String emailResponsavel, String local, Integer quantidade, BigDecimal total,
+			String responsavel, String emailResponsavel, String local, Integer quantidade,
 			List<Produto> produto) {
 		super();
 		this.id = id;
@@ -63,12 +63,14 @@ public class RequerimentoOrçamento implements Serializable {
 		this.emailResponsavel = emailResponsavel;
 		this.local = local;
 		this.quantidade = quantidade;
-		this.total = total;
 		this.produto = produto;
+		calcularTotal();
 	}
 
-
-
+	public void setProduto(List<Produto> produto) {
+	    this.produto = produto;
+	    calcularTotal(); // Atualiza o total automaticamente
+	}
 
 	public Long getId() {
         return id;
@@ -86,9 +88,6 @@ public class RequerimentoOrçamento implements Serializable {
         return statusRequerimento;
     }
 
-    public BigDecimal getTotal() {
-        return total;
-    }
 
     public void setStatusRequerimento(StatusRequerimento statusRequerimento) {
         this.statusRequerimento = statusRequerimento;
@@ -180,33 +179,24 @@ public class RequerimentoOrçamento implements Serializable {
 		this.dataPagamento = dataPagamento;
 	}
 
-	public void setTotal(BigDecimal total) {
+
+
+
+    public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
 
-	public void setProduto(List<Produto> produto) {
-        this.produto = produto;
-        recalculateTotal();  // Recalcula o total sempre que os produtos são alterados
-    }
 
-    public void addProduto(Produto produto) {
-        produto.setRequerimento(this);
-        this.produto.add(produto);
-        recalculateTotal();  // Recalcula o total ao adicionar um produto
-    }
 
-    public void removeProduto(Produto produto) {
-        this.produto.remove(produto);
-        recalculateTotal();  // Recalcula o total ao remover um produto
+	public BigDecimal getTotal() {
+        return total;
     }
+	public void calcularTotal() {
+	    this.total = produto.stream()
+	            .map(p -> p.getPreço().multiply(BigDecimal.valueOf(p.getQuantidade()))) // Multiplica preço pela quantidade
+	            .reduce(BigDecimal.ZERO, BigDecimal::add); // Soma todos os valores
+	}
 
-    @SuppressWarnings("deprecation")
-	private void recalculateTotal() {
-        this.total = produto.stream()
-                            .map(Produto::getPreço)                     // Mapeia os preços dos produtos
-                            .reduce(BigDecimal.ZERO, BigDecimal::add)   // Soma todos os preços
-                            .setScale(2, BigDecimal.ROUND_HALF_UP);     // Arredonda para 2 casas decimais
-    }
 
     @Override
     public int hashCode() {

@@ -43,19 +43,23 @@ public class RequerimentoOrçamentoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<RequerimentoOrçamentoDTO> insert(@RequestBody RequerimentoOrçamentoDTO dto){
-		RequerimentoOrçamentoDTO entity = service.insert(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(entity.getId()).toUri();
-		return ResponseEntity.created(uri).body(entity);
+	public ResponseEntity<RequerimentoOrçamentoDTO> insert(@RequestBody RequerimentoOrçamentoDTO dto) {
+	    RequerimentoOrçamentoDTO entity = service.insert(dto);
+
+	    URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+	            .path("/{id}")
+	            .buildAndExpand(entity.getId()) // Certifique-se de que getId() existe no DTO
+	            .toUri();
+
+	    return ResponseEntity.created(uri).body(entity);
 	}
 
 	
-	@PutMapping(value="/{id}")
-	public ResponseEntity<RequerimentoOrçamentoDTO>update (@PathVariable Long id, @RequestBody RequerimentoOrçamentoDTO dto){
-		 dto =service.update(id, dto);
-		return ResponseEntity.ok().body(dto);
-	}
+	//@PutMapping(value="/{id}")
+	//public ResponseEntity<RequerimentoOrçamentoDTO>update (@PathVariable Long id, @RequestBody RequerimentoOrçamentoDTO dto){
+		 //dto =service.update(id, dto);
+		//return ResponseEntity.ok().body(dto);
+	//}
 	
 	
 	

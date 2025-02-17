@@ -1,8 +1,13 @@
 package com.esibape.service;
 
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
@@ -43,33 +48,35 @@ public class RequerimentoOrçamentoService {
     }
 	
 	@Transactional
-    public RequerimentoOrçamentoDTO insert(RequerimentoOrçamentoDTO dto) {
-        RequerimentoOrçamento entity = new RequerimentoOrçamento();
-        copyDtoToEntity(dto, entity);
-        entity.setStatusRequerimento(StatusRequerimento.PENDENTE);
+	public RequerimentoOrçamentoDTO insert(RequerimentoOrçamentoDTO dto) {
+	    RequerimentoOrçamento entity = new RequerimentoOrçamento();
+	    copyDtoToEntity(dto, entity);
+	    entity.setStatusRequerimento(StatusRequerimento.PENDENTE);
 
-        // Adiciona os produtos do DTO à entidade RequerimentoOrçamento
-        if (dto.getProduto() != null) {
-            for (ProdutoDTO produtoDTO : dto.getProduto()) {
-                Produto produto = new Produto();
-                produto.setNome(produtoDTO.getNome());
-                produto.setPreço(produtoDTO.getPreço());
-                entity.addProduto(produto);
-            }
-        }
+	    if (dto.getProduto() != null) {
+	        List<Produto> produtos = new ArrayList<>();
+	        for (ProdutoDTO produtoDTO : dto.getProduto()) {
+	            Produto produto = new Produto();
+	            produto.setNome(produtoDTO.getNome());
+	            produto.setPreço(produtoDTO.getPreço());
+	            produto.setQuantidade(produtoDTO.getQuantidade());
+	            produto.setRequerimento(entity);
+	            produtos.add(produto);
+	        }
+	        entity.setProduto(produtos);
+	    }
 
-        // Salva a entidade RequerimentoOrçamento com os produtos no repositório
-        entity = repository.save(entity);
+	    entity.calcularTotal(); // Garante que o total seja atualizado corretamente antes de salvar
+	    entity = repository.save(entity);
 
-        // Enviar o e-mail de notificação
-        String recipientEmail = "joseluizjunior@yahoo.com"; // E-mail do usuário a ser notificado
-        try {
-            emailService.sendNewRequerimentoNotification(recipientEmail, entity.getResponsavel());
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-        return new RequerimentoOrçamentoDTO(entity);
-    }
+	    try {
+	        emailService.sendNewRequerimentoNotification("joseluizjunior@yahoo.com", entity.getResponsavel());
+	    } catch (MessagingException e) {
+	        e.printStackTrace();
+	    }
+
+	    return new RequerimentoOrçamentoDTO(entity, entity.getProduto());
+	}
 
 	@Transactional
 	public RequerimentoOrçamentoDTO updateStatus(Long id, StatusRequerimento newStatus) {
@@ -80,23 +87,19 @@ public class RequerimentoOrçamentoService {
 	    entity.setStatusRequerimento(newStatus);
 	    entity = repository.save(entity);
 
-	    // Envie um e-mail para o usuário que fez a requisição com base no status
-	    String recipientEmail = entity.getEmailResponsavel(); // Supondo que você tenha o e-mail do responsável na entidade
-	    try {
-	        if (newStatus == StatusRequerimento.APROVADO) {
-	            emailService.sendApprovalNotification(recipientEmail); // Chama o método para aprovação
-	        } else if (newStatus == StatusRequerimento.RECUSADO) {
-	            emailService.sendRejectionNotification(recipientEmail); // Chama o novo método para recusa
-	        }
-	    } catch (MessagingException e) {
-	        // Trate a exceção conforme necessário
-	        e.printStackTrace();
-	    }
+	    // Enviar o e-mail de notificação
+        String recipientEmail = "joseluizjunior@yahoo.com"; // E-mail do usuário a ser notificado
+        try {
+            emailService.sendNewRequerimentoNotification(recipientEmail, entity.getResponsavel());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return new RequerimentoOrçamentoDTO(entity);
 
-	    return new RequerimentoOrçamentoDTO(entity);
+	   
 	}
 
-	@Transactional
+	/*@Transactional
     public RequerimentoOrçamentoDTO update(Long id, RequerimentoOrçamentoDTO dto) {
         RequerimentoOrçamento entity = repository.getReferenceById(id);
         copyDtoToEntity(dto, entity);
@@ -116,7 +119,8 @@ public class RequerimentoOrçamentoService {
 
         entity = repository.save(entity);
         return new RequerimentoOrçamentoDTO(entity);
-    }
+    }*/
+	
 	  public void delete(Long id) {
 	        repository.deleteById(id);
 	    }

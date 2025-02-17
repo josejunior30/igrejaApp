@@ -14,7 +14,7 @@ public class ProdutoDTO implements Serializable{
 	private String nome;
 	private BigDecimal preço;
 	private RequerimentoOrçamentoDTO requerimento;
-	
+	private Integer quantidade;
 	public ProdutoDTO() {
 		
 	}
@@ -25,6 +25,7 @@ public class ProdutoDTO implements Serializable{
 		id = entity.getId();
 		this.nome = entity.getNome();
 		this.preço = entity.getPreço();
+		quantidade = entity.getQuantidade();
 
 
 	}
@@ -54,6 +55,16 @@ public class ProdutoDTO implements Serializable{
 
 	public RequerimentoOrçamentoDTO getRequerimento() {
 		return requerimento;
+	}
+
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
 	}
 
 

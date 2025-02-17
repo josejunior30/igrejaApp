@@ -21,7 +21,7 @@ const RequerimentoEditar: React.FC = () => {
     statusRequerimento: StatusRequerimento.PENDENTE,
     responsavel: "",
     emailResponsavel: "",
-  
+
     local: "",
     Total: 0,
     "O que vai ser feito ?": "",
@@ -255,7 +255,7 @@ const RequerimentoEditar: React.FC = () => {
               />
             </div>
 
-            <div className="col-4 col-md-4">
+            <div className=" col-md-2">
               <label htmlFor="preço" className="form-label">
                 Preço do Produto:
               </label>
@@ -285,7 +285,20 @@ const RequerimentoEditar: React.FC = () => {
                 placeholder="Preço do produto"
               />
             </div>
-
+            <div className=" col-3 col-md-2">
+              <label htmlFor="quantidade" className="form-label">
+                Quantidade:
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                name="quantidade"
+                value={newProduto.quantidade}
+                onChange={handleChange}
+                placeholder="Quantidade"
+                required
+              />
+            </div>
             <div className="col-3 col-md-3">
               <button
                 type="button"
