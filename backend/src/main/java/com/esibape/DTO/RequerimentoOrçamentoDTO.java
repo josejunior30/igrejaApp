@@ -21,13 +21,11 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	private LocalDate dataAprovacao;
 	private StatusRequerimento statusRequerimento;
 	private LocalDate dataPagamento;
-	@JsonProperty("O que vai ser feito ?")
 	private String pergunta1;
-	@JsonProperty("Qual o motivo de ser feito ?")
 	private String pergunta2;
 	private String responsavel;
-	 private String emailResponsavel;
-private Integer quantidade;
+	private String emailResponsavel;
+	private Integer quantidade;
 	private String local; 
 	private BigDecimal Total;
 

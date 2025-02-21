@@ -1,0 +1,15 @@
+.formulario-transacao {
+  color: white;
+}
+.menu-transferencia{
+ margin-right: 20px;
+ width: 200px;
+ height: 50px;
+ border-radius: 10px;
+ margin-bottom: 50px;
+ background-color: var(--color-coral);
+ color:white;
+}
+.titulo-transferencia{
+  color: white;
+}

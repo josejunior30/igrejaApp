@@ -66,12 +66,10 @@ const RequerimentoDetalhe: React.FC = () => {
               {new Date(requerimento.dataEvento).toLocaleDateString()}
             </p>
             <p>
-              <strong>O que vai ser feito?</strong>{" "}
-              {requerimento["O que vai ser feito ?"]}
+              <strong>O que vai ser feito?</strong> {requerimento.pergunta1}
             </p>
             <p>
-              <strong>Motivo:</strong>{" "}
-              {requerimento["Qual o motivo de ser feito ?"]}
+              <strong>Motivo:</strong> {requerimento.pergunta2}
             </p>
             <p>
               <strong>Data da Aprovaçao: </strong>

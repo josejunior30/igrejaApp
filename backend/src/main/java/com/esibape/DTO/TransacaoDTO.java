@@ -3,7 +3,7 @@ package com.esibape.DTO;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Objects;
+
 import com.esibape.entities.TipoDespesa;
 import com.esibape.entities.Transacao;
 

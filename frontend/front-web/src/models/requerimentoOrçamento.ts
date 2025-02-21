@@ -8,8 +8,8 @@ export type requerimentoOrçamento={
 
 	statusRequerimento:StatusRequerimento;
 	dataPagamento:Date;
-	"O que vai ser feito ?": string;
-	"Qual o motivo de ser feito ?": string;
+	pergunta1: string;
+	pergunta2: string;
 	responsavel: string;
 	local: string;
 	Total: number;

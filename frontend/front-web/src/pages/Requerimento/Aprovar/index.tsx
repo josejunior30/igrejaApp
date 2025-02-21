@@ -25,8 +25,8 @@ const RequerimentoAprovar: React.FC = () => {
 
     local: "",
     Total: 0,
-    "O que vai ser feito ?": "",
-    "Qual o motivo de ser feito ?": "",
+    pergunta1: "",
+    pergunta2: "",
     produto: [],
   });
 
@@ -175,7 +175,7 @@ const RequerimentoAprovar: React.FC = () => {
                 type="text"
                 className="form-control"
                 name="O que vai ser feito ?"
-                value={requerimento["O que vai ser feito ?"]}
+                value={requerimento.pergunta1}
                 readOnly
               />
             </div>
@@ -191,7 +191,7 @@ const RequerimentoAprovar: React.FC = () => {
                 type="text"
                 className="form-control"
                 name="Qual o motivo de ser feito ?"
-                value={requerimento["Qual o motivo de ser feito ?"]}
+                value={requerimento.pergunta2}
                 readOnly
               />
             </div>

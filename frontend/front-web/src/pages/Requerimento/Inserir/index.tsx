@@ -24,8 +24,8 @@ const RequerimentoOrçamento: React.FC = () => {
       responsavel: "",
       local: "",
       Total: 0,
-      "O que vai ser feito ?": "",
-      "Qual o motivo de ser feito ?": "",
+      pergunta1: "",
+      pergunta2: "",
       produto: [],
     });
 
@@ -148,8 +148,8 @@ const RequerimentoOrçamento: React.FC = () => {
         responsavel:"",
         local: "",
         Total: 0,
-        "O que vai ser feito ?": "",
-        "Qual o motivo de ser feito ?": "",
+        pergunta1: "",
+        pergunta2: "",
         produto: [],
       });
     } catch (error) {
@@ -239,8 +239,8 @@ const RequerimentoOrçamento: React.FC = () => {
               <input
                 type="text"
                 className="form-control"
-                name="O que vai ser feito ?"
-                value={requerimentoOrçamento["O que vai ser feito ?"]}
+                name="pergunta1"
+                value={requerimentoOrçamento.pergunta1}
                 onChange={handleChange}
                 placeholder="Descrição do que será feito"
                 required
@@ -259,7 +259,7 @@ const RequerimentoOrçamento: React.FC = () => {
                 type="text"
                 className="form-control"
                 name="Qual o motivo de ser feito ?"
-                value={requerimentoOrçamento["Qual o motivo de ser feito ?"]}
+                value={requerimentoOrçamento.pergunta2}
                 onChange={handleChange}
                 placeholder="Motivo da ação"
                 required

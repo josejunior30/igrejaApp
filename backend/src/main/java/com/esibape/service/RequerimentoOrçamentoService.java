@@ -1,13 +1,10 @@
 package com.esibape.service;
 
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
@@ -15,12 +12,16 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.esibape.DTO.ProdutoDTO;
 import com.esibape.DTO.RequerimentoOrçamentoDTO;
 import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusRequerimento;
+import com.esibape.entities.TipoDespesa;
+import com.esibape.entities.Transacao;
 import com.esibape.repository.RequerimentoOrçamentoRepository;
+import com.esibape.repository.TransacaoRepository;
 
 @Service
 public class RequerimentoOrçamentoService {
@@ -28,6 +29,10 @@ public class RequerimentoOrçamentoService {
 	private RequerimentoOrçamentoRepository repository;
 	 @Autowired
 	private EmailService emailService; 
+	 
+	 
+		@Autowired
+		private TransacaoRepository transacaoRepository;
 	 
 	@Transactional(readOnly = true)
 	public List<RequerimentoOrçamentoDTO>findAll(){
@@ -78,27 +83,27 @@ public class RequerimentoOrçamentoService {
 	    return new RequerimentoOrçamentoDTO(entity, entity.getProduto());
 	}
 
+
 	@Transactional
-	public RequerimentoOrçamentoDTO updateStatus(Long id, StatusRequerimento newStatus) {
-	    RequerimentoOrçamento entity = repository.findById(id)
-	            .orElseThrow(() -> new NoSuchElementException("Requerimento não encontrado"));
+    public RequerimentoOrçamentoDTO updateStatus(Long id, StatusRequerimento newStatus) {
+        RequerimentoOrçamento entity = repository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Requerimento não encontrado"));
 
-	    // Atualiza o status do requerimento
-	    entity.setStatusRequerimento(newStatus);
-	    entity = repository.save(entity);
+        entity.setStatusRequerimento(newStatus);
+        entity = repository.save(entity);
 
-	    // Enviar o e-mail de notificação
-        String recipientEmail = "joseluizjunior@yahoo.com"; // E-mail do usuário a ser notificado
-        try {
-            emailService.sendNewRequerimentoNotification(recipientEmail, entity.getResponsavel());
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        if (newStatus == StatusRequerimento.APROVADO) {
+            Transacao transacao = new Transacao();
+            transacao.setValor(entity.getTotal());
+            transacao.setData(LocalDate.now());
+            transacao.setDescricao(entity.getPergunta1());
+            transacao.setIsReceita(false);
+            transacao.setTipoDespesa(TipoDespesa.VARIAVEL);
+            transacaoRepository.save(transacao);
         }
+        
         return new RequerimentoOrçamentoDTO(entity);
-
-	   
-	}
-
+    }
 	/*@Transactional
     public RequerimentoOrçamentoDTO update(Long id, RequerimentoOrçamentoDTO dto) {
         RequerimentoOrçamento entity = repository.getReferenceById(id);
