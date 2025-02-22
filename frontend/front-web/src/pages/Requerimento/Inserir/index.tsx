@@ -258,7 +258,7 @@ const RequerimentoOrçamento: React.FC = () => {
               <input
                 type="text"
                 className="form-control"
-                name="Qual o motivo de ser feito ?"
+                name="pergunta2"
                 value={requerimentoOrçamento.pergunta2}
                 onChange={handleChange}
                 placeholder="Motivo da ação"

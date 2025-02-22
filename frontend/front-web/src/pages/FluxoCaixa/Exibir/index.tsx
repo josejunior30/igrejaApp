@@ -4,6 +4,9 @@ import * as FluxoCaixaService from "../../../service/FluxoCaixaService";
 import { Transacao } from "../../../models/transacao";
 import * as TransacaoService from "../../../service/TransacaoService";
 import { fluxoCaixa } from "../../../models/fluxoCaixa";
+import Header from "../../../components/Header";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const FluxoCaixa = () => {
   const [mes, setMes] = useState<number>(new Date().getMonth() + 1);
@@ -40,195 +43,311 @@ const FluxoCaixa = () => {
 
   const ganhos = transacao.filter((t) => t.isReceita);
   const despesas = transacao.filter((t) => !t.isReceita);
+  const handlePrint = () => {
+    const doc = new jsPDF();
+    let y = 10; // Posição inicial
+
+    doc.setFontSize(16);
+    doc.text("Relatório de Fluxo de Caixa", 14, y);
+    y += 10;
+
+    // Tabela de Ganhos
+    doc.setFontSize(14);
+    doc.text("Ganhos", 14, y);
+    y += 5;
+    //@ts-ignore
+    const ganhosTable = doc.autoTable({
+      startY: y,
+      head: [["Data", "Descrição", "Valor (R$)"]],
+      body: ganhos.map((t) => [
+        new Date(t.data).toLocaleDateString(),
+        t.descricao,
+        t.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }),
+      ]),
+      didParseCell: (data: any) => {
+        if (data.section === "body" && data.column.index === 2) {
+          data.cell.styles.textColor = [0, 128, 0]; // Verde para ganhos
+        }
+      },
+    });
+
+    y = ganhosTable.lastAutoTable.finalY + 10; // Atualiza posição Y
+
+    // Tabela de Despesas
+    doc.text("Despesas", 14, y);
+    y += 5;
+    //@ts-ignore
+    const despesasTable = doc.autoTable({
+      startY: y,
+      head: [["Data", "Descrição", "Valor (R$)", "Tipo"]],
+      body: despesas.map((t) => [
+        new Date(t.data).toLocaleDateString(),
+        t.descricao,
+        t.valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }),
+        t.tipoDespesa || "N/A",
+      ]),
+      didParseCell: (data: any) => {
+        if (data.section === "body" && data.column.index === 2) {
+          data.cell.styles.textColor = [255, 0, 0]; // Vermelho para despesas
+        }
+      },
+    });
+
+    y = despesasTable.lastAutoTable.finalY + 10; // Atualiza posição Y
+
+    // Totais do Fluxo de Caixa
+    if (fluxo) {
+      doc.text("Resumo do Fluxo de Caixa", 14, y);
+      y += 5;
+      //@ts-ignore
+      doc.autoTable({
+        startY: y,
+        body: [
+          [
+            "Receita Total",
+            fluxo.receitaTotal.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }),
+          ],
+          [
+            "Despesa Fixa",
+            fluxo.despesaFixa.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }),
+          ],
+          [
+            "Despesa Variável",
+            fluxo.despesaVariavel.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }),
+          ],
+          [
+            "Despesa Total",
+            fluxo.despesaTotal.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }),
+          ],
+          [
+            "Saldo Líquido",
+            fluxo.saldoLiquido.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }),
+          ],
+        ],
+        theme: "grid",
+        didParseCell: (data: any) => {
+          if (data.row.index === 4) {
+            data.cell.styles.textColor =
+              fluxo.saldoLiquido < 0 ? [255, 0, 0] : [0, 128, 0];
+          }
+        },
+      });
+    }
+
+    doc.save("relatorio_fluxo_caixa.pdf");
+  };
 
   return (
-    <div className="container-fluid mt-4">
-      <div className="row justify-content-center">
-        <div className="col-md-10">
-          <h2 className="text-center titulo-fluxo-caixa">Fluxo de Caixa</h2>
+    <>
+      <Header />
+      <div className="container-fluid mt-5 pt-5 mb-5">
+        <div className="row justify-content-center pt-4">
+          <div className="col-md-10">
+            <div className="col-md-8 d-flex offset-4">
+              <h2 className="text-center titulo-fluxo-caixa">Fluxo de Caixa</h2>
+              <div className="d-flex justify-content-center ">
+                <select
+                  className="form-select mx-2"
+                  value={mes}
+                  onChange={(e) => setMes(Number(e.target.value))}
+                >
+                  {[...Array(12)].map((_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {new Date(0, i).toLocaleString("pt-BR", {
+                        month: "long",
+                      })}
+                    </option>
+                  ))}
+                </select>
 
-          <div className="d-flex justify-content-center mb-4">
-            <select
-              className="form-select mx-2"
-              value={mes}
-              onChange={(e) => setMes(Number(e.target.value))}
-            >
-              {[...Array(12)].map((_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {new Date(0, i).toLocaleString("pt-BR", { month: "long" })}
-                </option>
-              ))}
-            </select>
+                <select
+                  className="form-select mx-2"
+                  value={ano}
+                  onChange={(e) => setAno(Number(e.target.value))}
+                >
+                  {[...Array(5)].map((_, i) => (
+                    <option key={i} value={new Date().getFullYear() - i}>
+                      {new Date().getFullYear() - i}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button className="btn btn-primary  " onClick={handlePrint}>
+                Imprimir
+              </button>
+            </div>
 
-            <select
-              className="form-select mx-2"
-              value={ano}
-              onChange={(e) => setAno(Number(e.target.value))}
-            >
-              {[...Array(5)].map((_, i) => (
-                <option key={i} value={new Date().getFullYear() - i}>
-                  {new Date().getFullYear() - i}
-                </option>
-              ))}
-            </select>
+            {error && (
+              <div className="alert alert-danger text-center">{error}</div>
+            )}
+
+            {loading ? (
+              <p className="text-center">Carregando...</p>
+            ) : (
+              <>
+                <div className="d-flex justify-content-between mt-5">
+                  <div className="w-50">
+                    <h4 className="text-center titulo-transacao">Ganhos</h4>
+                    <table className="table table-striped text-center">
+                      <thead>
+                        <tr>
+                          <th>Data</th>
+                          <th>Descrição</th>
+                          <th>Valor</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {ganhos.length > 0 ? (
+                          ganhos.map((t) => (
+                            <tr key={t.id}>
+                              <td>{new Date(t.data).toLocaleDateString()}</td>
+                              <td>{t.descricao}</td>
+                              <td>
+                                R${" "}
+                                {t.valor.toLocaleString("pt-BR", {
+                                  style: "currency",
+                                  currency: "BRL",
+                                })}
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={3}>Nenhum ganho encontrado</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="vr mx-3 "></div>
+
+                  <div className="w-50 mb-4">
+                    <h4 className="text-center titulo-transacao">Despesas</h4>
+                    <table className="table table-striped text-center">
+                      <thead>
+                        <tr>
+                          <th>Data</th>
+                          <th>Descrição</th>
+                          <th>Valor</th>
+                          <th>Tipo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {despesas.length > 0 ? (
+                          despesas.map((t) => (
+                            <tr key={t.id}>
+                              <td>{new Date(t.data).toLocaleDateString()}</td>
+                              <td>{t.descricao}</td>
+                              <td>
+                                R${" "}
+                                {t.valor.toLocaleString("pt-BR", {
+                                  style: "currency",
+                                  currency: "BRL",
+                                })}
+                              </td>
+                              <td>{t.tipoDespesa || "N/A"}</td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={4}>Nenhuma despesa encontrada</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <hr className="my-2 linha" />
+                <div className="d-flex fluxo-caixa-container">
+                  {fluxo && (
+                    <div className="mt-4  offset-2">
+                      <h4>Ganhos Totais </h4>
+                      <hr className="my-2 linha" />
+                      <p>
+                        Receita Total: R${" "}
+                        {fluxo.receitaTotal
+                          ? fluxo.receitaTotal.toLocaleString("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            })
+                          : " 0.00"}
+                      </p>
+                    </div>
+                  )}
+                  {fluxo && (
+                    <div className="mt-4 offset-4 ">
+                      <h4 className="titulo-transacao">Despesas Totais </h4>
+                      <hr className="my-2 linha" />
+                      <p>
+                        Despesa Fixa: R${" "}
+                        {fluxo.despesaTotal
+                          ? fluxo.despesaFixa.toLocaleString("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            })
+                          : "0.00"}
+                      </p>
+                      <p>
+                        Despesa Variavel: R${" "}
+                        {fluxo.despesaTotal
+                          ? fluxo.despesaVariavel.toLocaleString("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            })
+                          : "0.00"}
+                      </p>
+                      <p>
+                        Despesa Total: R${" "}
+                        {fluxo.despesaTotal
+                          ? fluxo.despesaTotal.toLocaleString("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            })
+                          : "0.00"}
+                      </p>
+                    </div>
+                  )}
+                </div>
+                {fluxo && (
+                  <div className="mt-4 text-center saldo-liquido mb-5">
+                    <h4>Saldo Líquido </h4>
+                    <hr className="my-2 linha" />
+                    <p
+                      style={{
+                        color: fluxo.saldoLiquido < 0 ? "#f80000" : "inherit",
+                      }}
+                    >
+                      {fluxo.saldoLiquido
+                        ? fluxo.saldoLiquido.toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          })
+                        : "0.00"}
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
           </div>
-
-          {error && (
-            <div className="alert alert-danger text-center">{error}</div>
-          )}
-
-          {loading ? (
-            <p className="text-center">Carregando...</p>
-          ) : (
-            <>
-              <div className="d-flex justify-content-between">
-                <div className="w-50">
-                  <h4 className="text-center">Ganhos</h4>
-                  <table className="table table-striped text-center">
-                    <thead>
-                      <tr>
-                        <th>Data</th>
-                        <th>Descrição</th>
-                        <th>Valor</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {ganhos.length > 0 ? (
-                        ganhos.map((t) => (
-                          <tr key={t.id}>
-                            <td>{new Date(t.data).toLocaleDateString()}</td>
-                            <td>{t.descricao}</td>
-                            <td>
-                              R${" "}
-                              {t.valor.toLocaleString("pt-BR", {
-                                style: "currency",
-                                currency: "BRL",
-                              })}
-                            </td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan={3}>Nenhum ganho encontrado</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="vr mx-3 "></div>
-
-                <div className="w-50 mb-4">
-                  <h4 className="text-center">Despesas</h4>
-                  <table className="table table-striped text-center">
-                    <thead>
-                      <tr>
-                        <th>Data</th>
-                        <th>Descrição</th>
-                        <th>Valor</th>
-                        <th>Tipo</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {despesas.length > 0 ? (
-                        despesas.map((t) => (
-                          <tr key={t.id}>
-                            <td>{new Date(t.data).toLocaleDateString()}</td>
-                            <td>{t.descricao}</td>
-                            <td>
-                              R${" "}
-                              {t.valor.toLocaleString("pt-BR", {
-                                style: "currency",
-                                currency: "BRL",
-                              })}
-                            </td>
-                            <td>{t.tipoDespesa || "N/A"}</td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan={4}>Nenhuma despesa encontrada</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <hr className="my-2 linha" />
-              <div className="d-flex fluxo-caixa-container">
-                {fluxo && (
-                  <div className="mt-4  offset-2">
-                    <h4>Ganhos Totais </h4>
-                    <hr className="my-2 linha" />
-                    <p>
-                      Receita Total: R${" "}
-                      {fluxo.receitaTotal
-                        ? fluxo.receitaTotal.toLocaleString("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          })
-                        : " 0.00"}
-                    </p>
-                  </div>
-                )}
-                {fluxo && (
-                  <div className="mt-4 offset-4 ">
-                    <h4>Despesas Totais </h4>
-                    <hr className="my-2 linha" />
-                    <p>
-                      Despesa Total: R${" "}
-
-                      {fluxo.despesaTotal
-                        ? fluxo.despesaFixa.toLocaleString("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          })
-                        : "0.00"}
-                    </p>
-                    <p>
-                      Despesa Total: R${" "}
-                      {fluxo.despesaTotal
-                        ? fluxo.despesaVariavel.toLocaleString("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          })
-                        : "0.00"}
-                    </p>
-                    <p>
-                      Despesa Total: R${" "}
-                      {fluxo.despesaTotal
-                        ? fluxo.despesaTotal.toLocaleString("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          })
-                        : "0.00"}
-                    </p>
-                  </div>
-                )}
-              </div>
-              {fluxo && (
-                <div className="mt-4 text-center saldo-liquido ">
-                  <h4>Saldo Líquido </h4>
-                  <p
-                    style={{
-                      color: fluxo.saldoLiquido < 0 ? "#f80000" : "inherit",
-                    }}
-                  >
-                
-                    {fluxo.saldoLiquido
-                      ? fluxo.saldoLiquido.toLocaleString("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        })
-                      : "0.00"}
-                  </p>
-                </div>
-              )}
-            </>
-          )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

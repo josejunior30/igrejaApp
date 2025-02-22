@@ -10,8 +10,12 @@
   font-weight: bold;
 }
 .saldo-liquido p{
-  font-size: 30px;
+  font-size: 40px;
   color: white;
+}
+.titulo-transacao{
+  
+  color: white!important;
 }
 .saldo-liquido {
 
