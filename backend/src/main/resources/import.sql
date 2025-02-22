@@ -229,18 +229,19 @@ INSERT INTO tb_requerimento(data_Requerimento, data_Evento, data_Aprovacao, data
 
 
 INSERT INTO tb_transacao (valor, data, descricao, Is_receita, tipo_despesa) VALUES (2000, '2024-04-05', 'festa da roca', 'TRUE', null )
-INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (5000, '2024-04-05', 'festa da roca', 'TRUE', null )
+
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (5000, '2024-04-10', 'dizimo', 'TRUE', null )
-INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (230, '2024-04-15', 'oferta da roca', 'TRUE', null )
+
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (50, '2024-04-17', 'cafe', 'FALSE', 'VARIAVEL' )
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (70, '2024-04-18', 'material de limpeza', 'FALSE', 'VARIAVEL' )
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (100, '2024-04-17', 'cafe ', 'FALSE', 'VARIAVEL' )
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (390, '2024-04-17', 'cfc', 'FALSE', 'VARIAVEL' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (5000, '2024-04-05', 'festa da roca', 'TRUE', null )
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (500, '2024-04-24', 'internet', 'FALSE', 'FIXO' )
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (200, '2024-04-24', 'salario', 'FALSE', 'FIXO' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (230, '2024-04-15', 'oferta da roca', 'TRUE', null )
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (400, '2024-04-26', 'descartavel', 'FALSE', 'VARIAVEL' )
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (100, '2024-04-28', 'cafe', 'FALSE', 'VARIAVEL' )
-
 
 
 INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'hamburguer', 120.97, 1);

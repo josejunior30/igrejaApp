@@ -50,6 +50,13 @@ public class TransacaoService {
 	    	repository.deleteById(id);
 	 
 	   }
+	   @Transactional(readOnly = true)
+	    public List<TransacaoDTO> buscarPorMesEAno(int mes, int ano) {
+	        List<Transacao> transacoes = repository.findByMesEAno(mes, ano);
+	        return transacoes.stream()
+	                         .map(TransacaoDTO::new)
+	                         .collect(Collectors.toList());
+	    }
 	   
 	private void copyDtoToEntity(TransacaoDTO dto, Transacao entity) {
 		entity.setData(dto.getData());

@@ -57,5 +57,10 @@ public class TransacaoController {
 			 service.delete(id);
 			return ResponseEntity.noContent().build();
 		}
+		  @GetMapping("/mes/{mes}/ano/{ano}")
+		    public ResponseEntity<List<TransacaoDTO>> getTransacoesPorMesEAno(@PathVariable int mes, @PathVariable int ano) {
+		        List<TransacaoDTO> transacoes = service.buscarPorMesEAno(mes, ano);
+		        return ResponseEntity.ok(transacoes);
+		    }
 		
 }

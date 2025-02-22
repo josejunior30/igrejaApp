@@ -19,9 +19,9 @@ export function deleteTransacao(id: number) {
   return axios.delete(`${BASE_URL}/transacao/${id}`);
 }
 
-export function findByResponsavel(responsavel: string) {
-  return axios.get(`${BASE_URL}/calendario/responsavel/${responsavel}`);
+export function findByMesAno(mes: number, ano:number) {
+  return axios.get(`${BASE_URL}/transacao/mes/${mes}/ano/${ano}`);
 }
-export function findByTitulo(titulo: string) {
-  return axios.get(`${BASE_URL}/calendario/titulo/${titulo}`);
-}
+
+
+

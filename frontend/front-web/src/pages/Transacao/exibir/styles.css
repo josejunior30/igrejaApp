@@ -1,0 +1,11 @@
+.ganho-bg {
+
+  color: #00ff3c!important; /* Verde Escuro para Contraste */
+  font-weight: bold;
+}
+
+.despesa-bg {
+
+  color: #f80000!important; /* Texto Branco para Contraste */
+  font-weight: bold;
+}

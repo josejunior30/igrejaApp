@@ -1,0 +1,29 @@
+.ganho-bg {
+
+  color: #00ff3c!important; /* Verde Escuro para Contraste */
+  font-weight: bold;
+}
+
+.despesa-bg {
+
+  color: #f80000!important; /* Texto Branco para Contraste */
+  font-weight: bold;
+}
+.saldo-liquido p{
+  font-size: 30px;
+  color: white;
+}
+.saldo-liquido {
+
+  color: white;
+}
+.titulo-fluxo-caixa{
+  color:white;
+}
+.fluxo-caixa-container{
+  color: white;
+}
+.linha{
+  color:white;
+
+}

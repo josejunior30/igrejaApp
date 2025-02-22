@@ -56,6 +56,7 @@ import CalendarioAtividade from "./pages/Calendario";
 import RequerimentoDetalhe from "./pages/Requerimento/detalhe";
 import Transacao from "./pages/Transacao/inserir";
 import TransacaoExibir from "./pages/Transacao/exibir";
+import FluxoCaixa from "./pages/FluxoCaixa/Exibir";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -322,7 +323,8 @@ function App() {
           <Route path="trilho/estudo/exibir" element={<ExibirPdfs />} />
           <Route path="/calendario" element={<CalendarioAtividade />} />
           <Route path="/transacao" element={<Transacao />} />
-          <Route path="/transacao-exibir" element={<TransacaoExibir/>} />
+          <Route path="/transacao-exibir" element={<TransacaoExibir />} />
+          <Route path="/fluxo-caixa" element={<FluxoCaixa />} />
         </Routes>
       </Router>
     </ContextToken.Provider>

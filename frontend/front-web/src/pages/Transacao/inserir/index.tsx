@@ -66,8 +66,10 @@ const Transacao = () => {
           <div className="col-10 text-center">
             <Link to="/requerimento"><button className="menu-transferencia">Pedido de Compra</button></Link>
             
-            <button className="menu-transferencia">Todas as Transaçoes </button>
-            <button className="menu-transferencia">Fluxo de Caixa</button>
+            <Link to="/transacao-exibir"><button className="menu-transferencia">Extrato</button></Link>
+            <Link to="/fluxo-caixa"><button className="menu-transferencia">Fluxo de Caixa</button></Link>
+
+     
           </div>
           <div className="col-6 text-center">
             <h3 className="titulo-transferencia">Inserir Transaçao</h3>
