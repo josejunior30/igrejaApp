@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.esibape.DTO.TransacaoDTO;
 import com.esibape.service.TransacaoService;
 
@@ -66,5 +68,9 @@ public class TransacaoController {
 		        List<TransacaoDTO> transacoes = service.buscarPorMesEAno(mes, ano);
 		        return ResponseEntity.ok(transacoes);
 		    }
-		
+		  @GetMapping("/buscar")
+		    public ResponseEntity<List<TransacaoDTO>> buscarPorDescricao(@RequestParam String descricao) {
+		        List<TransacaoDTO> transacoes = service.buscarPorDescricao(descricao);
+		        return ResponseEntity.ok(transacoes);
+		    }
 }

@@ -64,6 +64,15 @@ public class TransacaoService {
 	                        .map(TransacaoDTO::new)
 	                        .collect(Collectors.toList());
 	   }
+	   
+	   @Transactional(readOnly = true)
+	   public List<TransacaoDTO> buscarPorDescricao(String descricao) {
+	       List<Transacao> transacoes = repository.buscarPorDescricao("%" + descricao + "%");
+	       return transacoes.stream()
+	                        .map(TransacaoDTO::new)
+	                        .collect(Collectors.toList());
+	   }
+
 	private void copyDtoToEntity(TransacaoDTO dto, Transacao entity) {
 		entity.setData(dto.getData());
 		entity.setDescricao(dto.getDescricao());

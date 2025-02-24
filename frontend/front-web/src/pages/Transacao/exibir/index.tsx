@@ -4,7 +4,7 @@ import * as TransacaoService from "../../../service/TransacaoService";
 import Header from "../../../components/Header";
 import "./styles.css";
 import jsPDF from "jspdf";
-import "jspdf-autotable"; // Importação necessária para tabelas no PDF
+import "jspdf-autotable";
 import { PiTrashFill } from "react-icons/pi";
 
 const TransacaoExibir = () => {
@@ -20,6 +20,7 @@ const TransacaoExibir = () => {
       TransacaoService.findByMesAno(mes, ano)
         .then((response) => {
           setTransacao(response.data);
+          setFilteredTransacao(response.data);
         })
         .catch((error) => {
           console.error("Erro ao buscar dados:", error);
@@ -39,16 +40,21 @@ const TransacaoExibir = () => {
     }
   }, [transacao, mostrarGanhos, mostrarDespesas]);
 
-  // Método para definir a classe CSS de fundo para "Ganho" e "Despesa"
+  const handleFetchAnual = () => {
+    TransacaoService.findByAno(ano)
+      .then((response) => {
+        setTransacao(response.data);
+        setFilteredTransacao(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar transações do ano:", error);
+      });
+  };
+
   const getCorBackground = (isReceita: boolean) => {
     return isReceita ? "ganho-bg" : "despesa-bg";
   };
 
-  // Método para definir a cor do texto no PDF (Verde para ganhos, Vermelho para despesas)
-  const getTextColor = (isReceita: boolean) => {
-    return isReceita ? [0, 128, 0] : [255, 0, 0]; // Verde para Ganhos, Vermelho para Despesas
-  };
-  // Método para gerar um PDF com os dados da tabela
   const handlePrint = () => {
     const doc = new jsPDF();
     doc.text("Relatório de Transações", 14, 10);
@@ -60,28 +66,23 @@ const TransacaoExibir = () => {
       body: filteredTransacao.map((t) => [
         new Date(t.data).toLocaleDateString(),
         t.descricao,
-        t.valor.toFixed(2),
+        t.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 }),
         t.isReceita ? "Ganho" : "Despesa",
         t.tipoDespesa || "-",
       ]),
-      didParseCell: function (data: any) {
-        if (data.section === "body" && data.column.index === 3) {
-          const isReceita = data.cell.text[0] === "Ganho";
-          data.cell.styles.textColor = getTextColor(isReceita);
-        }
-      },
     });
 
     doc.save("relatorio_transacoes.pdf");
   };
 
   const handleDelete = (id: number) => {
-    const confirmed = window.confirm("Tem certeza que deseja excluir esta transação?");
-    if (confirmed) {
+    if (window.confirm("Tem certeza que deseja excluir esta transação?")) {
       TransacaoService.deleteTransacao(id)
         .then(() => {
           setTransacao((prevState) => prevState.filter((t) => t.id !== id));
-          setFilteredTransacao((prevState) => prevState.filter((t) => t.id !== id));
+          setFilteredTransacao((prevState) =>
+            prevState.filter((t) => t.id !== id)
+          );
           alert("Transação excluída com sucesso!");
         })
         .catch((error) => {
@@ -90,18 +91,38 @@ const TransacaoExibir = () => {
         });
     }
   };
-  
+
+  const handleSearch = (descricao: string) => {
+    if (descricao.trim() !== "") {
+      TransacaoService.findBybuscarPorDescricao(descricao)
+        .then((response) => {
+          setFilteredTransacao(response.data);
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar transações por descrição:", error);
+        });
+    } else {
+      setFilteredTransacao(transacao);
+    }
+  };
+
   return (
     <>
       <Header />
-
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center">
-          <div className="col-md-10 col-11 mt-5 offset-1">
+          <div className="col-md-10 col-11 mt-5">
             {/* Filtros de Mês e Ano */}
-            <div className="col-4 offset-4">
+
+            <div className="col-md-5 offset-4">
               <div className="d-flex justify-content-center mb-4">
-                {/* Filtro de Mês */}
+                <input
+                  className="form-control"
+                  type="text"
+                  placeholder="Insira a descrição"
+                  onChange={(e) => handleSearch(e.target.value)}
+                />
+
                 <select
                   className="form-select mx-2"
                   value={mes}
@@ -116,7 +137,6 @@ const TransacaoExibir = () => {
                   ))}
                 </select>
 
-                {/* Filtro de Ano */}
                 <select
                   className="form-select mx-2"
                   value={ano}
@@ -128,12 +148,19 @@ const TransacaoExibir = () => {
                     </option>
                   ))}
                 </select>
+
+                <button
+                  className="btn btn-secondary mx-3"
+                  onClick={handleFetchAnual}
+                >
+                  Anual
+                </button>
               </div>
             </div>
 
             {/* Checkboxes de Filtro e Botões de Impressão */}
-            <div className="d-flex justify-content-center align-items-center mb-3">
-              <div className="form-check mx-3">
+            <div className="d-flex offset-4 align-items-center mb-3">
+              <div className="form-check mx-2">
                 <input
                   className="form-check-input"
                   type="checkbox"
@@ -176,14 +203,21 @@ const TransacaoExibir = () => {
                     <tr key={t.id}>
                       <td>{new Date(t.data).toLocaleDateString()}</td>
                       <td>{t.descricao}</td>
-                      <td>R${t.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</td>
-
+                      <td>
+                        R$
+                        {t.valor.toLocaleString("pt-BR", {
+                          minimumFractionDigits: 2,
+                        })}
+                      </td>
                       <td className={getCorBackground(t.isReceita)}>
                         {t.isReceita ? "Ganho" : "Despesa"}
                       </td>
                       <td>{t.tipoDespesa || "-"}</td>
                       <td>
-                        <button className="btn btn-danger " onClick={() => handleDelete(t.id)}>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(t.id)}
+                        >
                           <PiTrashFill />
                         </button>
                       </td>
@@ -191,7 +225,7 @@ const TransacaoExibir = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={5}>Nenhuma transação encontrada</td>
+                    <td colSpan={6}>Nenhuma transação encontrada</td>
                   </tr>
                 )}
               </tbody>

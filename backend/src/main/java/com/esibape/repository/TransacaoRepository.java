@@ -22,4 +22,9 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long >{
 
 	    @Query("SELECT t FROM Transacao t WHERE YEAR(t.data) = :ano")
 	    List<Transacao> findByAno(@Param("ano") int ano);
+	    
+	    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricao) LIKE LOWER(CONCAT('%', :descricao, '%'))")
+	    List<Transacao> buscarPorDescricao(@Param("descricao") String descricao);
+
+
 }

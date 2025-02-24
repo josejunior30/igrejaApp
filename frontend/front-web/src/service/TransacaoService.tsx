@@ -8,11 +8,17 @@ export function findAno(ano: number = 2025) {
   return axios.get(`${BASE_URL}/transacao/ano/${ano}`);
 }
 
-
+export function findByAno(ano: number ) {
+  return axios.get(`${BASE_URL}/transacao/ano/${ano}`);
+}
 export function insertTransacao(Transacao: any) {
   return axios.post(`${BASE_URL}/transacao`, Transacao);
 }
 
+export function findBybuscarPorDescricao(descricao:string) {
+  
+    return axios.get(`${BASE_URL}/transacao/buscar?descricao=${descricao}`);
+  }
 export function updateCalendario(id: number, Calendario: any) {
   return axios.put(`${BASE_URL}/calendario/${id}`, Calendario);
 }
