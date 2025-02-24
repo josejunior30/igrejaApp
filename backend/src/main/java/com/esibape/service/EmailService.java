@@ -28,6 +28,7 @@ public class EmailService {
                 "<p>Um novo requerimento foi criado por <strong>" + responsavel + "</strong>. Acesse o sistema i-SIBAPE para mais detalhes.</p>" +
                 "<p>Atenciosamente,</p>" +
                 "<p><strong>Equipe i-SIBAPE</strong></p>" +
+                "<p>https://sibape.com.br/</p>" +
                 "</body>" +
                 "</html>";
 
