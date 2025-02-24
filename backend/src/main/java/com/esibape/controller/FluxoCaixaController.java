@@ -59,4 +59,10 @@ public class FluxoCaixaController {
 			return ResponseEntity.ok().body(fluxoCaixa);
 		}
 	
+	 @GetMapping("/acumulado/{mes}/{ano}")
+	    public ResponseEntity<FluxoCaixaDTO> getFluxoCaixaAcumulado(@PathVariable Integer mes, @PathVariable Integer ano) {
+	        FluxoCaixa fluxoCaixa = service.calcularFluxoAcumuladoAteMes(mes, ano);
+	        return ResponseEntity.ok(new FluxoCaixaDTO(fluxoCaixa));
+	    }
+	
 }

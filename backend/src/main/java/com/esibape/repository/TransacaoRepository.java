@@ -20,5 +20,6 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long >{
 	    @Query("SELECT t FROM Transacao t WHERE MONTH(t.data) = :mes AND YEAR(t.data) = :ano")
 	    List<Transacao> findByMesEAno(@Param("mes") int mes, @Param("ano") int ano);
 
-
+	    @Query("SELECT t FROM Transacao t WHERE YEAR(t.data) = :ano")
+	    List<Transacao> findByAno(@Param("ano") int ano);
 }

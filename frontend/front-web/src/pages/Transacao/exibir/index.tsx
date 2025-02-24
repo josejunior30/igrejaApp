@@ -5,6 +5,7 @@ import Header from "../../../components/Header";
 import "./styles.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable"; // Importação necessária para tabelas no PDF
+import { PiTrashFill } from "react-icons/pi";
 
 const TransacaoExibir = () => {
   const [transacao, setTransacao] = useState<Transacao[]>([]);
@@ -30,14 +31,12 @@ const TransacaoExibir = () => {
     if (!mostrarGanhos && !mostrarDespesas) {
       setFilteredTransacao(transacao);
     } else {
-      const filtrado = transacao.filter((t) => 
-        (mostrarGanhos && t.isReceita) || 
-        (mostrarDespesas && !t.isReceita)
+      const filtrado = transacao.filter(
+        (t) =>
+          (mostrarGanhos && t.isReceita) || (mostrarDespesas && !t.isReceita)
       );
       setFilteredTransacao(filtrado);
     }
-
-    
   }, [transacao, mostrarGanhos, mostrarDespesas]);
 
   // Método para definir a classe CSS de fundo para "Ganho" e "Despesa"
@@ -65,7 +64,7 @@ const TransacaoExibir = () => {
         t.isReceita ? "Ganho" : "Despesa",
         t.tipoDespesa || "-",
       ]),
-      didParseCell: function (data:any) {
+      didParseCell: function (data: any) {
         if (data.section === "body" && data.column.index === 3) {
           const isReceita = data.cell.text[0] === "Ganho";
           data.cell.styles.textColor = getTextColor(isReceita);
@@ -75,6 +74,23 @@ const TransacaoExibir = () => {
 
     doc.save("relatorio_transacoes.pdf");
   };
+
+  const handleDelete = (id: number) => {
+    const confirmed = window.confirm("Tem certeza que deseja excluir esta transação?");
+    if (confirmed) {
+      TransacaoService.deleteTransacao(id)
+        .then(() => {
+          setTransacao((prevState) => prevState.filter((t) => t.id !== id));
+          setFilteredTransacao((prevState) => prevState.filter((t) => t.id !== id));
+          alert("Transação excluída com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao excluir transação:", error);
+          alert("Erro ao excluir a transação.");
+        });
+    }
+  };
+  
   return (
     <>
       <Header />
@@ -82,21 +98,30 @@ const TransacaoExibir = () => {
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center">
           <div className="col-md-10 col-11 mt-5 offset-1">
-            
             {/* Filtros de Mês e Ano */}
             <div className="col-4 offset-4">
               <div className="d-flex justify-content-center mb-4">
                 {/* Filtro de Mês */}
-                <select className="form-select mx-2" value={mes} onChange={(e) => setMes(Number(e.target.value))}>
+                <select
+                  className="form-select mx-2"
+                  value={mes}
+                  onChange={(e) => setMes(Number(e.target.value))}
+                >
                   {[...Array(12)].map((_, i) => (
                     <option key={i + 1} value={i + 1}>
-                      {new Date(0, i).toLocaleString("pt-BR", { month: "long" })}
+                      {new Date(0, i).toLocaleString("pt-BR", {
+                        month: "long",
+                      })}
                     </option>
                   ))}
                 </select>
 
                 {/* Filtro de Ano */}
-                <select className="form-select mx-2" value={ano} onChange={(e) => setAno(Number(e.target.value))}>
+                <select
+                  className="form-select mx-2"
+                  value={ano}
+                  onChange={(e) => setAno(Number(e.target.value))}
+                >
                   {[...Array(5)].map((_, i) => (
                     <option key={i} value={new Date().getFullYear() - i}>
                       {new Date().getFullYear() - i}
@@ -117,7 +142,7 @@ const TransacaoExibir = () => {
                 />
                 <label className="form-check-label">Mostrar Ganhos</label>
               </div>
-              
+
               <div className="form-check mx-3">
                 <input
                   className="form-check-input"
@@ -129,7 +154,7 @@ const TransacaoExibir = () => {
               </div>
 
               <button className="btn btn-secondary mx-3" onClick={handlePrint}>
-               Imprimir
+                Imprimir
               </button>
             </div>
 
@@ -142,6 +167,7 @@ const TransacaoExibir = () => {
                   <th scope="col">Valor</th>
                   <th scope="col">Tipo</th>
                   <th scope="col">Tipo de Despesa</th>
+                  <th scope="col">Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -150,11 +176,17 @@ const TransacaoExibir = () => {
                     <tr key={t.id}>
                       <td>{new Date(t.data).toLocaleDateString()}</td>
                       <td>{t.descricao}</td>
-                      <td>R$ {t.valor.toFixed(2)}</td>
+                      <td>R${t.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</td>
+
                       <td className={getCorBackground(t.isReceita)}>
                         {t.isReceita ? "Ganho" : "Despesa"}
                       </td>
                       <td>{t.tipoDespesa || "-"}</td>
+                      <td>
+                        <button className="btn btn-danger " onClick={() => handleDelete(t.id)}>
+                          <PiTrashFill />
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
@@ -164,7 +196,6 @@ const TransacaoExibir = () => {
                 )}
               </tbody>
             </table>
-
           </div>
         </div>
       </div>

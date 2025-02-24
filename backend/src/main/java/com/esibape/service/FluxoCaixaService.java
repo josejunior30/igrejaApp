@@ -51,39 +51,87 @@ public class FluxoCaixaService {
     public FluxoCaixa calcularFluxoParaMes(Integer mes, Integer ano) {
         LocalDate inicio = LocalDate.of(ano, mes, 1);
         LocalDate fim = inicio.withDayOfMonth(inicio.lengthOfMonth());
-        
+
         List<Transacao> transacoes = transacaoRepository.findByDataBetween(inicio, fim);
+
         BigDecimal receitaTotal = transacoes.stream()
                 .filter(Transacao::getIsReceita)
                 .map(Transacao::getValor)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        
+
         BigDecimal despesaTotal = transacoes.stream()
                 .filter(t -> !t.getIsReceita())
                 .map(Transacao::getValor)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        
+
         BigDecimal despesaFixa = transacoes.stream()
                 .filter(t -> !t.getIsReceita() && t.getTipoDespesa() == TipoDespesa.FIXO)
                 .map(Transacao::getValor)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        
+
         BigDecimal despesaVariavel = transacoes.stream()
                 .filter(t -> !t.getIsReceita() && t.getTipoDespesa() == TipoDespesa.VARIAVEL)
                 .map(Transacao::getValor)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        
+
         BigDecimal saldoLiquido = receitaTotal.subtract(despesaTotal);
-        
-        FluxoCaixa fluxoCaixa = repository.findByMesAndAno(mes, ano)
-                .orElse(new FluxoCaixa(null, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, mes, ano));
-        
+
+        // Verifica se já existe um fluxo de caixa para o mês
+        FluxoCaixa fluxoCaixa = repository.findByMesAndAno(mes, ano);
+        if (fluxoCaixa == null) {
+            fluxoCaixa = new FluxoCaixa(null, receitaTotal, despesaTotal, saldoLiquido, despesaFixa, despesaVariavel, mes, ano);
+        } else {
+            fluxoCaixa.setReceitaTotal(receitaTotal);
+            fluxoCaixa.setDespesaTotal(despesaTotal);
+            fluxoCaixa.setDespesaFixa(despesaFixa);
+            fluxoCaixa.setDespesaVariavel(despesaVariavel);
+            fluxoCaixa.setSaldoLiquido(saldoLiquido);
+        }
+
+        return repository.save(fluxoCaixa);
+    }
+
+    
+    @Transactional
+    public FluxoCaixa calcularFluxoAcumuladoAteMes(Integer mes, Integer ano) {
+        LocalDate inicioAno = LocalDate.of(ano, 1, 1);
+        LocalDate fimMesAtual = LocalDate.of(ano, mes, 1).withDayOfMonth(LocalDate.of(ano, mes, 1).lengthOfMonth());
+
+        List<Transacao> transacoes = transacaoRepository.findByDataBetween(inicioAno, fimMesAtual);
+
+        BigDecimal receitaTotal = transacoes.stream()
+                .filter(Transacao::getIsReceita)
+                .map(Transacao::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal despesaTotal = transacoes.stream()
+                .filter(t -> !t.getIsReceita())
+                .map(Transacao::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal despesaFixa = transacoes.stream()
+                .filter(t -> !t.getIsReceita() && t.getTipoDespesa() == TipoDespesa.FIXO)
+                .map(Transacao::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal despesaVariavel = transacoes.stream()
+                .filter(t -> !t.getIsReceita() && t.getTipoDespesa() == TipoDespesa.VARIAVEL)
+                .map(Transacao::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal saldoLiquido = receitaTotal.subtract(despesaTotal);
+
+        FluxoCaixa fluxoCaixa = repository.findByMesAndAno(mes, ano);
+        if (fluxoCaixa == null) {
+            fluxoCaixa = new FluxoCaixa(null, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, mes, ano);
+        }
+
         fluxoCaixa.setReceitaTotal(receitaTotal);
         fluxoCaixa.setDespesaTotal(despesaTotal);
         fluxoCaixa.setDespesaFixa(despesaFixa);
         fluxoCaixa.setDespesaVariavel(despesaVariavel);
         fluxoCaixa.setSaldoLiquido(saldoLiquido);
-        
+
         return repository.save(fluxoCaixa);
     }
     @Transactional(readOnly = true)

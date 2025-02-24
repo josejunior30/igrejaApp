@@ -9,9 +9,17 @@
   color: #f80000!important; /* Texto Branco para Contraste */
   font-weight: bold;
 }
-.saldo-liquido p{
+.saldo-liquido {
   font-size: 40px;
   color: white;
+  font-weight: bolder;
+}
+.btn-anual{
+  margin-left: 10px!important;
+}
+.DespesaTotal{
+  font-size: 22px;
+  font-weight: bolder;
 }
 .titulo-transacao{
   

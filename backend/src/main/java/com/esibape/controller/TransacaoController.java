@@ -51,7 +51,11 @@ public class TransacaoController {
 			
 			return ResponseEntity.created(uri).body(entity);
 		}		
-		
+		   @GetMapping("/ano/{ano}")
+		    public ResponseEntity<List<TransacaoDTO>> getTransacoesPorAno(@PathVariable int ano) {
+		        List<TransacaoDTO> transacoes = service.buscarPorAno(ano);
+		        return ResponseEntity.ok(transacoes);
+		    }
 		@DeleteMapping(value="/{id}")
 		public ResponseEntity<TransacaoDTO>delete(@PathVariable Long id){
 			 service.delete(id);

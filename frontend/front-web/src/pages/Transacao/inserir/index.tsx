@@ -66,7 +66,7 @@ const Transacao = () => {
           <div className="col-10 text-center">
             <Link to="/requerimento"><button className="menu-transferencia">Pedido de Compra</button></Link>
             
-            <Link to="/transacao-exibir"><button className="menu-transferencia">Extrato</button></Link>
+            <Link to="/transacao-exibir"><button className="menu-transferencia">Todas as Transaçoes</button></Link>
             <Link to="/fluxo-caixa"><button className="menu-transferencia">Fluxo de Caixa</button></Link>
 
      

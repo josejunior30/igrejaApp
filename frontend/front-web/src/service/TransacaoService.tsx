@@ -2,12 +2,13 @@ import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
 
 export function findAll() {
-  return axios.get(`${BASE_URL}/calendario`);
+  return axios.get(`${BASE_URL}/transacao`);
+}
+export function findAno(ano: number = 2025) {
+  return axios.get(`${BASE_URL}/transacao/ano/${ano}`);
 }
 
-export function findById(id: number) {
-  return axios.get(`${BASE_URL}/calendario/${id}`);
-}
+
 export function insertTransacao(Transacao: any) {
   return axios.post(`${BASE_URL}/transacao`, Transacao);
 }

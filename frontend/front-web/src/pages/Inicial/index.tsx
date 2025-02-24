@@ -33,8 +33,8 @@ const Inicial = () => (
             id="img-menu"
           />
 
-          <h3>Tesouraria</h3>
-          <Link to="#">
+          <h3>Finanças</h3>
+          <Link to="/transacao">
             <button className="btn btn-info">Clique aqui</button>
           </Link>
         </div>
@@ -48,7 +48,7 @@ const Inicial = () => (
 
           <h3>Secretaria</h3>
           <Link to="/membro">
-            <button className="btn btn-info">Clique aqui</button>
+            <button className="btn btn-info ">Clique aqui</button>
           </Link>
         </div>
         <div className="col-9 col-md-3" id="col-img">

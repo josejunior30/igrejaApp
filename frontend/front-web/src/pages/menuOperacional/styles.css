@@ -61,7 +61,8 @@ color: white;
 
 #col-img h3{
   opacity: 0;
-transition: opacity 0.3s;
+  transform: translateY(-420%);
+  transition: transform 0.9s;
 text-align: center;
 }
 

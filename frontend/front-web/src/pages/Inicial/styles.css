@@ -34,13 +34,15 @@ html {
 
 #col-img button {
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.7s;
   border-radius: 10px;
   background-color: var(--color-coral);
   border: none;
   color: white;
   width: 170px;
-  margin-right: 21vw;
+  position: relative;
+  margin-right: 20vw;
+
 }
 
 #col-img:hover button {
