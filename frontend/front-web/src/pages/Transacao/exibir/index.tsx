@@ -14,13 +14,15 @@ const TransacaoExibir = () => {
   const [ano, setAno] = useState<number>(new Date().getFullYear());
   const [mostrarGanhos, setMostrarGanhos] = useState(false);
   const [mostrarDespesas, setMostrarDespesas] = useState(false);
+  const [totalPesquisa, setTotalPesquisa] = useState<number>(0);
+  const [termoPesquisa, setTermoPesquisa] = useState<string>("");
 
   useEffect(() => {
     if (mes && ano) {
       TransacaoService.findByMesAno(mes, ano)
         .then((response) => {
           setTransacao(response.data);
-          setFilteredTransacao(response.data);
+          aplicarFiltros(response.data);
         })
         .catch((error) => {
           console.error("Erro ao buscar dados:", error);
@@ -29,32 +31,58 @@ const TransacaoExibir = () => {
   }, [mes, ano]);
 
   useEffect(() => {
-    if (!mostrarGanhos && !mostrarDespesas) {
-      setFilteredTransacao(transacao);
-    } else {
-      const filtrado = transacao.filter(
-        (t) =>
-          (mostrarGanhos && t.isReceita) || (mostrarDespesas && !t.isReceita)
-      );
-      setFilteredTransacao(filtrado);
-    }
+    aplicarFiltros(transacao);
   }, [transacao, mostrarGanhos, mostrarDespesas]);
 
   const handleFetchAnual = () => {
     TransacaoService.findByAno(ano)
       .then((response) => {
         setTransacao(response.data);
-        setFilteredTransacao(response.data);
+        aplicarFiltros(response.data);
       })
       .catch((error) => {
         console.error("Erro ao buscar transações do ano:", error);
       });
   };
 
+  const handleSearch = (descricao: string) => {
+    setTermoPesquisa(descricao); // Atualiza o estado do termo pesquisado
+
+    if (descricao.trim() !== "") {
+      TransacaoService.findBybuscarPorDescricao(descricao)
+        .then((response) => {
+          aplicarFiltros(response.data);
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar transações por descrição:", error);
+        });
+    } else {
+      aplicarFiltros(transacao);
+    }
+  };
+
+  const aplicarFiltros = (lista: Transacao[]) => {
+    let filtrado = lista;
+
+    if (mostrarGanhos || mostrarDespesas) {
+      filtrado = lista.filter(
+        (t) =>
+          (mostrarGanhos && t.isReceita) || (mostrarDespesas && !t.isReceita)
+      );
+    }
+
+    setFilteredTransacao(filtrado);
+    calcularTotal(filtrado);
+  };
+
+  const calcularTotal = (lista: Transacao[]) => {
+    const total = lista.reduce((acc, t) => acc + t.valor, 0);
+    setTotalPesquisa(total);
+  };
+
   const getCorBackground = (isReceita: boolean) => {
     return isReceita ? "ganho-bg" : "despesa-bg";
   };
-
   const handlePrint = () => {
     const doc = new jsPDF();
     doc.text("Relatório de Transações", 14, 10);
@@ -74,52 +102,20 @@ const TransacaoExibir = () => {
 
     doc.save("relatorio_transacoes.pdf");
   };
-
-  const handleDelete = (id: number) => {
-    if (window.confirm("Tem certeza que deseja excluir esta transação?")) {
-      TransacaoService.deleteTransacao(id)
-        .then(() => {
-          setTransacao((prevState) => prevState.filter((t) => t.id !== id));
-          setFilteredTransacao((prevState) =>
-            prevState.filter((t) => t.id !== id)
-          );
-          alert("Transação excluída com sucesso!");
-        })
-        .catch((error) => {
-          console.error("Erro ao excluir transação:", error);
-          alert("Erro ao excluir a transação.");
-        });
-    }
-  };
-
-  const handleSearch = (descricao: string) => {
-    if (descricao.trim() !== "") {
-      TransacaoService.findBybuscarPorDescricao(descricao)
-        .then((response) => {
-          setFilteredTransacao(response.data);
-        })
-        .catch((error) => {
-          console.error("Erro ao buscar transações por descrição:", error);
-        });
-    } else {
-      setFilteredTransacao(transacao);
-    }
-  };
-
   return (
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center">
           <div className="col-md-10 col-11 mt-5">
-            {/* Filtros de Mês e Ano */}
-
+            {/* Filtros de Mês, Ano e Pesquisa */}
             <div className="col-md-5 offset-4">
               <div className="d-flex justify-content-center mb-4">
                 <input
                   className="form-control"
                   type="text"
                   placeholder="Insira a descrição"
+                  value={termoPesquisa}
                   onChange={(e) => handleSearch(e.target.value)}
                 />
 
@@ -158,7 +154,7 @@ const TransacaoExibir = () => {
               </div>
             </div>
 
-            {/* Checkboxes de Filtro e Botões de Impressão */}
+            {/* Filtros de Ganhos e Despesas */}
             <div className="d-flex offset-4 align-items-center mb-3">
               <div className="form-check mx-2">
                 <input
@@ -179,11 +175,29 @@ const TransacaoExibir = () => {
                 />
                 <label className="form-check-label">Mostrar Despesas</label>
               </div>
+            </div>
+         
+            {/* Exibir Total SOMENTE se houver pesquisa */}
+            {termoPesquisa.trim() !== "" && (
+              <div className="text-center mt-2 totalFiltro">
+                <h5>Total das Transações Filtradas:</h5>
+                <p>
+                  <strong>
+                    {totalPesquisa.toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+                  </strong>
+                </p>
+              </div>
+            )}
+            <div className="col-12 text-end mb-2">
 
-              <button className="btn btn-secondary mx-3" onClick={handlePrint}>
+           
+               <button className="btn btn-secondary mx-3" onClick={handlePrint}>
                 Imprimir
               </button>
-            </div>
+              </div>
 
             {/* Tabela de Transações */}
             <table className="table table-striped text-center">
@@ -194,7 +208,6 @@ const TransacaoExibir = () => {
                   <th scope="col">Valor</th>
                   <th scope="col">Tipo</th>
                   <th scope="col">Tipo de Despesa</th>
-                  <th scope="col">Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -213,19 +226,11 @@ const TransacaoExibir = () => {
                         {t.isReceita ? "Ganho" : "Despesa"}
                       </td>
                       <td>{t.tipoDespesa || "-"}</td>
-                      <td>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleDelete(t.id)}
-                        >
-                          <PiTrashFill />
-                        </button>
-                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={6}>Nenhuma transação encontrada</td>
+                    <td colSpan={5}>Nenhuma transação encontrada</td>
                   </tr>
                 )}
               </tbody>
