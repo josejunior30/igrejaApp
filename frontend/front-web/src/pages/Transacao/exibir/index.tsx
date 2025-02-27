@@ -98,10 +98,33 @@ const TransacaoExibir = () => {
         t.isReceita ? "Ganho" : "Despesa",
         t.tipoDespesa || "-",
       ]),
+      didParseCell: function (data: any) {
+        if (data.row.section === "body" && data.column.index === 3) {
+          // Se for despesa, aplica cor vermelha
+          if (data.cell.raw === "Despesa") {
+            data.cell.styles.textColor = [255, 0, 0]; // Vermelho
+          }
+        }
+      },
     });
+
+    // Se houver pesquisa, adiciona o total de transações filtradas
+    if (termoPesquisa.trim() !== "") {
+      doc.text(
+        `Total das Transações Filtradas: ${totalPesquisa.toLocaleString(
+          "pt-BR",
+          { style: "currency", currency: "BRL" }
+        )}`,
+        14,
+
+        //@ts-ignore
+        doc.autoTable.previous.finalY + 10
+      );
+    }
 
     doc.save("relatorio_transacoes.pdf");
   };
+
   return (
     <>
       <Header />
@@ -176,7 +199,7 @@ const TransacaoExibir = () => {
                 <label className="form-check-label">Mostrar Despesas</label>
               </div>
             </div>
-         
+
             {/* Exibir Total SOMENTE se houver pesquisa */}
             {termoPesquisa.trim() !== "" && (
               <div className="text-center mt-2 totalFiltro">
@@ -192,12 +215,10 @@ const TransacaoExibir = () => {
               </div>
             )}
             <div className="col-12 text-end mb-2">
-
-           
-               <button className="btn btn-secondary mx-3" onClick={handlePrint}>
+              <button className="btn btn-secondary mx-3" onClick={handlePrint}>
                 Imprimir
               </button>
-              </div>
+            </div>
 
             {/* Tabela de Transações */}
             <table className="table table-striped text-center">
