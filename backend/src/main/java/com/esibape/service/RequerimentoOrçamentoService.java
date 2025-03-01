@@ -75,7 +75,7 @@ public class RequerimentoOrçamentoService {
 	    entity = repository.save(entity);
 
 	    try {
-	        emailService.sendNewRequerimentoNotification("joseluizjunior@yahoo.com", entity.getResponsavel());
+	        emailService.sendNewRequerimentoNotification("eleilson_mendes@hotmail.com", entity.getResponsavel());
 	    } catch (MessagingException e) {
 	        e.printStackTrace();
 	    }
