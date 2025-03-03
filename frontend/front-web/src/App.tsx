@@ -57,7 +57,7 @@ import RequerimentoDetalhe from "./pages/Requerimento/detalhe";
 import Transacao from "./pages/Transacao/inserir";
 import TransacaoExibir from "./pages/Transacao/exibir";
 import FluxoCaixa from "./pages/FluxoCaixa/Exibir";
-
+import ContaPagar from "./pages/ContaPagar/inserir";
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
     useState<AccessTokenPayloadDTO>();
@@ -325,6 +325,7 @@ function App() {
           <Route path="/transacao" element={<Transacao />} />
           <Route path="/transacao-exibir" element={<TransacaoExibir />} />
           <Route path="/fluxo-caixa" element={<FluxoCaixa />} />
+          <Route path="/conta-pagar" element={<ContaPagar />} />
         </Routes>
       </Router>
     </ContextToken.Provider>
