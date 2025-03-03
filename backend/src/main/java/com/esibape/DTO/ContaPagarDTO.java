@@ -5,8 +5,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import com.esibape.entities.ContaPagar;
 import com.esibape.entities.StatusPagamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 
@@ -17,8 +21,9 @@ public class ContaPagarDTO implements Serializable{
 	    private String descricao;
 	    private BigDecimal valor;
 	    private LocalDate dataVencimento;
+	    @Enumerated(EnumType.STRING)
 	    private StatusPagamento status;
-	    private String fornecedor;
+	    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	    private LocalDateTime dataCriacao;
 	    private String createdBy;
 
@@ -86,16 +91,6 @@ public class ContaPagarDTO implements Serializable{
 
 	public void setStatus(StatusPagamento status) {
 		this.status = status;
-	}
-
-
-	public String getFornecedor() {
-		return fornecedor;
-	}
-
-
-	public void setFornecedor(String fornecedor) {
-		this.fornecedor = fornecedor;
 	}
 
 

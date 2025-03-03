@@ -7,22 +7,27 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+@Entity
+@Table(name="tb_conta_pagar")
 public class ContaPagar implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	
-	
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,10 +45,9 @@ public class ContaPagar implements Serializable{
     @Column(nullable = false)
     private StatusPagamento status;
 
-    @Column(nullable = false)
-    private String fornecedor;
 
     @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(updatable = false, nullable = false)
     private LocalDateTime dataCriacao;
 
@@ -56,28 +60,18 @@ public class ContaPagar implements Serializable{
     
     
     public ContaPagar(Long id, String descricao, BigDecimal valor, LocalDate dataVencimento, StatusPagamento status,
-			String fornecedor, LocalDateTime dataCriacao, String createdBy) {
+			 LocalDateTime dataCriacao, String createdBy) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.valor = valor;
 		this.dataVencimento = dataVencimento;
 		this.status = status;
-		this.fornecedor = fornecedor;
 		this.dataCriacao = dataCriacao;
 		this.createdBy = createdBy;
 	}
 
 
-	@PrePersist
-    public void setCreatedByUser() {
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            this.createdBy = auth.getName();
-        } else {
-            this.createdBy = "Sistema"; // Caso não tenha usuário autenticado
-        }
-    }
 
 
 	public Long getId() {
@@ -127,16 +121,6 @@ public class ContaPagar implements Serializable{
 
 	public void setStatus(StatusPagamento status) {
 		this.status = status;
-	}
-
-
-	public String getFornecedor() {
-		return fornecedor;
-	}
-
-
-	public void setFornecedor(String fornecedor) {
-		this.fornecedor = fornecedor;
 	}
 
 

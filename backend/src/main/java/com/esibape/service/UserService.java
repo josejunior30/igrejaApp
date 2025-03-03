@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -101,16 +102,25 @@ public class UserService implements UserDetailsService {
 	        return new BCryptPasswordEncoder();
 	    }
   
-   
-  protected User authenticated() {
-	  try{
-		  String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		  return repository.findByEmail(username);
-	  }catch( Exception e){
-		  throw new UsernameNotFoundException("User not found");
-	  }
-  }
-  
+	  protected User authenticated() {
+		    try {
+		        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		        if (auth == null) {
+		            throw new UsernameNotFoundException("Authentication is null");
+		        }
+
+		        String username = auth.getName();
+		        System.out.println("Authenticated username: " + username); // Log para debug
+
+		        User user = repository.findByEmail(username);
+		        if (user == null) {
+		            throw new UsernameNotFoundException("User not found for email: " + username);
+		        }
+		        return user;
+		    } catch (Exception e) {
+		        throw new UsernameNotFoundException("User not found", e);
+		    }
+		}
 
   @Transactional(readOnly = true)
   public UserDTO getMe() {

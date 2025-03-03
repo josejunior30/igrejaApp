@@ -1,0 +1,71 @@
+package com.esibape.controller;
+
+import java.net.URI;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.esibape.DTO.ContaPagarDTO;
+import com.esibape.DTO.VisitanteDTO;
+import com.esibape.entities.StatusPagamento;
+import com.esibape.service.ContaPagarService;
+
+
+@CrossOrigin("http://localhost:3000")
+@RestController
+@RequestMapping(value = "/contaPagar")
+public class ContaPagarController {
+	
+		@Autowired
+		private ContaPagarService service;
+	
+
+		@GetMapping
+		public ResponseEntity <List<ContaPagarDTO>>findAll(){
+			List<ContaPagarDTO> contaPagar = service.findAll();
+			return ResponseEntity.ok().body(contaPagar);
+		}
+		
+			@GetMapping(value="/{id}")
+			public ResponseEntity<ContaPagarDTO>findById(@PathVariable Long id){
+				ContaPagarDTO contaPagar = service.findById(id);
+				return ResponseEntity.ok().body(contaPagar);
+			}
+		
+		
+		
+		    @PostMapping
+		    public ResponseEntity<ContaPagarDTO> insert(@RequestBody ContaPagarDTO dto) {
+		        ContaPagarDTO entity = service.insert(dto);
+		        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+		                .path("/{id}")
+		                .buildAndExpand(entity.getId())
+		                .toUri();
+		        return ResponseEntity.created(uri).body(entity);
+		    }
+			
+		    @PatchMapping("/{id}/status")
+		    public ResponseEntity<ContaPagarDTO> updateStatus(@PathVariable Long id, @RequestBody StatusPagamento novoStatus) {
+		        ContaPagarDTO dto = service.updateStatus(id, novoStatus);
+		        return ResponseEntity.ok(dto);
+		    }
+			@DeleteMapping(value="/{id}")
+			public ResponseEntity<VisitanteDTO>delete(@PathVariable Long id){
+				 service.delete(id);
+				return ResponseEntity.noContent().build();
+			}
+			
+		
+			
+}
