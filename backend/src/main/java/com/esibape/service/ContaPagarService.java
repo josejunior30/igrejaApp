@@ -1,5 +1,6 @@
 package com.esibape.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,17 +28,17 @@ public class ContaPagarService {
 	@Transactional(readOnly = true)
 	public List<ContaPagarDTO> findAll() {
 	    List<ContaPagar> list = repository.findAll();
-
+	    list.forEach(this::atualizarStatusSeAtrasado);
 	    return list.stream()
 	        .map(x -> new ContaPagarDTO(x))
 	        .collect(Collectors.toList());
 	}
-
 	@Transactional(readOnly = true)
 	public ContaPagarDTO findById(Long id) {
 	    Optional<ContaPagar> optionalCurso = repository.findById(id);
 	    if (optionalCurso.isPresent()) {
 	    	ContaPagar contaPagar = optionalCurso.get();
+	    	 atualizarStatusSeAtrasado(contaPagar);
 	        return new ContaPagarDTO(contaPagar);
 	    } else {
 	        // You can return null or throw an exception if you prefer
@@ -100,7 +101,13 @@ public class ContaPagarService {
           entity.setCreatedBy(dto.getCreatedBy());
     
        }
-
+    @Transactional
+	public void atualizarStatusSeAtrasado(ContaPagar contaPagar) {
+	    if (contaPagar.getStatus() == StatusPagamento.PENDENTE && contaPagar.getDataVencimento().isBefore(LocalDate.now())) {
+	        contaPagar.setStatus(StatusPagamento.ATRASADO);
+	        repository.save(contaPagar);
+	    }
+	}
     
     public void delete(Long id) {
     	repository.deleteById(id);

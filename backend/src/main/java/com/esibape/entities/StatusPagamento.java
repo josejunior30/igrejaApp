@@ -2,9 +2,9 @@ package com.esibape.entities;
 
 
 public enum StatusPagamento {
-    APROVADO("aprovado"),
-    RECUSADO("recusado"),
-    PENDENTE("PENDENTE");
+    PAGO("pago"),
+    ATRASADO("atrasado"),
+    PENDENTE("pendente");
 
     private final String statusPagamento ;
 
