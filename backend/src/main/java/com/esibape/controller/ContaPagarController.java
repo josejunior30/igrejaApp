@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -66,6 +67,32 @@ public class ContaPagarController {
 				return ResponseEntity.noContent().build();
 			}
 			
-		
+			// 🔹 Buscar contas pagas filtrando por descrição, mês e ano
+		    @GetMapping("/buscar-por-data")
+		    public ResponseEntity<List<ContaPagarDTO>> buscarPorDescricaoStatusMesAno(
+		        @RequestParam String descricao, 
+		        @RequestParam(required = true) Integer mes, 
+		        @RequestParam(required = true) Integer ano
+		    ) {
+		        if (mes == null || ano == null) {
+		            return ResponseEntity.badRequest().body(null);
+		        }
+		        
+		        List<ContaPagarDTO> contas = service.findByDescricaoStatusMesAno(descricao, mes, ano);
+		        return ResponseEntity.ok(contas);
+		    }
+		    
+		    @GetMapping("/buscar-por-ano")
+		    public ResponseEntity<List<ContaPagarDTO>> buscarPorDescricaoAno(
+		        @RequestParam String descricao,
+		        @RequestParam Integer ano
+		    ) {
+		        if (ano == null) {
+		            return ResponseEntity.badRequest().body(null);
+		        }
+
+		        List<ContaPagarDTO> contas = service.findByDescricaoAndAno(descricao, ano);
+		        return ResponseEntity.ok(contas);
+		    }
 			
 }

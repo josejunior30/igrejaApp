@@ -17,13 +17,19 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.ContaPagarDTO;
 import com.esibape.entities.ContaPagar;
 import com.esibape.entities.StatusPagamento;
+import com.esibape.entities.TipoDespesa;
+import com.esibape.entities.Transacao;
 import com.esibape.repository.ContaPagarRepository;
+import com.esibape.repository.TransacaoRepository;
 
 
 @Service
 public class ContaPagarService {
 	@Autowired
 	private ContaPagarRepository repository;
+	
+	@Autowired
+	private TransacaoRepository transacaoRepository;
 
 	@Transactional(readOnly = true)
 	public List<ContaPagarDTO> findAll() {
@@ -87,6 +93,16 @@ public class ContaPagarService {
 	    entity.setStatus(novoStatus);
 	    entity = repository.save(entity);
 	    
+	    if (novoStatus == StatusPagamento.PAGO) {
+	        Transacao transacao = new Transacao();
+	        transacao.setValor(entity.getValor());
+	        transacao.setData(LocalDate.now());
+	        transacao.setDescricao(entity.getDescricao());
+	        transacao.setIsReceita(false);
+	        transacao.setTipoDespesa(TipoDespesa.VARIAVEL);
+	        transacaoRepository.save(transacao);
+	    }
+	    
 	    return new ContaPagarDTO(entity);
 	}
 
@@ -108,6 +124,32 @@ public class ContaPagarService {
 	        repository.save(contaPagar);
 	    }
 	}
+    
+    @Transactional(readOnly = true)
+    public List<ContaPagarDTO> findByDescricaoStatusMesAno(String descricao, int mes, int ano) {
+        LocalDate inicio = LocalDate.of(ano, mes, 1); // Primeiro dia do mês
+        LocalDate fim = inicio.withDayOfMonth(inicio.lengthOfMonth()); // Último dia do mês
+
+        List<ContaPagar> contas = repository.findByDescricaoContainingIgnoreCaseAndStatusAndDataVencimentoBetween(
+            descricao, StatusPagamento.PAGO, inicio, fim);
+
+        return contas.stream()
+            .map(ContaPagarDTO::new)
+            .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
+    public List<ContaPagarDTO> findByDescricaoAndAno(String descricao, int ano) {
+        LocalDate inicio = LocalDate.of(ano, 1, 1);  // Primeiro dia do ano
+        LocalDate fim = LocalDate.of(ano, 12, 31);   // Último dia do ano
+
+        List<ContaPagar> contas = repository.findByDescricaoContainingIgnoreCaseAndDataVencimentoBetween(
+            descricao, inicio, fim);
+
+        return contas.stream()
+            .map(ContaPagarDTO::new)
+            .collect(Collectors.toList());
+    }
+
     
     public void delete(Long id) {
     	repository.deleteById(id);

@@ -96,20 +96,7 @@ const RequerimentoOrçamento: React.FC = () => {
     setNewProduto({ id: 0, nome: "", preço: 0, quantidade: 1 });
   };
   
-  const formatarValor = (valor: string) => {
-    const valorNumerico = valor.replace(/\D/g, "");
-    if (valorNumerico === "") return "0,00";
-
-    const valorFormatado = (Number(valorNumerico) / 100).toLocaleString(
-      "pt-BR",
-      {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }
-    );
-
-    return valorFormatado;
-  };
+ 
   const handlePrecoChange = (e: ChangeEvent<HTMLInputElement>) => {
     let valor = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
 

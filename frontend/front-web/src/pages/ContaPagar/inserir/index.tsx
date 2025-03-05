@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   findAllContaPagar,
+  findByDescricaoMesAndAno,
   insertContaPagar,
   updateStatus,
 } from "../../../service/ContaPagarService";
@@ -9,13 +10,14 @@ import Header from "../../../components/Header";
 import "./styles.css";
 const ContaPagar = () => {
   const [contas, setContas] = useState<contaPagar[]>([]);
+  const [filtro, setFiltro] = useState({ descricao: "", mes: 1, ano: 2025 });
+  const [totalPago, setTotalPago] = useState(0);
   const [novaConta, setNovaConta] = useState<Partial<contaPagar>>({
     descricao: "",
     dataVencimento: new Date(),
     valor: 0,
   });
 
-  // Buscar todas as contas ao carregar o componente
   useEffect(() => {
     async function fetchData() {
       try {
@@ -33,10 +35,15 @@ const ContaPagar = () => {
     const { name, value } = event.target;
 
     if (name === "valor") {
-      const formattedValue = formatCurrencyInput(value);
+      let valor = value.replace(/\D/g, "");
+
+      if (valor === "") valor = "0";
+
+      let valorNumerico = parseFloat((parseInt(valor, 10) / 100).toFixed(2));
+
       setNovaConta((prev) => ({
         ...prev,
-        valor: parseFloat(formattedValue.replace(/\D/g, "")) / 100, // Mantém o valor como número internamente
+        valor: valorNumerico || 0,
       }));
     } else {
       setNovaConta((prev) => ({
@@ -46,22 +53,10 @@ const ContaPagar = () => {
     }
   };
 
-  const formatCurrencyInput = (value: string): string => {
-    let numericValue = value.replace(/\D/g, ""); // Remove tudo que não for número
-    numericValue = (parseInt(numericValue, 10) / 100).toFixed(2); // Ajusta para decimal
-
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(parseFloat(numericValue));
-  };
-
-  // Formatar data para o input date (YYYY-MM-DD)
   const formatDateForInput = (date: Date) => {
     return date.toISOString().split("T")[0];
   };
 
-  // Submissão do formulário
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -70,11 +65,7 @@ const ContaPagar = () => {
 
       if (response && response.data) {
         alert("Conta cadastrada com sucesso!");
-
-        // Atualiza a lista de contas
         setContas((prev) => [...prev, response.data]);
-
-        // Resetar o formulário
         setNovaConta({ descricao: "", dataVencimento: new Date(), valor: 0 });
       } else {
         console.error("Resposta inválida", response);
@@ -99,11 +90,60 @@ const ContaPagar = () => {
       alert("Erro ao atualizar status!");
     }
   };
+
+  const handleFiltroChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+    setFiltro((prev) => ({
+      ...prev,
+      [name]: name === "mes" || name === "ano" ? parseInt(value, 10) : value,
+    }));
+  };
+
+  const handlePesquisar = async () => {
+    if (!filtro.descricao.trim()) {
+      alert("Por favor, digite uma descrição para a busca.");
+      return;
+    }
+    try {
+      const response = await findByDescricaoMesAndAno(
+        filtro.mes,
+        filtro.ano,
+        filtro.descricao
+      );
+      setContas(response.data);
+
+      // 🔹 Soma os valores das contas pagas
+      const total = response.data
+        .filter((conta: contaPagar) => conta.status === StatusPagamento.PAGO)
+        .reduce((acc: number, conta: contaPagar) => acc + conta.valor, 0);
+
+      setTotalPago(total); // Atualiza o estado do total pago
+    } catch (error) {
+      console.error("Erro ao buscar contas:", error);
+      alert("Erro ao buscar contas!");
+    }
+  };
+
+  const handleLimpar = async () => {
+    setFiltro({ descricao: "", mes: 1, ano: 2025 });
+    setTotalPago(0);
+
+    try {
+      const response = await findAllContaPagar(); // 🔹 Chama a API novamente
+      setContas(response.data); // 🔹 Atualiza os dados sem recarregar a página
+    } catch (error) {
+      console.error("Erro ao buscar contas:", error);
+    }
+  };
   return (
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
-        <h2 className="mt-3">Cadastro de Conta a Pagar</h2>
+        <h3 className="mt-3 text-center titulo-conta mb-5">
+          Cadastro de Conta a Pagar
+        </h3>
         <div className="row justify-content-center">
           <div className="col-md-10 ">
             <form onSubmit={handleSubmit} className="d-flex">
@@ -120,9 +160,7 @@ const ContaPagar = () => {
                 />
               </div>
               <div className="col-md-2 insert-conta">
-                <label className="form-label  label-conta">
-                  Data de Vencimento
-                </label>
+                <label className="form-label  label-conta">Vencimento</label>
                 <input
                   type="date"
                   className="form-control"
@@ -139,7 +177,10 @@ const ContaPagar = () => {
                   className="form-control"
                   placeholder="R$ 0,00"
                   name="valor"
-                  value={formatCurrencyInput((novaConta.valor ?? 0).toString())}
+                  value={(novaConta.valor ?? 0).toLocaleString("pt-BR", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })} // Garante que 'valor' sempre tenha um número válido
                   onChange={handleChange}
                   required
                 />
@@ -152,18 +193,85 @@ const ContaPagar = () => {
             </form>
           </div>
         </div>
+        <div className="row justify-content-center mt-4">
+          <div className="col-md-12 d-flex gap-2 offset-4">
+            <div className="col-md-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Digite a descrição"
+                name="descricao"
+                value={filtro.descricao}
+                onChange={handleFiltroChange}
+              />
+            </div>
+            <div className="col-md-1">
+              <select
+                className="form-control"
+                name="mes"
+                value={filtro.mes}
+                onChange={handleFiltroChange}
+              >
+                <option>mes</option>
+                {[...Array(12)].map((_, i) => (
+                  <option key={i + 1} value={i + 1}>
+                    {new Date(0, i).toLocaleString("pt-BR", { month: "long" })}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="col-md-1">
+              <select
+                className="form-control"
+                name="ano"
+                value={filtro.ano}
+                onChange={handleFiltroChange}
+              >
+                {[2024, 2025, 2026].map((ano) => (
+                  <option key={ano} value={ano}>
+                    {ano}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="col-md-3">
+              <button
+                className="btn btn-primary btn-pesquisa-pagar"
+                onClick={handlePesquisar}
+              >
+                Pesquisar
+              </button>
 
-        <div className="row">
-          <div className="col-md-12">
+              <button className="btn btn-secondary" onClick={handleLimpar}>
+                Limpar
+              </button>
+            </div>
+          </div>
+          <div className="row justify-content-center mt-4">
+            <div className="col-md-9 text-right">
+              <h3 className="total-pago">
+                Total Pago:{" "}
+                <span className="text-success">
+                  {totalPago.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </span>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-md-10">
             <table className="table table-striped mt-4">
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Lancamento</th>
                   <th>Descrição</th>
-                  <th>Data de Vencimento</th>
                   <th>Valor</th>
                   <th>Status</th>
+                  <th>Vencimento</th>
                   <th>Usuario</th>
                 </tr>
               </thead>
@@ -178,11 +286,6 @@ const ContaPagar = () => {
                         )}
                       </td>
                       <td>{conta.descricao}</td>
-                      <td>
-                        {new Date(conta.dataVencimento).toLocaleDateString(
-                          "pt-BR"
-                        )}
-                      </td>
 
                       <td>
                         R${" "}
@@ -211,7 +314,11 @@ const ContaPagar = () => {
                           </button>
                         )}
                       </td>
-
+                      <td>
+                        {new Date(conta.dataVencimento).toLocaleDateString(
+                          "pt-BR"
+                        )}
+                      </td>
                       <td>{conta.createdBy}</td>
                     </tr>
                   ))
