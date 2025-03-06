@@ -46,17 +46,20 @@ public class ContaPagar implements Serializable{
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(updatable = false, nullable = false)
     private LocalDateTime dataCriacao;
+    
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dataPagamento;
+    
 
-    @Column(nullable = false, updatable = false)
     private String createdBy;
 
     public ContaPagar() {
     	
     }
     
-    
-    public ContaPagar(Long id, String descricao, BigDecimal valor, LocalDate dataVencimento, StatusPagamento status,
-			 LocalDateTime dataCriacao, String createdBy) {
+	
+	public ContaPagar(Long id, String descricao, BigDecimal valor, LocalDate dataVencimento, StatusPagamento status,
+			LocalDateTime dataCriacao, LocalDateTime dataPagamento, String createdBy) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -64,8 +67,12 @@ public class ContaPagar implements Serializable{
 		this.dataVencimento = dataVencimento;
 		this.status = status;
 		this.dataCriacao = dataCriacao;
+		this.dataPagamento = dataPagamento;
 		this.createdBy = createdBy;
 	}
+
+
+
 
 
 
@@ -110,13 +117,28 @@ public class ContaPagar implements Serializable{
 	}
 
 
+	public LocalDateTime getDataPagamento() {
+		return dataPagamento;
+	}
+
+
+	public void setDataPagamento(LocalDateTime dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+
 	public StatusPagamento getStatus() {
 		return status;
 	}
 
 
 	public void setStatus(StatusPagamento status) {
-		this.status = status;
+	    this.status = status;
+	    if (status == StatusPagamento.PAGO) {
+	        this.dataPagamento = LocalDateTime.now(); // Atualiza a data de pagamento automaticamente
+	    } else {
+	        this.dataPagamento = null; 
+	    }
 	}
 
 

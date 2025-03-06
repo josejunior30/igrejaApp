@@ -13,8 +13,6 @@ public interface ContaPagarRepository extends JpaRepository<ContaPagar, Long> {
 
 	List<ContaPagar> findByDescricaoContainingIgnoreCaseAndStatusAndDataVencimentoBetween(
 	        String descricao, StatusPagamento status, LocalDate inicio, LocalDate fim);
-	
-    List<ContaPagar> findByDescricaoContainingIgnoreCaseAndDataVencimentoBetween(
-            String descricao, LocalDate inicio, LocalDate fim);
+
 
 }

@@ -25,6 +25,8 @@ public class ContaPagarDTO implements Serializable{
 	    private StatusPagamento status;
 	    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	    private LocalDateTime dataCriacao;
+	    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	    private LocalDateTime dataPagamento;
 	    private String createdBy;
 
 	
@@ -41,7 +43,7 @@ public class ContaPagarDTO implements Serializable{
 		status=entity.getStatus();
 		createdBy=entity.getCreatedBy();
 		valor=entity.getValor();
-		
+		dataPagamento=entity.getDataPagamento();
 	}
 
 	public Long getId() {
@@ -68,6 +70,14 @@ public class ContaPagarDTO implements Serializable{
 		return valor;
 	}
 
+
+	public LocalDateTime getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(LocalDateTime dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
 
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;

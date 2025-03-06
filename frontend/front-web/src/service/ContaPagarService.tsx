@@ -32,23 +32,33 @@ export async function insertContaPagar(ContaPagar: any) {
   }
 }
 
-export async function updateStatus(id: number, statusPagamento: string) {
+
+export async function updateStatus(id: number) {
+  const token = getAccessToken();
+
+  if (!token) {
+    throw new Error("Token de acesso não encontrado");
+  }
+
+  const config: AxiosRequestConfig = {
+    method: "PATCH",
+    url: `${BASE_URL}/contaPagar/${id}/status`, 
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    data: "PAGO", // Enviando apenas a string "PAGO"
+  };
+
   try {
-    const response = await axios.patch(
-      `${BASE_URL}/contaPagar/${id}/status`,
-      statusPagamento,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios(config);
     return response.data;
   } catch (error) {
     console.error("Erro ao atualizar status:", error);
     throw error;
   }
 }
+
 export function findByDescricaoMesAndAno(
   mes: number,
   ano: number,
@@ -61,6 +71,6 @@ export function findByDescricaoMesAndAno(
 
 export function findByDescricaoAno(ano: number, descricao: string) {
   return axios.get(
-    `${BASE_URL}/contaPagar/buscar-por-data?descricao=${descricao}&ano=${ano}`
+    `${BASE_URL}/contaPagar/buscar-por-ano?descricao=${descricao}&ano=${ano}`
   );
 }

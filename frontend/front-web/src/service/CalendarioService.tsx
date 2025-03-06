@@ -8,6 +8,10 @@ export function findAll() {
 export function findById(id: number) {
   return axios.get(`${BASE_URL}/calendario/${id}`);
 }
+
+export function findByAno(ano: number) {
+  return axios.get(`${BASE_URL}/calendario/ano/${ano}`);
+}
 export function insertCalendario(Calendario: any) {
   return axios.post(`${BASE_URL}/calendario`, Calendario);
 }

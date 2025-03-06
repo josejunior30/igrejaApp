@@ -29,21 +29,22 @@
 }
 .btn-esquerda {
   position: absolute;
-  left: 21vw;
+  left: 8vw;
 }
 .btn-limpar{
   margin-left: 10px;
+  margin-right: 10px;
 }
 .btn-direita {
   position: absolute;
-  left: 40vw;
+  left: 27vw;
 }
 .titulo-evento {
   font-size: 18px;
 }
 .mes-atual {
   color: white;
-  text-align: center;
+
 }
 .add-evento {
   position: absolute;

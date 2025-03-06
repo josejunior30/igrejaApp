@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   findAllContaPagar,
+  findByDescricaoAno,
   findByDescricaoMesAndAno,
   insertContaPagar,
   updateStatus,
@@ -8,9 +9,10 @@ import {
 import { contaPagar, StatusPagamento } from "../../../models/contaPagar";
 import Header from "../../../components/Header";
 import "./styles.css";
+
 const ContaPagar = () => {
   const [contas, setContas] = useState<contaPagar[]>([]);
-  const [filtro, setFiltro] = useState({ descricao: "", mes: 1, ano: 2025 });
+  const [filtro, setFiltro] = useState({ descricao: "", mes: 0, ano: 2025 });
   const [totalPago, setTotalPago] = useState(0);
   const [novaConta, setNovaConta] = useState<Partial<contaPagar>>({
     descricao: "",
@@ -78,7 +80,7 @@ const ContaPagar = () => {
   };
   const handlePagar = async (id: number) => {
     try {
-      await updateStatus(id, StatusPagamento.PAGO);
+      await updateStatus(id);
       setContas((prev) =>
         prev.map((conta) =>
           conta.id === id ? { ...conta, status: StatusPagamento.PAGO } : conta
@@ -100,26 +102,34 @@ const ContaPagar = () => {
       [name]: name === "mes" || name === "ano" ? parseInt(value, 10) : value,
     }));
   };
-
   const handlePesquisar = async () => {
     if (!filtro.descricao.trim()) {
       alert("Por favor, digite uma descrição para a busca.");
       return;
     }
+
     try {
-      const response = await findByDescricaoMesAndAno(
-        filtro.mes,
-        filtro.ano,
-        filtro.descricao
-      );
+      let response;
+      const mesValido =
+        Number.isInteger(filtro.mes) && filtro.mes > 0 ? filtro.mes : null;
+
+      if (!mesValido) {
+        response = await findByDescricaoAno(filtro.ano, filtro.descricao);
+      } else {
+        response = await findByDescricaoMesAndAno(
+          mesValido,
+          filtro.ano,
+          filtro.descricao
+        );
+      }
+
       setContas(response.data);
 
-      // 🔹 Soma os valores das contas pagas
       const total = response.data
         .filter((conta: contaPagar) => conta.status === StatusPagamento.PAGO)
         .reduce((acc: number, conta: contaPagar) => acc + conta.valor, 0);
 
-      setTotalPago(total); // Atualiza o estado do total pago
+      setTotalPago(total);
     } catch (error) {
       console.error("Erro ao buscar contas:", error);
       alert("Erro ao buscar contas!");
@@ -127,16 +137,17 @@ const ContaPagar = () => {
   };
 
   const handleLimpar = async () => {
-    setFiltro({ descricao: "", mes: 1, ano: 2025 });
+    setFiltro({ descricao: "", mes: 0, ano: 2025 });
     setTotalPago(0);
 
     try {
-      const response = await findAllContaPagar(); // 🔹 Chama a API novamente
-      setContas(response.data); // 🔹 Atualiza os dados sem recarregar a página
+      const response = await findAllContaPagar(); 
+      setContas(response.data); 
     } catch (error) {
       console.error("Erro ao buscar contas:", error);
     }
   };
+
   return (
     <>
       <Header />
@@ -180,7 +191,7 @@ const ContaPagar = () => {
                   value={(novaConta.valor ?? 0).toLocaleString("pt-BR", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
-                  })} // Garante que 'valor' sempre tenha um número válido
+                  })} 
                   onChange={handleChange}
                   required
                 />
@@ -194,8 +205,10 @@ const ContaPagar = () => {
           </div>
         </div>
         <div className="row justify-content-center mt-4">
-          <div className="col-md-12 d-flex gap-2 offset-4">
-            <div className="col-md-3">
+        <h4 className="text-center titulo-pesquisa-paga">Pesquisa contas pagas</h4>
+          <div className="col-md-12 d-flex gap-2 offset-5">
+         
+            <div className="col-md-2">
               <input
                 type="text"
                 className="form-control"
@@ -212,7 +225,8 @@ const ContaPagar = () => {
                 value={filtro.mes}
                 onChange={handleFiltroChange}
               >
-                <option>mes</option>
+                <option value="0">Mês</option>{" "}
+              
                 {[...Array(12)].map((_, i) => (
                   <option key={i + 1} value={i + 1}>
                     {new Date(0, i).toLocaleString("pt-BR", { month: "long" })}
@@ -262,7 +276,7 @@ const ContaPagar = () => {
           </div>
         </div>
         <div className="row justify-content-center">
-          <div className="col-md-10">
+          <div className="col-md-11">
             <table className="table table-striped mt-4">
               <thead>
                 <tr>
@@ -272,6 +286,7 @@ const ContaPagar = () => {
                   <th>Valor</th>
                   <th>Status</th>
                   <th>Vencimento</th>
+                  <th className="text-center">Pagamento</th>
                   <th>Usuario</th>
                 </tr>
               </thead>
@@ -318,6 +333,11 @@ const ContaPagar = () => {
                         {new Date(conta.dataVencimento).toLocaleDateString(
                           "pt-BR"
                         )}
+                      </td>
+                      <td className="text-center">
+                        {conta.dataPagamento
+                          ? new Date(conta.dataPagamento).toLocaleDateString("pt-BR")
+                          : "-"}
                       </td>
                       <td>{conta.createdBy}</td>
                     </tr>

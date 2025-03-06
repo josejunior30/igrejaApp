@@ -76,8 +76,15 @@ public class CalendarioService {
         
         return repository.findByResponsavelContainingIgnoreCaseAndDataBetween(responsavel, inicioAno, fimAno);
     }
-    
-    
+    // 🔍 Buscar todos os eventos por ano
+    @Transactional(readOnly = true)
+    public List<Calendario> buscarPorAno(int ano) {
+        LocalDate inicioAno = LocalDate.of(ano, 1, 1);
+        LocalDate fimAno = LocalDate.of(ano, 12, 31);
+        
+        return repository.findByDataBetween(inicioAno, fimAno);
+    }
+
     
     private void copyDtoToEntity(CalendarioDTO dto, Calendario entity) {
     

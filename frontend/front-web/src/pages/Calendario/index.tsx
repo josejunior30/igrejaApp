@@ -6,6 +6,8 @@ import Header from "../../components/Header";
 import Form from "react-bootstrap/Form";
 import "./styles.css";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const CalendarioAtividade = () => {
   const [calendarioDTO, setCalendarioDTO] = useState<Calendario[]>([]);
@@ -206,14 +208,32 @@ const CalendarioAtividade = () => {
       CalendarioService.findByTitulo(searchTerm)
         .then((response) => setSearchResults(response.data))
         .catch((error) => console.error("Erro ao buscar por título:", error));
-    } else {
+    } else if (searchType === "responsavel") {
       CalendarioService.findByResponsavel(searchTerm)
         .then((response) => setSearchResults(response.data))
-        .catch((error) =>
-          console.error("Erro ao buscar por responsável:", error)
-        );
+        .catch((error) => console.error("Erro ao buscar por responsável:", error));
+    } else if (searchType === "ano") {
+      CalendarioService.findByAno(Number(searchTerm))
+        .then((response) => setSearchResults(response.data))
+        .catch((error) => console.error("Erro ao buscar por ano:", error));
     }
   };
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Resultados da Pesquisa", 20, 10);
+    
+    const tableColumn = ["Evento", "Responsável", "Data", "Hora"];
+    const tableRows = searchResults.map(evento => [
+      evento.titulo,
+      evento.responsavel,
+      new Date(evento.data).toLocaleDateString(),
+      formatarHora(evento.hora)
+    ]);
+         //@ts-ignore
+    doc.autoTable({ head: [tableColumn], body: tableRows });
+    doc.save("eventos.pdf");
+  };
+
   return (
     <>
       <Header />
@@ -224,7 +244,7 @@ const CalendarioAtividade = () => {
               <Button className="btn-esquerda" onClick={retrocederMes}>
                 <GoChevronLeft />
               </Button>
-              <h4 className="mes-atual offset-3">
+              <h4 className="mes-atual offset-1">
                 {new Date(anoAtual, mesAtual).toLocaleString("default", {
                   month: "long",
                 })}{" "}
@@ -234,12 +254,10 @@ const CalendarioAtividade = () => {
                 <GoChevronRight />
               </Button>
 
-              <div className="col-md-2 offset-2">
-                <Form.Control
+              <div className="col-md-2 offset-1">
+              <Form.Control
                   type="text"
-                  placeholder={`Buscar por ${
-                    searchType === "titulo" ? "título" : "responsável"
-                  }...`}
+                  placeholder={`Buscar por ${searchType === "titulo" ? "título" : searchType === "responsavel" ? "responsável" : "ano"}...`}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="input-calendar"
@@ -252,13 +270,14 @@ const CalendarioAtividade = () => {
                 >
                   <option value="titulo">Título</option>
                   <option value="responsavel">Responsável</option>
+                  <option value="ano">Ano</option>
                 </Form.Select>
               </div>
-              <div className="col-md-2">
+              <div className="col-md-4">
                 <Button variant="primary" onClick={handleSearch}>
                   Pesquisar
                 </Button>
-   
+                
                 <Button
                 className="btn-limpar"
                   variant="secondary"
@@ -268,6 +287,9 @@ const CalendarioAtividade = () => {
                   }}
                 >
                   Limpar
+                </Button>
+                <Button variant="success" onClick={handleExportPDF}>
+           Imprimir
                 </Button>
            </div>
             </div>

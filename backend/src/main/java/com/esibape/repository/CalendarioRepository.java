@@ -19,5 +19,7 @@ public interface CalendarioRepository extends JpaRepository<Calendario, Long> {
     List<Calendario> findByResponsavelContainingIgnoreCaseAndDataBetween(
         String responsavel, LocalDate inicioAno, LocalDate fimAno
     );
+
+	List<Calendario> findByDataBetween(LocalDate inicioAno, LocalDate fimAno);
 }
 

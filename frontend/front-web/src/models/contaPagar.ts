@@ -6,6 +6,7 @@ export type contaPagar = {
   dataCriacao: Date;
   descricao:string;
   createdBy: number;
+  dataPagamento:Date;
  
 }
 

@@ -55,7 +55,6 @@ public class ContaPagarService {
 	public ContaPagarDTO insert(ContaPagarDTO dto) {
 	    ContaPagar entity = new ContaPagar();
 	    copyDtoToEntity(dto, entity);
-	    entity.setCreatedBy(getAuthenticatedUser());
 	    entity.setStatus(StatusPagamento.PENDENTE); 
 	    entity = repository.save(entity);
 	    return new ContaPagarDTO(entity);
@@ -91,9 +90,10 @@ public class ContaPagarService {
 	        .orElseThrow(() -> new EntityNotFoundException("ContaPagar não encontrada para o ID: " + id));
 	    
 	    entity.setStatus(novoStatus);
-	    entity = repository.save(entity);
 	    
 	    if (novoStatus == StatusPagamento.PAGO) {
+	        entity.setCreatedBy(getAuthenticatedUser()); // Atualiza o usuário que pagou
+
 	        Transacao transacao = new Transacao();
 	        transacao.setValor(entity.getValor());
 	        transacao.setData(LocalDate.now());
@@ -103,6 +103,7 @@ public class ContaPagarService {
 	        transacaoRepository.save(transacao);
 	    }
 	    
+	    entity = repository.save(entity);
 	    return new ContaPagarDTO(entity);
 	}
 
@@ -112,7 +113,7 @@ public class ContaPagarService {
           entity.setDataCriacao(dto.getDataCriacao());
           entity.setDataVencimento(dto.getDataVencimento());
           entity.setDescricao(dto.getDescricao());
-     
+       
           entity.setValor(dto.getValor());
           entity.setCreatedBy(dto.getCreatedBy());
     
@@ -142,8 +143,8 @@ public class ContaPagarService {
         LocalDate inicio = LocalDate.of(ano, 1, 1);  // Primeiro dia do ano
         LocalDate fim = LocalDate.of(ano, 12, 31);   // Último dia do ano
 
-        List<ContaPagar> contas = repository.findByDescricaoContainingIgnoreCaseAndDataVencimentoBetween(
-            descricao, inicio, fim);
+        List<ContaPagar> contas = repository.findByDescricaoContainingIgnoreCaseAndStatusAndDataVencimentoBetween(
+            descricao, StatusPagamento.PAGO, inicio, fim);
 
         return contas.stream()
             .map(ContaPagarDTO::new)
