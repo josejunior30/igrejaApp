@@ -20,7 +20,7 @@ const RequerimentoOrçamento: React.FC = () => {
       dataPagamento: new Date(),
       dataAprovacao: new Date(),
       statusRequerimento: 0,
-      emailResponsavel:"",
+      emailResponsavel: "",
       responsavel: "",
       local: "",
       Total: 0,
@@ -59,19 +59,24 @@ const RequerimentoOrçamento: React.FC = () => {
 
   const handleProductChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-  
+
     setNewProduto((prevProduto) => ({
       ...prevProduto,
-      [name]: name === "preço" || name === "quantidade" ? Number(value) || 1 : value,
+      [name]:
+        name === "preço" || name === "quantidade" ? Number(value) || 1 : value,
     }));
   };
-  
+
   const handleAddProduct = () => {
-    if (!newProduto.nome || newProduto.preço <= 0 || newProduto.quantidade <= 0) {
+    if (
+      !newProduto.nome ||
+      newProduto.preço <= 0 ||
+      newProduto.quantidade <= 0
+    ) {
       alert("Preencha corretamente os dados do produto!");
       return;
     }
-  
+
     setRequerimentoOrçamento((prevState) => {
       const novoProduto: Produto = {
         id: prevState.produto.length + 1,
@@ -79,24 +84,24 @@ const RequerimentoOrçamento: React.FC = () => {
         preço: newProduto.preço,
         quantidade: newProduto.quantidade, // 🔹 Garante que `quantidade` seja salvo corretamente
       };
-  
+
       console.log("Produto adicionado:", novoProduto); // 🔍 Verifica se `quantidade` está correto
-  
+
       const novoTotal = (
-        prevState.Total + novoProduto.preço * novoProduto.quantidade
+        prevState.Total +
+        novoProduto.preço * novoProduto.quantidade
       ).toFixed(2);
-  
+
       return {
         ...prevState,
         produto: [...prevState.produto, novoProduto],
         Total: parseFloat(novoTotal),
       };
     });
-  
+
     setNewProduto({ id: 0, nome: "", preço: 0, quantidade: 1 });
   };
-  
- 
+
   const handlePrecoChange = (e: ChangeEvent<HTMLInputElement>) => {
     let valor = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
 
@@ -112,13 +117,17 @@ const RequerimentoOrçamento: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log("Requerimento antes do POST:", JSON.stringify(requerimentoOrçamento, null, 2)); // 🔍 Melhor visualização no console
+    console.log(
+      "Requerimento antes do POST:",
+      JSON.stringify(requerimentoOrçamento, null, 2)
+    ); // 🔍 Melhor visualização no console
     try {
-
-
       // Faz o POST do requerimento
-      const response = await axios.post(`${BASE_URL}/requerimento`, requerimentoOrçamento);
-    
+      const response = await axios.post(
+        `${BASE_URL}/requerimento`,
+        requerimentoOrçamento
+      );
+
       console.log("Resposta da API:", response.data);
       // Mostra o alerta de sucesso após o envio bem-sucedido
       alert("Requerimento enviado com sucesso!");
@@ -132,7 +141,7 @@ const RequerimentoOrçamento: React.FC = () => {
         dataAprovacao: new Date(),
         statusRequerimento: 0,
         emailResponsavel: "",
-        responsavel:"",
+        responsavel: "",
         local: "",
         Total: 0,
         pergunta1: "",

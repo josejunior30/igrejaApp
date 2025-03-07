@@ -19,6 +19,7 @@ import com.esibape.DTO.RequerimentoOrçamentoDTO;
 import com.esibape.entities.ContaPagar;
 import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
+import com.esibape.entities.StatusPagamento;
 import com.esibape.entities.StatusRequerimento;
 import com.esibape.entities.TipoDespesa;
 import com.esibape.entities.Transacao;
@@ -80,7 +81,7 @@ public class RequerimentoOrçamentoService {
 	    entity = repository.save(entity);
 
 	    try {
-	        emailService.sendNewRequerimentoNotification("eleilson_mendes@hotmail.com", entity.getResponsavel());
+	        emailService.sendNewRequerimentoNotification("joseluizjunior@yahoo.com", entity.getResponsavel());
 	    } catch (MessagingException e) {
 	        e.printStackTrace();
 	    }
@@ -90,24 +91,30 @@ public class RequerimentoOrçamentoService {
 
 
 	@Transactional
-    public RequerimentoOrçamentoDTO updateStatus(Long id, StatusRequerimento newStatus) {
-        RequerimentoOrçamento entity = repository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Requerimento não encontrado"));
+	public RequerimentoOrçamentoDTO updateStatus(Long id, StatusRequerimento newStatus) {
+	    RequerimentoOrçamento entity = repository.findById(id)
+	            .orElseThrow(() -> new NoSuchElementException("Requerimento não encontrado"));
 
-        entity.setStatusRequerimento(newStatus);
-        entity = repository.save(entity);
+	    entity.setStatusRequerimento(newStatus);
+	    
+	    if (newStatus == StatusRequerimento.APROVADO) {
+	        // Criar uma nova ContaPagar vinculada ao RequerimentoOrçamento aprovado
+	        ContaPagar contaPagar = new ContaPagar();
+	        contaPagar.setValor(entity.getTotal()); // Define o valor total do requerimento
+	        contaPagar.setDescricao(entity.getPergunta1());
+	        contaPagar.setDataVencimento(entity.getDataPagamento()); 
+	        contaPagar.setStatus(StatusPagamento.PENDENTE); // Define o status como pendente
+	        contaPagar.setDataCriacao(LocalDateTime.now());
+	        contaPagar.setCreatedBy(entity.getResponsavel()); // Define o responsável
 
-        if (newStatus == StatusRequerimento.APROVADO) {
-            ContaPagar transacao = new ContaPagar();
-            transacao.setValor(entity.getTotal()); 
-            transacao.setDataCriacao(LocalDateTime.now());
-            transacao.setDescricao(entity.getPergunta1());
-            transacao.setDataPagamento(LocalDateTime.now());
-            contaPagarRepository.save(transacao);
-        }
-        
-        return new RequerimentoOrçamentoDTO(entity);
-    }
+	        // Salvar a conta a pagar
+	        contaPagarRepository.save(contaPagar);
+	    }
+
+	    entity = repository.save(entity);
+	    return new RequerimentoOrçamentoDTO(entity);
+	}
+
 	/*@Transactional
     public RequerimentoOrçamentoDTO update(Long id, RequerimentoOrçamentoDTO dto) {
         RequerimentoOrçamento entity = repository.getReferenceById(id);
