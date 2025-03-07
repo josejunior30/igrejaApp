@@ -204,32 +204,42 @@ const CalendarioAtividade = () => {
       return;
     }
 
+    const handleResponse = (response: { data: Calendario[] }) => {
+      const sortedResults = response.data.sort(
+        (a, b) => new Date(a.data).getTime() - new Date(b.data).getTime()
+      );
+      setSearchResults(sortedResults);
+    };
+
     if (searchType === "titulo") {
       CalendarioService.findByTitulo(searchTerm)
-        .then((response) => setSearchResults(response.data))
+        .then(handleResponse)
         .catch((error) => console.error("Erro ao buscar por título:", error));
     } else if (searchType === "responsavel") {
       CalendarioService.findByResponsavel(searchTerm)
-        .then((response) => setSearchResults(response.data))
-        .catch((error) => console.error("Erro ao buscar por responsável:", error));
+        .then(handleResponse)
+        .catch((error) =>
+          console.error("Erro ao buscar por responsável:", error)
+        );
     } else if (searchType === "ano") {
       CalendarioService.findByAno(Number(searchTerm))
-        .then((response) => setSearchResults(response.data))
+        .then(handleResponse)
         .catch((error) => console.error("Erro ao buscar por ano:", error));
     }
   };
+
   const handleExportPDF = () => {
     const doc = new jsPDF();
     doc.text("Resultados da Pesquisa", 20, 10);
-    
+
     const tableColumn = ["Evento", "Responsável", "Data", "Hora"];
-    const tableRows = searchResults.map(evento => [
+    const tableRows = searchResults.map((evento) => [
       evento.titulo,
       evento.responsavel,
       new Date(evento.data).toLocaleDateString(),
-      formatarHora(evento.hora)
+      formatarHora(evento.hora),
     ]);
-         //@ts-ignore
+    //@ts-ignore
     doc.autoTable({ head: [tableColumn], body: tableRows });
     doc.save("eventos.pdf");
   };
@@ -255,9 +265,15 @@ const CalendarioAtividade = () => {
               </Button>
 
               <div className="col-md-2 offset-1">
-              <Form.Control
+                <Form.Control
                   type="text"
-                  placeholder={`Buscar por ${searchType === "titulo" ? "título" : searchType === "responsavel" ? "responsável" : "ano"}...`}
+                  placeholder={`Buscar por ${
+                    searchType === "titulo"
+                      ? "título"
+                      : searchType === "responsavel"
+                      ? "responsável"
+                      : "ano"
+                  }...`}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="input-calendar"
@@ -277,9 +293,9 @@ const CalendarioAtividade = () => {
                 <Button variant="primary" onClick={handleSearch}>
                   Pesquisar
                 </Button>
-                
+
                 <Button
-                className="btn-limpar"
+                  className="btn-limpar"
                   variant="secondary"
                   onClick={() => {
                     setSearchTerm("");
@@ -289,9 +305,9 @@ const CalendarioAtividade = () => {
                   Limpar
                 </Button>
                 <Button variant="success" onClick={handleExportPDF}>
-           Imprimir
+                  Imprimir
                 </Button>
-           </div>
+              </div>
             </div>
 
             {/* 📌 Resultados da Pesquisa */}
