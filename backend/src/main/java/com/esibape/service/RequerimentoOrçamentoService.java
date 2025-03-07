@@ -2,6 +2,7 @@ package com.esibape.service;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esibape.DTO.ProdutoDTO;
 import com.esibape.DTO.RequerimentoOrçamentoDTO;
+import com.esibape.entities.ContaPagar;
 import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusRequerimento;
@@ -34,7 +36,7 @@ public class RequerimentoOrçamentoService {
 	 
 		@Autowired
 		private TransacaoRepository transacaoRepository;
-		
+		@Autowired
 		private ContaPagarRepository contaPagarRepository;
 	 
 	@Transactional(readOnly = true)
@@ -96,13 +98,12 @@ public class RequerimentoOrçamentoService {
         entity = repository.save(entity);
 
         if (newStatus == StatusRequerimento.APROVADO) {
-            Transacao transacao = new Transacao();
+            ContaPagar transacao = new ContaPagar();
             transacao.setValor(entity.getTotal()); 
-            transacao.setData(LocalDate.now());
+            transacao.setDataCriacao(LocalDateTime.now());
             transacao.setDescricao(entity.getPergunta1());
-            transacao.setIsReceita(false);
-            transacao.setTipoDespesa(TipoDespesa.VARIAVEL);
-            transacaoRepository.save(transacao);
+            transacao.setDataPagamento(LocalDateTime.now());
+            contaPagarRepository.save(transacao);
         }
         
         return new RequerimentoOrçamentoDTO(entity);
