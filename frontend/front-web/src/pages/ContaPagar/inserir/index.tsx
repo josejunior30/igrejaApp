@@ -9,11 +9,13 @@ import {
 import { contaPagar, StatusPagamento } from "../../../models/contaPagar";
 import Header from "../../../components/Header";
 import "./styles.css";
+import { FaSearch } from "react-icons/fa";
 
 const ContaPagar = () => {
   const [contas, setContas] = useState<contaPagar[]>([]);
   const [filtro, setFiltro] = useState({ descricao: "", mes: 0, ano: 2025 });
   const [totalPago, setTotalPago] = useState(0);
+  const [mostrarFiltro, setMostrarFiltro] = useState(false);
   const [novaConta, setNovaConta] = useState<Partial<contaPagar>>({
     descricao: "",
     dataVencimento: new Date(),
@@ -79,14 +81,12 @@ const ContaPagar = () => {
     }
   };
   const handlePagar = async (id: number) => {
+    const confirmacao = window.confirm("Tem certeza que deseja pagar?");
+    if (!confirmacao) return;
+
     try {
       await updateStatus(id);
-      setContas((prev) =>
-        prev.map((conta) =>
-          conta.id === id ? { ...conta, status: StatusPagamento.PAGO } : conta
-        )
-      );
-      alert("Status atualizado para APROVADO!");
+      window.location.reload();
     } catch (error) {
       console.error("Erro ao atualizar status:", error);
       alert("Erro ao atualizar status!");
@@ -141,8 +141,8 @@ const ContaPagar = () => {
     setTotalPago(0);
 
     try {
-      const response = await findAllContaPagar(); 
-      setContas(response.data); 
+      const response = await findAllContaPagar();
+      setContas(response.data);
     } catch (error) {
       console.error("Erro ao buscar contas:", error);
     }
@@ -156,9 +156,9 @@ const ContaPagar = () => {
           Cadastro de Conta a Pagar
         </h3>
         <div className="row justify-content-center">
-          <div className="col-md-10 ">
+          <div className="col-md-12 ">
             <form onSubmit={handleSubmit} className="d-flex">
-              <div className="col-md-3 insert-conta offset-2">
+              <div className="col-md-2 insert-conta offset-3">
                 <label className="form-label label-conta">Descrição</label>
                 <input
                   type="text"
@@ -191,7 +191,7 @@ const ContaPagar = () => {
                   value={(novaConta.valor ?? 0).toLocaleString("pt-BR", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
-                  })} 
+                  })}
                   onChange={handleChange}
                   required
                 />
@@ -204,11 +204,24 @@ const ContaPagar = () => {
             </form>
           </div>
         </div>
+        <div className="justify-content-center text-center mt-3">
+
+        <button
+          className="btn-pesquisa-pagar"
+          onClick={() => setMostrarFiltro(!mostrarFiltro)}
+        >
+          <FaSearch />
+             {" "}Pesquisar
+        </button>
+        </div>
+       
+        {mostrarFiltro && (
         <div className="row justify-content-center mt-4">
-        <h4 className="text-center titulo-pesquisa-paga">Pesquisa contas pagas</h4>
-          <div className="col-md-12 d-flex gap-2 offset-5">
-         
-            <div className="col-md-2">
+          <h4 className="text-center titulo-pesquisa-paga">
+            Pesquisa contas pagas
+          </h4>
+          <div className="col-md-12 d-flex gap-2">
+            <div className="col-md-2 offset-3">
               <input
                 type="text"
                 className="form-control"
@@ -226,7 +239,6 @@ const ContaPagar = () => {
                 onChange={handleFiltroChange}
               >
                 <option value="0">Mês</option>{" "}
-              
                 {[...Array(12)].map((_, i) => (
                   <option key={i + 1} value={i + 1}>
                     {new Date(0, i).toLocaleString("pt-BR", { month: "long" })}
@@ -250,7 +262,7 @@ const ContaPagar = () => {
             </div>
             <div className="col-md-3">
               <button
-                className="btn btn-primary btn-pesquisa-pagar"
+                className="btn btn-primary btn-pesquisa-conta"
                 onClick={handlePesquisar}
               >
                 Pesquisar
@@ -275,6 +287,7 @@ const ContaPagar = () => {
             </div>
           </div>
         </div>
+                )}
         <div className="row justify-content-center">
           <div className="col-md-11">
             <table className="table table-striped mt-4">
@@ -336,7 +349,9 @@ const ContaPagar = () => {
                       </td>
                       <td className="text-center">
                         {conta.dataPagamento
-                          ? new Date(conta.dataPagamento).toLocaleDateString("pt-BR")
+                          ? new Date(conta.dataPagamento).toLocaleDateString(
+                              "pt-BR"
+                            )
                           : "-"}
                       </td>
                       <td>{conta.createdBy}</td>

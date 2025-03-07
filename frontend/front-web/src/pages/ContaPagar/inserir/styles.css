@@ -14,9 +14,17 @@
 .total-pago{
   color:white;
 }
-.btn-pesquisa-pagar{
+.btn-pesquisa-conta{
   margin-right: 10px;
 }
 .titulo-pesquisa-paga{
   color:white;
+}
+.btn-pesquisa-pagar{
+  background-color: var(--color-coral);
+  color:white;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: bolder;
 }

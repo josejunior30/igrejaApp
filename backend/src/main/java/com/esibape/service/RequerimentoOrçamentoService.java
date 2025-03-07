@@ -20,6 +20,7 @@ import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusRequerimento;
 import com.esibape.entities.TipoDespesa;
 import com.esibape.entities.Transacao;
+import com.esibape.repository.ContaPagarRepository;
 import com.esibape.repository.RequerimentoOrçamentoRepository;
 import com.esibape.repository.TransacaoRepository;
 
@@ -33,6 +34,8 @@ public class RequerimentoOrçamentoService {
 	 
 		@Autowired
 		private TransacaoRepository transacaoRepository;
+		
+		private ContaPagarRepository contaPagarRepository;
 	 
 	@Transactional(readOnly = true)
 	public List<RequerimentoOrçamentoDTO>findAll(){
@@ -94,7 +97,7 @@ public class RequerimentoOrçamentoService {
 
         if (newStatus == StatusRequerimento.APROVADO) {
             Transacao transacao = new Transacao();
-            transacao.setValor(entity.getTotal());
+            transacao.setValor(entity.getTotal()); 
             transacao.setData(LocalDate.now());
             transacao.setDescricao(entity.getPergunta1());
             transacao.setIsReceita(false);
