@@ -66,13 +66,13 @@ const Transacao = () => {
           <div className="col-10 text-center">
             <Link to="/requerimento"><button className="menu-transferencia">Pedido de Compra</button></Link>
             
-            <Link to="/transacao-exibir"><button className="menu-transferencia">Todas as Transaçoes</button></Link>
+            <Link to="/transacao-exibir"><button className="menu-transferencia">Todas os ganhos</button></Link>
             <Link to="/fluxo-caixa"><button className="menu-transferencia">Fluxo de Caixa</button></Link>
             <Link to="/conta-pagar"><button className="menu-transferencia">Contas a Pagar </button></Link>
 
           </div>
           <div className="col-6 text-center">
-            <h3 className="titulo-transferencia">Inserir Transaçao</h3>
+            <h3 className="titulo-transferencia">Ganhos</h3>
             <form
               className="row justify-content-center formulario-transacao"
               onSubmit={handleSubmit}
@@ -107,34 +107,7 @@ const Transacao = () => {
                   placeholder="R$ 0,00"
                 />
               </div>
-
-              <div className="col-md-3 mt-5 offset-1">
-                <label className="form-label">Tipo de Receita</label>
-                <select
-                  className="form-select"
-                  value={isReceita}
-                  onChange={(e) => setIsReceita(e.target.value)}
-                >
-                  <option value="">Escolha</option>
-                  <option value="TRUE">Ganho</option>
-                  <option value="FALSE">Despesa</option>
-                </select>
-              </div>
-
-              {isReceita === "FALSE" && (
-                <div className="col-md-3 mt-5">
-                  <label className="form-label">Tipo de Despesa</label>
-                  <select
-                    className="form-select"
-                    value={tipoDespesa}
-                    onChange={(e) => setTipoDespesa(e.target.value)}
-                  >
-                    <option value="">Escolha</option>
-                    <option value="FIXO">Fixo</option>
-                    <option value="VARIAVEL">Variável</option>
-                  </select>
-                </div>
-              )}
+          
               <div className="col-3 mt-5 pt-2 ">
                 <button type="submit" className="btn btn-primary mt-4 ">
                   Adicionar

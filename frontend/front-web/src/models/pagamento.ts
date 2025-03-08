@@ -49,7 +49,7 @@ export enum FormaPagamento {
 export enum MesReferencia {
     JANEIRO = 'JANEIRO',
     FEVEREIRO = 'FEVEREIRO',
-    MARCO = 'MARÇO',
+    MARCO = 'MARCO',
     ABRIL = 'ABRIL',
     MAIO = 'MAIO',
     JUNHO = 'JUNHO',

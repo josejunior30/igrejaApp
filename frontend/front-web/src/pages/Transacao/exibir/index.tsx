@@ -80,9 +80,7 @@ const TransacaoExibir = () => {
     setTotalPesquisa(total);
   };
 
-  const getCorBackground = (isReceita: boolean) => {
-    return isReceita ? "ganho-bg" : "despesa-bg";
-  };
+
   const handlePrint = () => {
     const doc = new jsPDF();
     doc.text("Relatório de Transações", 14, 10);
@@ -177,28 +175,7 @@ const TransacaoExibir = () => {
               </div>
             </div>
 
-            {/* Filtros de Ganhos e Despesas */}
-            <div className="d-flex offset-4 align-items-center mb-3">
-              <div className="form-check mx-2">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={mostrarGanhos}
-                  onChange={() => setMostrarGanhos(!mostrarGanhos)}
-                />
-                <label className="form-check-label">Mostrar Ganhos</label>
-              </div>
-
-              <div className="form-check mx-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={mostrarDespesas}
-                  onChange={() => setMostrarDespesas(!mostrarDespesas)}
-                />
-                <label className="form-check-label">Mostrar Despesas</label>
-              </div>
-            </div>
+           
 
             {/* Exibir Total SOMENTE se houver pesquisa */}
             {termoPesquisa.trim() !== "" && (
@@ -227,8 +204,7 @@ const TransacaoExibir = () => {
                   <th scope="col">Data</th>
                   <th scope="col">Descrição</th>
                   <th scope="col">Valor</th>
-                  <th scope="col">Tipo</th>
-                  <th scope="col">Tipo de Despesa</th>
+          
                 </tr>
               </thead>
               <tbody>
@@ -243,10 +219,7 @@ const TransacaoExibir = () => {
                           minimumFractionDigits: 2,
                         })}
                       </td>
-                      <td className={getCorBackground(t.isReceita)}>
-                        {t.isReceita ? "Ganho" : "Despesa"}
-                      </td>
-                      <td>{t.tipoDespesa || "-"}</td>
+                
                     </tr>
                   ))
                 ) : (

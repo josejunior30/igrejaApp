@@ -74,3 +74,8 @@ export function findByDescricaoAno(ano: number, descricao: string) {
     `${BASE_URL}/contaPagar/buscar-por-ano?descricao=${descricao}&ano=${ano}`
   );
 }
+export function findByMesAno(ano: number, mes: number) {
+  return axios.get(
+    `${BASE_URL}/contaPagar/buscar-por-data-criacao?mes=${mes}&ano=${ano}`
+  );
+}

@@ -226,6 +226,19 @@ const RequerimentoOrçamento: React.FC = () => {
                 required
               />
             </div>
+            <div className="col-md-4">
+              <label htmlFor="dataEvento" className="form-label">
+                Data limite para pagamento:
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                name="dataPagamento"
+                value={formatarDataEvento(requerimentoOrçamento.dataPagamento)}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
             {/* O que vai ser feito */}
             <div className="col-12">

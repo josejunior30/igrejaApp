@@ -94,5 +94,18 @@ public class ContaPagarController {
 		        List<ContaPagarDTO> contas = service.findByDescricaoAndAno(descricao, ano);
 		        return ResponseEntity.ok(contas);
 		    }
+		    
+		    @GetMapping("/buscar-por-data-criacao")
+		    public ResponseEntity<List<ContaPagarDTO>> buscarPorMesAnoDataCriacao(
+		        @RequestParam Integer mes, 
+		        @RequestParam Integer ano
+		    ) {
+		        if (mes == null || ano == null) {
+		            return ResponseEntity.badRequest().body(null);
+		        }
+
+		        List<ContaPagarDTO> contas = service.findByMesAnoDataCriacao(mes, ano);
+		        return ResponseEntity.ok(contas);
+		    }
 			
 }

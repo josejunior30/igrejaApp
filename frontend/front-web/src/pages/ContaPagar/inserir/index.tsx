@@ -3,6 +3,7 @@ import {
   findAllContaPagar,
   findByDescricaoAno,
   findByDescricaoMesAndAno,
+  findByMesAno,
   insertContaPagar,
   updateStatus,
 } from "../../../service/ContaPagarService";
@@ -10,10 +11,16 @@ import { contaPagar, StatusPagamento } from "../../../models/contaPagar";
 import Header from "../../../components/Header";
 import "./styles.css";
 import { FaSearch } from "react-icons/fa";
+import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleRight } from "react-icons/fa";
 
 const ContaPagar = () => {
   const [contas, setContas] = useState<contaPagar[]>([]);
-  const [filtro, setFiltro] = useState({ descricao: "", mes: 0, ano: 2025 });
+  const [filtro, setFiltro] = useState({
+    descricao: "",
+    mes: new Date().getMonth() + 1,
+    ano: new Date().getFullYear(),
+  });
   const [totalPago, setTotalPago] = useState(0);
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
   const [novaConta, setNovaConta] = useState<Partial<contaPagar>>({
@@ -25,14 +32,14 @@ const ContaPagar = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await findAllContaPagar();
+        const response = await findByMesAno(filtro.ano, filtro.mes); // 🔹 Busca pelo mês e ano atual
         setContas(response.data);
       } catch (error) {
         console.error("Erro ao buscar contas:", error);
       }
     }
     fetchData();
-  }, []);
+  }, [filtro.mes, filtro.ano]);
 
   // Atualizar estado da nova conta dinamicamente
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +63,21 @@ const ContaPagar = () => {
       }));
     }
   };
+  const handleMesAnterior = () => {
+    setFiltro((prev) => {
+      const novoMes = prev.mes === 1 ? 12 : prev.mes - 1;
+      const novoAno = prev.mes === 1 ? prev.ano - 1 : prev.ano;
+      return { ...prev, mes: novoMes, ano: novoAno };
+    });
+  };
 
+  const handleMesProximo = () => {
+    setFiltro((prev) => {
+      const novoMes = prev.mes === 12 ? 1 : prev.mes + 1;
+      const novoAno = prev.mes === 12 ? prev.ano + 1 : prev.ano;
+      return { ...prev, mes: novoMes, ano: novoAno };
+    });
+  };
   const formatDateForInput = (date: Date) => {
     return date.toISOString().split("T")[0];
   };
@@ -152,9 +173,19 @@ const ContaPagar = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
-        <h3 className="mt-3 text-center titulo-conta mb-5">
+        <h3 className="mt-3  pt-3 titulo-conta mb-5">
           Cadastro de Conta a Pagar
         </h3>
+        <span className="mes-contaPagar">
+          <button className="btn-left-conta" onClick={handleMesAnterior}>
+            <FaAngleLeft />
+          </button>
+          {filtro.mes} / {filtro.ano}
+          <button className="btn-right-conta" onClick={handleMesProximo}>
+            <FaAngleRight />
+          </button>
+        </span>
+
         <div className="row justify-content-center">
           <div className="col-md-12 ">
             <form onSubmit={handleSubmit} className="d-flex">
@@ -205,89 +236,89 @@ const ContaPagar = () => {
           </div>
         </div>
         <div className="justify-content-center text-center mt-3">
-
-        <button
-          className="btn-pesquisa-pagar"
-          onClick={() => setMostrarFiltro(!mostrarFiltro)}
-        >
-          <FaSearch />
-             {" "}Pesquisar
-        </button>
+          <button
+            className="btn-pesquisa-pagar"
+            onClick={() => setMostrarFiltro(!mostrarFiltro)}
+          >
+            <FaSearch /> Pesquisar
+          </button>
         </div>
-       
+
         {mostrarFiltro && (
-        <div className="row justify-content-center mt-4">
-          <h4 className="text-center titulo-pesquisa-paga">
-            Pesquisa contas pagas
-          </h4>
-          <div className="col-md-12 d-flex gap-2">
-            <div className="col-md-2 offset-3">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Digite a descrição"
-                name="descricao"
-                value={filtro.descricao}
-                onChange={handleFiltroChange}
-              />
-            </div>
-            <div className="col-md-1">
-              <select
-                className="form-control"
-                name="mes"
-                value={filtro.mes}
-                onChange={handleFiltroChange}
-              >
-                <option value="0">Mês</option>{" "}
-                {[...Array(12)].map((_, i) => (
-                  <option key={i + 1} value={i + 1}>
-                    {new Date(0, i).toLocaleString("pt-BR", { month: "long" })}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="col-md-1">
-              <select
-                className="form-control"
-                name="ano"
-                value={filtro.ano}
-                onChange={handleFiltroChange}
-              >
-                {[2024, 2025, 2026].map((ano) => (
-                  <option key={ano} value={ano}>
-                    {ano}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="col-md-3">
-              <button
-                className="btn btn-primary btn-pesquisa-conta"
-                onClick={handlePesquisar}
-              >
-                Pesquisar
-              </button>
-
-              <button className="btn btn-secondary" onClick={handleLimpar}>
-                Limpar
-              </button>
-            </div>
-          </div>
           <div className="row justify-content-center mt-4">
-            <div className="col-md-9 text-right">
-              <h3 className="total-pago">
-                Total Pago:{" "}
-                <span className="text-success">
-                  {totalPago.toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
-                </span>
-              </h3>
+            <h4 className="text-center titulo-pesquisa-paga">
+              Pesquisa contas pagas
+            </h4>
+            <div className="col-md-12 d-flex gap-2">
+              <div className="col-md-2 offset-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Digite a descrição"
+                  name="descricao"
+                  value={filtro.descricao}
+                  onChange={handleFiltroChange}
+                />
+              </div>
+              <div className="col-md-1">
+                <select
+                  className="form-control"
+                  name="mes"
+                  value={filtro.mes}
+                  onChange={handleFiltroChange}
+                >
+                  <option value="0">Mês</option>{" "}
+                  {[...Array(12)].map((_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {new Date(0, i).toLocaleString("pt-BR", {
+                        month: "long",
+                      })}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-md-1">
+                <select
+                  className="form-control"
+                  name="ano"
+                  value={filtro.ano}
+                  onChange={handleFiltroChange}
+                >
+                  {[2024, 2025, 2026].map((ano) => (
+                    <option key={ano} value={ano}>
+                      {ano}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-md-3">
+                <button
+                  className="btn btn-primary btn-pesquisa-conta"
+                  onClick={handlePesquisar}
+                >
+                  Pesquisar
+                </button>
+
+                <button className="btn btn-secondary" onClick={handleLimpar}>
+                  Limpar
+                </button>
+              </div>
+            </div>
+            <div className="row justify-content-center mt-4">
+              <div className="col-md-9 text-right">
+                <h3 className="total-pago">
+                  Total Pago:{" "}
+                  <span className="text-success">
+                    {totalPago.toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+                  </span>
+                </h3>
+              </div>
             </div>
           </div>
-        </div>
-                )}
+        )}
         <div className="row justify-content-center">
           <div className="col-md-11">
             <table className="table table-striped mt-4">

@@ -20,6 +20,21 @@
 .titulo-pesquisa-paga{
   color:white;
 }
+.mes-contaPagar{
+  color:white;
+  position: absolute;
+  font-size: 20px;
+right: 20vw;
+margin-top: -60px;
+}
+.btn-left-conta{
+  background: none;
+  color: white;
+}
+.btn-right-conta{
+  background: none;
+  color: white;
+}
 .btn-pesquisa-pagar{
   background-color: var(--color-coral);
   color:white;

@@ -1,6 +1,7 @@
 package com.esibape.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,7 +84,6 @@ public class ContaPagarService {
 	    return "Sistema";
 	}
 
-
 	@Transactional
 	public ContaPagarDTO updateStatus(Long id, StatusPagamento novoStatus) {
 	    ContaPagar entity = repository.findById(id)
@@ -107,6 +107,17 @@ public class ContaPagarService {
 	    return new ContaPagarDTO(entity);
 	}
 
+	@Transactional(readOnly = true)
+	public List<ContaPagarDTO> findByMesAnoDataCriacao(int mes, int ano) {
+	    LocalDateTime inicio = LocalDateTime.of(ano, mes, 1, 0, 0); // Primeiro dia do mês, meia-noite
+	    LocalDateTime fim = inicio.withDayOfMonth(inicio.toLocalDate().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59); // Último dia do mês, 23:59:59
+
+	    List<ContaPagar> contas = repository.findByDataCriacaoBetween(inicio, fim);
+	    
+	    return contas.stream()
+	        .map(ContaPagarDTO::new)
+	        .collect(Collectors.toList());
+	}
 
     private void copyDtoToEntity(ContaPagarDTO dto, ContaPagar entity) {
  
