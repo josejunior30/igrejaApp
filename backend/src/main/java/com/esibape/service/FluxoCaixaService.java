@@ -77,10 +77,13 @@ public class FluxoCaixaService {
         BigDecimal saldoLiquido = receitaTotal.subtract(despesaTotal);
 
         // Verifica se já existe um fluxo de caixa para o mês
-        FluxoCaixa fluxoCaixa = repository.findByMesAndAno(mes, ano);
-        if (fluxoCaixa == null) {
+        List<FluxoCaixa> result = repository.findByMesAndAno(mes, ano);
+        FluxoCaixa fluxoCaixa;
+
+        if (result.isEmpty()) {
             fluxoCaixa = new FluxoCaixa(null, receitaTotal, despesaTotal, saldoLiquido, despesaFixa, despesaVariavel, mes, ano);
         } else {
+            fluxoCaixa = result.get(0); // Pega o primeiro registro encontrado
             fluxoCaixa.setReceitaTotal(receitaTotal);
             fluxoCaixa.setDespesaTotal(despesaTotal);
             fluxoCaixa.setDespesaFixa(despesaFixa);
@@ -90,7 +93,6 @@ public class FluxoCaixaService {
 
         return repository.save(fluxoCaixa);
     }
-
     
     @Transactional
     public FluxoCaixa calcularFluxoAcumuladoAteMes(Integer mes, Integer ano) {
@@ -121,16 +123,19 @@ public class FluxoCaixaService {
 
         BigDecimal saldoLiquido = receitaTotal.subtract(despesaTotal);
 
-        FluxoCaixa fluxoCaixa = repository.findByMesAndAno(mes, ano);
-        if (fluxoCaixa == null) {
-            fluxoCaixa = new FluxoCaixa(null, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, mes, ano);
-        }
+        List<FluxoCaixa> result = repository.findByMesAndAno(mes, ano);
+        FluxoCaixa fluxoCaixa;
 
-        fluxoCaixa.setReceitaTotal(receitaTotal);
-        fluxoCaixa.setDespesaTotal(despesaTotal);
-        fluxoCaixa.setDespesaFixa(despesaFixa);
-        fluxoCaixa.setDespesaVariavel(despesaVariavel);
-        fluxoCaixa.setSaldoLiquido(saldoLiquido);
+        if (result.isEmpty()) {
+            fluxoCaixa = new FluxoCaixa(null, receitaTotal, despesaTotal, saldoLiquido, despesaFixa, despesaVariavel, mes, ano);
+        } else {
+            fluxoCaixa = result.get(0); // Pega o primeiro registro encontrado
+            fluxoCaixa.setReceitaTotal(receitaTotal);
+            fluxoCaixa.setDespesaTotal(despesaTotal);
+            fluxoCaixa.setDespesaFixa(despesaFixa);
+            fluxoCaixa.setDespesaVariavel(despesaVariavel);
+            fluxoCaixa.setSaldoLiquido(saldoLiquido);
+        }
 
         return repository.save(fluxoCaixa);
     }

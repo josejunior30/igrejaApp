@@ -32,7 +32,7 @@ const ContaPagar = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await findByMesAno(filtro.ano, filtro.mes); // 🔹 Busca pelo mês e ano atual
+        const response = await findByMesAno(filtro.ano, filtro.mes); 
         setContas(response.data);
       } catch (error) {
         console.error("Erro ao buscar contas:", error);

@@ -1,4 +1,4 @@
-export type Transacao = {
+export type TransacaoDTO = {
   id: number;
   valor: number;
   data: Date;

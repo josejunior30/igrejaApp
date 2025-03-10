@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./styles.css";
 import Header from "../../../components/Header";
 import { insertTransacao } from "../../../service/TransacaoService";
-import { Link } from "react-router-dom";
+
 
 const Transacao = () => {
   const [descricao, setDescricao] = useState("");
@@ -61,17 +61,10 @@ const Transacao = () => {
   return (
     <>
       <Header />
-      <div className="container-fluid mt-5 pt-5">
+      <div className="container-fluid  ">
         <div className="row pt-5 justify-content-center">
-          <div className="col-10 text-center">
-            <Link to="/requerimento"><button className="menu-transferencia">Pedido de Compra</button></Link>
-            
-            <Link to="/transacao-exibir"><button className="menu-transferencia">Todas os ganhos</button></Link>
-            <Link to="/fluxo-caixa"><button className="menu-transferencia">Fluxo de Caixa</button></Link>
-            <Link to="/conta-pagar"><button className="menu-transferencia">Contas a Pagar </button></Link>
-
-          </div>
-          <div className="col-6 text-center">
+        
+          <div className="col-6 text-center mb-5">
             <h3 className="titulo-transferencia">Ganhos</h3>
             <form
               className="row justify-content-center formulario-transacao"
@@ -108,9 +101,9 @@ const Transacao = () => {
                 />
               </div>
           
-              <div className="col-3 mt-5 pt-2 ">
+              <div className="col-md-1 pt-2 ">
                 <button type="submit" className="btn btn-primary mt-4 ">
-                  Adicionar
+                  Inserir
                 </button>
               </div>
             </form>

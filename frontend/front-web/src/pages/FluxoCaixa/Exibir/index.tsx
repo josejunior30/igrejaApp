@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import "./styles.css";
 import * as FluxoCaixaService from "../../../service/FluxoCaixaService";
-import { Transacao } from "../../../models/transacao";
+import { TransacaoDTO } from "../../../models/transacao";
 import * as TransacaoService from "../../../service/TransacaoService";
 import { fluxoCaixa } from "../../../models/fluxoCaixa";
 import Header from "../../../components/Header";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { Link } from "react-router-dom";
 
 const FluxoCaixa = () => {
   const [mes, setMes] = useState<number>(new Date().getMonth() + 1);
   const [ano, setAno] = useState<number>(new Date().getFullYear());
-  const [transacao, setTransacao] = useState<Transacao[]>([]);
+  const [transacao, setTransacao] = useState<TransacaoDTO[]>([]);
   const [fluxo, setFluxo] = useState<fluxoCaixa | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,6 +33,26 @@ const FluxoCaixa = () => {
   }, [mes, ano]);
 
   useEffect(() => {
+    if (mes && ano) {
+      TransacaoService.findByMesAno(mes, ano)
+        .then((response) => {
+          setTransacao(
+            response.data.sort(
+              (
+                a: { data: string | number | Date },
+                b: { data: string | number | Date }
+              ) => new Date(a.data).getTime() - new Date(b.data).getTime()
+            )
+          );
+        })
+        .catch((error) => {
+          console.error("Erro ao buscar dados:", error);
+          setError("Erro ao carregar transações.");
+        });
+    }
+  }, [mes, ano]);
+
+  useEffect(() => {
     if (mes && ano && !modoAnual) {
       FluxoCaixaService.findByFluxoMes(mes, ano)
         .then((response) => {
@@ -42,8 +63,41 @@ const FluxoCaixa = () => {
         });
     }
   }, [mes, ano, modoAnual]);
-  
 
+  const handleFetchAnual = () => {
+    setModoAnual(true);
+    setLoading(true);
+    setError(null);
+
+    FluxoCaixaService.findByMesAnoAcumulado(mes, ano)
+      .then((response) => {
+        setFluxo(response.data);
+        setSaldoTotal(response.data.saldoLiquido);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar fluxo de caixa anual:", error);
+        setError("Erro ao carregar fluxo de caixa anual.");
+      });
+
+    TransacaoService.findAno(ano)
+      .then((response) => {
+        setTransacao(
+          response.data.sort(
+            (
+              a: { data: string | number | Date },
+              b: { data: string | number | Date }
+            ) => new Date(a.data).getTime() - new Date(b.data).getTime()
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar transações do ano:", error);
+        setError("Erro ao carregar transações.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   const ganhos = transacao.filter((t) => t.isReceita);
   const despesas = transacao.filter((t) => !t.isReceita);
   const handlePrint = () => {
@@ -154,35 +208,6 @@ const FluxoCaixa = () => {
 
     doc.save("relatorio_fluxo_caixa.pdf");
   };
-  const handleFetchAnual = () => {
-    setModoAnual(true);
-    setLoading(true);
-    setError(null);
-  
-    FluxoCaixaService.findByMesAnoAcumulado(mes, ano)
-      .then((response) => {
-        setFluxo(response.data);
-        setSaldoTotal(response.data.saldoLiquido);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar fluxo de caixa anual:", error);
-        setError("Erro ao carregar fluxo de caixa anual.");
-      });
-  
-    TransacaoService.findAno(ano)
-      .then((response) => {
-        setTransacao(response.data);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar transações do ano:", error);
-        setError("Erro ao carregar transações.");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-  
-
   // Busca o fluxo de caixa acumulado ao carregar a página
   useEffect(() => {
     setLoading(true);
@@ -204,9 +229,25 @@ const FluxoCaixa = () => {
       <Header />
       <div className="container-fluid mt-5 pt-5 mb-5">
         <div className="row justify-content-center pt-4">
+          <div className="col-10 text-center">
+            <Link to="/requerimento">
+              <button className="menu-transferencia">Pedido de Compra</button>
+            </Link>
+
+            <Link to="/transacao-exibir">
+              <button className="menu-transferencia">Ganhos</button>
+            </Link>
+            <Link to="/fluxo-caixa">
+              <button className="menu-transferencia">Fluxo de Caixa</button>
+            </Link>
+            <Link to="/conta-pagar">
+              <button className="menu-transferencia">Contas a Pagar </button>
+            </Link>
+          </div>
           <div className="col-md-11">
             <div className="col-md-8 d-flex offset-3">
               <h2 className="text-center titulo-fluxo-caixa">Fluxo de Caixa</h2>
+
               <div className="d-flex justify-content-center ">
                 <select
                   className="form-select mx-2"
@@ -237,7 +278,10 @@ const FluxoCaixa = () => {
               <button className="btn btn-primary  " onClick={handlePrint}>
                 Imprimir
               </button>
-              <button className="btn btn-primary btn-anual" onClick={handleFetchAnual}>
+              <button
+                className="btn btn-primary btn-anual"
+                onClick={handleFetchAnual}
+              >
                 Anual
               </button>
             </div>
@@ -329,7 +373,7 @@ const FluxoCaixa = () => {
                     <div className="mt-4  offset-1">
                       <h4>Ganhos Totais </h4>
                       <hr className="my-2 linha" />
-                      <p  className="DespesaTotal">
+                      <p className="DespesaTotal">
                         Receita Total: R${" "}
                         {fluxo.receitaTotal
                           ? fluxo.receitaTotal.toLocaleString("pt-BR", {
@@ -362,7 +406,7 @@ const FluxoCaixa = () => {
                             })
                           : "0.00"}
                       </p>
-                        <hr className="my-2 linha" />
+                      <hr className="my-2 linha" />
                       <p className="DespesaTotal">
                         Despesa Total: R${" "}
                         {fluxo.despesaTotal
@@ -377,23 +421,23 @@ const FluxoCaixa = () => {
                 </div>
                 <hr className="my-2 linha" />
                 {fluxo && (
-                  <div className="mt-4 d-flex justify-content-center align-items-center mb-5 fluxo-caixa-container" >
+                  <div className="mt-4 d-flex justify-content-center align-items-center mb-5 fluxo-caixa-container">
                     {/* Saldo Líquido */}
                     <div className="text-center me-5">
                       <h4>Saldo Líquido no Mes</h4>
                       <hr className="my-2 linha" />
                       <p
-                      className="saldo-liquido"
+                        className="saldo-liquido"
                         style={{
                           color: fluxo.saldoLiquido < 0 ? "#f80000" : "inherit",
                         }}
                       >
-                        {fluxo.saldoLiquido
-                          ? fluxo.saldoLiquido.toLocaleString("pt-BR", {
+                        {modoAnual
+                          ? "-"
+                          : fluxo.saldoLiquido.toLocaleString("pt-BR", {
                               style: "currency",
                               currency: "BRL",
-                            })
-                          : "0.00"}
+                            })}
                       </p>
                     </div>
 
@@ -401,7 +445,8 @@ const FluxoCaixa = () => {
                     <div className="text-center">
                       <h4>Saldo Liquido Total</h4>
                       <hr className="my-2 linha" />
-                      <p className="saldo-liquido"
+                      <p
+                        className="saldo-liquido"
                         style={{
                           color: saldoTotal < 0 ? "#f80000" : "inherit",
                         }}

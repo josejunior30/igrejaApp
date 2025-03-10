@@ -65,14 +65,18 @@ public class TransacaoService {
 	                        .collect(Collectors.toList());
 	   }
 	   
-	   @Transactional(readOnly = true)
-	   public List<TransacaoDTO> buscarPorDescricao(String descricao) {
-	       List<Transacao> transacoes = repository.buscarPorDescricao("%" + descricao + "%");
-	       return transacoes.stream()
-	                        .map(TransacaoDTO::new)
-	                        .collect(Collectors.toList());
-	   }
-
+	    @Transactional(readOnly = true)
+	    public List<TransacaoDTO> buscarPorDescricao(String descricao, Integer mes, int ano) {
+	        List<Transacao> transacoes;
+	        if (mes == null || mes == 0) {
+	            transacoes = repository.buscarPorDescricaoEAno("%" + descricao + "%", ano);
+	        } else {
+	            transacoes = repository.buscarPorDescricaoMesEAno("%" + descricao + "%", mes, ano);
+	        }
+	        return transacoes.stream()
+	                         .map(TransacaoDTO::new)
+	                         .collect(Collectors.toList());
+	    }
 	private void copyDtoToEntity(TransacaoDTO dto, Transacao entity) {
 		entity.setData(dto.getData());
 		entity.setDescricao(dto.getDescricao());

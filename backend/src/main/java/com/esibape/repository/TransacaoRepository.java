@@ -12,19 +12,23 @@ import org.springframework.data.repository.query.Param;
 import com.esibape.entities.Transacao;
 
 
-public interface TransacaoRepository extends JpaRepository<Transacao, Long >{
-	
-	 List<Transacao> findByIsReceita(Boolean isReceita);
-	    List<Transacao> findByDataBetween(LocalDate inicio, LocalDate fim);
-	    
-	    @Query("SELECT t FROM Transacao t WHERE MONTH(t.data) = :mes AND YEAR(t.data) = :ano")
-	    List<Transacao> findByMesEAno(@Param("mes") int mes, @Param("ano") int ano);
+public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
 
-	    @Query("SELECT t FROM Transacao t WHERE YEAR(t.data) = :ano")
-	    List<Transacao> findByAno(@Param("ano") int ano);
-	    
-	    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricao) LIKE LOWER(CONCAT('%', :descricao, '%'))")
-	    List<Transacao> buscarPorDescricao(@Param("descricao") String descricao);
+    List<Transacao> findByIsReceita(Boolean isReceita);
+    List<Transacao> findByDataBetween(LocalDate inicio, LocalDate fim);
 
+    @Query("SELECT t FROM Transacao t WHERE MONTH(t.data) = :mes AND YEAR(t.data) = :ano")
+    List<Transacao> findByMesEAno(@Param("mes") int mes, @Param("ano") int ano);
 
+    @Query("SELECT t FROM Transacao t WHERE YEAR(t.data) = :ano")
+    List<Transacao> findByAno(@Param("ano") int ano);
+
+    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricao) LIKE LOWER(CONCAT('%', :descricao, '%'))")
+    List<Transacao> buscarPorDescricao(@Param("descricao") String descricao);
+
+    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricao) LIKE LOWER(CONCAT('%', :descricao, '%')) AND YEAR(t.data) = :ano")
+    List<Transacao> buscarPorDescricaoEAno(@Param("descricao") String descricao, @Param("ano") int ano);
+
+    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricao) LIKE LOWER(CONCAT('%', :descricao, '%')) AND MONTH(t.data) = :mes AND YEAR(t.data) = :ano")
+    List<Transacao> buscarPorDescricaoMesEAno(@Param("descricao") String descricao, @Param("mes") int mes, @Param("ano") int ano);
 }

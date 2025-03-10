@@ -1,4 +1,3 @@
-import React from "react";
 
 import { Link } from "react-router-dom";
 import "./styles.css";
@@ -8,7 +7,6 @@ const projetos =
   "https://i.postimg.cc/6qJgcsZs/Esta-o-siba-250-x-150-mm-250-x-170-mm.png";
 const financeiro = "https://i.postimg.cc/QdwmwPQs/financeiro.jpg";
 const lideranca = "https://i.postimg.cc/T3FHVw9N/2.png";
-const pg = "https://i.postimg.cc/sDMXn0w3/pequeno-Grupo.jpg";
 const secretaria = "https://i.postimg.cc/TYvd9YLJ/secretaria.jpg";
 const visitante = "https://i.postimg.cc/TYvd9YLJ/secretaria.jpg";
 const cfc =
@@ -34,7 +32,7 @@ const Inicial = () => (
           />
 
           <h3>Finanças</h3>
-          <Link to="/transacao">
+          <Link to="/fluxo-caixa">
             <button className="btn btn-info">Clique aqui</button>
           </Link>
         </div>

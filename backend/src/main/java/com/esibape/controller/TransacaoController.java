@@ -69,8 +69,11 @@ public class TransacaoController {
 		        return ResponseEntity.ok(transacoes);
 		    }
 		  @GetMapping("/buscar")
-		    public ResponseEntity<List<TransacaoDTO>> buscarPorDescricao(@RequestParam String descricao) {
-		        List<TransacaoDTO> transacoes = service.buscarPorDescricao(descricao);
+		    public ResponseEntity<List<TransacaoDTO>> buscarPorDescricao(
+		            @RequestParam String descricao,
+		            @RequestParam(required = false) Integer mes,
+		            @RequestParam int ano) {
+		        List<TransacaoDTO> transacoes = service.buscarPorDescricao(descricao, mes, ano);
 		        return ResponseEntity.ok(transacoes);
 		    }
 }
