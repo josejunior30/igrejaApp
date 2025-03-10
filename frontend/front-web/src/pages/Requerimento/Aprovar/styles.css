@@ -38,6 +38,9 @@ html, body{
 #relatorio-add form label{
 font-weight: bold;
 }
+.total input{
+  font-weight: bolder;
+}
 #relatorio-add form button:hover{
 background-color: var(--color-coral);
 border: none;

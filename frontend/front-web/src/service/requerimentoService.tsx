@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
-import { StatusRequerimento } from "../models/requerimentoOrçamento";
+
 
 
 
@@ -13,6 +13,9 @@ export function findById(id:number){
     return axios.get(`${BASE_URL}/requerimento/${id}`);
 }
 
+export function findByMesAno(mes:number,  ano:number){
+    return axios.get(`${BASE_URL}/requerimento/mes/${mes}/ano/${ano}`);
+}
 
 export function insertAluno(requerimentoOrçamento:any){
     return axios.post(`${BASE_URL}/requerimento`, requerimentoOrçamento);

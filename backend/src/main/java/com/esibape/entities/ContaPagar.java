@@ -50,6 +50,7 @@ public class ContaPagar implements Serializable{
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataPagamento;
     
+    private String createdByConta;
 
     private String createdBy;
 
@@ -58,8 +59,9 @@ public class ContaPagar implements Serializable{
     }
     
 	
+  
 	public ContaPagar(Long id, String descricao, BigDecimal valor, LocalDate dataVencimento, StatusPagamento status,
-			LocalDateTime dataCriacao, LocalDateTime dataPagamento, String createdBy) {
+			LocalDateTime dataCriacao, LocalDateTime dataPagamento, String createdByConta, String createdBy) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -68,13 +70,9 @@ public class ContaPagar implements Serializable{
 		this.status = status;
 		this.dataCriacao = dataCriacao;
 		this.dataPagamento = dataPagamento;
+		this.createdByConta = createdByConta;
 		this.createdBy = createdBy;
 	}
-
-
-
-
-
 
 
 	public Long getId() {
@@ -115,6 +113,18 @@ public class ContaPagar implements Serializable{
 	public void setDataVencimento(LocalDate dataVencimento) {
 		this.dataVencimento = dataVencimento;
 	}
+
+
+	public String getCreatedByConta() {
+		return createdByConta;
+	}
+
+
+
+	public void setCreatedByConta(String createdByConta) {
+		this.createdByConta = createdByConta;
+	}
+
 
 
 	public LocalDateTime getDataPagamento() {

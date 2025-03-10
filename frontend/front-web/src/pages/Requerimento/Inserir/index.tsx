@@ -8,6 +8,7 @@ import {
   requerimentoOrçamento,
 } from "../../../models/requerimentoOrçamento";
 import Header from "../../../components/Header";
+import { StatusRequerimento } from "../../../models/requerimentoOrçamento";
 
 const RequerimentoOrçamento: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const RequerimentoOrçamento: React.FC = () => {
       dataEvento: new Date(),
       dataPagamento: new Date(),
       dataAprovacao: new Date(),
-      statusRequerimento: 0,
+      statusRequerimento: StatusRequerimento.PENDENTE,
       emailResponsavel: "",
       responsavel: "",
       local: "",
@@ -139,7 +140,7 @@ const RequerimentoOrçamento: React.FC = () => {
         dataEvento: new Date(),
         dataPagamento: new Date(),
         dataAprovacao: new Date(),
-        statusRequerimento: 0,
+        statusRequerimento: StatusRequerimento.PENDENTE,
         emailResponsavel: "",
         responsavel: "",
         local: "",

@@ -320,7 +320,7 @@ const ContaPagar = () => {
           </div>
         )}
         <div className="row justify-content-center">
-          <div className="col-md-11">
+          <div className="col-md-12">
             <table className="table table-striped mt-4">
               <thead>
                 <tr>

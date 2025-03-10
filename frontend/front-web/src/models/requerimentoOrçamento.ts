@@ -18,13 +18,12 @@ export type requerimentoOrçamento={
 
 }
 
-  export enum StatusRequerimento {
-	APROVADO,
-	RECUSADO,
-	PENDENTE
-	
-	
+export enum StatusRequerimento {
+	APROVADO = "APROVADO",
+	RECUSADO = "RECUSADO",
+	PENDENTE = "PENDENTE"
   }
+  
 
   export type Produto={
     id:number; 

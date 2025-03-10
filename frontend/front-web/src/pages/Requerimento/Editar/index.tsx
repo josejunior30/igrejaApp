@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 import * as requerimentoService from "../../../service/requerimentoService";
@@ -25,7 +25,7 @@ const RequerimentoEditar: React.FC = () => {
     local: "",
     Total: 0,
     pergunta1: "",
-  pergunta2  : "",
+    pergunta2: "",
     produto: [],
   });
 
@@ -294,7 +294,12 @@ const RequerimentoEditar: React.FC = () => {
                 className="form-control"
                 name="quantidade"
                 value={newProduto.quantidade}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setNewProduto({
+                    ...newProduto,
+                    quantidade: Number(e.target.value),
+                  })
+                }
                 placeholder="Quantidade"
                 required
               />

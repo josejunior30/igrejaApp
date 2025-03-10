@@ -48,7 +48,7 @@ public class ContaPagarService {
 	    	 atualizarStatusSeAtrasado(contaPagar);
 	        return new ContaPagarDTO(contaPagar);
 	    } else {
-	        // You can return null or throw an exception if you prefer
+	      
 	        return null;
 	    }
 	}
@@ -56,7 +56,8 @@ public class ContaPagarService {
 	public ContaPagarDTO insert(ContaPagarDTO dto) {
 	    ContaPagar entity = new ContaPagar();
 	    copyDtoToEntity(dto, entity);
-	    entity.setStatus(StatusPagamento.PENDENTE); 
+	    entity.setStatus(StatusPagamento.PENDENTE);
+	    entity.setCreatedByConta(getAuthenticatedUser()); 
 	    entity = repository.save(entity);
 	    return new ContaPagarDTO(entity);
 	}
@@ -92,7 +93,7 @@ public class ContaPagarService {
 	    entity.setStatus(novoStatus);
 	    
 	    if (novoStatus == StatusPagamento.PAGO) {
-	        entity.setCreatedBy(getAuthenticatedUser()); // Atualiza o usuário que pagou
+	        entity.setCreatedBy(getAuthenticatedUser()); 
 
 	        Transacao transacao = new Transacao();
 	        transacao.setValor(entity.getValor());
@@ -109,7 +110,7 @@ public class ContaPagarService {
 
 	@Transactional(readOnly = true)
 	public List<ContaPagarDTO> findByMesAnoDataCriacao(int mes, int ano) {
-	    LocalDateTime inicio = LocalDateTime.of(ano, mes, 1, 0, 0); // Primeiro dia do mês, meia-noite
+	    LocalDateTime inicio = LocalDateTime.of(ano, mes, 1, 0, 0);
 	    LocalDateTime fim = inicio.withDayOfMonth(inicio.toLocalDate().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59); // Último dia do mês, 23:59:59
 
 	    List<ContaPagar> contas = repository.findByDataCriacaoBetween(inicio, fim);
@@ -124,7 +125,7 @@ public class ContaPagarService {
           entity.setDataCriacao(dto.getDataCriacao());
           entity.setDataVencimento(dto.getDataVencimento());
           entity.setDescricao(dto.getDescricao());
-       
+       entity.setCreatedByConta(dto.getCreatedByConta());
           entity.setValor(dto.getValor());
           entity.setCreatedBy(dto.getCreatedBy());
     
@@ -139,8 +140,8 @@ public class ContaPagarService {
     
     @Transactional(readOnly = true)
     public List<ContaPagarDTO> findByDescricaoStatusMesAno(String descricao, int mes, int ano) {
-        LocalDate inicio = LocalDate.of(ano, mes, 1); // Primeiro dia do mês
-        LocalDate fim = inicio.withDayOfMonth(inicio.lengthOfMonth()); // Último dia do mês
+        LocalDate inicio = LocalDate.of(ano, mes, 1); 
+        LocalDate fim = inicio.withDayOfMonth(inicio.lengthOfMonth()); 
 
         List<ContaPagar> contas = repository.findByDescricaoContainingIgnoreCaseAndStatusAndDataVencimentoBetween(
             descricao, StatusPagamento.PAGO, inicio, fim);
@@ -151,8 +152,8 @@ public class ContaPagarService {
     }
     @Transactional(readOnly = true)
     public List<ContaPagarDTO> findByDescricaoAndAno(String descricao, int ano) {
-        LocalDate inicio = LocalDate.of(ano, 1, 1);  // Primeiro dia do ano
-        LocalDate fim = LocalDate.of(ano, 12, 31);   // Último dia do ano
+        LocalDate inicio = LocalDate.of(ano, 1, 1); 
+        LocalDate fim = LocalDate.of(ano, 12, 31);  
 
         List<ContaPagar> contas = repository.findByDescricaoContainingIgnoreCaseAndStatusAndDataVencimentoBetween(
             descricao, StatusPagamento.PAGO, inicio, fim);

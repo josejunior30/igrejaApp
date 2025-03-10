@@ -41,6 +41,9 @@ const RequerimentoAprovar: React.FC = () => {
             setRequerimento({
               ...response.data,
               Total: response.data.total || 0,
+              dataAprovacao: response.data.dataAprovacao
+                ? new Date(response.data.dataAprovacao) // Conversão para Date
+                : new Date(), // Data atual se não houver
             });
           }
         }
@@ -83,7 +86,7 @@ const RequerimentoAprovar: React.FC = () => {
         name === "dataEvento"
           ? new Date(value)
           : name === "statusRequerimento"
-          ? Number(value)
+          ? (value as unknown as StatusRequerimento)
           : value,
     }));
   };
@@ -101,6 +104,14 @@ const RequerimentoAprovar: React.FC = () => {
 
     return valorFormatado;
   };
+  useEffect(() => {
+    const novoTotal = requerimento.produto.reduce(
+      (acc, p) => acc + (p.preço || 0) * (p.quantidade || 1),
+      0
+    );
+
+    setRequerimento((prev) => ({ ...prev, Total: novoTotal }));
+  }, [requerimento.produto]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -224,11 +235,7 @@ const RequerimentoAprovar: React.FC = () => {
                 type="text"
                 className="form-control"
                 name="Total"
-                value={
-                  requerimento.Total > 0
-                    ? `R$ ${requerimento.Total.toFixed(2)}`
-                    : ""
-                }
+                value={`R$ ${requerimento.Total.toFixed(2)}`}
                 readOnly
               />
             </div>
@@ -236,7 +243,7 @@ const RequerimentoAprovar: React.FC = () => {
               className="col-12 d-flex text-center justify-content-center gap-4"
               id="aprovacao"
             >
-              <div className="col-12 col-md-2">
+              <div className="col-12 col-md-3">
                 <label htmlFor="dataAprovacao" className="form-label">
                   Data Aprovação:
                 </label>
@@ -247,7 +254,7 @@ const RequerimentoAprovar: React.FC = () => {
                   value={
                     requerimento.dataAprovacao instanceof Date
                       ? requerimento.dataAprovacao.toISOString().split("T")[0]
-                      : ""
+                      : new Date().toISOString().split("T")[0] // Garante um valor válido
                   }
                   onChange={(e) =>
                     setRequerimento({
@@ -258,29 +265,7 @@ const RequerimentoAprovar: React.FC = () => {
                 />
               </div>
 
-              <div className="col-12 col-md-2">
-                <label htmlFor="dataPagamento" className="form-label">
-                  Data Pagamento:
-                </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  name="dataPagamento"
-                  value={
-                    requerimento.dataPagamento instanceof Date
-                      ? requerimento.dataPagamento.toISOString().split("T")[0]
-                      : ""
-                  }
-                  onChange={(e) =>
-                    setRequerimento({
-                      ...requerimento,
-                      dataPagamento: new Date(e.target.value),
-                    })
-                  }
-                />
-              </div>
-
-              <div className="col-md-2">
+              <div className="col-md-3">
                 <label htmlFor="statusRequerimento" className="form-label">
                   Status:
                 </label>
@@ -290,9 +275,15 @@ const RequerimentoAprovar: React.FC = () => {
                   value={requerimento.statusRequerimento}
                   onChange={handleChange}
                 >
-                  <option value={StatusRequerimento.PENDENTE}>Pendente</option>
-                  <option value={StatusRequerimento.RECUSADO}>Recusado</option>
-                  <option value={StatusRequerimento.APROVADO}>Aprovado</option>
+                  <option value={StatusRequerimento.PENDENTE}>
+                    {StatusRequerimento[StatusRequerimento.PENDENTE]}
+                  </option>
+                  <option value={StatusRequerimento.RECUSADO}>
+                    {StatusRequerimento[StatusRequerimento.RECUSADO]}
+                  </option>
+                  <option value={StatusRequerimento.APROVADO}>
+                    {StatusRequerimento[StatusRequerimento.APROVADO]}
+                  </option>
                 </select>
               </div>
             </div>

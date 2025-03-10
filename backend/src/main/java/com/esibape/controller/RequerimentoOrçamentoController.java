@@ -55,11 +55,11 @@ public class RequerimentoOrçamentoController {
 	}
 
 	
-	//@PutMapping(value="/{id}")
-	//public ResponseEntity<RequerimentoOrçamentoDTO>update (@PathVariable Long id, @RequestBody RequerimentoOrçamentoDTO dto){
-		 //dto =service.update(id, dto);
-		//return ResponseEntity.ok().body(dto);
-	//}
+	@PutMapping(value="/{id}")
+	public ResponseEntity<RequerimentoOrçamentoDTO>update (@PathVariable Long id, @RequestBody RequerimentoOrçamentoDTO dto){
+		 dto =service.update(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
 	
 	
 	
@@ -83,6 +83,12 @@ public class RequerimentoOrçamentoController {
 	        return ResponseEntity.badRequest().build(); // Retorna 400 para outros erros
 	    }
 	}
+	 @GetMapping(value="/mes/{month}/ano/{year}")
+	    public ResponseEntity<List<RequerimentoOrçamentoDTO>> getByMonthAndYear(@PathVariable int month, @PathVariable int year) {
+	        List<RequerimentoOrçamentoDTO> requerimentos = service.findByMonthAndYear(month, year);
+	        return ResponseEntity.ok(requerimentos);
+	    }
+	}
 
 
-}
+

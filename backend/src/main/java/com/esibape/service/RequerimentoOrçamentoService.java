@@ -21,11 +21,9 @@ import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusPagamento;
 import com.esibape.entities.StatusRequerimento;
-import com.esibape.entities.TipoDespesa;
-import com.esibape.entities.Transacao;
 import com.esibape.repository.ContaPagarRepository;
 import com.esibape.repository.RequerimentoOrçamentoRepository;
-import com.esibape.repository.TransacaoRepository;
+
 
 @Service
 public class RequerimentoOrçamentoService {
@@ -35,8 +33,6 @@ public class RequerimentoOrçamentoService {
 	private EmailService emailService; 
 	 
 	 
-		@Autowired
-		private TransacaoRepository transacaoRepository;
 		@Autowired
 		private ContaPagarRepository contaPagarRepository;
 	 
@@ -101,11 +97,11 @@ public class RequerimentoOrçamentoService {
 	        // Criar uma nova ContaPagar vinculada ao RequerimentoOrçamento aprovado
 	        ContaPagar contaPagar = new ContaPagar();
 	        contaPagar.setValor(entity.getTotal()); // Define o valor total do requerimento
-	        contaPagar.setDescricao(entity.getPergunta1());
+	        contaPagar.setDescricao("Pedido: " + entity.getPergunta1());
 	        contaPagar.setDataVencimento(entity.getDataPagamento()); 
 	        contaPagar.setStatus(StatusPagamento.PENDENTE); // Define o status como pendente
 	        contaPagar.setDataCriacao(LocalDateTime.now());
-	        contaPagar.setCreatedBy(entity.getResponsavel()); // Define o responsável
+	        contaPagar.setCreatedByConta(entity.getResponsavel()); // Define o responsável
 
 	        // Salvar a conta a pagar
 	        contaPagarRepository.save(contaPagar);
@@ -115,33 +111,62 @@ public class RequerimentoOrçamentoService {
 	    return new RequerimentoOrçamentoDTO(entity);
 	}
 
-	/*@Transactional
-    public RequerimentoOrçamentoDTO update(Long id, RequerimentoOrçamentoDTO dto) {
-        RequerimentoOrçamento entity = repository.getReferenceById(id);
-        copyDtoToEntity(dto, entity);
+	@Transactional
+	public RequerimentoOrçamentoDTO update(Long id, RequerimentoOrçamentoDTO dto) {
+	    RequerimentoOrçamento entity = repository.findById(id)
+	            .orElseThrow(() -> new NoSuchElementException("Requerimento não encontrado"));
 
-        // Atualiza os produtos associados ao requerimento
-        entity.getProduto().clear(); 
+	    copyDtoToEntity(dto, entity);
 
-        if (dto.getProduto() != null) {
-            for (ProdutoDTO produtoDTO : dto.getProduto()) {
-                Produto produto = new Produto();
-                produto.setNome(produtoDTO.getNome());
-                produto.setPreço(produtoDTO.getPreço());
+	    if (dto.getProduto() != null) {
+	        // Removendo produtos antigos que não estão na nova lista
+	        entity.getProduto().removeIf(produto -> 
+	            dto.getProduto().stream().noneMatch(p -> p.getId() != null && p.getId().equals(produto.getId()))
+	        );
 
-                entity.addProduto(produto);  
-            }
-        }
+	        // Atualiza produtos existentes e adiciona novos
+	        for (ProdutoDTO produtoDTO : dto.getProduto()) {
+	            Produto produto = entity.getProduto().stream()
+	                    .filter(p -> produtoDTO.getId() != null && p.getId().equals(produtoDTO.getId()))
+	                    .findFirst()
+	                    .orElse(null);
 
-        entity = repository.save(entity);
-        return new RequerimentoOrçamentoDTO(entity);
-    }*/
+	            if (produto == null) {
+	                // Criar um novo produto se não existir
+	                produto = new Produto();
+	                produto.setRequerimento(entity); // Associa ao requerimento
+	                entity.getProduto().add(produto); // Adiciona na lista
+	            }
+
+	            // Atualiza os dados do produto (seja novo ou existente)
+	            produto.setNome(produtoDTO.getNome());
+	            produto.setPreço(produtoDTO.getPreço());
+	            produto.setQuantidade(produtoDTO.getQuantidade());
+	        }
+	    }
+
+	    entity = repository.save(entity);
+	    return new RequerimentoOrçamentoDTO(entity, entity.getProduto());
+	}
+
+
 	
 	  public void delete(Long id) {
 	        repository.deleteById(id);
 	    }
 	  
-	  
+	  @Transactional(readOnly = true)
+	  public List<RequerimentoOrçamentoDTO> findByMonthAndYear(int month, int year) {
+	      LocalDate startDate = LocalDate.of(year, month, 1);
+	      LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+	      
+	      List<RequerimentoOrçamento> list = repository.findByDataRequerimentoBetween(startDate, endDate);
+	      
+	      return list.stream()
+	                 .map(entity -> new RequerimentoOrçamentoDTO(entity, entity.getProduto()))
+	                 .collect(Collectors.toList());
+	  }
+
 	private void copyDtoToEntity(RequerimentoOrçamentoDTO dto, RequerimentoOrçamento entity) {
       
         entity.setDataAprovacao(dto.getDataAprovacao());
