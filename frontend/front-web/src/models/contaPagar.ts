@@ -7,6 +7,7 @@ export type contaPagar = {
   descricao:string;
   createdBy: number;
   dataPagamento:Date;
+  tipoDespesa:TipoDespesa;
  
 }
 
@@ -15,3 +16,9 @@ export enum StatusPagamento {
 	ATRASADO="ATRASADO",
 	PENDENTE="PENDENTE"
   }
+  export enum TipoDespesa {
+    FIXO = "FIXO",
+    VARIAVEL = "VARIAVEL"
+  }
+  
+  

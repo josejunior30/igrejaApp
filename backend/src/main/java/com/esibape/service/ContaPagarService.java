@@ -128,6 +128,7 @@ public class ContaPagarService {
        entity.setCreatedByConta(dto.getCreatedByConta());
           entity.setValor(dto.getValor());
           entity.setCreatedBy(dto.getCreatedBy());
+          entity.setTipoDespesa(dto.getTipoDespesa());
     
        }
     @Transactional

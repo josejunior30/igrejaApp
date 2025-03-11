@@ -51,7 +51,8 @@ public class ContaPagar implements Serializable{
     private LocalDateTime dataPagamento;
     
     private String createdByConta;
-
+    @Enumerated(EnumType.STRING)
+    private TipoDespesa tipoDespesa;
     private String createdBy;
 
     public ContaPagar() {
@@ -59,9 +60,9 @@ public class ContaPagar implements Serializable{
     }
     
 	
-  
 	public ContaPagar(Long id, String descricao, BigDecimal valor, LocalDate dataVencimento, StatusPagamento status,
-			LocalDateTime dataCriacao, LocalDateTime dataPagamento, String createdByConta, String createdBy) {
+			LocalDateTime dataCriacao, LocalDateTime dataPagamento, String createdByConta, TipoDespesa tipoDespesa,
+			String createdBy) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -71,8 +72,11 @@ public class ContaPagar implements Serializable{
 		this.dataCriacao = dataCriacao;
 		this.dataPagamento = dataPagamento;
 		this.createdByConta = createdByConta;
+		this.tipoDespesa = tipoDespesa;
 		this.createdBy = createdBy;
 	}
+
+
 
 
 	public Long getId() {
@@ -92,6 +96,16 @@ public class ContaPagar implements Serializable{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+
+	public TipoDespesa getTipoDespesa() {
+		return tipoDespesa;
+	}
+
+
+	public void setTipoDespesa(TipoDespesa tipoDespesa) {
+		this.tipoDespesa = tipoDespesa;
 	}
 
 

@@ -9,7 +9,8 @@ INSERT INTO tb_projetos (nome, lider,  coordenador, foto_coordenador, foto_lider
 
 INSERT INTO tb_role (authority ) VALUES ( 'ROLE_ADMIN');
 INSERT INTO tb_role (authority ) VALUES ( 'ROLE_OPERADOR');
-
+INSERT INTO tb_role (authority ) VALUES ( 'ROLE_FINANCA');
+ 
 INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Eleilson','Mendes' ,'eleison_mendes@hotmail.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
 INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Junior','Ribeiro Junior' ,'joseluizjunior@yahoo.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
 INSERT INTO tb_user (nome, sobrenome, email, password) VALUES ('Jaline','Mirian Peereira' ,'jalineemirian@gmail.com', '$2a$10$7fUHpqBMkb8xzdigZvJo2eOmAitjGOcKV5YYaMjm6C/8AageW5pPe');
@@ -20,6 +21,8 @@ INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 1, 1);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 2, 1);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 3, 2);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 4, 2);
+INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 2, 3);
+
 
 INSERT INTO tb_curso(nome, url, resumo) VALUES ( 'Fundamentos', 'https://i.postimg.cc/13SywQfk/6.png','O trilho de Fundamentos oferece uma formação voltada àqueles que desejam conhecer os princípios basilares da Fé Cristã.');
 INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Biblia e Teologia', 'https://i.postimg.cc/vmMwgLSb/5.png', 'O trilho de Bíblia & Teologia oferece uma formação voltada àqueles que desejam aprofundar o conhecimento bíblico e teológico.');

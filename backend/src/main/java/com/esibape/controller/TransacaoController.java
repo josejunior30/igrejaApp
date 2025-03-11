@@ -37,7 +37,7 @@ public class TransacaoController {
 		List<TransacaoDTO> transacao = service.findAll();
 		return ResponseEntity.ok().body(transacao);
 	}
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	
 		@GetMapping(value="/{id}")
 		public ResponseEntity<TransacaoDTO>findById(@PathVariable Long id){
 		TransacaoDTO transacao = service.findById(id);

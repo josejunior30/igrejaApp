@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -34,9 +35,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
 		}
-		
-		http.authorizeRequests().anyRequest().permitAll();
-		
+		  http.authorizeRequests()
+	        .antMatchers(HttpMethod.POST, "/contaPagar").hasRole("FINANCA") 
+	        .antMatchers(HttpMethod.GET, "/**").permitAll()
+		  .antMatchers(HttpMethod.PATCH, "/contaPagar/{id}/status").hasRole("FINANCA");
 		http.cors().configurationSource(corsConfigurationSource());
 	}
 	

@@ -7,7 +7,11 @@ import {
   insertContaPagar,
   updateStatus,
 } from "../../../service/ContaPagarService";
-import { contaPagar, StatusPagamento } from "../../../models/contaPagar";
+import {
+  contaPagar,
+  StatusPagamento,
+  TipoDespesa,
+} from "../../../models/contaPagar";
 import Header from "../../../components/Header";
 import "./styles.css";
 import { FaSearch } from "react-icons/fa";
@@ -27,12 +31,13 @@ const ContaPagar = () => {
     descricao: "",
     dataVencimento: new Date(),
     valor: 0,
+    tipoDespesa: TipoDespesa.VARIAVEL,
   });
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await findByMesAno(filtro.ano, filtro.mes); 
+        const response = await findByMesAno(filtro.ano, filtro.mes);
         setContas(response.data);
       } catch (error) {
         console.error("Erro ao buscar contas:", error);
@@ -227,6 +232,31 @@ const ContaPagar = () => {
                   required
                 />
               </div>
+              <div className="col-md-1 insert-conta">
+                <label className="form-label label-conta">Tipo</label>
+                <select
+                  className="form-control"
+                  name="tipoDespesa"
+                  value={novaConta.tipoDespesa ?? ""}
+                  onChange={(event) =>
+                    setNovaConta((prev) => ({
+                      ...prev,
+                      tipoDespesa: event.target.value as TipoDespesa,
+                    }))
+                  }
+                  required
+                >
+                  <option value="" disabled>
+                    Selecione...
+                  </option>
+                  {Object.values(TipoDespesa).map((tipo) => (
+                    <option key={tipo} value={tipo}>
+                      {tipo}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div className="col-md-3 mt-4 pt-2">
                 <button type="submit" className="btn btn-primary">
                   Inserir
@@ -324,7 +354,7 @@ const ContaPagar = () => {
             <table className="table table-striped mt-4">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>#</th>
                   <th>Lancamento</th>
                   <th>Descrição</th>
                   <th>Valor</th>
@@ -336,16 +366,16 @@ const ContaPagar = () => {
               </thead>
               <tbody>
                 {contas.length > 0 ? (
-                  contas.map((conta) => (
+                  contas.map((conta, index) => (
                     <tr key={conta.id}>
-                      <td>{conta.id}</td>
+                      <td>{index + 1}</td>{" "}
+                    
                       <td>
                         {new Date(conta.dataCriacao).toLocaleDateString(
                           "pt-BR"
                         )}
                       </td>
                       <td>{conta.descricao}</td>
-
                       <td>
                         R${" "}
                         {conta.valor.toLocaleString("pt-BR", {
@@ -353,7 +383,6 @@ const ContaPagar = () => {
                           currency: "BRL",
                         })}
                       </td>
-
                       <td
                         style={{
                           color:
@@ -390,7 +419,7 @@ const ContaPagar = () => {
                   ))
                 ) : (
                   <tr>
-                    <td className="text-center" colSpan={5}>
+                    <td className="text-center" colSpan={8}>
                       Nenhuma conta cadastrada
                     </td>
                   </tr>

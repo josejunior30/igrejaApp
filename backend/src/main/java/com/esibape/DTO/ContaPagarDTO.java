@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 
 import com.esibape.entities.ContaPagar;
 import com.esibape.entities.StatusPagamento;
+import com.esibape.entities.TipoDespesa;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
@@ -29,8 +30,9 @@ public class ContaPagarDTO implements Serializable{
 	    private LocalDateTime dataPagamento;
 	    private String createdBy;
 	    private String createdByConta;
+	    private TipoDespesa tipoDespesa;
 	
-	public ContaPagarDTO() {
+	    public ContaPagarDTO() {
 			
 			
 	}
@@ -45,6 +47,7 @@ public class ContaPagarDTO implements Serializable{
 		valor=entity.getValor();
 		dataPagamento=entity.getDataPagamento();
 		createdByConta=entity.getCreatedByConta();
+		tipoDespesa=entity.getTipoDespesa();
 	}
 
 	public Long getId() {
@@ -66,6 +69,14 @@ public class ContaPagarDTO implements Serializable{
 		this.descricao = descricao;
 	}
 
+
+	public TipoDespesa getTipoDespesa() {
+		return tipoDespesa;
+	}
+
+	public void setTipoDespesa(TipoDespesa tipoDespesa) {
+		this.tipoDespesa = tipoDespesa;
+	}
 
 	public BigDecimal getValor() {
 		return valor;
