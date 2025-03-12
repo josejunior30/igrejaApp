@@ -17,4 +17,6 @@ public interface ContaPagarRepository extends JpaRepository<ContaPagar, Long> {
 
 	
 	List<ContaPagar> findByDataCriacaoBetween(LocalDateTime inicio, LocalDateTime fim);
+
+
 }

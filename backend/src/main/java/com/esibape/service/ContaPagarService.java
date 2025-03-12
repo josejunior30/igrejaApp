@@ -95,6 +95,13 @@ public class ContaPagarService {
 	    if (novoStatus == StatusPagamento.PAGO) {
 	        entity.setCreatedBy(getAuthenticatedUser()); 
 
+ 	        Transacao transacao = new Transacao();
+ 	        transacao.setValor(entity.getValor());
+ 	        transacao.setData(LocalDate.now());
+ 	        transacao.setDescricao(entity.getDescricao());
+ 	        transacao.setIsReceita(false);
+ 	        transacao.setTipoDespesa(TipoDespesa.VARIAVEL);
+ 	        transacaoRepository.save(transacao);
 	    }
 	    
 	    entity = repository.save(entity);
