@@ -22,8 +22,8 @@ export function updateRequerimento(id: number, requerimentoOrçamento:any){
 }
 
 export async function updateStatus(id: number, statusRequerimento: string) {
-    if (!authService.hasAnyRoles(["ROLE_FINANCA"])) { // Certifique-se de que o nome do role está correto!
-        alert("Acesso negado: Você não tem permissão para realizar esta ação.");
+    if (!authService.hasAnyRoles(["ROLE_FINANCA"])) { 
+                alert("Acesso negado: Você não tem permissão para realizar esta ação.");
         throw new Error("Acesso negado: Você não tem permissão para realizar esta ação.");
     }
 
