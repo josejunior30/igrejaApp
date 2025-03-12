@@ -71,9 +71,14 @@ const TransacaoExibir = () => {
   };
 
   const aplicarFiltros = (lista: TransacaoDTO[]) => {
-    const ordenado = lista.sort(
+    // Filtra apenas as transações que são receitas (isReceita === true)
+    const filtrado = lista.filter((t) => t.isReceita);
+    
+    // Ordena por data
+    const ordenado = filtrado.sort(
       (a, b) => new Date(a.data).getTime() - new Date(b.data).getTime()
     );
+    
     setFilteredTransacao(ordenado);
     calcularTotal(ordenado);
   };
