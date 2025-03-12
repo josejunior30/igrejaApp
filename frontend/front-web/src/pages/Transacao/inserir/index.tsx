@@ -76,6 +76,7 @@ const Transacao = () => {
                   type="text"
                   className="form-control"
                   value={descricao}
+                  placeholder="insira a descrição"
                   onChange={(e) => setDescricao(e.target.value)}
                 />
               </div>

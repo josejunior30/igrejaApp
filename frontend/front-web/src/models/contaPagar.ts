@@ -5,7 +5,8 @@ export type contaPagar = {
   status:StatusPagamento;
   dataCriacao: Date;
   descricao:string;
-  createdBy: number;
+  createdBy: string;
+  createdByConta:string;
   dataPagamento:Date;
   tipoDespesa:TipoDespesa;
  

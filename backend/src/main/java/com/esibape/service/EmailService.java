@@ -16,7 +16,7 @@ public class EmailService {
 
 
 
-    public void sendNewRequerimentoNotification(String recipientEmail, String responsavel) throws MessagingException {
+    public void sendNewRequerimentoNotification(String recipientEmail, String nomeLider, String responsavel) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
@@ -24,22 +24,21 @@ public class EmailService {
         String htmlContent = "<html>" +
                 "<body>" +
                 "<h2 style='color: blue;'>Novo Requerimento Criado</h2>" +
-                "<p>Olá Josué,</p>" +
+                "<p>Olá " + nomeLider + ",</p>" +  
                 "<p>Um novo requerimento foi criado por <strong>" + responsavel + "</strong>. Acesse o sistema i-SIBAPE para mais detalhes.</p>" +
                 "<p>Atenciosamente,</p>" +
                 "<p><strong>Equipe i-SIBAPE</strong></p>" +
-                "<p>https://sibape.com.br/</p>" +
+                "<a>https://sibape.com.br</a>" +
                 "</body>" +
                 "</html>";
 
         helper.setTo(recipientEmail);
         helper.setSubject("Novo Requerimento Criado");
-        helper.setText(htmlContent, true);  // O segundo parâmetro true indica que o conteúdo é HTML.
+        helper.setText(htmlContent, true); 
 
         mailSender.send(mimeMessage);
     }
-    
-    // Novo método para enviar e-mail de aprovação
+    // método para enviar e-mail de aprovação
     public void sendApprovalNotification(String recipientEmail) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -75,7 +74,7 @@ public class EmailService {
 
         helper.setTo(recipientEmail);
         helper.setSubject("Requerimento Recusado");
-        helper.setText(htmlContent, true);  // O segundo parâmetro true indica que o conteúdo é HTML.
+        helper.setText(htmlContent, true); 
 
         mailSender.send(mimeMessage);
     }

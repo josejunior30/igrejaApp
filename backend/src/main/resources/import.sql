@@ -23,7 +23,6 @@ INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 3, 2);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 4, 2);
 INSERT INTO tb_user_role (user_id, role_id ) VALUES ( 2, 3);
 
-
 INSERT INTO tb_curso(nome, url, resumo) VALUES ( 'Fundamentos', 'https://i.postimg.cc/13SywQfk/6.png','O trilho de Fundamentos oferece uma formação voltada àqueles que desejam conhecer os princípios basilares da Fé Cristã.');
 INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Biblia e Teologia', 'https://i.postimg.cc/vmMwgLSb/5.png', 'O trilho de Bíblia & Teologia oferece uma formação voltada àqueles que desejam aprofundar o conhecimento bíblico e teológico.');
 INSERT INTO tb_curso(nome, url,  resumo) VALUES ( 'Vida Cristã', 'https://i.postimg.cc/J0TzKYvN/4.png', 'O trilho de Vida Cristã oferece uma formação que visa equipar os crentes para o enfrentamento dos desafios diários da caminhada cristã.');
@@ -73,6 +72,7 @@ INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idad
 INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, cpf ,estado_Civil, rua, bairro, numero, cidade, complemento, cep, visitante_Status) VALUES ('Bruna ','Homer Silva','(21)970323353','juneba@gmail.com', '1988-10-07',32, '128.308.317-56', 0,'rua Dalva raposo', 'Maria Paula', '35', 'são gonçalo', 'bloco 07 ap 202', '24110221', 'NIVEL_3' );
 INSERT INTO tb_visitante (nome, sobrenome,telefone, email, data_Nascimento, idade, cpf ,estado_Civil, rua, bairro, numero, cidade, complemento, cep, visitante_Status) VALUES ('Ana Cristina ','Henrique Vieira','(21)970323353','juneba@gmail.com', '1988-10-07',32, '128.308.317-56', 1,'rua Dalva raposo', 'Maria Paula', '35', 'são gonçalo', 'bloco 07 ap 202', '24110221', 'NIVEL_2' );
 
+INSERT INTO tb_lideranca (nome, email, cargo) VALUES ('Juneba', 'joseluizjunior@yahoo.com', 'FINANÇAS')
 
 INSERT INTO tb_crianca (nome, sobrenome,telefone, data_Nascimento, idade , rua, bairro, numero, cidade, complemento, cep) VALUES ('Ana Cristina ','Henrique Vieira','(21)970323353', '1988-10-07',32,'rua Dalva raposo', 'Maria Paula', '35', 'são gonçalo', 'bloco 07 ap 202', '24110221' );
 

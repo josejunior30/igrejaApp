@@ -48,10 +48,7 @@ const RequerimentoExibir = () => {
     }
   };
 
-  const handleArchive = (id: number) => {
-    setRequerimento((prevState) => prevState.filter(req => req.id !== id));
-    alert("Requerimento arquivado com sucesso!");
-  };
+
 
   const filteredRequerimentos = showPendingOnly
     ? requerimento.filter(req => req.statusRequerimento === "PENDENTE")
@@ -160,15 +157,9 @@ const RequerimentoExibir = () => {
                           )}
                         </td>
                         <td>
-                          {requerimento.statusRequerimento === "APROVADO" ? (
-                            <button className="btn btn-primary" onClick={() => handleArchive(requerimento.id)}>
-                              <IoMdArchive />
-                            </button>
-                          ) : (
                             <button className="btn btn-danger" onClick={() => handleDelete(requerimento.id)}>
                               <PiTrashFill />
                             </button>
-                          )}
                         </td>
                       </tr>
                     ))

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
-
+import * as authService from '../service/AuthService';
 export function findAll() {
   return axios.get(`${BASE_URL}/transacao`);
 }
@@ -11,8 +11,20 @@ export function findAno(ano: number = 2025) {
 export function findByAno(ano: number) {
   return axios.get(`${BASE_URL}/transacao/ano/${ano}`);
 }
-export function insertTransacao(Transacao: any) {
-  return axios.post(`${BASE_URL}/transacao`, Transacao);
+export async function insertTransacao(Transacao: any) {
+  if (!authService.hasAnyRoles(['ROLE_FINANCA'])) {
+    alert('Acesso negado: Você não tem permissão para realizar esta ação.');
+    throw new Error('Acesso negado: Você não tem permissão para realizar esta ação.');
+}
+
+try {
+    const response = await axios.post(`${BASE_URL}/transacao`, Transacao);
+    return response.data;
+} catch (error) {
+    console.error('Erro ao inserir pagamento:', error);
+    throw error;
+}
+
 }
 
 export function findBybuscarPorDescricao(

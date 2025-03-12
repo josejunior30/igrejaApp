@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
@@ -16,12 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esibape.DTO.ProdutoDTO;
 import com.esibape.DTO.RequerimentoOrçamentoDTO;
+import com.esibape.entities.Cargo;
 import com.esibape.entities.ContaPagar;
+import com.esibape.entities.Lideranca;
 import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusPagamento;
 import com.esibape.entities.StatusRequerimento;
 import com.esibape.repository.ContaPagarRepository;
+import com.esibape.repository.LiderancaRepository;
 import com.esibape.repository.RequerimentoOrçamentoRepository;
 
 
@@ -31,7 +35,8 @@ public class RequerimentoOrçamentoService {
 	private RequerimentoOrçamentoRepository repository;
 	 @Autowired
 	private EmailService emailService; 
-	 
+	 @Autowired
+	 private LiderancaRepository liderancaRepository;
 	 
 		@Autowired
 		private ContaPagarRepository contaPagarRepository;
@@ -73,15 +78,22 @@ public class RequerimentoOrçamentoService {
 	        entity.setProduto(produtos);
 	    }
 
-	    entity.calcularTotal(); // Garante que o total seja atualizado corretamente antes de salvar
+	    entity.calcularTotal(); 
 	    entity = repository.save(entity);
+	    
+	    Optional<Lideranca> liderFinancas = liderancaRepository.findByCargo(Cargo.FINANÇAS);
 
-	    try {
-	        emailService.sendNewRequerimentoNotification("joseluizjunior@yahoo.com", entity.getResponsavel());
-	    } catch (MessagingException e) {
-	        e.printStackTrace();
+	    if (liderFinancas.isPresent()) {
+	    	 Lideranca lider = liderFinancas.get();
+	    	 String emailFinanceiro = lider.getEmail();
+	    	String nomeLider = lider.getNome(); 
+	    	
+	    	try {
+	            emailService.sendNewRequerimentoNotification(emailFinanceiro, nomeLider, entity.getResponsavel());
+	        } catch (MessagingException e) {
+	            e.printStackTrace();
+	        }
 	    }
-
 	    return new RequerimentoOrçamentoDTO(entity, entity.getProduto());
 	}
 

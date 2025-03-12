@@ -17,7 +17,8 @@ import "./styles.css";
 import { FaSearch } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa";
-
+import { hasAnyRoles } from "../../../service/AuthService";
+import {  RoleEnum } from "../../../models/auth";
 const ContaPagar = () => {
   const [contas, setContas] = useState<contaPagar[]>([]);
   const [filtro, setFiltro] = useState({
@@ -33,7 +34,7 @@ const ContaPagar = () => {
     valor: 0,
     tipoDespesa: TipoDespesa.VARIAVEL,
   });
-
+  const isAdmin = hasAnyRoles(['ROLE_ADMIN']);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -351,81 +352,67 @@ const ContaPagar = () => {
         )}
         <div className="row justify-content-center">
           <div className="col-md-12">
-            <table className="table table-striped mt-4">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Lancamento</th>
-                  <th>Descrição</th>
-                  <th>Valor</th>
-                  <th>Status</th>
-                  <th>Vencimento</th>
-                  <th className="text-center">Pagamento</th>
-                  <th>Usuario</th>
-                </tr>
-              </thead>
-              <tbody>
-                {contas.length > 0 ? (
-                  contas.map((conta, index) => (
-                    <tr key={conta.id}>
-                      <td>{index + 1}</td>{" "}
-                    
-                      <td>
-                        {new Date(conta.dataCriacao).toLocaleDateString(
-                          "pt-BR"
-                        )}
-                      </td>
-                      <td>{conta.descricao}</td>
-                      <td>
-                        R${" "}
-                        {conta.valor.toLocaleString("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
-                      </td>
-                      <td
-                        style={{
-                          color:
-                            conta.status === StatusPagamento.ATRASADO
-                              ? "#ff3e3e"
-                              : "bolder",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {conta.status}
-                        {conta.status !== StatusPagamento.PAGO && (
-                          <button
-                            onClick={() => handlePagar(conta.id)}
-                            className="btn btn-success btn-pagar"
-                          >
-                            Pagar
-                          </button>
-                        )}
-                      </td>
-                      <td>
-                        {new Date(conta.dataVencimento).toLocaleDateString(
-                          "pt-BR"
-                        )}
-                      </td>
-                      <td className="text-center">
-                        {conta.dataPagamento
-                          ? new Date(conta.dataPagamento).toLocaleDateString(
-                              "pt-BR"
-                            )
-                          : "-"}
-                      </td>
-                      <td>{conta.createdBy}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td className="text-center" colSpan={8}>
-                      Nenhuma conta cadastrada
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+          <table className="table table-striped mt-4">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Lancamento</th>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Status</th>
+        <th>Vencimento</th>
+        <th className="text-center">Pagamento</th>
+        <th>Usuário</th>
+        {isAdmin && <th>Criado por</th>} {/* Renderiza a coluna somente se for ADMIN */}
+      </tr>
+    </thead>
+    <tbody>
+      {contas.length > 0 ? (
+        contas.map((conta, index) => (
+          <tr key={conta.id}>
+            <td>{index + 1}</td>
+            <td>{new Date(conta.dataCriacao).toLocaleDateString("pt-BR")}</td>
+            <td>{conta.descricao}</td>
+            <td>
+              R${" "}
+              {conta.valor.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </td>
+            <td
+              style={{
+                color:
+                  conta.status === StatusPagamento.ATRASADO ? "#ff3e3e" : "bolder",
+                fontWeight: "bold",
+              }}
+            >
+              {conta.status}
+              {conta.status !== StatusPagamento.PAGO && (
+                <button onClick={() => handlePagar(conta.id)} className="btn btn-success btn-pagar">
+                  Pagar
+                </button>
+              )}
+            </td>
+            <td>{new Date(conta.dataVencimento).toLocaleDateString("pt-BR")}</td>
+            <td className="text-center">
+              {conta.dataPagamento
+                ? new Date(conta.dataPagamento).toLocaleDateString("pt-BR")
+                : "-"}
+            </td>
+             <td>{conta.createdBy}</td>
+            {isAdmin && <td>{conta.createdByConta}</td>} 
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td className="text-center" colSpan={isAdmin ? 9 : 8}>
+            Nenhuma conta cadastrada
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
           </div>
         </div>
       </div>

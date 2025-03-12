@@ -1,5 +1,5 @@
 
-export type RoleEnum = "ROLE_ADMIN" | "ROLE_OPERADOR";
+export type RoleEnum = "ROLE_ADMIN" | "ROLE_OPERADOR" | "ROLE_FINANCA";
 
 export type CredentialsDTO={
 

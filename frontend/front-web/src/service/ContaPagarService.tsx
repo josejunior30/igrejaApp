@@ -1,14 +1,17 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL } from "../ultilitarios/system";
 import { getAccessToken } from "./AuthService";
-
+import * as authService from '../service/AuthService';
 export function findAllContaPagar() {
   return axios.get(`${BASE_URL}/contaPagar`);
 }
 
 export async function insertContaPagar(ContaPagar: any) {
   const token = getAccessToken();
-
+ if (!authService.hasAnyRoles(['ROLE_FINANCA'])) {
+        alert('Acesso negado: Você não tem permissão para realizar esta ação.');
+        throw new Error('Acesso negado: Você não tem permissão para realizar esta ação.');
+    }
   if (!token) {
     throw new Error("Token de acesso não encontrado");
   }

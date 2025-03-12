@@ -21,7 +21,7 @@ export function findPagamentosByAluno(id: number): Promise<Pagamento[]> {
 
 export async function insertPagamento(pagamento: Pagamento) {
     
-    // Verifica se o usuário tem a role 'ROLE_ADMIN'
+
     if (!authService.hasAnyRoles(['ROLE_ADMIN'])) {
         alert('Acesso negado: Você não tem permissão para realizar esta ação.');
         throw new Error('Acesso negado: Você não tem permissão para realizar esta ação.');
