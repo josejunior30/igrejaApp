@@ -7,6 +7,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Transacao from "../inserir";
 import { FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const TransacaoExibir = () => {
   const [transacao, setTransacao] = useState<TransacaoDTO[]>([]);
@@ -134,6 +135,7 @@ const TransacaoExibir = () => {
       <Header />
 
       <div className="container-fluid mt-5 pt-5">
+         
         <Transacao />
         <div className="row justify-content-center">
           <div className="col-md-12 text-center">

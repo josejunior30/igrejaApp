@@ -7,7 +7,8 @@ import { fluxoCaixa } from "../../../models/fluxoCaixa";
 import Header from "../../../components/Header";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { Link } from "react-router-dom";
+
+import Botoes from "../../../components/botoes";
 
 const FluxoCaixa = () => {
   const [mes, setMes] = useState<number>(new Date().getMonth() + 1);
@@ -228,22 +229,8 @@ const FluxoCaixa = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5 mb-5">
-        <div className="row justify-content-center pt-4">
-          <div className="col-10 text-center">
-            <Link to="/requerimento">
-              <button className="menu-transferencia">Pedido de Compra</button>
-            </Link>
-
-            <Link to="/transacao-exibir">
-              <button className="menu-transferencia">Ganhos</button>
-            </Link>
-            <Link to="/fluxo-caixa">
-              <button className="menu-transferencia">Fluxo de Caixa</button>
-            </Link>
-            <Link to="/conta-pagar">
-              <button className="menu-transferencia">Contas a Pagar </button>
-            </Link>
-          </div>
+        <div className="row justify-content-center ">
+         <Botoes/>
           <div className="col-md-11">
             <div className="col-md-8 d-flex offset-3">
               <h2 className="text-center titulo-fluxo-caixa">Fluxo de Caixa</h2>

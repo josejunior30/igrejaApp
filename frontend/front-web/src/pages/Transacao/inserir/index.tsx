@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import "./styles.css";
 import Header from "../../../components/Header";
 import { insertTransacao } from "../../../service/TransacaoService";
-
+import { Link } from "react-router-dom";
+import Botoes from "../../../components/botoes";
 
 const Transacao = () => {
   const [descricao, setDescricao] = useState("");
@@ -62,8 +63,8 @@ const Transacao = () => {
     <>
       <Header />
       <div className="container-fluid  ">
-        <div className="row pt-5 justify-content-center">
-        
+        <div className="row  justify-content-center">
+   <Botoes/>
           <div className="col-6 text-center mb-5">
             <h3 className="titulo-transferencia">Ganhos</h3>
             <form
@@ -101,7 +102,7 @@ const Transacao = () => {
                   placeholder="R$ 0,00"
                 />
               </div>
-          
+
               <div className="col-md-1 pt-2 ">
                 <button type="submit" className="btn btn-primary mt-4 ">
                   Inserir

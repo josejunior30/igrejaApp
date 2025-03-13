@@ -18,7 +18,9 @@ import { FaSearch } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa";
 import { hasAnyRoles } from "../../../service/AuthService";
-import {  RoleEnum } from "../../../models/auth";
+import { RoleEnum } from "../../../models/auth";
+import { Link } from "react-router-dom";
+import Botoes from "../../../components/botoes";
 const ContaPagar = () => {
   const [contas, setContas] = useState<contaPagar[]>([]);
   const [filtro, setFiltro] = useState({
@@ -34,7 +36,7 @@ const ContaPagar = () => {
     valor: 0,
     tipoDespesa: TipoDespesa.VARIAVEL,
   });
-  const isAdmin = hasAnyRoles(['ROLE_ADMIN']);
+  const isAdmin = hasAnyRoles(["ROLE_ADMIN"]);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -179,240 +181,259 @@ const ContaPagar = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
-        <h3 className="mt-3  pt-3 titulo-conta mb-5">
-          Cadastro de Conta a Pagar
-        </h3>
-        <span className="mes-contaPagar">
-          <button className="btn-left-conta" onClick={handleMesAnterior}>
-            <FaAngleLeft />
-          </button>
-          {filtro.mes} / {filtro.ano}
-          <button className="btn-right-conta" onClick={handleMesProximo}>
-            <FaAngleRight />
-          </button>
-        </span>
-
         <div className="row justify-content-center">
-          <div className="col-md-12 ">
-            <form onSubmit={handleSubmit} className="d-flex">
-              <div className="col-md-2 insert-conta offset-3">
-                <label className="form-label label-conta">Descrição</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Descrição"
-                  name="descricao"
-                  value={novaConta.descricao}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="col-md-2 insert-conta">
-                <label className="form-label  label-conta">Vencimento</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  name="dataVencimento"
-                  value={formatDateForInput(novaConta.dataVencimento!)}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="col-md-1 insert-conta">
-                <label className="form-label  label-conta">Valor</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="R$ 0,00"
-                  name="valor"
-                  value={(novaConta.valor ?? 0).toLocaleString("pt-BR", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="col-md-1 insert-conta">
-                <label className="form-label label-conta">Tipo</label>
-                <select
-                  className="form-control"
-                  name="tipoDespesa"
-                  value={novaConta.tipoDespesa ?? ""}
-                  onChange={(event) =>
-                    setNovaConta((prev) => ({
-                      ...prev,
-                      tipoDespesa: event.target.value as TipoDespesa,
-                    }))
-                  }
-                  required
-                >
-                  <option value="" disabled>
-                    Selecione...
-                  </option>
-                  {Object.values(TipoDespesa).map((tipo) => (
-                    <option key={tipo} value={tipo}>
-                      {tipo}
-                    </option>
-                  ))}
-                </select>
-              </div>
+    <Botoes/>
+          <h3 className="titulo-conta mb-5">
+            Cadastro de Conta a Pagar
+          </h3>
+          <span className="mes-contaPagar">
+            <button className="btn-left-conta" onClick={handleMesAnterior}>
+              <FaAngleLeft />
+            </button>
+            {filtro.mes} / {filtro.ano}
+            <button className="btn-right-conta" onClick={handleMesProximo}>
+              <FaAngleRight />
+            </button>
+          </span>
 
-              <div className="col-md-3 mt-4 pt-2">
-                <button type="submit" className="btn btn-primary">
-                  Inserir
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div className="justify-content-center text-center mt-3">
-          <button
-            className="btn-pesquisa-pagar"
-            onClick={() => setMostrarFiltro(!mostrarFiltro)}
-          >
-            <FaSearch /> Pesquisar
-          </button>
-        </div>
-
-        {mostrarFiltro && (
-          <div className="row justify-content-center mt-4">
-            <h4 className="text-center titulo-pesquisa-paga">
-              Pesquisa contas pagas
-            </h4>
-            <div className="col-md-12 d-flex gap-2">
-              <div className="col-md-2 offset-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Digite a descrição"
-                  name="descricao"
-                  value={filtro.descricao}
-                  onChange={handleFiltroChange}
-                />
-              </div>
-              <div className="col-md-1">
-                <select
-                  className="form-control"
-                  name="mes"
-                  value={filtro.mes}
-                  onChange={handleFiltroChange}
-                >
-                  <option value="0">Mês</option>{" "}
-                  {[...Array(12)].map((_, i) => (
-                    <option key={i + 1} value={i + 1}>
-                      {new Date(0, i).toLocaleString("pt-BR", {
-                        month: "long",
-                      })}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-md-1">
-                <select
-                  className="form-control"
-                  name="ano"
-                  value={filtro.ano}
-                  onChange={handleFiltroChange}
-                >
-                  {[2024, 2025, 2026].map((ano) => (
-                    <option key={ano} value={ano}>
-                      {ano}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-md-3">
-                <button
-                  className="btn btn-primary btn-pesquisa-conta"
-                  onClick={handlePesquisar}
-                >
-                  Pesquisar
-                </button>
-
-                <button className="btn btn-secondary" onClick={handleLimpar}>
-                  Limpar
-                </button>
-              </div>
-            </div>
-            <div className="row justify-content-center mt-4">
-              <div className="col-md-9 text-right">
-                <h3 className="total-pago">
-                  Total Pago:{" "}
-                  <span className="text-success">
-                    {totalPago.toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
+          <div className="row justify-content-center">
+            <div className="col-md-12 ">
+              <form onSubmit={handleSubmit} className="d-flex">
+                <div className="col-md-2 insert-conta offset-3">
+                  <label className="form-label label-conta">Descrição</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Descrição"
+                    name="descricao"
+                    value={novaConta.descricao}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-2 insert-conta">
+                  <label className="form-label  label-conta">Vencimento</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    name="dataVencimento"
+                    value={formatDateForInput(novaConta.dataVencimento!)}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-1 insert-conta">
+                  <label className="form-label  label-conta">Valor</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="R$ 0,00"
+                    name="valor"
+                    value={(novaConta.valor ?? 0).toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
                     })}
-                  </span>
-                </h3>
-              </div>
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-1 insert-conta">
+                  <label className="form-label label-conta">Tipo</label>
+                  <select
+                    className="form-control"
+                    name="tipoDespesa"
+                    value={novaConta.tipoDespesa ?? ""}
+                    onChange={(event) =>
+                      setNovaConta((prev) => ({
+                        ...prev,
+                        tipoDespesa: event.target.value as TipoDespesa,
+                      }))
+                    }
+                    required
+                  >
+                    <option value="" disabled>
+                      Selecione...
+                    </option>
+                    {Object.values(TipoDespesa).map((tipo) => (
+                      <option key={tipo} value={tipo}>
+                        {tipo}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-3 mt-4 pt-2">
+                  <button type="submit" className="btn btn-primary">
+                    Inserir
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
-        )}
-        <div className="row justify-content-center">
-          <div className="col-md-12">
-          <table className="table table-striped mt-4">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Lancamento</th>
-        <th>Descrição</th>
-        <th>Valor</th>
-        <th>Status</th>
-        <th>Vencimento</th>
-        <th className="text-center">Pagamento</th>
-        <th>Usuário</th>
-        {isAdmin && <th>Criado por</th>} {/* Renderiza a coluna somente se for ADMIN */}
-      </tr>
-    </thead>
-    <tbody>
-      {contas.length > 0 ? (
-        contas.map((conta, index) => (
-          <tr key={conta.id}>
-            <td>{index + 1}</td>
-            <td>{new Date(conta.dataCriacao).toLocaleDateString("pt-BR")}</td>
-            <td>{conta.descricao}</td>
-            <td>
-              R${" "}
-              {conta.valor.toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })}
-            </td>
-            <td
-              style={{
-                color:
-                  conta.status === StatusPagamento.ATRASADO ? "#ff3e3e" : "bolder",
-                fontWeight: "bold",
-              }}
+          <div className="justify-content-center text-center mt-3">
+            <button
+              className="btn-pesquisa-pagar"
+              onClick={() => setMostrarFiltro(!mostrarFiltro)}
             >
-              {conta.status}
-              {conta.status !== StatusPagamento.PAGO && (
-                <button onClick={() => handlePagar(conta.id)} className="btn btn-success btn-pagar">
-                  Pagar
-                </button>
-              )}
-            </td>
-            <td>{new Date(conta.dataVencimento).toLocaleDateString("pt-BR")}</td>
-            <td className="text-center">
-              {conta.dataPagamento
-                ? new Date(conta.dataPagamento).toLocaleDateString("pt-BR")
-                : "-"}
-            </td>
-             <td>{conta.createdBy}</td>
-            {isAdmin && <td>{conta.createdByConta}</td>} 
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td className="text-center" colSpan={isAdmin ? 9 : 8}>
-            Nenhuma conta cadastrada
-          </td>
-        </tr>
-      )}
-    </tbody>
-  </table>
+              <FaSearch /> Pesquisar
+            </button>
+          </div>
+
+          {mostrarFiltro && (
+            <div className="row justify-content-center mt-4">
+              <h4 className="text-center titulo-pesquisa-paga">
+                Pesquisa contas pagas
+              </h4>
+              <div className="col-md-12 d-flex gap-2">
+                <div className="col-md-2 offset-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Digite a descrição"
+                    name="descricao"
+                    value={filtro.descricao}
+                    onChange={handleFiltroChange}
+                  />
+                </div>
+                <div className="col-md-1">
+                  <select
+                    className="form-control"
+                    name="mes"
+                    value={filtro.mes}
+                    onChange={handleFiltroChange}
+                  >
+                    <option value="0">Mês</option>{" "}
+                    {[...Array(12)].map((_, i) => (
+                      <option key={i + 1} value={i + 1}>
+                        {new Date(0, i).toLocaleString("pt-BR", {
+                          month: "long",
+                        })}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="col-md-1">
+                  <select
+                    className="form-control"
+                    name="ano"
+                    value={filtro.ano}
+                    onChange={handleFiltroChange}
+                  >
+                    {[2024, 2025, 2026].map((ano) => (
+                      <option key={ano} value={ano}>
+                        {ano}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="col-md-3">
+                  <button
+                    className="btn btn-primary btn-pesquisa-conta"
+                    onClick={handlePesquisar}
+                  >
+                    Pesquisar
+                  </button>
+
+                  <button className="btn btn-secondary" onClick={handleLimpar}>
+                    Limpar
+                  </button>
+                </div>
+              </div>
+              <div className="row justify-content-center mt-4">
+                <div className="col-md-9 text-right">
+                  <h3 className="total-pago">
+                    Total Pago:{" "}
+                    <span className="text-success">
+                      {totalPago.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      })}
+                    </span>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="row justify-content-center">
+            <div className="col-md-12">
+              <table className="table table-striped mt-4">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Lancamento</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th>Vencimento</th>
+                    <th className="text-center">Pagamento</th>
+                    <th>Usuário</th>
+                    {isAdmin && <th>Criado por</th>}{" "}
+                    {/* Renderiza a coluna somente se for ADMIN */}
+                  </tr>
+                </thead>
+                <tbody>
+                  {contas.length > 0 ? (
+                    contas.map((conta, index) => (
+                      <tr key={conta.id}>
+                        <td>{index + 1}</td>
+                        <td>
+                          {new Date(conta.dataCriacao).toLocaleDateString(
+                            "pt-BR"
+                          )}
+                        </td>
+                        <td>{conta.descricao}</td>
+                        <td>
+                          R${" "}
+                          {conta.valor.toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          })}
+                        </td>
+                        <td
+                          style={{
+                            color:
+                              conta.status === StatusPagamento.ATRASADO
+                                ? "#ff3e3e"
+                                : "bolder",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {conta.status}
+                          {conta.status !== StatusPagamento.PAGO && (
+                            <button
+                              onClick={() => handlePagar(conta.id)}
+                              className="btn btn-success btn-pagar"
+                            >
+                              Pagar
+                            </button>
+                          )}
+                        </td>
+                        <td>
+                          {new Date(conta.dataVencimento).toLocaleDateString(
+                            "pt-BR"
+                          )}
+                        </td>
+                        <td className="text-center">
+                          {conta.dataPagamento
+                            ? new Date(conta.dataPagamento).toLocaleDateString(
+                                "pt-BR"
+                              )
+                            : "-"}
+                        </td>
+                        <td>{conta.createdBy}</td>
+                        {isAdmin && <td>{conta.createdByConta}</td>}
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td className="text-center" colSpan={isAdmin ? 9 : 8}>
+                        Nenhuma conta cadastrada
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

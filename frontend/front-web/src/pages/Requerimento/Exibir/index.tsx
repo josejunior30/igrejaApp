@@ -9,6 +9,7 @@ import { TiArrowBack } from "react-icons/ti";
 import { PiTrashFill } from "react-icons/pi";
 import { format } from 'date-fns';
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import Botoes from "../../../components/botoes";
 
 const RequerimentoExibir = () => {
   const [requerimento, setRequerimento] = useState<requerimentoOrçamento[]>([]);
@@ -72,7 +73,8 @@ const RequerimentoExibir = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
-        <div className="row" id="voltar">
+        <div className="row justify-content-center">
+          <Botoes/>
           <div className="col">
           <button className="btn-voltar" onClick={() => navigate(-1)}>
               <TiArrowBack /> Voltar

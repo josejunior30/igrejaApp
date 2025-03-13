@@ -1,0 +1,13 @@
+.menu-transferencia{
+  margin-right: 20px;
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  background-color: var(--color-coral);
+  color:white;
+ }
+ .menu-transferencia.ativo {
+  background-color: var(--color-turquoise); /* Cor de destaque para o botão ativo */
+  color: white; /* Cor do texto quando ativo */
+}
