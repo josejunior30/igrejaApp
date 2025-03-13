@@ -21,6 +21,7 @@ const RequerimentoEditar: React.FC = () => {
     statusRequerimento: StatusRequerimento.PENDENTE,
     responsavel: "",
     emailResponsavel: "",
+    createdBy:"",
 
     local: "",
     Total: 0,

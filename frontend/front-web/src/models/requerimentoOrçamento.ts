@@ -5,7 +5,7 @@ export type requerimentoOrçamento={
 	dataRequerimento: Date;
 	dataEvento:Date;
 	dataAprovacao:Date;
-
+createdBy:string;
 	statusRequerimento:StatusRequerimento;
 	dataPagamento:Date;
 	pergunta1: string;

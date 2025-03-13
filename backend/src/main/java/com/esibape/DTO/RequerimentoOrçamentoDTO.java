@@ -10,7 +10,7 @@ import java.util.Objects;
 import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusRequerimento;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 public class RequerimentoOrçamentoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -28,6 +28,7 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	private Integer quantidade;
 	private String local; 
 	private BigDecimal Total;
+    private String createdBy;
 
 	private List<ProdutoDTO> produto = new ArrayList<>();
 	
@@ -54,7 +55,7 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 		quantidade = entity.getQuantidade();
 		local = entity.getLocal();
 		Total = entity.getTotal();
-
+		createdBy=entity.getCreatedBy();
 		emailResponsavel= entity.getEmailResponsavel();
 		
 	}
@@ -90,6 +91,14 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 
 	public void setDataAprovacao(LocalDate dataAprovacao) {
 		this.dataAprovacao = dataAprovacao;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public StatusRequerimento getStatusRequerimento() {

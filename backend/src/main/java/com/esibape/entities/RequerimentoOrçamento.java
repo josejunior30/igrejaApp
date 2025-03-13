@@ -35,7 +35,8 @@ public class RequerimentoOrçamento implements Serializable {
     private String responsavel;
     private String emailResponsavel;
     private String local;
-    private Integer quantidade;
+    private Integer quantidade; 
+    private String createdBy;
     @Column(nullable = false)
     private BigDecimal total = BigDecimal.ZERO;
 
@@ -45,11 +46,10 @@ public class RequerimentoOrçamento implements Serializable {
     public RequerimentoOrçamento() {}
 
 
-
 	public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovacao,
 			StatusRequerimento statusRequerimento, LocalDate dataPagamento, String pergunta1, String pergunta2,
-			String responsavel, String emailResponsavel, String local, Integer quantidade,
-			List<Produto> produto) {
+			String responsavel, String emailResponsavel, String local, Integer quantidade, String createdBy,
+			BigDecimal total, List<Produto> produto) {
 		super();
 		this.id = id;
 		this.dataRequerimento = dataRequerimento;
@@ -63,9 +63,11 @@ public class RequerimentoOrçamento implements Serializable {
 		this.emailResponsavel = emailResponsavel;
 		this.local = local;
 		this.quantidade = quantidade;
+		this.createdBy = createdBy;
+		this.total = total;
 		this.produto = produto;
-		calcularTotal();
 	}
+
 
 	public void setProduto(List<Produto> produto) {
 	    this.produto = produto;
@@ -115,7 +117,12 @@ public class RequerimentoOrçamento implements Serializable {
     }
     
 
-    public Integer getQuantidade() {
+    public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+
+	public Integer getQuantidade() {
 		return quantidade;
 	}
 
@@ -214,4 +221,11 @@ public class RequerimentoOrçamento implements Serializable {
         RequerimentoOrçamento other = (RequerimentoOrçamento) obj;
         return Objects.equals(id, other.id);
     }
+
+
+
+	public String getCreatedBy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -258,13 +258,13 @@ INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALU
 
 
 
-INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'hamburguer', 120.97, 1);
-INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'ovo', 20.90, 1);
-INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'pão', 45.50, 1);
-INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'batata', 37.79, 2);
-INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'café', 20.00, 2);
-INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'leite', 06.79, 2);
-INSERT INTO tb_produto(nome, preço, requerimento_id) VALUES ( 'açucar', 2.79, 2);
+INSERT INTO tb_produto(nome, preco, requerimento_id) VALUES ( 'hamburguer', 120.97, 1);
+INSERT INTO tb_produto(nome, preco, requerimento_id) VALUES ( 'ovo', 20.90, 1);
+INSERT INTO tb_produto(nome, preco, requerimento_id) VALUES ( 'pão', 45.50, 1);
+INSERT INTO tb_produto(nome, preco, requerimento_id) VALUES ( 'batata', 37.79, 2);
+INSERT INTO tb_produto(nome, preco, requerimento_id) VALUES ( 'café', 20.00, 2);
+INSERT INTO tb_produto(nome, preco, requerimento_id) VALUES ( 'leite', 06.79, 2);
+INSERT INTO tb_produto(nome, preco, requerimento_id) VALUES ( 'açucar', 2.79, 2);
 
 INSERT INTO tb_ebd_curso_visitante(ebd_curso_id, visitante_id) VALUES (3, 1)
 INSERT INTO tb_ebd_curso_visitante(ebd_curso_id, visitante_id) VALUES (3, 2)
