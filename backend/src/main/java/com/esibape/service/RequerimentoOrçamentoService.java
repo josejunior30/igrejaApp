@@ -24,6 +24,7 @@ import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusPagamento;
 import com.esibape.entities.StatusRequerimento;
+import com.esibape.entities.TipoDespesa;
 import com.esibape.repository.ContaPagarRepository;
 import com.esibape.repository.LiderancaRepository;
 import com.esibape.repository.RequerimentoOrçamentoRepository;
@@ -123,6 +124,7 @@ public class RequerimentoOrçamentoService {
 	        contaPagar.setStatus(StatusPagamento.PENDENTE);
 	        contaPagar.setDataCriacao(LocalDateTime.now());
 	        contaPagar.setCreatedByConta(entity.getResponsavel());
+	        contaPagar.setTipoDespesa(TipoDespesa.VARIAVEL);
 	        contaPagar.setCreatedBy(entity.getResponsavel());
 	        contaPagarRepository.save(contaPagar);
 	    }

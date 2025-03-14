@@ -81,7 +81,7 @@ public class ContaPagarService {
             .orElseThrow(() -> new EntityNotFoundException("ContaPagar não encontrada para o ID: " + id));
 
         entity.setStatus(novoStatus);
-        
+
         if (novoStatus == StatusPagamento.PAGO) {
             entity.setCreatedBy(getAuthenticatedUser());
 
@@ -100,6 +100,9 @@ public class ContaPagarService {
             }
 
             transacaoRepository.save(transacao);
+        } else if (novoStatus == StatusPagamento.PENDENTE) {
+            // Deletar a transação associada, se existir
+            transacaoRepository.deleteByContaPagar(entity);
         }
 
         entity = repository.save(entity);
