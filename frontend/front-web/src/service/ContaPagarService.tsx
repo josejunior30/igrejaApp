@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL } from "../ultilitarios/system";
 import { getAccessToken } from "./AuthService";
 import * as authService from '../service/AuthService';
+import { StatusPagamento } from "../models/contaPagar";
 export function findAllContaPagar() {
   return axios.get(`${BASE_URL}/contaPagar`);
 }
@@ -34,33 +35,41 @@ export async function insertContaPagar(ContaPagar: any) {
     throw error;
   }
 }
-
-
-export async function updateStatus(id: number) {
-  const token = getAccessToken();
-
-  if (!token) {
-    throw new Error("Token de acesso não encontrado");
+export async function updateStatus(id: number, status: StatusPagamento) {
+  if (!id || status === undefined) {
+    throw new Error("ID e Status são obrigatórios para atualizar a conta.");
   }
 
-  const config: AxiosRequestConfig = {
-    method: "PATCH",
-    url: `${BASE_URL}/contaPagar/${id}/status`, 
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    data: "PAGO", // Enviando apenas a string "PAGO"
-  };
+  const token = getAccessToken();
+  if (!token) {
+    throw new Error("Token de acesso não encontrado.");
+  }
 
   try {
-    const response = await axios(config);
+    const response = await axios.patch(
+      `${BASE_URL}/contaPagar/${id}/status`,
+      status, // Enviando apenas o valor, não um objeto
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
     return response.data;
-  } catch (error) {
-    console.error("Erro ao atualizar status:", error);
-    throw error;
+  } catch (error: any) {
+    if (error.response) {
+      console.error("Erro ao atualizar status:", error.response.data);
+      throw new Error(error.response.data.message || "Erro ao atualizar status");
+    } else if (error.request) {
+      throw new Error("Falha na comunicação com o servidor.");
+    } else {
+      throw new Error("Erro inesperado: " + error.message);
+    }
   }
 }
+
 
 export function findByDescricaoMesAndAno(
   mes: number,

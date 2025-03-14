@@ -90,7 +90,7 @@ public class ContaPagarService {
             transacao.setData(LocalDate.now());
             transacao.setDescricao(entity.getDescricao());
             transacao.setIsReceita(false);
-            transacao.setContaPagar(entity); // Relacionando corretamente a transação
+            transacao.setContaPagar(entity); 
 
             // Definir tipo de despesa antes de salvar
             if (entity.isFixa()) {

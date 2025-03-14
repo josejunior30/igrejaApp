@@ -109,12 +109,12 @@ const ContaPagar = () => {
       alert("Erro ao cadastrar conta!");
     }
   };
-  const handlePagar = async (id: number) => {
+  const handlePagar = async (id: number, status: StatusPagamento) => {
     const confirmacao = window.confirm("Tem certeza que deseja pagar?");
     if (!confirmacao) return;
 
     try {
-      await updateStatus(id);
+      await updateStatus(id, status);
       window.location.reload();
     } catch (error) {
       console.error("Erro ao atualizar status:", error);
@@ -181,7 +181,7 @@ const ContaPagar = () => {
     if (confirmed) {
       deleteContaPagar(id)
         .then(() => {
-          setContas((prevState) => prevState.filter(req => req.id !== id));
+          setContas((prevState) => prevState.filter((req) => req.id !== id));
           alert(" excluído com sucesso!");
         })
         .catch((error) => {
@@ -189,7 +189,27 @@ const ContaPagar = () => {
         });
     }
   };
+  const handleTogglePagamento = async (id: number, status: StatusPagamento) => {
+    const confirmacao = window.confirm(
+      status === StatusPagamento.PAGO
+        ? "Tem certeza que deseja cancelar o pagamento?"
+        : "Tem certeza que deseja pagar?"
+    );
+    if (!confirmacao) return;
 
+    try {
+      await updateStatus(
+        id,
+        status === StatusPagamento.PAGO
+          ? StatusPagamento.PENDENTE
+          : StatusPagamento.PAGO
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error("Erro ao atualizar status:", error);
+      alert("Erro ao atualizar status!");
+    }
+  };
   return (
     <>
       <Header />
@@ -367,7 +387,7 @@ const ContaPagar = () => {
           )}
           <div className="row justify-content-center">
             <div className="col-md-12">
-              <table className="table table-striped mt-4">
+              <table className="table table-striped mt-4 conta-pagar-table">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -375,13 +395,12 @@ const ContaPagar = () => {
                     <th>Descrição</th>
                     <th>Valor</th>
                     <th>Status</th>
+                    <th></th>
                     <th>Vencimento</th>
                     <th className="text-center">Pagamento</th>
                     <th>Usuário</th>
-                    {isAdmin && <th>Criado por</th>}{" "}
-                    <th>Excluir</th>
+                    {isAdmin && <th>Criado por</th>} <th>Excluir</th>
                   </tr>
-                  
                 </thead>
                 <tbody>
                   {contas.length > 0 ? (
@@ -411,15 +430,22 @@ const ContaPagar = () => {
                           }}
                         >
                           {conta.status}
-                          {conta.status !== StatusPagamento.PAGO && (
-                            <button
-                              onClick={() => handlePagar(conta.id)}
-                              className="btn btn-success btn-pagar"
-                            >
-                              Pagar
-                            </button>
-                          )}
+                          
                         </td>
+                        <td className="text-center"><button
+                            onClick={() =>
+                              handleTogglePagamento(conta.id, conta.status)
+                            }
+                            className={`btn ${
+                              conta.status === StatusPagamento.PAGO
+                                ? "btn-warning"
+                                : "btn-success"
+                            } btn-pagar`}
+                          >
+                            {conta.status === StatusPagamento.PAGO
+                              ? "Cancelar "
+                              : "Pagar"}
+                          </button></td>
                         <td>
                           {new Date(conta.dataVencimento).toLocaleDateString(
                             "pt-BR"
