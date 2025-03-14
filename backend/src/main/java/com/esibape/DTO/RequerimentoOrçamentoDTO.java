@@ -28,7 +28,7 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	private Integer quantidade;
 	private String local; 
 	private BigDecimal Total;
-    private String createdBy;
+    private String createdByRequerimento;
 
 	private List<ProdutoDTO> produto = new ArrayList<>();
 	
@@ -55,7 +55,7 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 		quantidade = entity.getQuantidade();
 		local = entity.getLocal();
 		Total = entity.getTotal();
-		createdBy=entity.getCreatedBy();
+		createdByRequerimento=entity.getCreatedByRequerimento();
 		emailResponsavel= entity.getEmailResponsavel();
 		
 	}
@@ -93,12 +93,13 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 		this.dataAprovacao = dataAprovacao;
 	}
 
-	public String getCreatedBy() {
-		return createdBy;
+	
+	public String getCreatedByRequerimento() {
+		return createdByRequerimento;
 	}
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
+	public void setCreatedByRequerimento(String createdByRequerimento) {
+		this.createdByRequerimento = createdByRequerimento;
 	}
 
 	public StatusRequerimento getStatusRequerimento() {

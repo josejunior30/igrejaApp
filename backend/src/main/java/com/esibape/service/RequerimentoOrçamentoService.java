@@ -40,6 +40,10 @@ public class RequerimentoOrçamentoService {
 	 
 		@Autowired
 		private ContaPagarRepository contaPagarRepository;
+		 
+			@Autowired
+			private ContaPagarService contaPagarService;
+		 
 	 
 	@Transactional(readOnly = true)
 	public List<RequerimentoOrçamentoDTO>findAll(){
@@ -61,10 +65,14 @@ public class RequerimentoOrçamentoService {
 	
 	@Transactional
 	public RequerimentoOrçamentoDTO insert(RequerimentoOrçamentoDTO dto) {
+		 // Testa a autenticação antes de continuar
+	    String authenticatedUser = contaPagarService.getAuthenticatedUser();
+	    System.out.println("Authenticated User in RequerimentoOrçamentoDTO insert: " + authenticatedUser);
 	    RequerimentoOrçamento entity = new RequerimentoOrçamento();
 	    copyDtoToEntity(dto, entity);
 	    entity.setStatusRequerimento(StatusRequerimento.PENDENTE);
-
+	    entity.setCreatedByRequerimento(contaPagarService.getAuthenticatedUser());
+	
 	    if (dto.getProduto() != null) {
 	        List<Produto> produtos = new ArrayList<>();
 	        for (ProdutoDTO produtoDTO : dto.getProduto()) {
@@ -79,6 +87,7 @@ public class RequerimentoOrçamentoService {
 	    }
 
 	    entity.calcularTotal(); 
+	 
 	    entity = repository.save(entity);
 	    
 	    Optional<Lideranca> liderFinancas = liderancaRepository.findByCargo(Cargo.FINANÇAS);
@@ -99,29 +108,39 @@ public class RequerimentoOrçamentoService {
 
 
 	@Transactional
-	public RequerimentoOrçamentoDTO updateStatus(Long id, StatusRequerimento newStatus) {
+	public RequerimentoOrçamentoDTO updateStatus(Long id, StatusRequerimento newStatus) throws MessagingException {
 	    RequerimentoOrçamento entity = repository.findById(id)
 	            .orElseThrow(() -> new NoSuchElementException("Requerimento não encontrado"));
 
 	    entity.setStatusRequerimento(newStatus);
-	    
-	    if (newStatus == StatusRequerimento.APROVADO) {
-	        // Criar uma nova ContaPagar vinculada ao RequerimentoOrçamento aprovado
-	        ContaPagar contaPagar = new ContaPagar();
-	        contaPagar.setValor(entity.getTotal()); // Define o valor total do requerimento
-	        contaPagar.setDescricao("Pedido: " + entity.getPergunta1());
-	        contaPagar.setDataVencimento(entity.getDataPagamento()); 
-	        contaPagar.setStatus(StatusPagamento.PENDENTE); // Define o status como pendente
-	        contaPagar.setDataCriacao(LocalDateTime.now());
-	        contaPagar.setCreatedByConta(entity.getResponsavel()); // Define o responsável
+	    String recipientEmail = entity.getCreatedByRequerimento();
 
-	        // Salvar a conta a pagar
+	    if (newStatus == StatusRequerimento.APROVADO) {
+	        ContaPagar contaPagar = new ContaPagar();
+	        contaPagar.setValor(entity.getTotal());
+	        contaPagar.setDescricao("Pedido: " + entity.getPergunta1());
+	        contaPagar.setDataVencimento(entity.getDataPagamento());
+	        contaPagar.setStatus(StatusPagamento.PENDENTE);
+	        contaPagar.setDataCriacao(LocalDateTime.now());
+	        contaPagar.setCreatedByConta(entity.getResponsavel());
+	        contaPagar.setCreatedBy(entity.getResponsavel());
 	        contaPagarRepository.save(contaPagar);
+	    }
+
+	    if (recipientEmail != null && !recipientEmail.isEmpty()) {
+	        if (newStatus == StatusRequerimento.APROVADO) {
+	            emailService.sendApprovalNotification(recipientEmail);
+	        } else if (newStatus == StatusRequerimento.RECUSADO) {
+	            emailService.sendRejectionNotification(recipientEmail);
+	        }
+	    } else {
+	        System.out.println("Email do criador do requerimento não encontrado, notificação não enviada.");
 	    }
 
 	    entity = repository.save(entity);
 	    return new RequerimentoOrçamentoDTO(entity);
 	}
+
 
 	@Transactional
 	public RequerimentoOrçamentoDTO update(Long id, RequerimentoOrçamentoDTO dto) {
@@ -192,7 +211,8 @@ public class RequerimentoOrçamentoService {
         entity.setQuantidade(dto.getQuantidade());
         entity.setEmailResponsavel(dto.getEmailResponsavel());
         entity.setStatusRequerimento(dto.getStatusRequerimento());
-     
+   
      
 	}
+	
 }

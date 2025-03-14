@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import {
+  deleteContaPagar,
   findAllContaPagar,
   findByDescricaoAno,
   findByDescricaoMesAndAno,
@@ -18,9 +19,8 @@ import { FaSearch } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa";
 import { hasAnyRoles } from "../../../service/AuthService";
-import { RoleEnum } from "../../../models/auth";
-import { Link } from "react-router-dom";
 import Botoes from "../../../components/botoes";
+import { PiTrashFill } from "react-icons/pi";
 const ContaPagar = () => {
   const [contas, setContas] = useState<contaPagar[]>([]);
   const [filtro, setFiltro] = useState({
@@ -176,16 +176,27 @@ const ContaPagar = () => {
       console.error("Erro ao buscar contas:", error);
     }
   };
+  const handleDelete = (id: number) => {
+    const confirmed = window.confirm("Tem certeza que deseja excluir ?");
+    if (confirmed) {
+      deleteContaPagar(id)
+        .then(() => {
+          setContas((prevState) => prevState.filter(req => req.id !== id));
+          alert(" excluído com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao excluir :", error);
+        });
+    }
+  };
 
   return (
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center">
-    <Botoes/>
-          <h3 className="titulo-conta mb-5">
-            Cadastro de Conta a Pagar
-          </h3>
+          <Botoes />
+          <h3 className="titulo-conta mb-5">Cadastro de Conta a Pagar</h3>
           <span className="mes-contaPagar">
             <button className="btn-left-conta" onClick={handleMesAnterior}>
               <FaAngleLeft />
@@ -196,10 +207,10 @@ const ContaPagar = () => {
             </button>
           </span>
 
-          <div className="row justify-content-center">
-            <div className="col-md-12 ">
+          <div className="row justify-content-center ">
+            <div className="col-md-10 offset-3">
               <form onSubmit={handleSubmit} className="d-flex">
-                <div className="col-md-2 insert-conta offset-3">
+                <div className="col-md-3 insert-conta ">
                   <label className="form-label label-conta">Descrição</label>
                   <input
                     type="text"
@@ -368,8 +379,9 @@ const ContaPagar = () => {
                     <th className="text-center">Pagamento</th>
                     <th>Usuário</th>
                     {isAdmin && <th>Criado por</th>}{" "}
-                    {/* Renderiza a coluna somente se for ADMIN */}
+                    <th>Excluir</th>
                   </tr>
+                  
                 </thead>
                 <tbody>
                   {contas.length > 0 ? (
@@ -422,6 +434,14 @@ const ContaPagar = () => {
                         </td>
                         <td>{conta.createdBy}</td>
                         {isAdmin && <td>{conta.createdByConta}</td>}
+                        <td>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handleDelete(conta.id)}
+                          >
+                            <PiTrashFill />
+                          </button>
+                        </td>
                       </tr>
                     ))
                   ) : (

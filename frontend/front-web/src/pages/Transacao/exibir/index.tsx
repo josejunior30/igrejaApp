@@ -8,6 +8,7 @@ import "jspdf-autotable";
 import Transacao from "../inserir";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { PiTrashFill } from "react-icons/pi";
 
 const TransacaoExibir = () => {
   const [transacao, setTransacao] = useState<TransacaoDTO[]>([]);
@@ -74,12 +75,12 @@ const TransacaoExibir = () => {
   const aplicarFiltros = (lista: TransacaoDTO[]) => {
     // Filtra apenas as transações que são receitas (isReceita === true)
     const filtrado = lista.filter((t) => t.isReceita);
-    
+
     // Ordena por data
     const ordenado = filtrado.sort(
       (a, b) => new Date(a.data).getTime() - new Date(b.data).getTime()
     );
-    
+
     setFilteredTransacao(ordenado);
     calcularTotal(ordenado);
   };
@@ -129,13 +130,24 @@ const TransacaoExibir = () => {
 
     doc.save("relatorio_transacoes.pdf");
   };
-
+  const handleDelete = (id: number) => {
+    const confirmed = window.confirm("Tem certeza que deseja excluir ?");
+    if (confirmed) {
+      TransacaoService.deleteTransacao(id)
+        .then(() => {
+          setTransacao((prevState) => prevState.filter((req) => req.id !== id));
+          alert(" excluído com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao excluir :", error);
+        });
+    }
+  };
   return (
     <>
       <Header />
 
       <div className="container-fluid mt-5 pt-5">
-         
         <Transacao />
         <div className="row justify-content-center">
           <div className="col-md-12 text-center">
@@ -236,6 +248,7 @@ const TransacaoExibir = () => {
                     <th scope="col">Data</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Valor</th>
+                    <th scope="col">Excluir</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -249,6 +262,14 @@ const TransacaoExibir = () => {
                           {t.valor.toLocaleString("pt-BR", {
                             minimumFractionDigits: 2,
                           })}
+                        </td>
+                        <td>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handleDelete(t.id)}
+                          >
+                            <PiTrashFill />
+                          </button>
                         </td>
                       </tr>
                     ))

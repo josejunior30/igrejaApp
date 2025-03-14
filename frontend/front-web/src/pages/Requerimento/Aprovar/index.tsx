@@ -12,7 +12,8 @@ import "./styles.css";
 const RequerimentoAprovar: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-
+  const loadingImage = "/imagens/loading.gif";
+  const [loading, setLoading] = useState(false);
   const [requerimento, setRequerimento] = useState<requerimentoOrçamento>({
     id: 0,
     dataRequerimento: new Date(),
@@ -22,7 +23,7 @@ const RequerimentoAprovar: React.FC = () => {
     statusRequerimento: StatusRequerimento.PENDENTE,
     responsavel: "",
     emailResponsavel: "",
-    createdBy:"",
+    createdByRequerimento: "",
     local: "",
     Total: 0,
     pergunta1: "",
@@ -42,8 +43,8 @@ const RequerimentoAprovar: React.FC = () => {
               ...response.data,
               Total: response.data.total || 0,
               dataAprovacao: response.data.dataAprovacao
-                ? new Date(response.data.dataAprovacao) // Conversão para Date
-                : new Date(), // Data atual se não houver
+                ? new Date(response.data.dataAprovacao)
+                : new Date(),
             });
           }
         }
@@ -57,6 +58,7 @@ const RequerimentoAprovar: React.FC = () => {
 
   const handleUpdateClick = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     if (id && requerimento) {
       updateStatus(
         Number(id),
@@ -67,6 +69,7 @@ const RequerimentoAprovar: React.FC = () => {
             "Status do requerimento atualizado com sucesso:",
             response.data
           );
+          setLoading(false);
           alert("Atualização feita com sucesso!");
           navigate("/requerimento");
         })
@@ -289,16 +292,25 @@ const RequerimentoAprovar: React.FC = () => {
             </div>
 
             <div className="col-12  mt-5 mb-5 text-center">
-              <button
-                type="submit"
-                className="btn btn-primary"
-                style={{
-                  backgroundColor: "var(--color-coral)",
-                  border: "none",
-                }}
-              >
-                Atualizar Status
-              </button>
+              {loading ? (
+                <img
+                  src={loadingImage}
+                  alt="Carregando..."
+                  className="rounded mx-auto d-block "
+                  id="loading-image"
+                />
+              ) : (
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  style={{
+                    backgroundColor: "var(--color-coral)",
+                    border: "none",
+                  }}
+                >
+                  Enviar
+                </button>
+              )}
             </div>
           </form>
         </div>

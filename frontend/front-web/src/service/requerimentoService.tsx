@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL } from "../ultilitarios/system";
 import * as authService from '../service/AuthService';
+import { RoleEnum } from "../models/auth";
 
 export function findAll(){
     return axios.get(`${BASE_URL}/requerimento`);
@@ -14,9 +15,40 @@ export function findByMesAno(mes:number,  ano:number){
     return axios.get(`${BASE_URL}/requerimento/mes/${mes}/ano/${ano}`);
 }
 
-export function insertAluno(requerimentoOrçamento:any){
-    return axios.post(`${BASE_URL}/requerimento`, requerimentoOrçamento);
+
+export async function insertRequerimento(requerimentoOrçamento: any) {
+  const token = authService.getAccessToken();
+  const allowedRoles: RoleEnum[] = ['ROLE_OPERADOR', 'ROLE_ADMIN', 'ROLE_FINANCA'];
+
+  if (!authService.hasAnyRoles(allowedRoles)) {
+    alert('Acesso negado: Você não tem permissão para realizar esta ação.');
+    throw new Error('Acesso negado: Você não tem permissão para realizar esta ação.');
+  }
+
+  if (!token) {
+    throw new Error("Token de acesso não encontrado");
+  }
+
+  const config: AxiosRequestConfig = {
+    method: "POST",
+    url: `${BASE_URL}/requerimento`,
+    data: requerimentoOrçamento,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  try {
+    const response = await axios(config);
+    return response;
+  } catch (error) {
+    console.error("Erro ao inserir requerimento:", error);
+    throw error;
+  }
 }
+
+
 export function updateRequerimento(id: number, requerimentoOrçamento:any){
     return axios.put(`${BASE_URL}/requerimento/${id}`, requerimentoOrçamento);
 }
@@ -36,7 +68,7 @@ export async function updateStatus(id: number, statusRequerimento: string) {
 
         const response = await axios.put(
             `${BASE_URL}/requerimento/${id}/status?newStatus=${statusRequerimento}`,
-            {}, // Corpo da requisição vazio
+            {}, 
             { headers }
         );
 

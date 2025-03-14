@@ -36,7 +36,7 @@ public class RequerimentoOrçamento implements Serializable {
     private String emailResponsavel;
     private String local;
     private Integer quantidade; 
-    private String createdBy;
+    private String createdByRequerimento;
     @Column(nullable = false)
     private BigDecimal total = BigDecimal.ZERO;
 
@@ -46,9 +46,11 @@ public class RequerimentoOrçamento implements Serializable {
     public RequerimentoOrçamento() {}
 
 
+    
+
 	public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovacao,
 			StatusRequerimento statusRequerimento, LocalDate dataPagamento, String pergunta1, String pergunta2,
-			String responsavel, String emailResponsavel, String local, Integer quantidade, String createdBy,
+			String responsavel, String emailResponsavel, String local, Integer quantidade, String createdByRequerimento,
 			BigDecimal total, List<Produto> produto) {
 		super();
 		this.id = id;
@@ -63,15 +65,17 @@ public class RequerimentoOrçamento implements Serializable {
 		this.emailResponsavel = emailResponsavel;
 		this.local = local;
 		this.quantidade = quantidade;
-		this.createdBy = createdBy;
+		this.createdByRequerimento = createdByRequerimento;
 		this.total = total;
 		this.produto = produto;
 	}
 
 
+
+
 	public void setProduto(List<Produto> produto) {
 	    this.produto = produto;
-	    calcularTotal(); // Atualiza o total automaticamente
+	    calcularTotal(); 
 	}
 
 	public Long getId() {
@@ -117,14 +121,24 @@ public class RequerimentoOrçamento implements Serializable {
     }
     
 
-    public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
 
 	public Integer getQuantidade() {
 		return quantidade;
 	}
+
+
+	
+	public String getCreatedByRequerimento() {
+		return createdByRequerimento;
+	}
+
+
+
+
+	public void setCreatedByRequerimento(String createdByRequerimento) {
+		this.createdByRequerimento = createdByRequerimento;
+	}
+
 
 
 
@@ -224,8 +238,5 @@ public class RequerimentoOrçamento implements Serializable {
 
 
 
-	public String getCreatedBy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

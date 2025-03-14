@@ -62,7 +62,7 @@ public class ContaPagarService {
 	    return new ContaPagarDTO(entity);
 	}
 
-	private String getAuthenticatedUser() {
+	public String getAuthenticatedUser() {
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    if (auth == null) {
 	        System.out.println("Authentication is null");

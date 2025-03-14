@@ -4,12 +4,13 @@ import './styles.css';
 import Header from "../../../components/Header";
 import { requerimentoOrçamento } from '../../../models/requerimentoOrçamento';
 import { Link, useNavigate } from "react-router-dom";
+import { TiArrowBack } from "react-icons/ti";
 import { PiTrashFill } from "react-icons/pi";
 import { format } from 'date-fns';
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import Botoes from "../../../components/botoes";
 
-const RequerimentoExibir = () => {
+
+const RequerimentoExibirOperacional = () => {
   const [requerimento, setRequerimento] = useState<requerimentoOrçamento[]>([]);
   const [showPendingOnly, setShowPendingOnly] = useState(false);
   const [filtro, setFiltro] = useState({
@@ -71,9 +72,12 @@ const RequerimentoExibir = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
-        <div className="row justify-content-center">
-          <Botoes/>
-     
+        <div className="row justify-content-center pt-5">
+          <div className="col">
+          <button className="btn-voltar" onClick={() => navigate(-1)}>
+              <TiArrowBack /> Voltar
+            </button>
+          </div>
         </div>
         <div className="row justify-content-center ">
           <div className="col-11 col-md-5 text-center" id="barra-requerimento">
@@ -174,4 +178,4 @@ const RequerimentoExibir = () => {
   );
 };
 
-export default RequerimentoExibir;
+export default RequerimentoExibirOperacional;

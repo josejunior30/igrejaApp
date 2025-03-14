@@ -58,6 +58,7 @@ import Transacao from "./pages/Transacao/inserir";
 import TransacaoExibir from "./pages/Transacao/exibir";
 import FluxoCaixa from "./pages/FluxoCaixa/Exibir";
 import ContaPagar from "./pages/ContaPagar/inserir";
+import RequerimentoExibirOperacional from "./pages/Requerimento/Exibir copy";
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
     useState<AccessTokenPayloadDTO>();
@@ -281,19 +282,38 @@ function App() {
             }
           />
           <Route path="/dashbord" element={<Dashboard />} />
-          <Route path="/requerimento" element={<RequerimentoExibir />} />
+          <Route
+            path="/requerimento"
+            element={
+              <PrivateRoute>
+                <RequerimentoExibir />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/requerimentoEditar/:id"
-            element={<RequerimentoEditar />}
+            element={
+              <PrivateRoute>
+                <RequerimentoEditar />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/requerimento/inserir"
-            element={<RequerimentoOrçamento />}
+            element={
+              <PrivateRoute>
+                <RequerimentoOrçamento />
+              </PrivateRoute>
+            }
           />
           <Route path="/operacional" element={<OperacionalMenu />} />
           <Route
             path="/requerimentoAprovar/:id"
-            element={<RequerimentoAprovar />}
+            element={
+              <PrivateRoute>
+                <RequerimentoAprovar />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/requerimento-detalhe/:id"
@@ -324,8 +344,30 @@ function App() {
           <Route path="/calendario" element={<CalendarioAtividade />} />
           <Route path="/transacao" element={<Transacao />} />
           <Route path="/transacao-exibir" element={<TransacaoExibir />} />
-          <Route path="/fluxo-caixa" element={<FluxoCaixa />} />
-          <Route path="/conta-pagar" element={<ContaPagar />} />
+          <Route
+            path="/fluxo-caixa"
+            element={
+              <PrivateRoute>
+                <FluxoCaixa />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/conta-pagar"
+            element={
+              <PrivateRoute>
+                <ContaPagar />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/requerimentoExibir"
+            element={
+              <PrivateRoute>
+                <RequerimentoExibirOperacional />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Router>
     </ContextToken.Provider>

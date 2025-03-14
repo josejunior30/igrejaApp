@@ -1,7 +1,7 @@
-import axios from "axios";
+
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../../ultilitarios/system";
+
 import "./styles.css";
 import {
   Produto,
@@ -9,10 +9,12 @@ import {
 } from "../../../models/requerimentoOrçamento";
 import Header from "../../../components/Header";
 import { StatusRequerimento } from "../../../models/requerimentoOrçamento";
+import { insertRequerimento } from "../../../service/requerimentoService";
 
 const RequerimentoOrçamento: React.FC = () => {
   const navigate = useNavigate();
-
+  const loadingImage = "/imagens/loading.gif";
+  const [loading, setLoading] = useState(false);
   const [requerimentoOrçamento, setRequerimentoOrçamento] =
     useState<requerimentoOrçamento>({
       id: 0,
@@ -23,7 +25,7 @@ const RequerimentoOrçamento: React.FC = () => {
       statusRequerimento: StatusRequerimento.PENDENTE,
       emailResponsavel: "",
       responsavel: "",
-      createdBy:"",
+      createdByRequerimento:"",
       local: "",
       Total: 0,
       pergunta1: "",
@@ -37,7 +39,7 @@ const RequerimentoOrçamento: React.FC = () => {
     id: 0,
     nome: "",
     preço: 0,
-    quantidade: 1, // Nova propriedade para quantidade
+    quantidade: 1, 
   });
 
   const formatarDataEvento = (data: any) => {
@@ -84,10 +86,10 @@ const RequerimentoOrçamento: React.FC = () => {
         id: prevState.produto.length + 1,
         nome: newProduto.nome,
         preço: newProduto.preço,
-        quantidade: newProduto.quantidade, // 🔹 Garante que `quantidade` seja salvo corretamente
+        quantidade: newProduto.quantidade, 
       };
 
-      console.log("Produto adicionado:", novoProduto); // 🔍 Verifica se `quantidade` está correto
+      console.log("Produto adicionado:", novoProduto);
 
       const novoTotal = (
         prevState.Total +
@@ -105,36 +107,33 @@ const RequerimentoOrçamento: React.FC = () => {
   };
 
   const handlePrecoChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let valor = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+    let valor = e.target.value.replace(/\D/g, ""); 
 
-    if (valor === "") valor = "0"; // Garante que o campo nunca fique vazio
+    if (valor === "") valor = "0";
 
-    let valorNumerico = (parseInt(valor, 10) / 100).toFixed(2); // Formata sempre com 2 casas decimais
+    let valorNumerico = (parseInt(valor, 10) / 100).toFixed(2); 
 
     setNewProduto((prevProduto) => ({
       ...prevProduto,
-      preço: parseFloat(valorNumerico), // Salva corretamente o número
+      preço: parseFloat(valorNumerico), 
     }));
   };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    
     console.log(
       "Requerimento antes do POST:",
       JSON.stringify(requerimentoOrçamento, null, 2)
-    ); // 🔍 Melhor visualização no console
+    );
+    setLoading(true);
     try {
-      // Faz o POST do requerimento
-      const response = await axios.post(
-        `${BASE_URL}/requerimento`,
-        requerimentoOrçamento
-      );
+
+      const response = await insertRequerimento(requerimentoOrçamento);
 
       console.log("Resposta da API:", response.data);
-      // Mostra o alerta de sucesso após o envio bem-sucedido
       alert("Requerimento enviado com sucesso!");
 
-      // Resetando o formulário após o envio
+     
       setRequerimentoOrçamento({
         id: 0,
         dataRequerimento: new Date(),
@@ -146,17 +145,19 @@ const RequerimentoOrçamento: React.FC = () => {
         responsavel: "",
         local: "",
         Total: 0,
-        createdBy:"",
+        createdByRequerimento: "",
         pergunta1: "",
         pergunta2: "",
         produto: [],
       });
+
     } catch (error) {
       console.error("Erro ao enviar requerimento:", error);
-
       alert("Erro ao enviar o requerimento. Por favor, tente novamente.");
+    }finally{
+      setLoading(false);
     }
-  };
+};
 
   const handleGoBack = () => {
     navigate(-1);
@@ -170,7 +171,7 @@ const RequerimentoOrçamento: React.FC = () => {
           <form onSubmit={handleSubmit} className="row p-4 g-4">
             <h3>Relatório de Orçamento</h3>
 
-            {/* Responsável */}
+
             <div className="col-md-4">
               <label htmlFor="responsavel" className="form-label">
                 Responsável:
@@ -186,7 +187,6 @@ const RequerimentoOrçamento: React.FC = () => {
               />
             </div>
 
-            {/* Local */}
             <div className="col-md-4">
               <label htmlFor="local" className="form-label">
                 Local:
@@ -215,7 +215,7 @@ const RequerimentoOrçamento: React.FC = () => {
                 required
               />
             </div>
-            {/* Data do Evento */}
+       
             <div className="col-md-4">
               <label htmlFor="dataEvento" className="form-label">
                 Data do Evento:
@@ -243,7 +243,7 @@ const RequerimentoOrçamento: React.FC = () => {
               />
             </div>
 
-            {/* O que vai ser feito */}
+ 
             <div className="col-12">
               <label htmlFor="O que vai ser feito ?" className="form-label">
                 O que vai ser feito?
@@ -259,7 +259,7 @@ const RequerimentoOrçamento: React.FC = () => {
               />
             </div>
 
-            {/* Qual o motivo de ser feito */}
+     
             <div className="col-12">
               <label
                 htmlFor="Qual o motivo de ser feito ?"
@@ -278,7 +278,6 @@ const RequerimentoOrçamento: React.FC = () => {
               />
             </div>
 
-            {/* Formulário para adicionar produtos */}
             <div className=" col-md-4">
               <label htmlFor="nome" className="form-label">
                 Produto:
@@ -358,9 +357,23 @@ const RequerimentoOrçamento: React.FC = () => {
             </label>
 
             <div className="d-grid gap-2 col-6 mx-auto mt-5">
-              <button className="btn btn-primary" type="submit">
-                Enviar
-              </button>
+            {loading ? (
+                    <img
+                      src={loadingImage}
+                      alt="Carregando..."
+                      className="rounded mx-auto d-block "
+                      id="loading-image"
+                    />
+                  ) : (
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      id="btn-logar"
+                    >
+                   Enviar
+                    </button>
+                  )}
+             
             </div>
           </form>
         </div>

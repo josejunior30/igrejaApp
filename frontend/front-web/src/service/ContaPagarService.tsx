@@ -82,3 +82,7 @@ export function findByMesAno(ano: number, mes: number) {
     `${BASE_URL}/contaPagar/buscar-por-data-criacao?mes=${mes}&ano=${ano}`
   );
 }
+export async function deleteContaPagar(id: number) {
+
+  return axios.delete(`${BASE_URL}/contaPagar/${id}`);
+}
