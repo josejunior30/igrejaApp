@@ -322,7 +322,7 @@ const RequerimentoOrçamento: React.FC = () => {
               />
             </div>
 
-            <div className="col-3 col-md-3">
+            <div className="col-1 col-md-3">
               <button
                 type="button"
                 className="btn btn-secondary mt-4"
@@ -356,7 +356,7 @@ const RequerimentoOrçamento: React.FC = () => {
               })}
             </label>
 
-            <div className="d-grid gap-2 col-6 mx-auto mt-5">
+            <div className="d-grid gap-2 col-md-6 mx-auto mt-5">
             {loading ? (
                     <img
                       src={loadingImage}

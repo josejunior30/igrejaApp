@@ -185,7 +185,9 @@ public class ContaPagar implements Serializable{
 		this.createdBy = createdBy;
 	}
 
-
+	  public boolean isFixa() {
+	        return this.tipoDespesa == TipoDespesa.FIXO;
+	    }
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

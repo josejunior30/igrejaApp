@@ -35,5 +35,7 @@ border: none;
 
   @media (max-width: 768px) {
     
-
+    #relatorio-add form label{
+      font-size: 12px;
+      }
   }

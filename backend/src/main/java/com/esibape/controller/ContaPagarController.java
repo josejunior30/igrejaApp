@@ -64,7 +64,7 @@ public class ContaPagarController {
 		    }
 			@DeleteMapping(value="/{id}")
 			public ResponseEntity<VisitanteDTO>delete(@PathVariable Long id){
-				 service.delete(id);
+				 service.deleteContaPagar(id);
 				return ResponseEntity.noContent().build();
 			}
 			

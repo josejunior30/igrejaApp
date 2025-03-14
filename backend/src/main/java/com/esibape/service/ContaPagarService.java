@@ -100,8 +100,14 @@ public class ContaPagarService {
  	        transacao.setData(LocalDate.now());
  	        transacao.setDescricao(entity.getDescricao());
  	        transacao.setIsReceita(false);
- 	        transacao.setTipoDespesa(TipoDespesa.VARIAVEL);
+ 	
  	        transacaoRepository.save(transacao);
+ 	       if (entity.isFixa()) {  // Supondo que exista um método `isFixa()` na ContaPagar
+ 	            transacao.setTipoDespesa(TipoDespesa.FIXO);
+ 	        } else {
+ 	            transacao.setTipoDespesa(TipoDespesa.VARIAVEL);
+ 	        }
+
 	    }
 	    
 	    entity = repository.save(entity);
@@ -165,9 +171,16 @@ public class ContaPagarService {
     }
 
     
-    public void delete(Long id) {
-    	repository.deleteById(id);
- 
-   }
+    @Transactional
+    public void deleteContaPagar(Long id) {
+        ContaPagar entity = repository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("ContaPagar não encontrada para o ID: " + id));
+
+        // Apagar transações que tenham a mesma descrição da ContaPagar
+        transacaoRepository.deleteByDescricao(entity.getDescricao());
+
+        // Agora, deletar a ContaPagar
+        repository.delete(entity);
+    }
 
 }
