@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,10 +16,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.CreationTimestamp;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name="tb_conta_pagar")
 public class ContaPagar implements Serializable{
@@ -54,15 +59,18 @@ public class ContaPagar implements Serializable{
     @Enumerated(EnumType.STRING)
     private TipoDespesa tipoDespesa;
     private String createdBy;
-
+    @OneToMany(mappedBy = "contaPagar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transacao> transacao = new ArrayList<>();
     public ContaPagar() {
     	
     }
     
-	
+    
+
+
 	public ContaPagar(Long id, String descricao, BigDecimal valor, LocalDate dataVencimento, StatusPagamento status,
 			LocalDateTime dataCriacao, LocalDateTime dataPagamento, String createdByConta, TipoDespesa tipoDespesa,
-			String createdBy) {
+			String createdBy, List<Transacao> transacao) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -74,6 +82,7 @@ public class ContaPagar implements Serializable{
 		this.createdByConta = createdByConta;
 		this.tipoDespesa = tipoDespesa;
 		this.createdBy = createdBy;
+		this.transacao = transacao;
 	}
 
 
@@ -97,6 +106,20 @@ public class ContaPagar implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+
+	public List<Transacao> getTransacao() {
+		return transacao;
+	}
+
+
+
+
+	public void setTransacao(List<Transacao> transacao) {
+		this.transacao = transacao;
+	}
+
+
 
 
 	public TipoDespesa getTipoDespesa() {
@@ -185,9 +208,7 @@ public class ContaPagar implements Serializable{
 		this.createdBy = createdBy;
 	}
 
-	  public boolean isFixa() {
-	        return this.tipoDespesa == TipoDespesa.FIXO;
-	    }
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -205,9 +226,8 @@ public class ContaPagar implements Serializable{
 		ContaPagar other = (ContaPagar) obj;
 		return Objects.equals(id, other.id);
 	}
+	  public boolean isFixa() {
+	        return this.tipoDespesa == TipoDespesa.FIXO;
+	    }
 
-
-	
-    
 }
-

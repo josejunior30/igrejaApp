@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./styles.css";
 import Header from "../../../components/Header";
 import { insertTransacao } from "../../../service/TransacaoService";
-import { Link } from "react-router-dom";
+
 import Botoes from "../../../components/botoes";
 
 const Transacao = () => {
@@ -12,7 +12,6 @@ const Transacao = () => {
   const [valor, setValor] = useState<number | "">("");
   const [data, setData] = useState("");
 
-  // Formatar valor no padrão BRL
   const formatCurrency = (value: number | "") => {
     if (value === "") return "";
     return new Intl.NumberFormat("pt-BR", {
@@ -20,37 +19,34 @@ const Transacao = () => {
       currency: "BRL",
     }).format(value);
   };
-  // Define a data atual quando o componente é carregado
+
   useEffect(() => {
     const hoje = new Date().toISOString().split("T")[0];
     setData(hoje);
   }, []);
 
   const handleValorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/\D/g, ""); // Remove tudo que não for número
-    const numberValue = parseFloat(rawValue) / 100; // Converte para decimal
+    const rawValue = e.target.value.replace(/\D/g, ""); 
+    const numberValue = parseFloat(rawValue) / 100; 
     setValor(isNaN(numberValue) ? "" : numberValue);
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+  
     const transacao = {
       descricao,
-      isReceita: isReceita === "TRUE",
-      tipoDespesa: isReceita === "FALSE" ? tipoDespesa : null, // Apenas se for despesa
-      valor: valor || 0, // Garante que não seja vazio
+      isReceita: true, // Agora sempre será TRUE
+      tipoDespesa: null, 
+      valor: valor || 0, 
       data,
     };
-
+  
     try {
       await insertTransacao(transacao);
       alert("Transação adicionada com sucesso!");
-
-      // Limpa os campos após a inserção
+  
       setDescricao("");
-      setIsReceita("");
-      setTipoDespesa("");
       setValor("");
       setData("");
     } catch (error) {
@@ -58,6 +54,7 @@ const Transacao = () => {
       alert("Erro ao adicionar transação.");
     }
   };
+  
 
   return (
     <>

@@ -11,7 +11,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="tb_transacao")
@@ -26,13 +29,18 @@ public class Transacao implements Serializable{
 	private Boolean isReceita;
 	 @Enumerated(EnumType.STRING)
 	private TipoDespesa tipoDespesa;
-	
+	 @ManyToOne
+	 @JoinColumn(name = "conta_pagar_id")
+	 private ContaPagar contaPagar; 
+
 	public Transacao() {
 		
 	}
 
+	
+
 	public Transacao(Long id, BigDecimal valor, LocalDate data, String descricao, Boolean isReceita,
-			TipoDespesa tipoDespesa) {
+			TipoDespesa tipoDespesa, ContaPagar contaPagar) {
 		super();
 		this.id = id;
 		this.valor = valor;
@@ -40,7 +48,10 @@ public class Transacao implements Serializable{
 		this.descricao = descricao;
 		this.isReceita = isReceita;
 		this.tipoDespesa = tipoDespesa;
+		this.contaPagar = contaPagar;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -53,6 +64,18 @@ public class Transacao implements Serializable{
 	public BigDecimal getValor() {
 		return valor;
 	}
+
+	public ContaPagar getContaPagar() {
+		return contaPagar;
+	}
+
+
+
+	public void setContaPagar(ContaPagar contaPagar) {
+		this.contaPagar = contaPagar;
+	}
+
+
 
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
@@ -109,6 +132,5 @@ public class Transacao implements Serializable{
 		Transacao other = (Transacao) obj;
 		return Objects.equals(id, other.id);
 	}
-	
 	
 }

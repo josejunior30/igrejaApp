@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,6 +13,7 @@ import javax.persistence.Enumerated;
 import com.esibape.entities.ContaPagar;
 import com.esibape.entities.StatusPagamento;
 import com.esibape.entities.TipoDespesa;
+import com.esibape.entities.Transacao;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
@@ -31,7 +34,7 @@ public class ContaPagarDTO implements Serializable{
 	    private String createdBy;
 	    private String createdByConta;
 	    private TipoDespesa tipoDespesa;
-	
+	    private List<TransacaoDTO> transacao = new ArrayList<>();
 	    public ContaPagarDTO() {
 			
 			
@@ -49,7 +52,12 @@ public class ContaPagarDTO implements Serializable{
 		createdByConta=entity.getCreatedByConta();
 		tipoDespesa=entity.getTipoDespesa();
 	}
-
+	public ContaPagarDTO(ContaPagar entity, List<Transacao> transacao) {
+		  this(entity);
+		  if (transacao != null) {
+			  transacao.forEach(cha -> this.transacao.add(new TransacaoDTO(cha)));
+	        }
+	}
 	public Long getId() {
 		return id;
 	}
@@ -114,6 +122,15 @@ public class ContaPagarDTO implements Serializable{
 	}
 
 
+	
+	public List<TransacaoDTO> getTransacao() {
+		return transacao;
+	}
+
+	public void setTransacao(List<TransacaoDTO> transacao) {
+		this.transacao = transacao;
+	}
+
 	public StatusPagamento getStatus() {
 		return status;
 	}
@@ -142,8 +159,4 @@ public class ContaPagarDTO implements Serializable{
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-
-	
-
-	
 }

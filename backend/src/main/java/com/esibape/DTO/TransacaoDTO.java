@@ -18,7 +18,7 @@ public class TransacaoDTO implements Serializable {
 	private String descricao;
 	private Boolean isReceita;
 	private TipoDespesa tipoDespesa;
-	
+	  private ContaPagarDTO contaPagar; 
 	
 	public TransacaoDTO() {
 		
@@ -32,6 +32,9 @@ public class TransacaoDTO implements Serializable {
 		this.isReceita =entity.getIsReceita();
 		this.tipoDespesa=entity.getTipoDespesa();
 		this.valor =entity.getValor();
+		 if (entity.getContaPagar() != null) {
+	            this.contaPagar = new ContaPagarDTO(entity.getContaPagar());
+	        }
 	}
 
 
@@ -69,6 +72,14 @@ public class TransacaoDTO implements Serializable {
 
 
 	
+	public ContaPagarDTO getContaPagar() {
+		return contaPagar;
+	}
+
+	public void setContaPagar(ContaPagarDTO contaPagar) {
+		this.contaPagar = contaPagar;
+	}
+
 	public Boolean getIsReceita() {
 		return isReceita;
 	}
@@ -84,6 +95,8 @@ public class TransacaoDTO implements Serializable {
 	public void setTipoDespesa(TipoDespesa tipoDespesa) {
 		this.tipoDespesa = tipoDespesa;
 	}
+
+
 
 
 }
