@@ -1,6 +1,7 @@
 package com.esibape.service;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -66,14 +67,20 @@ public class RequerimentoOrçamentoService {
 	
 	@Transactional
 	public RequerimentoOrçamentoDTO insert(RequerimentoOrçamentoDTO dto) {
-		 // Testa a autenticação antes de continuar
+	    // Testa a autenticação antes de continuar
 	    String authenticatedUser = contaPagarService.getAuthenticatedUser();
 	    System.out.println("Authenticated User in RequerimentoOrçamentoDTO insert: " + authenticatedUser);
+
 	    RequerimentoOrçamento entity = new RequerimentoOrçamento();
 	    copyDtoToEntity(dto, entity);
+
 	    entity.setStatusRequerimento(StatusRequerimento.PENDENTE);
-	    entity.setCreatedByRequerimento(contaPagarService.getAuthenticatedUser());
-	
+	    entity.setCreatedByRequerimento(authenticatedUser);
+
+	    // Garante que contaPagar seja NULL
+	    entity.setContaPagar(null);
+
+	    // Adiciona os produtos, se houver
 	    if (dto.getProduto() != null) {
 	        List<Produto> produtos = new ArrayList<>();
 	        for (ProdutoDTO produtoDTO : dto.getProduto()) {
@@ -87,23 +94,23 @@ public class RequerimentoOrçamentoService {
 	        entity.setProduto(produtos);
 	    }
 
-	    entity.calcularTotal(); 
-	 
-	    entity = repository.save(entity);
-	    
-	    Optional<Lideranca> liderFinancas = liderancaRepository.findByCargo(Cargo.FINANÇAS);
+	    // Calcula o total antes de salvar
+	    entity.calcularTotal();
 
+	    // Salva no banco
+	    entity = repository.save(entity);
+
+	    // Notificação por e-mail, se houver líder de finanças cadastrado
+	    Optional<Lideranca> liderFinancas = liderancaRepository.findByCargo(Cargo.FINANÇAS);
 	    if (liderFinancas.isPresent()) {
-	    	 Lideranca lider = liderFinancas.get();
-	    	 String emailFinanceiro = lider.getEmail();
-	    	String nomeLider = lider.getNome(); 
-	    	
-	    	try {
-	            emailService.sendNewRequerimentoNotification(emailFinanceiro, nomeLider, entity.getResponsavel());
+	        Lideranca lider = liderFinancas.get();
+	        try {
+	            emailService.sendNewRequerimentoNotification(lider.getEmail(), lider.getNome(), entity.getResponsavel());
 	        } catch (MessagingException e) {
 	            e.printStackTrace();
 	        }
 	    }
+
 	    return new RequerimentoOrçamentoDTO(entity, entity.getProduto());
 	}
 
@@ -111,24 +118,47 @@ public class RequerimentoOrçamentoService {
 	@Transactional
 	public RequerimentoOrçamentoDTO updateStatus(Long id, StatusRequerimento newStatus) throws MessagingException {
 	    RequerimentoOrçamento entity = repository.findById(id)
-	            .orElseThrow(() -> new NoSuchElementException("Requerimento não encontrado"));
+	        .orElseThrow(() -> new NoSuchElementException("Requerimento não encontrado"));
 
 	    entity.setStatusRequerimento(newStatus);
 	    String recipientEmail = entity.getCreatedByRequerimento();
 
+	    // **Gerenciar ContaPagar ao Aprovar**
 	    if (newStatus == StatusRequerimento.APROVADO) {
-	        ContaPagar contaPagar = new ContaPagar();
-	        contaPagar.setValor(entity.getTotal());
-	        contaPagar.setDescricao("Pedido: " + entity.getPergunta1());
+	        ContaPagar contaPagar = entity.getContaPagar();
+
+	        if (contaPagar == null) {
+	            // Criar uma nova ContaPagar se não existir
+	            contaPagar = new ContaPagar();
+	            contaPagar.setDescricao("Pedido: " + entity.getPergunta1());
+	            contaPagar.setDataCriacao(LocalDateTime.now());
+	            contaPagar.setStatus(StatusPagamento.PENDENTE);
+	            contaPagar.setTipoDespesa(TipoDespesa.VARIAVEL);
+	            contaPagar.setCreatedBy(entity.getResponsavel());
+	            contaPagar.setCreatedByConta(entity.getResponsavel());
+	            contaPagar.setValor(BigDecimal.ZERO); // Garante que não seja nulo
+	        }
+
+	        // Atualiza valores da ContaPagar
+	        contaPagar.setValor(contaPagar.getValor().add(entity.getTotal()));
 	        contaPagar.setDataVencimento(entity.getDataPagamento());
-	        contaPagar.setStatus(StatusPagamento.PENDENTE);
-	        contaPagar.setDataCriacao(LocalDateTime.now());
-	        contaPagar.setCreatedByConta(entity.getResponsavel());
-	        contaPagar.setTipoDespesa(TipoDespesa.VARIAVEL);
-	        contaPagar.setCreatedBy(entity.getResponsavel());
-	        contaPagarRepository.save(contaPagar);
+
+	        // Adiciona o requerimento à lista de requerimentos da ContaPagar (relacionamento bidirecional)
+	        if (!contaPagar.getRequerimentoOrçamento().contains(entity)) {
+	            contaPagar.getRequerimentoOrçamento().add(entity);
+	        }
+
+	        // Salvar ContaPagar
+	        contaPagar = contaPagarRepository.save(contaPagar);
+
+	        // Associar o ContaPagar ao requerimento
+	        entity.setContaPagar(contaPagar);
+	    } else {
+	        // Se não for aprovado, o ContaPagar deve ser mantido como está
+	        entity.setContaPagar(null);
 	    }
 
+	    // **Envio de e-mail para aprovação/recusa**
 	    if (recipientEmail != null && !recipientEmail.isEmpty()) {
 	        if (newStatus == StatusRequerimento.APROVADO) {
 	            emailService.sendApprovalNotification(recipientEmail);
@@ -139,7 +169,9 @@ public class RequerimentoOrçamentoService {
 	        System.out.println("Email do criador do requerimento não encontrado, notificação não enviada.");
 	    }
 
+	    // Salvar Requerimento atualizado
 	    entity = repository.save(entity);
+
 	    return new RequerimentoOrçamentoDTO(entity);
 	}
 
@@ -182,12 +214,30 @@ public class RequerimentoOrçamentoService {
 	    return new RequerimentoOrçamentoDTO(entity, entity.getProduto());
 	}
 
+	@Transactional
+	public void delete(Long id) {
+	    // Busca o Requerimento pelo ID
+	    RequerimentoOrçamento entity = repository.findById(id)
+	        .orElseThrow(() -> new NoSuchElementException("Requerimento não encontrado"));
 
-	
-	  public void delete(Long id) {
-	        repository.deleteById(id);
+	    ContaPagar contaPagar = entity.getContaPagar();
+
+	    // Se existir uma ContaPagar vinculada, verificar se pode ser excluída
+	    if (contaPagar != null) {
+	        // Remove o requerimento da lista de requerimentos da ContaPagar
+	        contaPagar.getRequerimentoOrçamento().remove(entity);
+
+	        // Se a ContaPagar não tiver mais nenhum requerimento vinculado, deletá-la
+	        if (contaPagar.getRequerimentoOrçamento().isEmpty()) {
+	            contaPagarRepository.delete(contaPagar);
+	        }
 	    }
-	  
+
+	    // Excluir o requerimento
+	    repository.delete(entity);
+	}
+
+
 	  @Transactional(readOnly = true)
 	  public List<RequerimentoOrçamentoDTO> findByMonthAndYear(int month, int year) {
 	      LocalDate startDate = LocalDate.of(year, month, 1);

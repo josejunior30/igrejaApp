@@ -27,6 +27,7 @@ const RequerimentoAprovar: React.FC = () => {
     local: "",
     Total: 0,
     pergunta1: "",
+    conta_pagar_id:0,
     pergunta2: "",
     produto: [],
   });

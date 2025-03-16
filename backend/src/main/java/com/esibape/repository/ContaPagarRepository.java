@@ -3,9 +3,12 @@ package com.esibape.repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.esibape.entities.ContaPagar;
+import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusPagamento;
 
 
@@ -17,6 +20,9 @@ public interface ContaPagarRepository extends JpaRepository<ContaPagar, Long> {
 
 	
 	List<ContaPagar> findByDataCriacaoBetween(LocalDateTime inicio, LocalDateTime fim);
+
+
+	Optional<RequerimentoOrçamento> findByDescricao(String string);
 
 
 }

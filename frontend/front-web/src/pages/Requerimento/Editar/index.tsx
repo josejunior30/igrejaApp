@@ -22,7 +22,7 @@ const RequerimentoEditar: React.FC = () => {
     responsavel: "",
     emailResponsavel: "",
     createdByRequerimento:"",
-
+    conta_pagar_id:0,
     local: "",
     Total: 0,
     pergunta1: "",

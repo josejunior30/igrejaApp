@@ -9,7 +9,6 @@ import Detalhes from "./pages/Membro/detalhe-membro";
 import Formulario from "./pages/formMembro/adcionarMembro";
 import Inicial from "./pages/Inicial";
 import FormularioUpdate from "./pages/formMembro/EditarMembro";
-
 import Projetos from "./pages/Projetos";
 import DetalheProjetos from "./pages/Projetos/detalhe-projeto";
 import Alunos from "./pages/Alunos/ListaAlunos";
@@ -17,7 +16,6 @@ import AddAlunos from "./pages/Alunos/addAlunos";
 import DetalhesAlunos from "./pages/Alunos/detalhesAlunos";
 import EditarAlunos from "./pages/Alunos/editarAlunos";
 import Presenca from "./pages/ListaChamada";
-
 import Relatorio from "./pages/Relatorio/pesquisa";
 import DetalhesRelatorio from "./pages/Relatorio/detalhes";
 import AddRelatorio from "./pages/Relatorio/adicionar";
@@ -58,7 +56,7 @@ import Transacao from "./pages/Transacao/inserir";
 import TransacaoExibir from "./pages/Transacao/exibir";
 import FluxoCaixa from "./pages/FluxoCaixa/Exibir";
 import ContaPagar from "./pages/ContaPagar/inserir";
-import RequerimentoExibirOperacional from "./pages/Requerimento/Exibir copy";
+
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
     useState<AccessTokenPayloadDTO>();
@@ -360,14 +358,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/requerimentoExibir"
-            element={
-              <PrivateRoute>
-                <RequerimentoExibirOperacional />
-              </PrivateRoute>
-            }
-          />
+        
         </Routes>
       </Router>
     </ContextToken.Provider>

@@ -61,16 +61,22 @@ public class ContaPagar implements Serializable{
     private String createdBy;
     @OneToMany(mappedBy = "contaPagar", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transacao> transacao = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "contaPagar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RequerimentoOrçamento>requerimentoOrçamento = new ArrayList<>();
+    
     public ContaPagar() {
     	
     }
     
     
+	
+
 
 
 	public ContaPagar(Long id, String descricao, BigDecimal valor, LocalDate dataVencimento, StatusPagamento status,
 			LocalDateTime dataCriacao, LocalDateTime dataPagamento, String createdByConta, TipoDespesa tipoDespesa,
-			String createdBy, List<Transacao> transacao) {
+			String createdBy, List<Transacao> transacao, List<RequerimentoOrçamento> requerimentoOrçamento) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -83,7 +89,10 @@ public class ContaPagar implements Serializable{
 		this.tipoDespesa = tipoDespesa;
 		this.createdBy = createdBy;
 		this.transacao = transacao;
+		this.requerimentoOrçamento = requerimentoOrçamento;
 	}
+
+
 
 
 
@@ -177,6 +186,24 @@ public class ContaPagar implements Serializable{
 	public StatusPagamento getStatus() {
 		return status;
 	}
+
+
+	public List<RequerimentoOrçamento> getRequerimentoOrçamento() {
+		return requerimentoOrçamento;
+	}
+
+
+
+
+
+
+	public void setRequerimentoOrçamento(List<RequerimentoOrçamento> requerimentoOrçamento) {
+		this.requerimentoOrçamento = requerimentoOrçamento;
+	}
+
+
+
+
 
 
 	public void setStatus(StatusPagamento status) {

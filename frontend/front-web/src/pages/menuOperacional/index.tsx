@@ -39,7 +39,7 @@ const OperacionalMenu = () => (
             id="img-menu"
           />
           <h3>Requerimento</h3>
-          <Link to="/requerimentoExibir">
+          <Link to="/requerimento">
             <button className="btn btn-info">Clique aqui</button>
           </Link>
         </div>

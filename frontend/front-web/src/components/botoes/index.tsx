@@ -1,8 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
+
+import *as AuthService from "../../service/AuthService"; 
 import "./styles.css";
 
 const Botoes = () => {
-  const location = useLocation(); // Obtém a localização atual
+  const location = useLocation();
+
+
+  // Verifica se o usuário tem a role necessária
+  const hasPermission = AuthService.hasAnyRoles(["ROLE_ADMIN", "ROLE_FINANCA"]);
+
+  // Se não tiver permissão, não renderiza nada
+  if (!hasPermission) {
+    return null;
+  }
 
   return (
     <div className="col-10 text-center pt-5">

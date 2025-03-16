@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
@@ -39,6 +42,10 @@ public class RequerimentoOrçamento implements Serializable {
     private String createdByRequerimento;
     @Column(nullable = false)
     private BigDecimal total = BigDecimal.ZERO;
+    
+    @ManyToOne
+    @JoinColumn(name = "conta_pagar_id")
+    private ContaPagar contaPagar;
 
     @OneToMany(mappedBy = "requerimento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Produto> produto = new ArrayList<>();
@@ -46,12 +53,10 @@ public class RequerimentoOrçamento implements Serializable {
     public RequerimentoOrçamento() {}
 
 
-    
-
 	public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovacao,
 			StatusRequerimento statusRequerimento, LocalDate dataPagamento, String pergunta1, String pergunta2,
 			String responsavel, String emailResponsavel, String local, Integer quantidade, String createdByRequerimento,
-			BigDecimal total, List<Produto> produto) {
+			BigDecimal total, ContaPagar contaPagar, List<Produto> produto) {
 		super();
 		this.id = id;
 		this.dataRequerimento = dataRequerimento;
@@ -67,10 +72,9 @@ public class RequerimentoOrçamento implements Serializable {
 		this.quantidade = quantidade;
 		this.createdByRequerimento = createdByRequerimento;
 		this.total = total;
+		this.contaPagar = contaPagar;
 		this.produto = produto;
 	}
-
-
 
 
 	public void setProduto(List<Produto> produto) {
@@ -131,6 +135,24 @@ public class RequerimentoOrçamento implements Serializable {
 	public String getCreatedByRequerimento() {
 		return createdByRequerimento;
 	}
+
+
+
+
+	public ContaPagar getContaPagar() {
+		return contaPagar;
+	}
+
+
+
+
+
+
+	public void setContaPagar(ContaPagar contaPagar) {
+		this.contaPagar = contaPagar;
+	}
+
+
 
 
 

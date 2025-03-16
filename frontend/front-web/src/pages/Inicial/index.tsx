@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./styles.css";
 import Header from "../../components/Header";
-import *as AauthService from "../../service/AuthService"; // 🔹 Importando o serviço de autenticação
+import *as AuthService from "../../service/AuthService"; // 🔹 Importando o serviço de autenticação
 
 const projetos = "https://i.postimg.cc/6qJgcsZs/Esta-o-siba-250-x-150-mm-250-x-170-mm.png";
 const financeiro = "https://i.postimg.cc/QdwmwPQs/financeiro.jpg";
@@ -12,7 +12,7 @@ const cfc = "https://i.postimg.cc/cCW1P3MX/C-pia-de-Projeto-Final-CFC-SIBAPE.png
 
 const Inicial = () => {
   // Verifica se o usuário tem a role ADMIN ou FINANCA
-  const temAcessoFinanceiro = AauthService.hasAnyRoles(["ROLE_ADMIN", "ROLE_FINANCA"]);
+  const temAcessoFinanceiro = AuthService.hasAnyRoles(["ROLE_ADMIN", "ROLE_FINANCA"]);
 
   // Função para tratar clique no botão de Finanças
   const handleFinanceiroClick = (e: React.MouseEvent<HTMLButtonElement>) => {

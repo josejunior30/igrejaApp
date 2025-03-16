@@ -6,7 +6,7 @@ export type requerimentoOrçamento={
 	dataEvento:Date;
 	dataAprovacao:Date;
 createdByRequerimento:string;
-
+conta_pagar_id: number;
 	statusRequerimento:StatusRequerimento;
 	dataPagamento:Date;
 	pergunta1: string;

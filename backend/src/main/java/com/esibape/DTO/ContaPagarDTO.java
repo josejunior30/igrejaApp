@@ -11,6 +11,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 import com.esibape.entities.ContaPagar;
+import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusPagamento;
 import com.esibape.entities.TipoDespesa;
 import com.esibape.entities.Transacao;
@@ -35,6 +36,7 @@ public class ContaPagarDTO implements Serializable{
 	    private String createdByConta;
 	    private TipoDespesa tipoDespesa;
 	    private List<TransacaoDTO> transacao = new ArrayList<>();
+	    private List<RequerimentoOrçamentoDTO>requerimentoOrçamento = new ArrayList<>();
 	    public ContaPagarDTO() {
 			
 			
@@ -51,12 +53,13 @@ public class ContaPagarDTO implements Serializable{
 		dataPagamento=entity.getDataPagamento();
 		createdByConta=entity.getCreatedByConta();
 		tipoDespesa=entity.getTipoDespesa();
+
 	}
-	public ContaPagarDTO(ContaPagar entity, List<Transacao> transacao) {
+	public ContaPagarDTO(ContaPagar entity, List<Transacao> transacao, List<RequerimentoOrçamento>requerimentoOrçamento ) {
 		  this(entity);
-		  if (transacao != null) {
-			  transacao.forEach(cha -> this.transacao.add(new TransacaoDTO(cha)));
-	        }
+		  
+		  transacao.forEach(cha -> this.transacao.add(new TransacaoDTO(cha)));       
+		  requerimentoOrçamento.forEach(y-> this.requerimentoOrçamento.add(new RequerimentoOrçamentoDTO(y)));
 	}
 	public Long getId() {
 		return id;
@@ -77,6 +80,14 @@ public class ContaPagarDTO implements Serializable{
 		this.descricao = descricao;
 	}
 
+
+	public List<RequerimentoOrçamentoDTO> getRequerimentoOrçamento() {
+		return requerimentoOrçamento;
+	}
+
+	public void setRequerimentoOrçamento(List<RequerimentoOrçamentoDTO> requerimentoOrçamento) {
+		this.requerimentoOrçamento = requerimentoOrçamento;
+	}
 
 	public TipoDespesa getTipoDespesa() {
 		return tipoDespesa;

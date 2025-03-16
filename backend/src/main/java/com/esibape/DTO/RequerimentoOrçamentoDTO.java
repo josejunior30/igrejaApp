@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.esibape.entities.ContaPagar;
 import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusRequerimento;
@@ -29,6 +30,7 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	private String local; 
 	private BigDecimal Total;
     private String createdByRequerimento;
+    private ContaPagarDTO contaPagar;
 
 	private List<ProdutoDTO> produto = new ArrayList<>();
 	
@@ -57,6 +59,9 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 		Total = entity.getTotal();
 		createdByRequerimento=entity.getCreatedByRequerimento();
 		emailResponsavel= entity.getEmailResponsavel();
+		 if (entity.getContaPagar() != null) {
+	            this.contaPagar = new ContaPagarDTO(entity.getContaPagar());
+	        }
 		
 	}
 	public RequerimentoOrçamentoDTO(RequerimentoOrçamento entity,List<Produto> produto ) {
@@ -134,6 +139,14 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 
 	
 	
+	public ContaPagarDTO getContaPagar() {
+		return contaPagar;
+	}
+
+	public void setContaPagar(ContaPagarDTO contaPagar) {
+		this.contaPagar = contaPagar;
+	}
+
 	public void setDataPagamento(LocalDate dataPagamento) {
 		this.dataPagamento = dataPagamento;
 	}
