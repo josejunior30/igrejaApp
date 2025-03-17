@@ -21,18 +21,22 @@
 .titulo-pesquisa-paga{
   color:white;
 }
-.mes-contaPagar{
+.mes-contaPagar-Pagar{
   color:white;
   position: absolute;
   font-size: 20px;
-right: 20vw;
-margin-top: -60px;
+ left: 70vw;
+top:40vh;
+
 }
-.btn-left-conta{
+.valor-total{
+  color: #10f508;
+}
+.btn-left-conta-Pagar{
   background: none;
   color: white;
 }
-.btn-right-conta{
+.btn-right-conta-Pagar{
   background: none;
   color: white;
 }
@@ -43,7 +47,20 @@ margin-top: -60px;
   height: 50px;
   border-radius: 10px;
   font-weight: bolder;
+  margin-left: 10px;
 }
 .conta-pagar-table{
   font-size: 14px!important;
+}
+.total-pesquisa{
+  color:white;
+}
+.btn-adicionar-conta{
+  background-color: var(--color-coral);
+  color:white;
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: bolder;
+  margin-right: 10px;
 }

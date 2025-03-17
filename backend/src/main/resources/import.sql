@@ -166,14 +166,16 @@ INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_cria
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Salario Ministro de Musica', 1200.00, '2025-03-10', 'PENDENTE', '2025-03-06')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Copo descartavel', 150.75, '2025-03-10', 'PENDENTE', '2025-03-06')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Internet', 120.15, '2025-03-10', 'PENDENTE', '2025-03-06')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Café da comunhão', 178.75, '2025-03-10', 'PENDENTE', '2025-01-16')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Café da comunhão', 178.75, '2025-03-10', 'PENDENTE', '2025-01-23')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Cafe da comunhão', 178.75, '2025-02-10', 'PENDENTE', '2025-01-16')
+
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Cappucino', 78.75, '2025-03-10', 'PENDENTE', '2025-01-14')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Conta de luz', 580.75, '2025-03-12', 'PENDENTE', '2025-02-27')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Conta água ', 320.75, '2025-03-10', 'PENDENTE', '2025-02-18')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Salario Pastoral', 1500.00, '2025-03-10', 'PENDENTE', '2025-03-05')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Salario Pastoral', 1500.00, '2025-03-10', 'PENDENTE', '2025-03-05')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Café da comunhão', 178.75, '2025-02-10', 'PENDENTE', '2025-01-16')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Café da comunhão', 178.75, '2025-02-10', 'PENDENTE', '2025-01-16')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Cafe da comunhão', 178.75, '2025-04-10', 'PENDENTE', '2025-03-16')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Café da comunhão', 178.75, '2025-02-10', 'PENDENTE', '2025-02-16')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Internet', 120.15, '2025-02-10', 'PENDENTE', '2025-02-06')
 
 

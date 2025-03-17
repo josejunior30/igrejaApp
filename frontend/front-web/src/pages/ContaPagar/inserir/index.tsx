@@ -21,8 +21,17 @@ import { FaAngleRight } from "react-icons/fa";
 import { hasAnyRoles } from "../../../service/AuthService";
 import Botoes from "../../../components/botoes";
 import { PiTrashFill } from "react-icons/pi";
+import { Button, Modal } from "react-bootstrap";
 const ContaPagar = () => {
   const [contas, setContas] = useState<contaPagar[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showSearchModal, setShowSearchModal] = useState(false);
+
+  const handleShowSearch = () => setShowSearchModal(true);
+  const handleCloseSearch = () => setShowSearchModal(false);
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+  const [totalPesquisa, setTotalPesquisa] = useState(0);
   const [filtro, setFiltro] = useState({
     descricao: "",
     mes: new Date().getMonth() + 1,
@@ -154,28 +163,18 @@ const ContaPagar = () => {
 
       setContas(response.data);
 
-      const total = response.data
-        .filter((conta: contaPagar) => conta.status === StatusPagamento.PAGO)
-        .reduce((acc: number, conta: contaPagar) => acc + conta.valor, 0);
-
-      setTotalPago(total);
+      // 🔹 Calcula o total da pesquisa
+      const total = response.data.reduce(
+        (acc: number, conta: contaPagar) => acc + conta.valor,
+        0
+      );
+      setTotalPesquisa(total);
     } catch (error) {
       console.error("Erro ao buscar contas:", error);
       alert("Erro ao buscar contas!");
     }
   };
 
-  const handleLimpar = async () => {
-    setFiltro({ descricao: "", mes: 0, ano: 2025 });
-    setTotalPago(0);
-
-    try {
-      const response = await findAllContaPagar();
-      setContas(response.data);
-    } catch (error) {
-      console.error("Erro ao buscar contas:", error);
-    }
-  };
   const handleDelete = (id: number) => {
     const confirmed = window.confirm("Tem certeza que deseja excluir ?");
     if (confirmed) {
@@ -217,21 +216,33 @@ const ContaPagar = () => {
         <div className="row justify-content-center">
           <Botoes />
           <h3 className="titulo-conta mb-5">Cadastro de Conta a Pagar</h3>
-          <span className="mes-contaPagar">
-            <button className="btn-left-conta" onClick={handleMesAnterior}>
+          <span className="mes-contaPagar-Pagar">
+            <button
+              className="btn-left-conta-Pagar"
+              onClick={handleMesAnterior}
+            >
               <FaAngleLeft />
             </button>
-            {filtro.mes} / {filtro.ano}
-            <button className="btn-right-conta" onClick={handleMesProximo}>
+            {new Date(filtro.ano, filtro.mes - 1).toLocaleString("pt-BR", {
+              month: "long",
+            })}{" "}
+            / {filtro.ano}
+            <button
+              className="btn-right-conta-Pagar"
+              onClick={handleMesProximo}
+            >
               <FaAngleRight />
             </button>
           </span>
 
-          <div className="row justify-content-center ">
-            <div className="col-md-10 offset-3">
-              <form onSubmit={handleSubmit} className="d-flex">
-                <div className="col-md-3 insert-conta ">
-                  <label className="form-label label-conta">Descrição</label>
+          <Modal show={showModal} onHide={handleClose} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Cadastro de Conta a Pagar</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label className="form-label">Descrição</label>
                   <input
                     type="text"
                     className="form-control"
@@ -242,8 +253,8 @@ const ContaPagar = () => {
                     required
                   />
                 </div>
-                <div className="col-md-2 insert-conta">
-                  <label className="form-label  label-conta">Vencimento</label>
+                <div className="mb-3">
+                  <label className="form-label">Vencimento</label>
                   <input
                     type="date"
                     className="form-control"
@@ -253,8 +264,8 @@ const ContaPagar = () => {
                     required
                   />
                 </div>
-                <div className="col-md-1 insert-conta">
-                  <label className="form-label  label-conta">Valor</label>
+                <div className="mb-3">
+                  <label className="form-label">Valor</label>
                   <input
                     type="text"
                     className="form-control"
@@ -268,8 +279,8 @@ const ContaPagar = () => {
                     required
                   />
                 </div>
-                <div className="col-md-1 insert-conta">
-                  <label className="form-label label-conta">Tipo</label>
+                <div className="mb-3">
+                  <label className="form-label">Tipo</label>
                   <select
                     className="form-control"
                     name="tipoDespesa"
@@ -292,99 +303,108 @@ const ContaPagar = () => {
                     ))}
                   </select>
                 </div>
-
-                <div className="col-md-3 mt-4 pt-2">
-                  <button type="submit" className="btn btn-primary">
+                <div className="text-end">
+                  <Button variant="secondary" onClick={handleClose}>
+                    Fechar
+                  </Button>
+                  <Button type="submit" variant="primary" className="ms-2">
                     Inserir
-                  </button>
+                  </Button>
                 </div>
               </form>
-            </div>
-          </div>
+            </Modal.Body>
+          </Modal>
+
           <div className="justify-content-center text-center mt-3">
-            <button
-              className="btn-pesquisa-pagar"
-              onClick={() => setMostrarFiltro(!mostrarFiltro)}
-            >
+            <button className="btn-adicionar-conta" onClick={handleShow}>
+              + Adicionar
+            </button>
+            <button className="btn-pesquisa-pagar" onClick={handleShowSearch}>
               <FaSearch /> Pesquisar
             </button>
           </div>
 
-          {mostrarFiltro && (
-            <div className="row justify-content-center mt-4">
-              <h4 className="text-center titulo-pesquisa-paga">
-                Pesquisa contas pagas
-              </h4>
-              <div className="col-md-12 d-flex gap-2">
-                <div className="col-md-2 offset-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Digite a descrição"
-                    name="descricao"
-                    value={filtro.descricao}
-                    onChange={handleFiltroChange}
-                  />
-                </div>
-                <div className="col-md-1">
-                  <select
-                    className="form-control"
-                    name="mes"
-                    value={filtro.mes}
-                    onChange={handleFiltroChange}
-                  >
-                    <option value="0">Mês</option>{" "}
-                    {[...Array(12)].map((_, i) => (
-                      <option key={i + 1} value={i + 1}>
-                        {new Date(0, i).toLocaleString("pt-BR", {
-                          month: "long",
-                        })}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="col-md-1">
-                  <select
-                    className="form-control"
-                    name="ano"
-                    value={filtro.ano}
-                    onChange={handleFiltroChange}
-                  >
-                    {[2024, 2025, 2026].map((ano) => (
-                      <option key={ano} value={ano}>
-                        {ano}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="col-md-3">
-                  <button
-                    className="btn btn-primary btn-pesquisa-conta"
-                    onClick={handlePesquisar}
-                  >
-                    Pesquisar
-                  </button>
-
-                  <button className="btn btn-secondary" onClick={handleLimpar}>
-                    Limpar
-                  </button>
-                </div>
+          <Modal show={showSearchModal} onHide={handleCloseSearch} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Pesquisa de Contas</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="mb-3">
+                <label className="form-label">Descrição</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Digite a descrição"
+                  name="descricao"
+                  value={filtro.descricao}
+                  onChange={handleFiltroChange}
+                />
               </div>
-              <div className="row justify-content-center mt-4">
-                <div className="col-md-9 text-right">
-                  <h3 className="total-pago">
-                    Total Pago:{" "}
-                    <span className="text-success">
-                      {totalPago.toLocaleString("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
+              <div className="mb-3">
+                <label className="form-label">Mês</label>
+                <select
+                  className="form-control"
+                  name="mes"
+                  value={filtro.mes}
+                  onChange={handleFiltroChange}
+                >
+                  <option value="0">Anual</option>
+                  {[...Array(12)].map((_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {new Date(0, i).toLocaleString("pt-BR", {
+                        month: "long",
                       })}
-                    </span>
-                  </h3>
-                </div>
+                    </option>
+                  ))}
+                </select>
               </div>
+              <div className="mb-3">
+                <label className="form-label">Ano</label>
+                <select
+                  className="form-control"
+                  name="ano"
+                  value={filtro.ano}
+                  onChange={handleFiltroChange}
+                >
+                  {[2024, 2025, 2026].map((ano) => (
+                    <option key={ano} value={ano}>
+                      {ano}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="text-end">
+                <Button variant="secondary" onClick={handleCloseSearch}>
+                  Fechar
+                </Button>
+                <Button
+                  variant="primary"
+                  className="ms-2"
+                  onClick={() => {
+                    handlePesquisar();
+                    handleCloseSearch();
+                  }}
+                >
+                  Pesquisar
+                </Button>
+              </div>
+            </Modal.Body>
+          </Modal>
+
+          <div className="row justify-content-center mt-4">
+            <div className="col-md-9 text-right">
+              <h3 className="total-pesquisa">
+                Total da Pesquisa:{" "}
+                <span className="valor-total">
+                  {totalPesquisa.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </span>
+              </h3>
             </div>
-          )}
+          </div>
+
           <div className="row justify-content-center">
             <div className="col-md-12">
               <table className="table table-striped mt-4 conta-pagar-table">
@@ -430,9 +450,9 @@ const ContaPagar = () => {
                           }}
                         >
                           {conta.status}
-                          
                         </td>
-                        <td className="text-center"><button
+                        <td className="text-center">
+                          <button
                             onClick={() =>
                               handleTogglePagamento(conta.id, conta.status)
                             }
@@ -445,7 +465,8 @@ const ContaPagar = () => {
                             {conta.status === StatusPagamento.PAGO
                               ? "Cancelar "
                               : "Pagar"}
-                          </button></td>
+                          </button>
+                        </td>
                         <td>
                           {new Date(conta.dataVencimento).toLocaleDateString(
                             "pt-BR"

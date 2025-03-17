@@ -84,7 +84,21 @@ margin-left: 2%;
  background-color: var(--color-turquoise);
 
 }
-
+.mes-contaPagar{
+  color:white;
+  position: absolute;
+  font-size: 20px;
+  right: 20vw;
+  margin-top: -60px;
+}
+.btn-left-conta{
+  background: none;
+  color: white;
+}
+.btn-right-conta{
+  background: none;
+  color: white;
+}
 @media (max-width: 768px) {
   #barra-projeto button{
     margin-left: 1%;

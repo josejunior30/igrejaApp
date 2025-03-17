@@ -142,9 +142,9 @@ public class ContaPagarService {
         LocalDate inicio = LocalDate.of(ano, mes, 1);
         LocalDate fim = inicio.withDayOfMonth(inicio.lengthOfMonth());
 
-        return repository.findByDescricaoContainingIgnoreCaseAndStatusAndDataVencimentoBetween(
-                descricao, StatusPagamento.PAGO, inicio, fim)
-            .stream().map(ContaPagarDTO::new)
+        return repository.findByDescricaoAproximada(descricao, StatusPagamento.PAGO, inicio, fim)
+            .stream()
+            .map(ContaPagarDTO::new)
             .collect(Collectors.toList());
     }
 
@@ -153,9 +153,9 @@ public class ContaPagarService {
         LocalDate inicio = LocalDate.of(ano, 1, 1);
         LocalDate fim = LocalDate.of(ano, 12, 31);
 
-        return repository.findByDescricaoContainingIgnoreCaseAndStatusAndDataVencimentoBetween(
-                descricao, StatusPagamento.PAGO, inicio, fim)
-            .stream().map(ContaPagarDTO::new)
+        return repository.findByDescricaoAproximada(descricao, StatusPagamento.PAGO, inicio, fim)
+            .stream()
+            .map(ContaPagarDTO::new)
             .collect(Collectors.toList());
     }
 
