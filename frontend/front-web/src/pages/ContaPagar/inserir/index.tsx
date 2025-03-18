@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   deleteContaPagar,
-  findAllContaPagar,
+ 
   findByDescricaoAno,
   findByDescricaoMesAndAno,
   findByMesAno,
@@ -37,8 +37,7 @@ const ContaPagar = () => {
     mes: new Date().getMonth() + 1,
     ano: new Date().getFullYear(),
   });
-  const [totalPago, setTotalPago] = useState(0);
-  const [mostrarFiltro, setMostrarFiltro] = useState(false);
+
   const [novaConta, setNovaConta] = useState<Partial<contaPagar>>({
     descricao: "",
     dataVencimento: new Date(),

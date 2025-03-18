@@ -8,7 +8,7 @@
 }
 
 .container-menu img {
-  width: 20vw;
+  width: 24vw;
   height: 200px;
   display: block;
   transition: transform 0.3s ease-in-out;
@@ -28,7 +28,7 @@
 .container-menu h3 {
   position: relative;
   bottom: 80px;
-margin-right: 3vw;
+margin-right: 1vw;
 
   opacity: 0;
   transition: opacity 0.4s ease-in-out;

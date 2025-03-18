@@ -52,7 +52,6 @@ import EditarKids from "./pages/kids/editar";
 import DetalhesKids from "./pages/kids/Detalhes";
 import CalendarioAtividade from "./pages/Calendario";
 import RequerimentoDetalhe from "./pages/Requerimento/detalhe";
-import Transacao from "./pages/Transacao/inserir";
 import TransacaoExibir from "./pages/Transacao/exibir";
 import FluxoCaixa from "./pages/FluxoCaixa/Exibir";
 import ContaPagar from "./pages/ContaPagar/inserir";
@@ -340,7 +339,7 @@ function App() {
           <Route path="trilho/estudo" element={<Estudo />} />
           <Route path="trilho/estudo/exibir" element={<ExibirPdfs />} />
           <Route path="/calendario" element={<CalendarioAtividade />} />
-          <Route path="/transacao" element={<Transacao />} />
+    
           <Route path="/transacao-exibir" element={<TransacaoExibir />} />
           <Route
             path="/fluxo-caixa"
