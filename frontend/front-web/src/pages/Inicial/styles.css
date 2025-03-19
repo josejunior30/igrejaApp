@@ -26,10 +26,10 @@
 }
 
 .container-menu h3 {
-  position: absolute;
-  bottom: 20px;
-left: 12vw;
-  transform: translateX(-50%);
+  position: relative;
+  bottom: 80px;
+margin-right: 3vw;
+
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
   z-index: 2;
@@ -42,25 +42,20 @@ left: 12vw;
   opacity: 1;
 }
 @media (max-width: 768px) {
-   
-.container-menu img {
+  .container-menu img {
     width: 200px;
     height: 130px;
     margin-bottom: 30px;
-
   }
   .container-menu h3 {
-    position: absolute;
-    bottom: 50px;
-    margin-left: 48vw;
-    transform: translateX(-50%);
+
+    bottom: 80px;
+margin-left: 3vw;
     font-size: 12px;
-  
   }
-  
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  #col-img button {
+    margin-left: 29%;
   }
-  @media (min-width: 768px) and (max-width: 1024px) {
-    #col-img button {
-      margin-left: 29%;
-    }
-  }
+}

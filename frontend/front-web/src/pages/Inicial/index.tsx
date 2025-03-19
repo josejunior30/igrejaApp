@@ -52,7 +52,7 @@ const Inicial = () => {
   return (
     <>
       <Header />
-      <div className="container-fluid mt-5 pt-5" id="conteiner-inicio">
+      <div className="container-fluid mt-5 pt-5" >
         <div className="row p-2" id="bem-vindo">
           <div className="col-12">
             <h2>Bem Vindo !</h2>
@@ -90,11 +90,12 @@ const Inicial = () => {
           </div>
         </div>
 
-        <div className="row justify-content-center mt-3">
-          <div className="col-12 col-md-3 container-menu">
+        <div className="row justify-content-center mt-3 mb-5">
+          <div className="col-12 col-md-3 container-menu text-center">
             <Link to="/trilho" onClick={(e) => handleDoubleClick(e, "/trilho")}>
               <img src={cfc} alt="CFC" className="img-fluid img-menu" />
-              <h3>CFC</h3>
+              <h3>Centro</h3>
+              <h3>Formaçao Crista</h3>
             </Link>
           </div>
 

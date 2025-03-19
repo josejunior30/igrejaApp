@@ -1,8 +1,10 @@
 import React from "react";
+import { GrDocumentPerformance } from "react-icons/gr";
 
 import { Link } from "react-router-dom";
 import "./styles.css";
 import Header from "../../components/Header";
+import { GrDocumentText } from "react-icons/gr";
 
 const controle = "https://i.postimg.cc/PJQGzWw6/pexels-goumbik-590020.jpg";
 const requerimento =
@@ -18,29 +20,14 @@ const OperacionalMenu = () => (
         </div>
       </div>
 
-      <div className="row justify-content-center mt-7 gap-4" id="row-menu">
-        <div className=" col-9 col-md-3" id="col-img">
-          <img
-            src={controle}
-            alt="Calendario"
-            className="img-fluid"
-            id="img-menu"
-          />
-          <h3>Frequência</h3>
-          <Link to="/numeroculto">
-            <button className="btn btn-info">Clique aqui</button>
+      <div className="row justify-content-center ">
+        <div className=" col-9 col-md-12 text-center" >
+        <Link to="/numeroculto">
+            <button className="btn-operacional"><GrDocumentPerformance />  Frequência
+            </button>
           </Link>
-        </div>
-        <div className="col-9 col-md-3" id="col-img">
-          <img
-            src={requerimento}
-            alt="Calendario"
-            className="img-fluid"
-            id="img-menu"
-          />
-          <h3>Requerimento</h3>
           <Link to="/requerimento">
-            <button className="btn btn-info">Clique aqui</button>
+            <button className="btn-operacional"> <GrDocumentText />  Requerimento</button>
           </Link>
         </div>
       </div>

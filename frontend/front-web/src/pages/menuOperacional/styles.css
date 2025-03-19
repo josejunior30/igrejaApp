@@ -1,87 +1,17 @@
-#bem-vindo{
-  text-align: center;
-  color: white;
-
+.btn-operacional{
+width: 200px;
+margin-right: 20px;
+height: 100px;
+border-radius: 20px;
+font-size: 18px;
 }
-#bem-vindo p{
-  color: var( --color-coral)
+.btn-operacional:hover{
+ background-color: var(--color-coral);
+ color: white;
 }
-#conteiner-inicio{
-  background-color: var(--color-black);
-  margin-bottom: 50px;
-}
-
-
-
-#col-img{
-  transition: transform 0.6s;
-  overflow: hidden;
-  color: white;
- justify-items: center;
-}
-
-html{
-  background-color: var(--color-black);
-}
-
-
-#col-img:hover{
-  transform: scale(1.1);
-
-
-}
-#col-img img {
-  transition: filter 0.6s; 
-}
-
-#col-img:hover img {
-  filter: brightness(0.4);
-}
-
-#col-img button { 
-opacity: 0;
-transition: opacity 0.3s;
-margin-left: 30%;
-border-radius: 50px;
-background-color: var(--color-coral);
-border: none;
-color: white;
-}
-
-#col-img:hover button {
-  transform: translateY(-350%);
-  transition: transform 0.7s;
-  opacity: 1;
-}
-#col-img:hover h3{
-  transform: translateY(-420%);
-  transition: transform 0.9s;
-  opacity: 1;
-}
-
-#col-img h3{
-  opacity: 0;
-  transform: translateY(-420%);
-  transition: transform 0.9s;
-text-align: center;
-}
-
 
 @media (max-width: 768px) {
-  #img-menu {
-   margin-top: 20px;
+    .btn-operacional{
+     margin-bottom: 20px;
+        }
   }
-  #row-menu{
-    margin-top: 10px;
-  }
-  #col-img button { 
-
-    margin-left: 34%;
-   
-    }
-}
-@media (min-width: 768px) and (max-width: 1024px) {
-  #col-img button {
-    margin-left: 29%;
-  }
-}
