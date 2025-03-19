@@ -85,7 +85,14 @@ public class CalendarioService {
         return repository.findByDataBetween(inicioAno, fimAno);
     }
 
-    
+    @Transactional(readOnly = true)
+    public List<Calendario> buscarPorMesEAno(int mes, int ano) {
+        LocalDate inicioMes = LocalDate.of(ano, mes, 1);
+        LocalDate fimMes = inicioMes.withDayOfMonth(inicioMes.lengthOfMonth());
+        
+        return repository.findByDataBetween(inicioMes, fimMes);
+    }
+
     private void copyDtoToEntity(CalendarioDTO dto, Calendario entity) {
     
         entity.setTitulo(dto.getTitulo());

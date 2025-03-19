@@ -29,3 +29,6 @@ export function findByResponsavel(responsavel: string) {
 export function findByTitulo(titulo: string) {
   return axios.get(`${BASE_URL}/calendario/titulo/${titulo}`);
 }
+export function findByMesEAno(mes: number, ano: number) {
+  return axios.get(`${BASE_URL}/calendario/mes/${mes}/ano/${ano}`);
+}

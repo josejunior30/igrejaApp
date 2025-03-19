@@ -4,6 +4,9 @@ import { BASE_URL } from "../ultilitarios/system";
 export function findAll() {
   return axios.get(`${BASE_URL}/visitante`);
 }
+export function findAllVisitante() {
+  return axios.get(`${BASE_URL}/visitante`);
+}
 
 export function findById(id: number) {
   return axios.get(`${BASE_URL}/visitante/${id}`);

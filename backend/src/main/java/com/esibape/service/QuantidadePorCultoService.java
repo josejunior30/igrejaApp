@@ -2,16 +2,17 @@ package com.esibape.service;
 
 
 import java.util.List;
-
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import com.esibape.DTO.QuantidadePorCultoDTO;
 import com.esibape.entities.QuantidadePorCulto;
+
+import com.esibape.entities.TipoCulto;import com.esibape.entities.TipoCulto;
 import com.esibape.repository.QuantidadePorCultoRepository;
 
 @Service
@@ -67,6 +68,12 @@ public class QuantidadePorCultoService {
                 .map(x -> new QuantidadePorCultoDTO(x))
                 .collect(Collectors.toList());
     }
+    
+    @Transactional(readOnly = true)
+    public Integer findMediaTotalByAnoAndTipoCulto(int ano, TipoCulto tipoCulto) {
+        return repository.findMediaTotalByAnoAndTipoCulto(ano, tipoCulto);
+    }
+
     
     private void copyDtoToEntity(QuantidadePorCultoDTO dto, QuantidadePorCulto entity) {
    

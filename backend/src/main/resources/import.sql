@@ -42,12 +42,12 @@ INSERT INTO tb_EBD_curso(nome, curso_id, resumo) VALUES ( 'Igreja Multiplicadora
 
 
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil, rua, bairro, numero, cidade, complemento, cep, membro_Status, membro_Tipo, ano , desligamento, url) VALUES ('José Luiz', 'Ribeiro Junior', 'junior@gmail.com', '1988-10-07', 35, '21970312251', '123.789.964-67', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', 'AFASTADO', 'TRANSFERENCIA', '1990', null, 'https://i.postimg.cc/CMJjqs70/glauber.png' );    
-INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep ,  membro_Status, membro_Tipo, ano , desligamento, url) VALUES ('Juliana', 'Fereira Duarte', 'marcus@gmail.com', '1987-05-11', 37, '21970312251', '923.289.964-12' ,0, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221',  'AFASTADO', 'TRANSFERENCIA',  '2002', null, 'https://i.postimg.cc/4xKDXbcV/Design-sem-nome-20240908-132021-0000.png' );
-INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep,  membro_Status, membro_Tipo, ano , desligamento, url) VALUES ('Jaline', 'Pereira Fonseca', 'jaline@gmail.com', '1991-06-22', 30, '21970312251', '954.789.964-99', 3, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', 'DESLIGADO', 'BATISMO',  '2002', '2024-04-11', 'https://i.postimg.cc/fL4k8nKJ/Alda.png' );
+INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep ,  membro_Status, membro_Tipo, ano , desligamento, url) VALUES ('Juliana', 'Fereira Duarte', 'marcus@gmail.com', '1987-03-11', 37, '21970312251', '923.289.964-12' ,0, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221',  'AFASTADO', 'TRANSFERENCIA',  '2002', null, 'https://i.postimg.cc/4xKDXbcV/Design-sem-nome-20240908-132021-0000.png' );
+INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep,  membro_Status, membro_Tipo, ano , desligamento, url) VALUES ('Jaline', 'Pereira Fonseca', 'jaline@gmail.com', '1991-03-22', 30, '21970312251', '954.789.964-99', 3, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', 'DESLIGADO', 'BATISMO',  '2002', '2024-04-11', 'https://i.postimg.cc/fL4k8nKJ/Alda.png' );
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep,  membro_Status, membro_Tipo, ano , desligamento) VALUES ('Aline', 'Pereira Fonseca', 'aline@gmail.com', '1988-10-07', 40, '21970312251', '883.789.964-46', 2, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', 'DESLIGADO', 'TRANSFERENCIA',  '2004', '2025-01-10' );
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep,  membro_Status, membro_Tipo, ano , desligamento) VALUES ('Alex', 'Soares Fonseca', 'alex@gmail.com', '1967-01-14',65, '21970312251', '149.789.964-67',2, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202','24110221', 'AFASTADO', 'BATISMO',  '1996', null );
-INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep,  membro_Status, membro_Tipo,ano, desligamento) VALUES ('Carlos','Henriques Silva', 'carlosx@gmail.com', '1970-09-14', 53, '21970312251', '123.091.964-16', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221',  'AFASTADO', 'TRANSFERENCIA',  '1987', null );
-INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, membro_Status, membro_Tipo, ano , desligamento) VALUES ( 'Gabriela', 'Lopez Marques', 'gabix@gmail.com', '1987-06-25', 41, '21970312251', '128.308.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202',' 24110221', 'AFASTADO', 'TRANSFERENCIA',  '2010', null);
+INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep,  membro_Status, membro_Tipo,ano, desligamento) VALUES ('Carlos','Henriques Silva', 'carlosx@gmail.com', '1970-03-14', 53, '21970312251', '123.091.964-16', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221',  'AFASTADO', 'TRANSFERENCIA',  '1987', null );
+INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, membro_Status, membro_Tipo, ano , desligamento) VALUES ( 'Gabriela', 'Lopez Marques', 'gabix@gmail.com', '1987-03-25', 41, '21970312251', '128.308.317-56', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202',' 24110221', 'AFASTADO', 'TRANSFERENCIA',  '2010', null);
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep,  membro_Status, membro_Tipo, ano , desligamento) VALUES ('João Arthur', 'Loureiro Ribeiro', 'joãox@gmail.com', '1981-04-19', 32, '21970312251', '935.308.745-56', 2, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221', 'AFASTADO', 'TRANSFERENCIA',  '2010', null );
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep,  membro_Status, membro_Tipo, ano , desligamento) VALUES ('Ana Cristina', 'Loureiro da Silva ', 'anax@gmail.com', '1984-01-14', 40 , '21970312251', '876.308.317-32', 3, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202', '24110221',  'ATIVO', 'TRANSFERENCIA',  '2016', null );
 INSERT INTO tb_membro ( nome, sobrenome, email, data_Nascimento, idade, telefone, cpf, estado_Civil,  rua, bairro, numero, cidade, complemento, cep, membro_Status, membro_Tipo, ano, desligamento) VALUES('Laura Ester', 'Soares Fonseca', 'laura@gmail.com', '1970-01-14',67,'21970312251', '128.128.317-33', 1, 'rua Dalva raposo', 'Maria Paula', 35 , 'são gonçalo', 'bloco 07 ap 202',' 24110221', 'ATIVO', 'BATISMO',  '2017', null);
@@ -209,23 +209,39 @@ INSERT INTO tb_entrada (entrada, valor, forma_pagamento, mes_referencia) VALUES 
 INSERT INTO tb_entrada (entrada, valor, forma_pagamento, mes_referencia) VALUES ('Atrasado maio', 50, 'PIX', 'JULHO')
 
 
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 10, '2024-07-07' , 32 , 'CULTO_DA_MANHA' );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 20, '2024-07-14' , 42 , 'CULTO_DA_MANHA' );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,Tipo_Culto ) VALUES ( 30, 20, '2024-07-21' , 50 , 'CULTO_DA_MANHA' );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 10, '2024-07-28' , 32 , 'CULTO_DA_NOITE' );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 22, 10, '2024-08-07' , 32 , 'CULTO_DA_MANHA' );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 22, 30, '2024-08-14' , 52 ,'CULTO_DA_MANHA' );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 70, 50, '2024-09-21' , 120 , 'CULTO_DA_NOITE');
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 40, 55, '2024-09-28' , 95 , 'CULTO_DA_MANHA' );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 35, 55, '2024-09-28' , 90 , 'CULTO_DA_NOITE' );
-INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,Tipo_Culto ) VALUES ( 60, 50, '2024-09-28' , 110 , 'CULTO_DA_MANHA' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 10, '2025-01-07' , 32 , 'CULTO_DA_MANHA' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 20, '2025-01-14' , 42 , 'CULTO_DA_MANHA' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,Tipo_Culto ) VALUES ( 30, 20, '2025-01-21' , 50 , 'CULTO_DA_MANHA' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,Tipo_Culto ) VALUES ( 30, 20, '2025-01-28' , 50 , 'CULTO_DA_MANHA' );
+
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 10, '2025-01-07' , 32 , 'CULTO_DA_NOITE' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 10, '2025-01-14' , 32 , 'CULTO_DA_NOITE' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 10, '2025-01-21' , 32 , 'CULTO_DA_NOITE' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 22, 10, '2025-01-28' , 32 , 'CULTO_DA_NOITE' );
+
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 22, 10, '20245-02-07' , 32 , 'CULTO_DA_MANHA' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 22, 10, '20245-02-07' , 32 , 'CULTO_DA_MANHA' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 22, 10, '20245-02-07' , 32 , 'CULTO_DA_MANHA' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 22, 30, '2025-02-14' , 52 ,'CULTO_DA_MANHA' );
+
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 70, 50, '2025-03-02' , 120 , 'CULTO_DA_NOITE');
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 35, 55, '2025-03-10' , 90 , 'CULTO_DA_NOITE' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 35, 55, '2025-03-16' , 90 , 'CULTO_DA_NOITE' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total , Tipo_Culto ) VALUES ( 35, 55, '2025-03-28' , 90 , 'CULTO_DA_NOITE' );
+
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 40, 55, '2025-03-02' , 95 , 'CULTO_DA_MANHA' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 40, 55, '2025-03-10' , 95 , 'CULTO_DA_MANHA' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 40, 55, '2025-03-16' , 95 , 'CULTO_DA_MANHA' );
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total,  Tipo_Culto ) VALUES ( 40, 55, '2025-03-28' , 95 , 'CULTO_DA_MANHA' );
+
+INSERT INTO tb_quantidade_culto (visitante, membro, data, total ,Tipo_Culto ) VALUES ( 60, 50, '2025-09-28' , 110 , 'CULTO_DA_MANHA' );
 
 
-INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-08-10' , 'Base de adoracao','19:00' );
-INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-06-12' , 'Ministerio das mulheres','19:30' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-03-10' , 'Base de adoracao','19:00' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-02-12' , 'Ministerio das mulheres','19:30' );
 INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Encontro da Familia','Culto em formato tradicional','2025-03-14' , 'Base de adoracao','9:00' );
-INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-02-05' , 'Base de adoracao','10:10' );
-INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Assembleia','Culto em formato tradicional','2025-02-09' , 'Base de Servico','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-01-05' , 'Base de adoracao','10:10' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Assembleia','Culto em formato tradicional','2025-03-09' , 'Base de Servico','10:10' );
 INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-02-14' , 'Base de adoracao','10:10' );
 INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Retiro','Culto em formato tradicional','2025-02-18' , 'comissao de Eventos','10:10' );
 INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-05-22' , 'Base de adoracao','10:10' );
@@ -233,7 +249,7 @@ INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES (
 INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-10-14' , 'Base de servico','10:10' );
 INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Dia dos Pais','Culto em formato tradicional','2025-09-14' , 'comissao de eventos','10:10' );
 INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-02-12' , 'Base de adoracao','10:10' );
-INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Dia das Mulheres','Culto em formato tradicional','2025-03-10' , 'ministerio das mulheres','19:00' );
+INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Dia das Mulheres','Culto em formato tradicional','2025-01-10' , 'ministerio das mulheres','19:00' );
 INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Culto Classico','Culto em formato tradicional','2025-03-14' , 'Base de adoracao','10:10' );
 INSERT INTO tb_calendario (titulo, descricao, data, responsavel ,hora ) VALUES ('Festa da Primavera','Culto em formato tradicional','2025-09-14' , 'Base de adoracao','19:00' );
 

@@ -34,7 +34,7 @@ public class Membro implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonProperty("id")
 	private Long id;
- @JsonProperty("nome")
+	@JsonProperty("nome")
 	private String nome;
 	private String sobrenome;
 	private String email;

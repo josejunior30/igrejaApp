@@ -72,5 +72,10 @@ public class CalendarioController {
         List<Calendario> eventos = service.buscarPorAno(ano);
         return ResponseEntity.ok().body(eventos);
     }
+    @GetMapping("/mes/{mes}/ano/{ano}")
+    public ResponseEntity<List<Calendario>> buscarPorMesEAno(@PathVariable int mes, @PathVariable int ano) {
+        List<Calendario> eventos = service.buscarPorMesEAno(mes, ano);
+        return ResponseEntity.ok().body(eventos);
+    }
 }
 

@@ -5,6 +5,10 @@ export function findAll() {
   return axios.get(`${BASE_URL}/kids`);
 }
 
+export function findAllKids() {
+  return axios.get(`${BASE_URL}/kids`);
+}
+
 export function findById(id: number) {
   return axios.get(`${BASE_URL}/kids/${id}`);
 }

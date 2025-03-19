@@ -55,6 +55,7 @@ import RequerimentoDetalhe from "./pages/Requerimento/detalhe";
 import TransacaoExibir from "./pages/Transacao/exibir";
 import FluxoCaixa from "./pages/FluxoCaixa/Exibir";
 import ContaPagar from "./pages/ContaPagar/inserir";
+import MenuSecretaria from "./pages/Secretaria";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -167,6 +168,14 @@ function App() {
             element={
               <PrivateRoute roles={["ROLE_ADMIN"]}>
                 <Formulario />
+              </PrivateRoute>
+            }
+          />
+            <Route
+            path="/secretaria"
+            element={
+              <PrivateRoute>
+                <MenuSecretaria />
               </PrivateRoute>
             }
           />

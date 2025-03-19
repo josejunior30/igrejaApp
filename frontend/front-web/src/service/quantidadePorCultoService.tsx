@@ -26,3 +26,6 @@ export function deleteMembro(id: number) {
 export function cultoPorMes(mes: number) {
     return axios.get(`${BASE_URL}/quantidade/mes/${mes}`);
   }
+  export function getMediaTotal(ano: number, tipoCulto: string) {
+    return axios.get(`${BASE_URL}/quantidade/media/${ano}/${tipoCulto}`);
+}

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { RelatorioDTO } from "../../../models/relatorio";
 import * as relatorioService from '../../../service/relatorioService';
-import { deleteRelatorio } from "../../../service/relatorioService";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'; 
+
+import { useParams, Link } from "react-router-dom";
+
 import Header from "../../../components/Header";
 import './styles.css';
 import { PiPrinterFill } from "react-icons/pi";

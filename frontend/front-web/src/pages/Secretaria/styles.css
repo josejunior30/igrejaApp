@@ -1,0 +1,50 @@
+.titulo-mes{
+  color:white;
+}
+
+.dados-secretaria{
+  color: var( --color-black);
+
+  text-align: center;
+  background-color: var( --color-turquoise);
+  border-radius: 10px;
+font-weight: bold;
+  margin-left: 10px;
+  margin-right: 10px;
+  max-width: 150px!important;
+  height: 60px;
+  align-content: center;
+}
+.data-conteudo{
+display: flex;
+}
+.data-container{
+  background-color: white;
+}
+.descricao-data span{
+  display: block;
+}
+.data-mes{
+  background-color: var(--color-form);
+  width: 80px;
+}
+.mes-sec{
+  background-color: white;
+  width: 70px;
+  text-align: center;
+  margin-left: 5px;
+  margin-top: 6px;
+  font-weight: bold;
+}
+.dia-sec{
+text-align: center;
+margin-top: 5px;
+font-weight: bold;
+}
+.data-mes span{
+ display: block;
+}
+.dados-secretaria h4{
+  font-weight: bold;
+  font-size: 14px;
+}
