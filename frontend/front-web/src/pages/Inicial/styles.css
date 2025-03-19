@@ -28,7 +28,7 @@
 .container-menu h3 {
   position: absolute;
   bottom: 20px;
-  margin-left: 11vw;
+left: 12vw;
   transform: translateX(-50%);
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
