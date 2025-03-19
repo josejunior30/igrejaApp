@@ -1,104 +1,75 @@
 import React, { useState } from "react";
-import { FaHome, FaBible } from "react-icons/fa";
-import "./styles.css";
-import { Link } from "react-router-dom";
+import { FaHome, FaBible,  FaCalendarAlt } from "react-icons/fa";
 import { HiUserGroup } from "react-icons/hi";
-import { FaTrainSubway } from "react-icons/fa6";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChildReaching } from "@fortawesome/free-solid-svg-icons";
-import { FaCalendarAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+import "./styles.css";
+import { FaTrainSubway } from "react-icons/fa6";
 const Sidebar: React.FC = () => {
   const [showSubmenu, setShowSubmenu] = useState(false);
+  
   const handleItemClick = () => {
-    setShowSubmenu((prevState) => !prevState);
+    setShowSubmenu(!showSubmenu);
   };
-  console.log("showSubmenu:", showSubmenu);
 
   return (
-    <>
-      <div className="sidebar-container">
-        <ul className="sidebar">
-          <li>
-            <Link to="/inicio">
-              <FaHome />
-              <span>Home</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/membro">
-              <i>
-                <HiUserGroup />
-              </i>
-              <span>Membro</span>
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/visitante">
-              <i>
-                <HiUserGroup />
-              </i>
-              <span>Visitante</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/kids">
-              <FontAwesomeIcon icon={faChildReaching} />
-              <span className="ki">Ki<span className="ds">ds</span></span>
-            </Link>
-          </li>
-          <li onClick={handleItemClick}>
-            <Link to="#">
-              <FaTrainSubway />
-              <span>Estação SIBAPE</span>
-            </Link>
-
-            {showSubmenu && (
-              <ul className="submenu">
-                <li>
-                  <Link to="/alunos">Alunos</Link>
-                </li>
-                <li>
-                  <Link to="/pagamento">Pagamentos</Link>
-                </li>
-                <li>
-                  <Link to="/relatorio">Relatórios</Link>
-                </li>
-                <li>
-                  <Link to="/chamada">Lista de Presença</Link>
-                </li>
-              </ul>
-            )}
-          </li>
-          <li>
-            <Link to="/calendario">
-            <FaCalendarAlt />
-              <span>Calendario</span>
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/trilho">
-              <FaBible />
-              <span>CFC</span>
-            </Link>
-          </li>
-
-          <li>
-            <Link to="#">
-              <i className="lni lni-cog"></i>
-              <span>Usuarios</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="#">
-              <i className="bi bi-file-earmark-text-fill"></i>
-              <span>Documentos</span>
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </>
+    <div className="sidebar">
+      <ul className="nav flex-column">
+        <li className="nav-item">
+          <Link to="/inicio" className="nav-link">
+            <FaHome className="me-2" /> Home
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/membro" className="nav-link">
+            <HiUserGroup className="me-2" /> Membro
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/visitante" className="nav-link">
+            <HiUserGroup className="me-2" /> Visitante
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/kids" className="nav-link">
+            <FontAwesomeIcon icon={faChildReaching} className="me-2" /> Kids
+          </Link>
+        </li>
+        <li className="nav-item">
+          <button className="nav-link bg-transparent border-0" onClick={handleItemClick}>
+            <FaTrainSubway className="me-2" /> Estação SIBAPE
+          </button>
+          {showSubmenu && (
+            <ul className="nav flex-column ms-3">
+              <li className="nav-item">
+                <Link to="/alunos" className="nav-link">Alunos</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/pagamento" className="nav-link">Pagamentos</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/relatorio" className="nav-link">Relatórios</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/chamada" className="nav-link">Lista de Presença</Link>
+              </li>
+            </ul>
+          )}
+        </li>
+        <li className="nav-item">
+          <Link to="/calendario" className="nav-link">
+            <FaCalendarAlt className="me-2" /> Calendário
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/trilho" className="nav-link">
+            <FaBible className="me-2" /> CFC
+          </Link>
+        </li>
+      </ul>
+    </div>
   );
 };
 

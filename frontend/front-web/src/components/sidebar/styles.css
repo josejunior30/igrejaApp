@@ -1,170 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-
-a {
-    text-decoration: none;
+/* Sidebar.css */
+.sidebar {
+  width: 16vw;
+  height: 100vh;
+  background-color: #343a40;
+  color: white;
+  padding: 1rem;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  padding-top: 100px;
 }
 
-li {
-    list-style: none;
-}
-
-h1 {
-    font-weight: 600;
-    font-size: 1.5rem;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-}
-
-.ki{
-  color:rgb(255, 56, 56);
-  font-weight: bolder;
-}
-.ds{
-  color:rgb(255, 255, 47);
-  font-weight: bolder;
-}
-.sidebar-container {
-    margin-top: 40px;
-    width: 160px;
-    height: 100vh;
-    background-color: #333;
-    
-    flex-direction: column;
-    align-items: center;
-    padding-top: 6%;
-    position: fixed;
-   
-    overflow: auto;
-
-    padding-bottom: 100vh;
-  }
-
-  .sidebar-container::-webkit-scrollbar{
-    width: 10px;
-  }
-  
-  .sidebar {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sidebar li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 5px;
-    transition: border-left 0.3s ease, width 0.3s ease; 
-    border-radius: 5px;
-    overflow: hidden;
-    padding: 5px;
-  }
-  .sidebar ul  {
-      
-    padding-left: 1px;
-   }
-  .sidebar li:hover {
-   
-background-color: #3f3f3f;
- 
-  }
-  
-
-  .sidebar li a {
-    text-decoration: none;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 24px;
-   
-  }
-  
-  .sidebar li svg {
-    color: white;
-    font-size: 24px;
-    transition: transform 0.3s ease; 
-  }
-  
-  
-  .sidebar li span {
-    font-size: 12px;
-    margin-top: 1px;
-  }
-/* Estilos para o submenu */
-.submenu {
- text-align: center;
-  position: fixed; 
-  width: 150px;
-  margin-left: 21%;
-  background-color:  #333;
-  border-radius: 5px;
- 
- 
-}
-
-/* Estilos para os itens do submenu */
-.submenu li {
-  display: block;
-}
-
-/* Estilos para os links do submenu */
-.submenu li a {
-  display: block;
-  padding: 5px;
-  color: #fff;
+.sidebar .nav-link {
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  font-size: 12px;
- 
+  transition: background 0.3s;
+  text-decoration: none;
 }
 
-/* Mostra o submenu quando o item pai é hover */
-.sidebar-container .sidebar li:hover .submenu {
-  display: block;
+.sidebar .nav-link:hover {
+  background-color: #495057;
+  border-radius: 5px;
+  color: var(--color-turquoise);
+  text-decoration: none;
 }
 
-.submenu-trigger:hover .submenu {
-  display: block;
+.sidebar .nav-item {
+  margin-bottom: 10px;
+  text-decoration: none;
 }
 
-  @media screen and (max-width: 768px) {
-    .sidebar-container {
-   width: 60px;
-      padding-top: 20%;
- text-align: center;
-    }
-  
-    .sidebar li span {
-      display: none;
-    }
-  
-    
-    .sidebar li svg {
-      font-size: 26px;
-    }
-  
-   
-    .submenu{
-      margin-left: 45%;
-      width: 130px;
-     
-    }
-    .submenu li a{
-      text-align: center;
-     padding: 5px;
-     font-size: 12px;
-     padding-left: 0;
-    
+.sidebar .nav-link svg {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
 
-     
-    }
+.submenu {
+  margin-left: 20px;
+  text-decoration: none;
+}
 
-    .sidebar ul  {
-      
-     padding-left: 2px;
-    }
-  }
-  
+.submenu .nav-link {
+  font-size: 0.9rem;
+}
