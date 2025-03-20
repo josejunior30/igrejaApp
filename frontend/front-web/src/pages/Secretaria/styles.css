@@ -16,22 +16,19 @@
   align-content: center;
 }
 
-.dados-secretaria i{
- 
-
-
+.dados-secretaria i {
 }
-.faPeopleGroup{
+.faPeopleGroup {
   font-size: 20px;
   margin-left: -30px;
   margin-right: 10px;
 }
-.faChildren{
+.faChildren {
   font-size: 20px;
   margin-left: -30px;
   margin-right: 10px;
 }
-.FaChartSimple{
+.FaChartSimple {
   font-size: 20px;
   margin-left: -30px;
   margin-right: 10px;
@@ -39,45 +36,53 @@
 .data-conteudo {
   display: flex;
 }
-.TbClockHour5{
+.TbClockHour5 {
   margin-right: 5px;
   margin-top: -3px;
+font-size: 18px;
 }
-.tb-aniversario{
+.tb-aniversario {
   font-size: 14px;
 }
 .data-container {
   background-color: white;
   border-radius: 10px;
- padding-bottom: 10px;
-
-
+  padding-bottom: 10px;
 }
-.descricao-data  {
+.descricao-data {
   display: block;
   margin-left: 20px;
   font-size: 14px;
   margin-top: 5px;
 }
-.descricao-data  {
+.descricao-data {
   display: block;
   margin-left: 20px;
   font-size: 14px;
   font-weight: bold;
   margin-top: 20px;
+  color: var(--color-coral);
 }
 .descricao-responsavel {
   display: block;
   margin-left: 20px;
   font-size: 14px;
-
+}
+.calendario-sec{
+  margin-top: -5px;
+}
+.descricao-responsavel-base {
+  display: block;
+  margin-left: 20px;
+  font-size: 14px;
+ 
+  font-weight: bold;
 }
 .data-mes {
   background-color: var(--color-form);
   width: 90px;
   margin-left: 10px;
   margin-top: 10px;
-
 }
 .mes-sec {
   background-color: white;
@@ -86,7 +91,6 @@
   margin-left: 5px;
   margin-top: 6px;
   font-weight: bold;
-
 }
 .dia-sec {
   text-align: center;
@@ -104,5 +108,4 @@
 .titulo-mes-evento {
   color: white;
   margin-bottom: -8px;
-
 }

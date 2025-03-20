@@ -72,13 +72,13 @@ const InsertQuantidade: React.FC = () => {
             onSubmit={handleSubmit}
             className="row justify-content-center g-4 px-4 pb-4"
           >
-            <div className="col-md-11 text-center">
+            <div className="col-md-12 text-center">
               <h3 className="text-center pt-4" id="QuantidadeTitulo">
                 Quantidade por cultos
               </h3>
             </div>
             <div
-              className="col-md-4 col-6 text-center offset-1"
+              className="col-md-4 col-6 text-center offset-2"
               id="quantidade"
             >
               <label htmlFor="data">Data:</label>
@@ -108,10 +108,13 @@ const InsertQuantidade: React.FC = () => {
                 <option value="2">Batismo</option>
                 <option value="3">Aniversário</option>
                 <option value="4">Ordenação</option>
+                <option value="5">Culto Jovem</option>
+                <option value="6">Culto das Mulheres</option>
+                <option value="7">Evento</option>
               </select>
             </div>
             <div
-              className="col-md-2 col-4 text-center offset-1 mt-5"
+              className="col-md-2 col-4 text-center offset-2 mt-5"
               id="quantidade"
             >
               <label>Visitantes</label>
@@ -147,7 +150,7 @@ const InsertQuantidade: React.FC = () => {
             </div>
             <div className="row justify-content-center">
               <div
-                className="col-md-9 col-11  text-center mt-5"
+                className="col-md-8 offset-2 col-11  text-center mt-5"
                 id="quantidade"
               >
                 <label htmlFor="numeroHomem">Observação:</label>
@@ -161,7 +164,7 @@ const InsertQuantidade: React.FC = () => {
               </div>
             </div>
 
-            <div className="col-md-12 col-9 text-center mt-4 mb-4">
+            <div className="col-md-8 col-9 text-center offset-2 mt-4 mb-4">
               <button type="submit" className="btn-EnviarQuantiade mt-4">
                 Enviar
               </button>

@@ -17,6 +17,7 @@ import Sidebar from "../../components/sidebar";
 import { MdGroups2 } from "react-icons/md";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCakeCandles,
   faChartLine,
   faChildren,
   faPeopleGroup,
@@ -24,6 +25,8 @@ import {
 import { HiUserGroup } from "react-icons/hi";
 import { FaChartSimple } from "react-icons/fa6";
 import { TbClockHour5 } from "react-icons/tb";
+import { FaBirthdayCake, FaRegCalendarAlt } from "react-icons/fa";
+import { LiaBirthdayCakeSolid } from "react-icons/lia";
 
 const MenuSecretaria = () => {
   const [loadingEventos, setLoadingEventos] = useState(true);
@@ -186,9 +189,11 @@ const MenuSecretaria = () => {
             </span>
           </div>
         </div>
-        <div className="row justify-content-center d-flex mt-4 pt-1">
+        <div className="row justify-content-center d-flex mt-4 pt-3">
           <div className="col-4 offset-2">
-            <h4 className="text-center titulo-mes">Próximos Aniversariantes</h4>
+            <h4 className="text-center titulo-mes">Próximos Aniversariantes <FontAwesomeIcon icon={faCakeCandles} />
+
+            </h4>
             {loadingAniversariantes ? (
               <p className="text-center">Carregando...</p>
             ) : membros.length === 0 ? (
@@ -216,7 +221,8 @@ const MenuSecretaria = () => {
           </div>
 
           <div className="col-4">
-            <h4 className="titulo-mes-evento text-center">Próximos Eventos</h4>
+            <h4 className="titulo-mes-evento text-center">Próximos Eventos <FaRegCalendarAlt className="calendario-sec"/>
+            </h4>
             <div className="data-container mb-5">
               {loadingEventos ? (
                 <p className="text-center">Carregando eventos...</p>
@@ -241,10 +247,10 @@ const MenuSecretaria = () => {
                       </span>
                       <span className="descricao-responsavel">
                         <TbClockHour5 className="TbClockHour5" />
-                        {formatHorario(evento.hora)}h
+                        {formatHorario(evento.hora)}
                       </span>
 
-                      <span className="descricao-responsavel">
+                      <span className="descricao-responsavel-base">
                         {evento.responsavel}
                       </span>
                     </div>

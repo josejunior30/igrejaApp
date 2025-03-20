@@ -6,7 +6,10 @@ public enum TipoCulto  {
     CULTO_DA_NOITE("culto de noite"),
     BATISMO("batismo"),
     ANIVERSARIO("aniversário"),
-    ORDENACAO("ordenação");
+    ORDENACAO("ordenação"),
+    CULTO_JOVEM("culto jovem"),
+    CULTO_MULHERES("culto das Mulheres"),
+    EVENTO("evento");
 	
 
     private final String descricao;
