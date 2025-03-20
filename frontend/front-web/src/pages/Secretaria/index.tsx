@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { findByMesEAno } from "../../service/CalendarioService";
+import { findByMesEAno, findByProximos } from "../../service/CalendarioService";
 import { findByMonthOfBirth, findAll } from "../../service/membroService";
 import { findAllKids } from "../../service/kidsService";
 import { findAllVisitante } from "../../service/visitanteService";
@@ -17,6 +17,7 @@ import {
   faPeopleGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { HiUserGroup } from "react-icons/hi";
+import { FaChartSimple } from "react-icons/fa6";
 
 const MenuSecretaria = () => {
   const [loadingEventos, setLoadingEventos] = useState(true);
@@ -50,7 +51,7 @@ const MenuSecretaria = () => {
 
   const fetchEventos = async () => {
     try {
-      const response = await findByMesEAno(mesAtual, anoAtual);
+      const response = await findByProximos();
       setEventos(response.data);
     } catch (error) {
       console.error("Erro ao buscar eventos:", error);
@@ -124,50 +125,57 @@ const MenuSecretaria = () => {
       setLoadingMediaCultoNoite(false);
     }
   };
-
+    const formatHorario = (horario: any) => {
+    if (!horario) return "";
+    const [hour, minute] = horario;
+    return `${String(hour).padStart(2, "0")}:${String(minute).padStart(
+      2,
+      "0"
+    )}`;
+  };
   return (
     <>
       <Header />
       <Sidebar />
       <div className="container-fluid mt-5 pt-5">
-        <div className="row d-flex pt-3 offset-3">
+        <div className="row d-flex pt-4 offset-3">
           <div className="col-2 dados-secretaria">
             <h4>Membros</h4>
             <span>
-              <HiUserGroup /> {loadingMembros ? "Carregando..." : totalMembros}
+            <FontAwesomeIcon icon={faPeopleGroup} className="faPeopleGroup"/> {loadingMembros ? "Carregando..." : totalMembros}
             </span>
           </div>
           <div className="col-2 dados-secretaria">
-            <h4> Visitantes</h4>
+            <h4>Visitantes</h4>
             <span>
-              <FontAwesomeIcon icon={faPeopleGroup} />{" "}
+              <FontAwesomeIcon icon={faPeopleGroup} className="faPeopleGroup"/>
               {loadingVisitantes ? "Carregando..." : totalVisitantes}
             </span>
           </div>
           <div className="col-2 dados-secretaria">
             <h4>Crianças</h4>
             <span>
-              <FontAwesomeIcon icon={faChildren} />{" "}
+              <FontAwesomeIcon icon={faChildren} className="faChildren" />{" "}
               {loadingKids ? "Carregando..." : totalKids}
             </span>
           </div>
-
-          <div className="col-2 dados-secretaria ">
-            <h4>Média culto noite</h4>
+          <div className="col-2 dados-secretaria">
+            <h4>Média Noite</h4>
             <span>
-              <FontAwesomeIcon icon={faChartLine} />{" "}
+            <FaChartSimple className="FaChartSimple"/>
+     
               {loadingMediaCultoNoite ? "Carregando..." : mediaCultoNoite}
             </span>
           </div>
           <div className="col-2 dados-secretaria">
-            <h4>Média culto Manhã</h4>
+            <h4>Média Manhã</h4>
             <span>
-              <FontAwesomeIcon icon={faChartLine} />{" "}
+            <FaChartSimple className="FaChartSimple"/>{" "}
               {loadingMediaCultoManha ? "Carregando..." : mediaCultoManha}
             </span>
           </div>
         </div>
-        <div className="row justify-content-center d-flex mt-5">
+        <div className="row justify-content-center d-flex mt-4 pt-1">
           <div className="col-4 offset-2">
             <h4 className="text-center titulo-mes">Aniversariantes do Mês</h4>
             {loadingAniversariantes ? (
@@ -195,46 +203,37 @@ const MenuSecretaria = () => {
               </table>
             )}
           </div>
-          <div className="col-4 data-container">
-            <div className="data-conteudo mt-3">
-              <div className="data-mes">
-                <span className="mes-sec">Mar</span>
-                <span className="dia-sec">22</span>
-              </div>
-              <div className="descricao-data">
-                <span>Descrição</span>
-                <span>Horario</span>
-                <span>Responsavel</span>
-              </div>
+
+          <div className="col-4">
+            <h4 className="titulo-mes-evento">Eventos no mês</h4>
+            <div className="data-container mb-5">
+              {loadingEventos ? (
+                <p className="text-center">Carregando eventos...</p>
+              ) : eventos.length === 0 ? (
+                <p className="text-center">Nenhum evento encontrado.</p>
+              ) : (
+                eventos.map((evento) => (
+                  <div key={evento.id} className="data-conteudo mt-3">
+                    <div className="data-mes">
+                      <span className="mes-sec">
+                        {new Date(evento.data).toLocaleString("default", {
+                          month: "short",
+                        })}
+                      </span>
+                      <span className="dia-sec">
+                        {new Date(evento.data).getDate()}
+                      </span>
+                    </div>
+                    <div >
+                    <span className="descricao-data d-flex">{evento.titulo} - <span>{formatHorario(evento.hora)}h</span></span>
+
+                      <span className="descricao-responsavel">{evento.responsavel}</span>
+                    </div>
+                   
+                  </div>
+                ))
+              )}
             </div>
-            <div className="col-4">
-            <h4 className="text-center titulo-mes">Eventos do Mês</h4>
-            
-            {loadingEventos ? (
-              <p className="text-center">Carregando...</p>
-            ) : eventos.length === 0 ? (
-              <p className="text-center">Nenhum evento encontrado.</p>
-            ) : (
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Data</th>
-                    <th>Título</th>
-                    <th>Responsável</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {eventos.map((evento) => (
-                    <tr key={evento.id}>
-                      <td>{new Date(evento.data).toLocaleDateString()}</td>
-                      <td>{evento.titulo}</td>
-                      <td>{evento.responsavel}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>  
           </div>
         </div>
       </div>

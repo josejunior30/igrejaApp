@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { SlArrowDown } from "react-icons/sl";
 
 import { getUserData } from "../../localstorage/access-token-repository";
 import { UsuarioDTO } from "../../models/usuario";
@@ -52,10 +53,11 @@ const Header = () => {
             />
           </Link>
         </div>
-        <div className="col-5 col-md-4 " onClick={toggleMenu} id="usuario">
-          <h2>
-            <i className="bi bi-person-circle"></i> {userName?.nome}
-          </h2>
+        <div className="col-5 col-md-4 usuario" onClick={toggleMenu} >
+          <h3>
+            <i className="bi bi-person-circle"></i> {userName?.nome} <SlArrowDown className="seta-user"/>
+
+          </h3>
           {showMenu && (
             <button
               type="button"

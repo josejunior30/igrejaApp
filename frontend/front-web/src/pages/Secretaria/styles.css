@@ -1,50 +1,101 @@
-.titulo-mes{
-  color:white;
+.titulo-mes {
+  color: white;
 }
 
-.dados-secretaria{
-  color: var( --color-black);
+.dados-secretaria {
+  color: var(--color-black);
 
   text-align: center;
-  background-color: var( --color-turquoise);
+  background-color: var(--color-turquoise);
   border-radius: 10px;
-font-weight: bold;
+  font-weight: bold;
   margin-left: 10px;
   margin-right: 10px;
-  max-width: 150px!important;
+  max-width: 150px !important;
   height: 60px;
   align-content: center;
 }
-.data-conteudo{
-display: flex;
+
+.dados-secretaria i{
+ 
+
+
 }
-.data-container{
+.faPeopleGroup{
+  font-size: 20px;
+  margin-left: -30px;
+  margin-right: 10px;
+}
+.faChildren{
+  font-size: 20px;
+  margin-left: -30px;
+  margin-right: 10px;
+}
+.FaChartSimple{
+  font-size: 20px;
+  margin-left: -30px;
+  margin-right: 10px;
+}
+.data-conteudo {
+  display: flex;
+}
+.data-container {
   background-color: white;
+  border-radius: 10px;
+ padding-bottom: 10px;
+
+
 }
-.descricao-data span{
+.descricao-data  {
   display: block;
+  margin-left: 20px;
+  font-size: 14px;
+  margin-top: 5px;
 }
-.data-mes{
+.descricao-data  {
+  display: block;
+  margin-left: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.descricao-responsavel {
+  display: block;
+  margin-left: 20px;
+  font-size: 14px;
+
+}
+.data-mes {
   background-color: var(--color-form);
-  width: 80px;
+  width: 90px;
+  margin-left: 10px;
+  margin-top: 10px;
+
 }
-.mes-sec{
+.mes-sec {
   background-color: white;
-  width: 70px;
+  width: 80px;
   text-align: center;
   margin-left: 5px;
   margin-top: 6px;
   font-weight: bold;
+
 }
-.dia-sec{
-text-align: center;
-margin-top: 5px;
-font-weight: bold;
+.dia-sec {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
-.data-mes span{
- display: block;
+.data-mes span {
+  display: block;
 }
-.dados-secretaria h4{
+.dados-secretaria h4 {
   font-weight: bold;
   font-size: 14px;
+}
+.titulo-mes-evento {
+  color: white;
+  margin-bottom: -8px;
+
 }

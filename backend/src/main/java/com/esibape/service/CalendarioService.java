@@ -51,8 +51,19 @@ public class CalendarioService {
 		return new CalendarioDTO(entity);
     }
  
-    
-    
+    @Transactional(readOnly = true)
+    public List<Calendario> buscarProximosQuatroEventos() {
+        LocalDate hoje = LocalDate.now();
+        System.out.println("Buscando eventos entre: " + hoje + " e " + hoje.plusMonths(3));
+
+        return repository.findByDataBetween(hoje, hoje.plusMonths(2))
+        		
+                         .stream()
+                         .sorted((e1, e2) -> e1.getData().compareTo(e2.getData()))
+                         .limit(4)
+                         .collect(Collectors.toList());
+
+    }
     @Transactional
     public void delete(Long id) {
         if (!repository.existsById(id)) {
