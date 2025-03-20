@@ -146,7 +146,7 @@ const Visitante = () => {
       <Sidebar />
       <div className="container-fluid">
         <div className="row justify-content-center mb-5">
-          <div className="col-md-10 col-11 mt-5 pt-5 offset-1">
+          <div className="col-md-10 col-11 mt-5 offset-1">
             <div className="row pt-3">
               <div className="container col-11 col-md-7 mt-5">
                 <div

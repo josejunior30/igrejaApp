@@ -57,6 +57,11 @@ public class MembroController {
 		}		
 		
 
+	    @GetMapping("/ativos")
+	    public ResponseEntity<List<MembroDTO>> getMembrosAtivos() {
+	        List<MembroDTO> membrosAtivos = service.findAllAtivos();
+	        return ResponseEntity.ok(membrosAtivos);
+	    }
 		@PutMapping(value="/{id}")
 		public ResponseEntity<MembroDTO>update (@PathVariable Long id, @RequestBody MembroDTO dto){
 			 dto =service.update(id, dto);

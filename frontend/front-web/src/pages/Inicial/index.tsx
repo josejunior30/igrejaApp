@@ -76,7 +76,7 @@ const Inicial = () => {
           </div>
 
           <div className="col-12 col-md-3 container-menu">
-            <Link to="/membro" onClick={(e) => handleDoubleClick(e, "/membro")}>
+            <Link to="/secretaria" onClick={(e) => handleDoubleClick(e, "/membro")}>
               <img src={secretaria} alt="Secretaria" className="img-fluid img-menu" />
               <h3>Secretaria</h3>
             </Link>

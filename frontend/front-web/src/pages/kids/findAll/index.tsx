@@ -23,7 +23,7 @@ const KidsMembro = () => {
       .findAll()
       .then((response) => {
         setKidsDTO(response.data);
-        setFilteredMembroDTO(response.data); // Mostra todos inicialmente
+        setFilteredMembroDTO(response.data); 
       })
       .catch((error) => {
         console.error("Erro ao buscar dados:", error);
@@ -42,7 +42,7 @@ const KidsMembro = () => {
 
   const handleMonthFilter = async (month: number) => {
     if (!month) {
-      // Se nenhum mês for selecionado, reseta para todos os membros
+  
       setFilteredMembroDTO(KidsDTO);
       return;
     }
@@ -56,7 +56,7 @@ const KidsMembro = () => {
 
   function formatPhoneNumber(phone: string | null | undefined): string {
     if (!phone) {
-      return ""; // Retorna uma string vazia se `phone` for `null` ou `undefined`
+      return ""; 
     }
     return phone
       .replace(/[^0-9]/g, "")
@@ -85,7 +85,7 @@ const KidsMembro = () => {
       <Sidebar />
       <div className="container-fluid">
         <div className="row justify-content-center">
-          <div className="col-md-10 col-11 mt-5 pt-5 offset-1">
+          <div className="col-md-10 col-11 mt-5 offset-1">
             <div className="row pt-3">
               <div className="container col-11 col-md-7 mt-5">
                 <div

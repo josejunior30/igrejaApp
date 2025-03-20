@@ -40,7 +40,7 @@ const Membro = () => {
 
   const handleMonthFilter = async (month: number) => {
     if (!month) {
-      // Se nenhum mês for selecionado, reseta para todos os membros
+    
       setFilteredMembroDTO(MembroDTO);
       return;
     }
@@ -54,7 +54,7 @@ const Membro = () => {
 
   function formatPhoneNumber(phone: string | null | undefined): string {
     if (!phone) {
-      return ""; // Retorna uma string vazia se `phone` for `null` ou `undefined`
+      return ""; 
     }
     return phone
       .replace(/[^0-9]/g, "")
@@ -108,9 +108,9 @@ const Membro = () => {
   const getColorByTipoCulto = (tipoCulto: string) => {
     switch (tipoCulto) {
       case "AFASTADO":
-        return "#fcba03"; // Azul para culto da manhã
+        return "#fcba03"; 
       case "DESLIGADO":
-        return "#c70909"; // Amarelo para culto da noite
+        return "#c70909"; 
     }
   };
   return (
@@ -119,7 +119,7 @@ const Membro = () => {
       <Sidebar />
       <div className="container-fluid">
         <div className="row justify-content-center">
-          <div className="col-md-10 col-11 mt-5 pt-5 offset-1">
+          <div className="col-md-10 col-11 mt-5 offset-1">
             <div className="row pt-3">
               <div className="container col-11 col-md-7 mt-5">
                 <div

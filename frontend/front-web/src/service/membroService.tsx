@@ -43,6 +43,10 @@ export function addEbdCurso(membroId: number, cursoId: number) {
 export function findByMonthOfBirth(mes: number) {
   return axios.get(`${BASE_URL}/membro/por-mes?mes=${mes}`);
 }
+
+export function findByAtivos() {
+  return axios.get(`${BASE_URL}/membro/ativos`);
+}
 export function findByProximosAniversarios() {
   return axios.get(`${BASE_URL}/membro/proximos-aniversarios`);
 }

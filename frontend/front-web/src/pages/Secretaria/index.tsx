@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { findByMesEAno, findByProximos } from "../../service/CalendarioService";
-import { findByMonthOfBirth, findAll, findByProximosAniversarios } from "../../service/membroService";
+import {
+  findByMonthOfBirth,
+  findAll,
+  findByProximosAniversarios,
+  findByAtivos,
+} from "../../service/membroService";
 import { findAllKids } from "../../service/kidsService";
 import { findAllVisitante } from "../../service/visitanteService";
 import { getMediaTotal } from "../../service/quantidadePorCultoService";
@@ -60,8 +65,10 @@ const MenuSecretaria = () => {
       setLoadingEventos(false);
     }
   };
-  const formatDia = (dia: number) => {
-    return dia < 10 ? `0${dia}` : `${dia}`;
+  const formatDiaMes = (data: Date) => {
+    const dia = data.getDate();
+    const mes = data.getMonth() + 1;
+    return `${dia < 10 ? `0${dia}` : dia}/${mes < 10 ? `0${mes}` : mes}`;
   };
   const fetchAniversariantes = async () => {
     try {
@@ -76,7 +83,7 @@ const MenuSecretaria = () => {
 
   const fetchTotalMembros = async () => {
     try {
-      const response = await findAll();
+      const response = await findByAtivos();
       setTotalMembros(response.data.length);
     } catch (error) {
       console.error("Erro ao buscar total de membros:", error);
@@ -128,7 +135,7 @@ const MenuSecretaria = () => {
       setLoadingMediaCultoNoite(false);
     }
   };
-    const formatHorario = (horario: any) => {
+  const formatHorario = (horario: any) => {
     if (!horario) return "";
     const [hour, minute] = horario;
     return `${String(hour).padStart(2, "0")}:${String(minute).padStart(
@@ -145,13 +152,14 @@ const MenuSecretaria = () => {
           <div className="col-2 dados-secretaria">
             <h4>Membros</h4>
             <span>
-            <FontAwesomeIcon icon={faPeopleGroup} className="faPeopleGroup"/> {loadingMembros ? "Carregando..." : totalMembros}
+              <FontAwesomeIcon icon={faPeopleGroup} className="faPeopleGroup" />{" "}
+              {loadingMembros ? "Carregando..." : totalMembros}
             </span>
           </div>
           <div className="col-2 dados-secretaria">
             <h4>Visitantes</h4>
             <span>
-              <FontAwesomeIcon icon={faPeopleGroup} className="faPeopleGroup"/>
+              <FontAwesomeIcon icon={faPeopleGroup} className="faPeopleGroup" />
               {loadingVisitantes ? "Carregando..." : totalVisitantes}
             </span>
           </div>
@@ -165,15 +173,15 @@ const MenuSecretaria = () => {
           <div className="col-2 dados-secretaria">
             <h4>Média Noite</h4>
             <span>
-            <FaChartSimple className="FaChartSimple"/>
-     
+              <FaChartSimple className="FaChartSimple" />
+
               {loadingMediaCultoNoite ? "Carregando..." : mediaCultoNoite}
             </span>
           </div>
           <div className="col-2 dados-secretaria">
             <h4>Média Manhã</h4>
             <span>
-            <FaChartSimple className="FaChartSimple"/>{" "}
+              <FaChartSimple className="FaChartSimple" />{" "}
               {loadingMediaCultoManha ? "Carregando..." : mediaCultoManha}
             </span>
           </div>
@@ -197,7 +205,7 @@ const MenuSecretaria = () => {
                 <tbody>
                   {membros.map((membro) => (
                     <tr key={membro.id}>
-                    <td>{formatDia(new Date(membro.dataNascimento).getDate())}</td>
+                      <td>{formatDiaMes(new Date(membro.dataNascimento))}</td>{" "}
                       <td>{membro.nome}</td>
                       <td>{membro.idade} anos</td>
                     </tr>
@@ -227,14 +235,19 @@ const MenuSecretaria = () => {
                         {new Date(evento.data).getDate()}
                       </span>
                     </div>
-                    <div >
-                    <span className="descricao-data d-flex">{evento.titulo} </span>
-                    <span className="descricao-responsavel"><TbClockHour5 className="TbClockHour5"/>
-                    {formatHorario(evento.hora)}h</span>
+                    <div>
+                      <span className="descricao-data d-flex">
+                        {evento.titulo}{" "}
+                      </span>
+                      <span className="descricao-responsavel">
+                        <TbClockHour5 className="TbClockHour5" />
+                        {formatHorario(evento.hora)}h
+                      </span>
 
-                      <span className="descricao-responsavel">{evento.responsavel}</span>
+                      <span className="descricao-responsavel">
+                        {evento.responsavel}
+                      </span>
                     </div>
-                   
                   </div>
                 ))
               )}

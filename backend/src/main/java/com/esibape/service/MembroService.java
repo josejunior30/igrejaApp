@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.MembroDTO;
 import com.esibape.entities.EBDCurso;
 import com.esibape.entities.Membro;
+import com.esibape.entities.MembroStatus;
 import com.esibape.repository.EBDCursoRepository;
 import com.esibape.repository.MembroRepository;
 
@@ -181,6 +182,16 @@ public class MembroService {
             .map(MembroDTO::new)
             .collect(Collectors.toList());
     }
+    
+    @Transactional(readOnly = true)
+    public List<MembroDTO> findAllAtivos() {
+    	List<Membro> membrosAtivos = repository.findByMembroStatus(MembroStatus.ATIVO);
+
+        return membrosAtivos.stream()
+            .map(MembroDTO::new)
+            .collect(Collectors.toList());
+    }
+
 
 }
 

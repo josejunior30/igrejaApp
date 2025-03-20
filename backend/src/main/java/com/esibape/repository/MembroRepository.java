@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.esibape.entities.Membro;
+import com.esibape.entities.MembroStatus;
 
 public interface MembroRepository extends JpaRepository<Membro, Long> {
 
@@ -17,5 +18,6 @@ public interface MembroRepository extends JpaRepository<Membro, Long> {
 	    @Query("SELECT m FROM Membro m WHERE MONTH(m.dataNascimento) = :mes")
 	    List<Membro> findByMonthOfBirth(@Param("mes") int mes);
 	
-	
+	    // Método para buscar membros com status ATIVO
+	    List<Membro> findByMembroStatus(MembroStatus status);
 }
