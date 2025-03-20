@@ -7,11 +7,17 @@
 }
 
 
-.usuario h3{
+.usuario h4{
 text-align: end;
 cursor: pointer;
   color: white;
  
+}
+.redefinir{
+  font-size: 12px!important;
+  background: none;
+
+ margin-left: 22vw;
 }
 .seta-user{
   font-size: 16px;

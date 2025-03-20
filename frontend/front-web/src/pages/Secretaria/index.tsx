@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { findByMesEAno, findByProximos } from "../../service/CalendarioService";
-import { findByMonthOfBirth, findAll } from "../../service/membroService";
+import { findByMonthOfBirth, findAll, findByProximosAniversarios } from "../../service/membroService";
 import { findAllKids } from "../../service/kidsService";
 import { findAllVisitante } from "../../service/visitanteService";
 import { getMediaTotal } from "../../service/quantidadePorCultoService";
@@ -18,6 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { HiUserGroup } from "react-icons/hi";
 import { FaChartSimple } from "react-icons/fa6";
+import { TbClockHour5 } from "react-icons/tb";
 
 const MenuSecretaria = () => {
   const [loadingEventos, setLoadingEventos] = useState(true);
@@ -59,10 +60,12 @@ const MenuSecretaria = () => {
       setLoadingEventos(false);
     }
   };
-
+  const formatDia = (dia: number) => {
+    return dia < 10 ? `0${dia}` : `${dia}`;
+  };
   const fetchAniversariantes = async () => {
     try {
-      const response = await findByMonthOfBirth(mesAtual);
+      const response = await findByProximosAniversarios();
       setMembros(response.data);
     } catch (error) {
       console.error("Erro ao buscar aniversariantes:", error);
@@ -177,13 +180,13 @@ const MenuSecretaria = () => {
         </div>
         <div className="row justify-content-center d-flex mt-4 pt-1">
           <div className="col-4 offset-2">
-            <h4 className="text-center titulo-mes">Aniversariantes do Mês</h4>
+            <h4 className="text-center titulo-mes">Próximos Aniversariantes</h4>
             {loadingAniversariantes ? (
               <p className="text-center">Carregando...</p>
             ) : membros.length === 0 ? (
               <p className="text-center">Nenhum aniversariante encontrado.</p>
             ) : (
-              <table className="table table-striped">
+              <table className="table table-striped tb-aniversario">
                 <thead>
                   <tr>
                     <th>Dia</th>
@@ -194,7 +197,7 @@ const MenuSecretaria = () => {
                 <tbody>
                   {membros.map((membro) => (
                     <tr key={membro.id}>
-                      <td>{new Date(membro.dataNascimento).getDate()}</td>
+                    <td>{formatDia(new Date(membro.dataNascimento).getDate())}</td>
                       <td>{membro.nome}</td>
                       <td>{membro.idade} anos</td>
                     </tr>
@@ -205,7 +208,7 @@ const MenuSecretaria = () => {
           </div>
 
           <div className="col-4">
-            <h4 className="titulo-mes-evento">Eventos no mês</h4>
+            <h4 className="titulo-mes-evento text-center">Próximos Eventos</h4>
             <div className="data-container mb-5">
               {loadingEventos ? (
                 <p className="text-center">Carregando eventos...</p>
@@ -225,7 +228,9 @@ const MenuSecretaria = () => {
                       </span>
                     </div>
                     <div >
-                    <span className="descricao-data d-flex">{evento.titulo} - <span>{formatHorario(evento.hora)}h</span></span>
+                    <span className="descricao-data d-flex">{evento.titulo} </span>
+                    <span className="descricao-responsavel"><TbClockHour5 className="TbClockHour5"/>
+                    {formatHorario(evento.hora)}h</span>
 
                       <span className="descricao-responsavel">{evento.responsavel}</span>
                     </div>

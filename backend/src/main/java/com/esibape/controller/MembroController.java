@@ -82,7 +82,11 @@ public class MembroController {
 	        return ResponseEntity.ok().body(dto);
 	    }
 	    
-		
+	    @GetMapping("/proximos-aniversarios")
+	    public ResponseEntity<List<MembroDTO>> getNextBirthdays() {
+	        List<MembroDTO> aniversariantes = service.findNextBirthdays();
+	        return ResponseEntity.ok(aniversariantes);
+	    }
 		
 		  @GetMapping(value = "/por-mes")
 		    public ResponseEntity<List<MembroDTO>> findByMonthOfBirth(@RequestParam(name = "mes") int mes) {

@@ -39,6 +39,13 @@
 .data-conteudo {
   display: flex;
 }
+.TbClockHour5{
+  margin-right: 5px;
+  margin-top: -3px;
+}
+.tb-aniversario{
+  font-size: 14px;
+}
 .data-container {
   background-color: white;
   border-radius: 10px;
@@ -83,7 +90,7 @@
 }
 .dia-sec {
   text-align: center;
-  margin-top: 5px;
+  margin-top: 10px;
   margin-bottom: 10px;
   font-weight: bold;
 }

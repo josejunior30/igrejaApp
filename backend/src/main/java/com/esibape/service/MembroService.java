@@ -4,6 +4,7 @@ package com.esibape.service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.esibape.DTO.MembroDTO;
 import com.esibape.entities.EBDCurso;
 import com.esibape.entities.Membro;
@@ -155,6 +157,30 @@ public class MembroService {
         repository.save(membro);
     }
 
-    
+    @Transactional(readOnly = true)
+    public List<MembroDTO> findNextBirthdays() {
+        LocalDate today = LocalDate.now();
+        
+        List<Membro> membros = repository.findAll();
+        
+        List<Membro> proximosAniversariantes = membros.stream()
+            .filter(membro -> membro.getDataNascimento() != null)
+            .sorted(Comparator.comparing(membro -> {
+                LocalDate aniversario = membro.getDataNascimento().withYear(today.getYear());
+                if (aniversario.isBefore(today)) {
+                    aniversario = aniversario.plusYears(1);
+                }
+                return aniversario;
+            }))
+            .limit(5)
+            .toList();
+        
+        proximosAniversariantes.forEach(this::atualizarIdade);
+        
+        return proximosAniversariantes.stream()
+            .map(MembroDTO::new)
+            .collect(Collectors.toList());
+    }
+
 }
 

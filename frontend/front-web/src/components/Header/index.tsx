@@ -54,14 +54,14 @@ const Header = () => {
           </Link>
         </div>
         <div className="col-5 col-md-4 usuario" onClick={toggleMenu} >
-          <h3>
+          <h4>
             <i className="bi bi-person-circle"></i> {userName?.nome} <SlArrowDown className="seta-user"/>
 
-          </h3>
+          </h4>
           {showMenu && (
             <button
               type="button"
-              className="btn btn-secondary"
+              className="btn btn-secondary redefinir"
               onClick={redefinirsenha}
             >
               Redefinir Senha
