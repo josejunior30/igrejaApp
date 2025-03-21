@@ -35,19 +35,19 @@ const TrilhaId = () => {
     }
   }, [id]);
 
-  // Helper function to merge and sort participants
+
   const getSortedParticipants = () => {
     if (!curso) return [];
     const allParticipants = [
       ...(curso.membro || []).map((membro) => ({
         ...membro,
         status: "Membro",
-        sobrenome: membro.sobrenome || "", // Garantir sobrenome nos membros
+        sobrenome: membro.sobrenome || "", 
       })),
       ...(curso.visitante || []).map((visitante) => ({
         ...visitante,
         status: "Visitante",
-        sobrenome: visitante.sobrenome || "(Sem Sobrenome)", // Adicionar sobrenome padrão para visitantes
+        sobrenome: visitante.sobrenome || "(Sem Sobrenome)", 
       })),
     ];
     return allParticipants.sort(
@@ -70,23 +70,22 @@ const TrilhaId = () => {
     }
   };
   const formatPhoneNumber = (phoneNumber: string): string => {
-    // Remove caracteres não numéricos
+   
     const cleaned = phoneNumber.replace(/\D/g, "");
 
     // Verifica se o número tem ao menos 10 ou 11 dígitos (DDD + número)
     if (cleaned.length === 10) {
-      // Formato: (XX) XXXX-XXXX
+      
       return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 6)}-${cleaned.slice(
         6
       )}`;
     } else if (cleaned.length === 11) {
-      // Formato: (XX) XXXXX-XXXX
+    
       return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(
         7
       )}`;
     }
 
-    // Retorna o número original caso não seja válido
     return phoneNumber;
   };
   const handlePrint = () => {
@@ -97,7 +96,6 @@ const TrilhaId = () => {
 
     const doc = new jsPDF();
 
-    // Título do documento
     doc.setFontSize(18);
     doc.text(`Participantes da Trilha: ${curso.nome}`, 10, 10);
 
@@ -112,15 +110,15 @@ const TrilhaId = () => {
       participant.status,
     ]);
 
-    // Adiciona a tabela ao PDF
+ 
     //@ts-ignore
     doc.autoTable({
       head: [tableColumn],
       body: tableRows,
-      startY: 20, // Posição da tabela no PDF
+      startY: 20, 
     });
 
-    // Salva o arquivo
+   
     doc.save(`Participantes_Trilha_${curso.nome}.pdf`);
   };
 
@@ -173,7 +171,7 @@ const TrilhaId = () => {
                     <tbody>
                       {getSortedParticipants().map((participant, index) => (
                         <tr key={`${participant.status}-${participant.id}`}>
-                          {/* Adicione uma coluna para o índice */}
+                       
                           <td>{index + 1}</td>
                           <td>{`${participant.nome} ${participant.sobrenome}`}</td>
                           <td>{`${participant.idade}`}</td>

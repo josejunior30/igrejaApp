@@ -211,7 +211,6 @@ const Inscrever: React.FC = () => {
             </div>
           </div>
 
-          {/* Se o usuário é membro */}
           {isMember && (
             <form onSubmit={handlePatchMembroCurso}>
               <div className="col-3 mt-4 mb-5 mx-auto">
@@ -270,10 +269,8 @@ const Inscrever: React.FC = () => {
             </form>
           )}
 
-          {/* Se o usuário não é membro */}
           {!isMember && isMember !== null && (
             <>
-              {/* Pergunta "Já tem cadastro?" */}
               <div className="col-12">
                 <h2 className="titulo mt-5">Já tem cadastro?</h2>
                 <div className="opcao-membro">
@@ -298,7 +295,6 @@ const Inscrever: React.FC = () => {
                 </div>
               </div>
 
-              {/* Se o usuário já tem cadastro (visitante) */}
               {isVisitor && (
                 <form onSubmit={handlePatchVisitanteCurso}>
                   <div className="col-3 mt-4 mb-5 mx-auto">
@@ -356,7 +352,7 @@ const Inscrever: React.FC = () => {
                 </form>
               )}
 
-              {/* Se o usuário não tem cadastro */}
+ 
               {!isVisitor && isVisitor !== null && (
                 <div className="container col-md-8 offset-2 mt-5 mb-5">
                   <form
@@ -384,7 +380,7 @@ const Inscrever: React.FC = () => {
                         onChange={(e) => setCadastroSobrenome(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3">
                       <label className="form-label dados-visitante">
                         Data de Nascimento
                       </label>
@@ -408,7 +404,7 @@ const Inscrever: React.FC = () => {
                         onChange={(e) => setCadastroCelular(e.target.value)}
                       />
                     </div>
-                    <div className="col-md-2 ">
+                    <div className="col-md-3 ">
                       <label className="form-label dados-visitante">
                         Email
                       </label>
@@ -421,7 +417,7 @@ const Inscrever: React.FC = () => {
                     </div>
                     <div className="col-md-3 mt-4 ">
                       <label className="form-label labelOpcao">
-                        Segunda opção de Curso
+                        Segunda opção
                       </label>
                       <select
                         className="form-select"
@@ -441,7 +437,7 @@ const Inscrever: React.FC = () => {
                     </div>
                     <div className="col-md-4 mt-5 pt-3">
                       <label className="form-label  pe-3 dados-visitante">
-                        Marque se quiser Apostila impressa
+                        Apostila impressa
                       </label>
                       <input
                         type="checkbox"

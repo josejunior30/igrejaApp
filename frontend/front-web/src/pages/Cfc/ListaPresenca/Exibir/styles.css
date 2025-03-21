@@ -53,7 +53,17 @@ html {
 
   margin-bottom: 50px;
 }
+.mes-chamada-cfc{
+  color:white;
+  position: absolute;
+  font-size: 20px;
+ left: 70vw;
+top:40vh;
 
+}
+.titulo-chamada-historico{
+  color: white;
+}
 @media (max-width: 768px) {
   #img-menu {
     margin-top: 20px;

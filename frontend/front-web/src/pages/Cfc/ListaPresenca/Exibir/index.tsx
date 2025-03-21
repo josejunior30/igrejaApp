@@ -7,11 +7,7 @@ import "./styles.css";
 import { useNavigate } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
 import { ebdCurso } from "../../../../models/trilha";
-
-interface Curso {
-  id: number;
-  nome: string;
-}
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 interface Presenca {
   id: number;
@@ -20,245 +16,133 @@ interface Presenca {
 }
 
 const HistoricoChamadaEBD = () => {
-  const [mes, setMes] = useState<number | null>(null);
-  const [ano, setAno] = useState<number | null>(null);
-  const [cursoId, setCursoId] = useState<number | null>(null);
-  const [cursos, setCursos] = useState<ebdCurso[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [presencas, setPresencas] = useState<Presenca[]>([]);
   const navigate = useNavigate();
-
-  const meses = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
-  ];
-
-  const calcularSemanasNoMes = (ano: number, mes: number) => {
-    const ultimoDia = new Date(ano, mes, 0);
-    return Math.ceil(ultimoDia.getDate() / 7);
-  };
-
-  const buscarCursos = async () => {
-    try {
-      const response = await findAllCurso();
-      setCursos(response.data);
-    } catch (error) {
-      console.error("Erro ao buscar os cursos:", error);
-    }
-  };
-  const organizarDados = (data: any[]) => {
-    const map: { [key: string]: Presenca } = {};
-
-    data.forEach((item) => {
-      const nomeCompleto = `${item.visitante.nome} ${item.visitante.sobrenome}`;
-      if (!map[nomeCompleto]) {
-        map[nomeCompleto] = {
-          id: item.visitante.id,
-          nome: nomeCompleto,
-          presencas: Array(5).fill("------"),
-        };
-      }
-      const semana = getSemanaDoMes(
-        new Date(item.data[0], item.data[1] - 1, item.data[2])
-      );
-      map[nomeCompleto].presencas[semana - 1] = item.chamadaVisitante;
-    });
-
-    return Object.values(map);
-  };
-  const buscarDadosVisitante = async () => {
-    if (mes && ano && cursoId) {
-      try {
-        const response = await findVisitanteByMonthAndCurso(mes, ano, cursoId);
-        return organizarDados(response.data); // Organiza os dados dos visitantes
-      } catch (error) {
-        console.error("Erro ao buscar os dados dos visitantes:", error);
-        return [];
-      }
-    }
-    return [];
-  };
-
-  const buscarDadosMembro = async () => {
-    if (mes && ano && cursoId) {
-      try {
-        const response = await findMembroByMonthAndCurso(mes, ano, cursoId);
-        return organizarDadosMembro(response.data); // Organiza os dados dos membros
-      } catch (error) {
-        console.error("Erro ao buscar os dados dos membros:", error);
-        return [];
-      }
-    }
-    return [];
-  };
-  const organizarDadosMembro = (data: any[]) => {
-    const membrosMap: { [key: string]: Presenca } = {};
-
-    data.forEach((item) => {
-      const nomeCompleto = `${item.membro.nome} ${item.membro.sobrenome}`;
-      if (!membrosMap[nomeCompleto]) {
-        membrosMap[nomeCompleto] = {
-          id: item.membro.id,
-          nome: nomeCompleto,
-          presencas: Array(5).fill("------"),
-        };
-      }
-      const semana = getSemanaDoMes(
-        new Date(item.data[0], item.data[1] - 1, item.data[2])
-      );
-      membrosMap[nomeCompleto].presencas[semana - 1] = item.chamadaMembro;
-    });
-
-    return Object.values(membrosMap);
-  };
-  const getSemanaDoMes = (date: Date): number => {
-    const dia = date.getDate();
-    return Math.ceil(dia / 7);
-  };
+  const [cursos, setCursos] = useState<ebdCurso[]>([]);
+  const [presencas, setPresencas] = useState<Presenca[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [cursoId, setCursoId] = useState<number | null>(null);
+  const [filtro, setFiltro] = useState({
+    mes: new Date().getMonth() + 1,
+    ano: new Date().getFullYear(),
+  });
 
   useEffect(() => {
+    const buscarCursos = async () => {
+      try {
+        const response = await findAllCurso();
+        setCursos(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar os cursos:", error);
+      }
+    };
     buscarCursos();
   }, []);
 
   useEffect(() => {
     const buscarDados = async () => {
-      setLoading(true);
-      try {
-        const visitantes = await buscarDadosVisitante(); // Buscar visitantes
-        const membros = await buscarDadosMembro(); // Buscar membros
-        setPresencas([...visitantes, ...membros]); // Combinar e definir no estado
-      } catch (error) {
-        console.error("Erro ao buscar os dados:", error);
-      } finally {
-        setLoading(false);
+      if (cursoId) {
+        setLoading(true);
+        try {
+          const visitantes = await findVisitanteByMonthAndCurso(filtro.mes, filtro.ano, cursoId);
+          const membros = await findMembroByMonthAndCurso(filtro.mes, filtro.ano, cursoId);
+          setPresencas([...organizarDados(visitantes.data), ...organizarDados(membros.data)]);
+        } catch (error) {
+          console.error("Erro ao buscar os dados:", error);
+        } finally {
+          setLoading(false);
+        }
       }
     };
+    buscarDados();
+  }, [cursoId, filtro]);
 
-    if (mes && ano && cursoId) {
-      buscarDados();
-    }
-  }, [mes, ano, cursoId]);
-  const semanasNoMes = mes && ano ? calcularSemanasNoMes(ano, mes) : 5;
+  const handleMesAnterior = () => {
+    setFiltro((prev) => ({
+      mes: prev.mes === 1 ? 12 : prev.mes - 1,
+      ano: prev.mes === 1 ? prev.ano - 1 : prev.ano,
+    }));
+  };
 
-  const handleVoltar = () => {
-    navigate(-1);
+  const handleMesProximo = () => {
+    setFiltro((prev) => ({
+      mes: prev.mes === 12 ? 1 : prev.mes + 1,
+      ano: prev.mes === 12 ? prev.ano + 1 : prev.ano,
+    }));
+  };
+
+  const organizarDados = (data: any[]): Presenca[] => {
+    const map: { [key: string]: Presenca } = {};
+    data.forEach((item) => {
+      const nomeCompleto = item.visitante 
+        ? `${item.visitante.nome} ${item.visitante.sobrenome}` 
+        : `${item.membro.nome} ${item.membro.sobrenome}`;
+      if (!map[nomeCompleto]) {
+        map[nomeCompleto] = {
+          id: item.id,
+          nome: nomeCompleto,
+          presencas: Array(5).fill("------"),
+        };
+      }
+      const semana = Math.ceil(new Date(item.data[0], item.data[1] - 1, item.data[2]).getDate() / 7);
+      map[nomeCompleto].presencas[semana - 1] = item.chamadaVisitante || item.chamadaMembro;
+    });
+    return Object.values(map);
   };
 
   return (
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
-        <div className="row" id="voltar">
-          <div className="col">
-            <button onClick={handleVoltar} className="btn btn-linkVoltar">
-              <TiArrowBack /> Voltar
-            </button>
-          </div>
-        </div>
-        <div className="col-12 text-center" id="tituloChamada">
-          <h2>Histórico de Chamada</h2>
-        </div>
-        <div className="row justify-content-center pt-5 mb-4" id="linha-menu">
-          <div className="col-3 text-center">
-            <label className="form-label dados-Historico">Curso</label>
-            <select
-              onChange={(e) => setCursoId(Number(e.target.value))}
-              className="form-select"
-            >
-              <option value="">Selecione</option>
+        <button onClick={() => navigate(-1)} className="btn btn-linkVoltar">
+          <TiArrowBack /> Voltar
+        </button>
+        <h3 className="text-center titulo-chamada-historico">Histórico de Chamada</h3>
+        <div className="row justify-content-center mb-4">
+          <div className="col-3 text-center mb-4">
+            <label>Curso</label>
+            <select onChange={(e) => setCursoId(Number(e.target.value))} className="form-select">
+              <option value="">Selecione o Curso</option>
               {cursos.map((curso) => (
-                <option key={curso.id} value={curso.id}>
-                  {curso.nome}
-                </option>
+                <option key={curso.id} value={curso.id}>{curso.nome}</option>
               ))}
             </select>
+            <span className="mes-chamada-cfc">
+            <button className="btn-left-conta-Pagar" onClick={handleMesAnterior}>
+              <FaAngleLeft />
+            </button>
+            {new Date(filtro.ano, filtro.mes - 1).toLocaleString("pt-BR", { month: "long" })} / {filtro.ano}
+            <button className="btn-right-conta-Pagar" onClick={handleMesProximo}>
+              <FaAngleRight />
+            </button>
+          </span>
           </div>
-          <div className="col-2 text-center">
-            <label className="form-label dados-Historico">Mês</label>
-            <select
-              onChange={(e) => setMes(Number(e.target.value))}
-              className="form-select"
-            >
-              <option value="">Selecione</option>
-              {meses.map((mesNome, index) => (
-                <option key={index + 1} value={index + 1}>
-                  {mesNome}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="col-2 text-center">
-            <label className="form-label dados-Historico">Ano</label>
-            <select
-              onChange={(e) => setAno(Number(e.target.value))}
-              className="form-select"
-            >
-              <option value="">Selecione</option>
-              {[2024, 2025].map((a) => (
-                <option key={a} value={a}>
-                  {a}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <div className="row justify-content-center mb-4" id="linha-menu">
-          <div className="col-9 justify-content-center">
-            {loading ? (
-              <div className="text-center">Carregando...</div>
-            ) : presencas.length > 0 ? (
-              <table className="table table-striped mb-5">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    {[...Array(semanasNoMes)].map((_, i) => (
-                      <th key={i}>Semana {i + 1}</th>
+     
+          {loading ? (
+            <div className="text-center">Carregando...</div>
+          ) : presencas.length > 0 ? (
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  {[...Array(5)].map((_, i) => <th key={i}>Semana {i + 1}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {presencas.map((pessoa, index) => (
+                  <tr key={`${pessoa.id}-${index}`}>
+                    <td>{index + 1}</td>
+                    <td>{pessoa.nome}</td>
+                    {pessoa.presencas.map((presenca, i) => (
+                      <td key={i} style={{ color: presenca === "AUSENTE" ? "red" : "white" }}>{presenca}</td>
                     ))}
                   </tr>
-                </thead>
-                <tbody>
-                  {presencas.map((pessoa, index) => (
-                    <tr key={pessoa.id}>
-                      <td>{index + 1}</td>
-                      <td>{pessoa.nome}</td>
-                      {pessoa.presencas
-                        .slice(0, semanasNoMes)
-                        .map((presenca, i) => (
-                          <td
-                            key={i}
-                            style={{
-                              color:
-                                presenca === "AUSENTE"
-                                  ? "red"
-                                  : presenca === "PRESENTE"
-                                  ? "white"
-                                  : "inherit",
-                              fontWeight:
-                                presenca === "AUSENTE" ? "bold" : "normal",
-                            }}
-                          >
-                            {presenca}
-                          </td>
-                        ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <div className="text-center">Nenhum dado encontrado.</div>
-            )}
-          </div>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="text-center">Nenhum dado encontrado.</div>
+          )}
         </div>
       </div>
     </>
