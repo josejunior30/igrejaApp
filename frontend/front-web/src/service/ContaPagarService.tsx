@@ -3,6 +3,7 @@ import { BASE_URL } from "../ultilitarios/system";
 import { getAccessToken } from "./AuthService";
 import * as authService from '../service/AuthService';
 import { StatusPagamento } from "../models/contaPagar";
+
 export function findAllContaPagar() {
   return axios.get(`${BASE_URL}/contaPagar`);
 }

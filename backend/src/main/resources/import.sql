@@ -116,7 +116,7 @@ INSERT INTO tb_lista_presenca_ebd (data, chamada_Membro, membro_id ,ebd_Curso_id
 INSERT INTO tb_lista_presenca_ebd (data, chamada_Membro, membro_id ,ebd_Curso_id) VALUES ('2025-03-05', 'AUSENTE', 4, 2)
 INSERT INTO tb_lista_presenca_ebd (data, chamada_Membro, membro_id ,ebd_Curso_id) VALUES ('2025-03-05', 'PRESENTE', 5, 2)
 INSERT INTO tb_lista_presenca_ebd (data, chamada_Membro, membro_id ,ebd_Curso_id) VALUES ('2025-03-12', 'PRESENTE', 1, 1)
-INSERT INTO tb_lista_presenca_ebd (data, chamada_Membro, membro_id ,ebd_Curso_id) VALUES ('2025-03'12', 'PRESENTE', 2, 1)
+INSERT INTO tb_lista_presenca_ebd (data, chamada_Membro, membro_id ,ebd_Curso_id) VALUES ('2025-03-12', 'PRESENTE', 2, 1)
 INSERT INTO tb_lista_presenca_ebd (data, chamada_Membro, membro_id ,ebd_Curso_id) VALUES ('2025-03-12', 'AUSENTE', 3, 1)
 INSERT INTO tb_lista_presenca_ebd (data, chamada_Membro, membro_id ,ebd_Curso_id) VALUES ('2025-03-19', 'PRESENTE', 1, 1)
 INSERT INTO tb_lista_presenca_ebd (data, chamada_Membro, membro_id ,ebd_Curso_id) VALUES ('2025-03-19', 'PRESENTE', 2, 1)
@@ -164,19 +164,32 @@ INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_
 
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Salario Pastoral', 1500.00, '2025-03-10', 'PENDENTE', '2025-03-06')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Salario Ministro de Musica', 1200.00, '2025-03-10', 'PENDENTE', '2025-03-06')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Copo descartavel', 150.75, '2025-03-10', 'PENDENTE', '2025-03-06')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Internet', 120.15, '2025-03-10', 'PENDENTE', '2025-03-06')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Café da comunhão', 178.75, '2025-03-10', 'PENDENTE', '2025-01-23')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Cafe da comunhão', 178.75, '2025-02-10', 'PENDENTE', '2025-01-16')
 
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Cappucino', 78.75, '2025-03-10', 'PENDENTE', '2025-01-14')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Conta de luz', 580.75, '2025-03-12', 'PENDENTE', '2025-02-27')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Internet', 120.15, '2025-03-10', 'PENDENTE', '2025-03-06')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao,  data_pagamento, created_by) VALUES ('Internet', 150.35, '2025-01-30', 'PAGO', '2025-01-10', '2025-01-25', 'juneba@gmail.com')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao,  data_pagamento, created_by) VALUES ('Internet', 150.35, '2025-02-30', 'PAGO', '2025-01-10', '2025-01-25', 'juneba@gmail.com')
+
+
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao,  data_pagamento, created_by) VALUES ('Copo descartavel', 58.35, '2025-01-30', 'PAGO', '2025-01-10', '2025-01-25', 'juneba@gmail.com')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao,  data_pagamento, created_by) VALUES ('Copo descartavel', 55.35, '2025-02-30', 'PAGO', '2025-02-10', '2025-02-27', 'juneba@gmail.com')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Copo descartavel', 150.75, '2025-03-10', 'PENDENTE', '2025-03-06')
+
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao,  data_pagamento, created_by) VALUES ('Café da comunhão', 178.75, '2025-03-10', 'PAGO', '2025-01-23', '2025-01-25', 'juneba@gmail.com')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao,  data_pagamento, created_by) VALUES ('Café da comunhão', 138.75, '2025-02-10', 'PAGO', '2025-02-08', '2025-02-20', 'juneba@gmail.com')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Cafe da comunhão', 178.75, '2025-03-10', 'PENDENTE', '2025-03-02')
+
+
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Conta de luz', 580.75, '2025-03-12', 'PENDENTE', '2025-03-27')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao,  data_pagamento, created_by) VALUES ('Conta de luz', 540.30, '2025-02-10', 'PAGO', '2025-02-08', '2025-02-20', 'juneba@gmail.com')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao,  data_pagamento, created_by) VALUES ('Conta de luz', 557.30, '2025-02-10', 'PAGO', '2025-01-07', '2025-01-20', 'juneba@gmail.com')
+
+
+
+
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Conta água ', 320.75, '2025-03-10', 'PENDENTE', '2025-02-18')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Salario Pastoral', 1500.00, '2025-03-10', 'PENDENTE', '2025-03-05')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Salario Pastoral', 1500.00, '2025-03-10', 'PENDENTE', '2025-03-05')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Cafe da comunhão', 178.75, '2025-04-10', 'PENDENTE', '2025-03-16')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Café da comunhão', 178.75, '2025-02-10', 'PENDENTE', '2025-02-16')
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Internet', 120.15, '2025-02-10', 'PENDENTE', '2025-02-06')
+
 
 
 INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_id ,ebd_Curso_id) VALUES ('2024-05-26', 'PRESENTE', 6, 1)
@@ -272,9 +285,20 @@ INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALU
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (567, '2025-02-10', 'Dizimo e Ofertas', 'TRUE', null )
 INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (360, '2025-01-15', 'Dizimo e Ofertas', 'TRUE', null )
 
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (360, '2025-01-15', ' conta agua', 'FALSE', 'VARIAVEL' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (360, '2025-02-10', ' conta agua', 'FALSE', 'VARIAVEL' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (328, '2025-03-10', ' conta agua', 'FALSE', 'VARIAVEL' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (500, '2025-01-10', ' conta Luz', 'FALSE', 'VARIAVEL' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (532, '2025-02-10', ' conta Luz', 'FALSE', 'VARIAVEL' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (546, '2025-03-10', ' conta Luz', 'FALSE', 'VARIAVEL' )
 
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (1500, '2025-01-06', ' Salario Pastoral', 'FALSE', 'VARIAVEL' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (1500, '2025-02-09', ' Salario Pastoral', 'FALSE', 'VARIAVEL' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (1500, '2025-03-10', ' Salario Pastoral', 'FALSE', 'VARIAVEL' )
 
-
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (1500, '2025-01-10', ' Salario Ministro Musica', 'FALSE', 'FIXO' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (1500, '2025-02-10', ' Salario Ministro Musica', 'FALSE', 'FIXO' )
+INSERT INTO tb_transacao (valor, data, descricao, is_receita, tipo_despesa) VALUES (1500, '2025-03-10', ' Salario Ministro Musica', 'FALSE', 'FIXO' )
 
 INSERT INTO tb_produto(nome, preco, requerimento_id) VALUES ( 'hamburguer', 120.97, 1);
 INSERT INTO tb_produto(nome, preco, requerimento_id) VALUES ( 'ovo', 20.90, 1);

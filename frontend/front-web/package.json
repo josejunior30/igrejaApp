@@ -47,6 +47,7 @@
     "react-slick": "^0.30.2",
     "react-sticky": "^6.0.3",
     "react-to-print": "^2.15.1",
+    "recharts": "^2.15.1",
     "slick-carousel": "^1.8.1",
     "sort-by": "^1.2.0",
     "styled-components": "^6.1.8",
@@ -83,6 +84,7 @@
     "@types/react-dom": "^18.2.19",
     "@types/react-input-mask": "^3.0.5",
     "@types/react-slick": "^0.23.13",
+    "@types/recharts": "^1.8.29",
     "@vitejs/plugin-react": "^4.2.1",
     "vite": "^5.2.10"
   }

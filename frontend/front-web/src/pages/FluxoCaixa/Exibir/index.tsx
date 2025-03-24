@@ -101,6 +101,7 @@ const FluxoCaixa = () => {
   };
   const ganhos = transacao.filter((t) => t.isReceita);
   const despesas = transacao.filter((t) => !t.isReceita);
+  
   const handlePrint = () => {
     const doc = new jsPDF();
     let y = 10; // Posição inicial
@@ -209,12 +210,13 @@ const FluxoCaixa = () => {
 
     doc.save("relatorio_fluxo_caixa.pdf");
   };
-  // Busca o fluxo de caixa acumulado ao carregar a página
+
+
   useEffect(() => {
     setLoading(true);
     FluxoCaixaService.findByMesAnoAcumulado(mes, ano)
       .then((response) => {
-        setSaldoTotal(response.data.saldoLiquido); // Atualiza o saldo total acumulado
+        setSaldoTotal(response.data.saldoLiquido);
       })
       .catch((error) => {
         console.error("Erro ao buscar saldo total acumulado:", error);

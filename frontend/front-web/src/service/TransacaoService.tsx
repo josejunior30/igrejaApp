@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../ultilitarios/system";
 import * as authService from "../service/AuthService";
+
 export function findAll() {
   return axios.get(`${BASE_URL}/transacao`);
 }
