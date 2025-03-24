@@ -18,15 +18,15 @@ const TransacaoExibir = () => {
   const [totalPesquisa, setTotalPesquisa] = useState<number>(0);
   const [termoPesquisa, setTermoPesquisa] = useState<string>("");
 
-  // Obtém mês e ano atual
+
   const [mes, setMes] = useState<number>(new Date().getMonth() + 1);
   const [ano, setAno] = useState<number>(new Date().getFullYear());
 
-  // Estados para controle de modais
+
   const [showModal, setShowModal] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
 
-  // 🔹 Ao carregar a página, busca os ganhos do mês e ano atuais
+
   useEffect(() => {
     TransacaoService.findByMesAno(mes, ano)
       .then((response) => {
@@ -34,7 +34,7 @@ const TransacaoExibir = () => {
         aplicarFiltros(response.data);
       })
       .catch((error) => console.error("Erro ao buscar dados:", error));
-  }, [mes, ano]); // Atualiza a busca sempre que mês ou ano mudarem
+  }, [mes, ano]); 
 
   const handleSearch = () => {
     if (termoPesquisa.trim() === "") return;
@@ -42,13 +42,13 @@ const TransacaoExibir = () => {
     TransacaoService.findBybuscarPorDescricao(termoPesquisa, mes, ano)
       .then((response) => {
         aplicarFiltros(response.data);
-        setShowSearchModal(false); // Fecha o modal após a pesquisa
+        setShowSearchModal(false); 
       })
       .catch((error) => console.error("Erro ao buscar transações:", error));
   };
 
   const aplicarFiltros = (lista: TransacaoDTO[]) => {
-    const filtrado = lista.filter((t) => t.isReceita); // 🔹 Filtra apenas ganhos
+    const filtrado = lista.filter((t) => t.isReceita);
     setFilteredTransacao(filtrado);
     calcularTotal(filtrado);
   };
@@ -74,7 +74,7 @@ const TransacaoExibir = () => {
   return (
     <>
       <Header />
-      <div className="container-fluid mt-5 pt-5">
+      <div className="container-fluid mt-5 pt-3">
         
         <div className="row justify-content-center">
         <Botoes/>

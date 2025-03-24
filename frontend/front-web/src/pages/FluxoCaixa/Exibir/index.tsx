@@ -230,7 +230,7 @@ const FluxoCaixa = () => {
   return (
     <>
       <Header />
-      <div className="container-fluid mt-5 pt-5 mb-5">
+      <div className="container-fluid mt-5 pt-3 mb-5">
         <div className="row justify-content-center ">
          <Botoes/>
           <div className="col-md-11">

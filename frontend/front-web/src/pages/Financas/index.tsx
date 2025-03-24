@@ -19,6 +19,9 @@ import {
 import { TransacaoDTO } from "../../models/transacao";
 import { findByAno } from "../../service/TransacaoService";
 import Header from "../../components/Header";
+import Botoes from "../../components/botoes";
+import { FiDollarSign } from "react-icons/fi";
+
 
 const Financas = () => {
   const [fluxo, setFluxo] = useState<fluxoCaixa | null>(null);
@@ -192,11 +195,14 @@ const Financas = () => {
   return (
     <>
       <Header />
-      <div className="container-fluid pt-5 mt-4">
-        <div className="row d-flex justify-content-center mt-5">
+ 
+      <div className="container-fluid pt-5 mt-3">
+    
+        <div className="row d-flex justify-content-center ">
+        <Botoes/>
           <div className="col-12 d-flex justify-content-center">
             <div className="dados-fin col-2">
-              <span>Saldo Líquido:</span>
+              <span><FiDollarSign />Saldo Líquido:</span>
               <span>
                 {fluxo
                   ? fluxo.saldoLiquido.toLocaleString("pt-BR", {
@@ -207,7 +213,7 @@ const Financas = () => {
               </span>
             </div>
             <div className="dados-fin col-2">
-              <span>Receita Mês:</span>
+              <span><FiDollarSign />Receita Mês:</span>
               <span>
                 {fluxo
                   ? fluxo.receitaTotal.toLocaleString("pt-BR", {
@@ -218,7 +224,7 @@ const Financas = () => {
               </span>
             </div>
             <div className="dados-fin col-2">
-              <span>Despesa no Mês:</span>
+              <span><FiDollarSign />Despesa no Mês:</span>
               <span>
                 {fluxo
                   ? fluxo.despesaTotal.toLocaleString("pt-BR", {
@@ -229,7 +235,7 @@ const Financas = () => {
               </span>
             </div>
             <div className="dados-fin col-2">
-              <span>Contas Atrasadas:</span>
+              <span><FiDollarSign />Contas Atrasadas:</span>
               <span>{contasAtrasadas}</span>
             </div>
           </div>

@@ -42,7 +42,7 @@ const Inicial = () => {
   };
   const handleFinanceiroClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!temAcessoFinanceiro) {
-      e.preventDefault(); // 🔹 Impede a navegação
+      e.preventDefault(); 
       alert("Acesso negado: Você não tem permissão para acessar Finanças.");
     }
   };
@@ -63,9 +63,9 @@ const Inicial = () => {
         <div className="row justify-content-center">
           <div className="col-12 col-md-3 container-menu">
             <Link 
-              to={temAcessoFinanceiro ? "/fluxo-caixa" : "#"}
+              to={temAcessoFinanceiro ? "/financas" : "#"}
               onClick={(e) => {
-                handleDoubleClick(e, "/fluxo-caixa");
+                handleDoubleClick(e, "/financas");
                 handleFinanceiroClick(e);
               }}
       

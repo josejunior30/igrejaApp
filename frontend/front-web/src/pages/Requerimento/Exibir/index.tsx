@@ -70,7 +70,7 @@ const RequerimentoExibir = () => {
   return (
     <>
       <Header />
-      <div className="container-fluid mt-5 pt-5">
+      <div className="container-fluid mt-5 pt-3">
         <div className="row justify-content-center">
           <Botoes/>
      

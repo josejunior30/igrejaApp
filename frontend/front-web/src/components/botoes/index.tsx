@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { IoHomeOutline } from "react-icons/io5";
 
 import *as AuthService from "../../service/AuthService"; 
 import "./styles.css";
@@ -17,6 +18,13 @@ const Botoes = () => {
 
   return (
     <div className="col-10 text-center pt-5">
+        <Link to="/financas">
+        <button
+          className={`menu-transferencia-home ${location.pathname === "/financas" ? "ativo" : ""}`}
+        >
+         <IoHomeOutline />
+        </button>
+      </Link>
       <Link to="/requerimento">
         <button
           className={`menu-transferencia ${location.pathname === "/requerimento" ? "ativo" : ""}`}

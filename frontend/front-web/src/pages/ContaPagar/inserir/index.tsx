@@ -217,7 +217,7 @@ const ContaPagar = () => {
   return (
     <>
       <Header />
-      <div className="container-fluid mt-5 pt-5">
+      <div className="container-fluid mt-5 pt-3">
         <div className="row justify-content-center">
           <Botoes />
           <h3 className="titulo-conta mb-5">Cadastro de Conta a Pagar</h3>
