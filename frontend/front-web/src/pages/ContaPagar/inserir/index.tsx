@@ -194,20 +194,26 @@ const ContaPagar = () => {
         : "Tem certeza que deseja pagar?"
     );
     if (!confirmacao) return;
-
+  
     try {
-      await updateStatus(
-        id,
-        status === StatusPagamento.PAGO
-          ? StatusPagamento.PENDENTE
-          : StatusPagamento.PAGO
-      );
+      let novoStatus;
+  
+      if (status === StatusPagamento.PAGO) {
+        novoStatus = StatusPagamento.PENDENTE;
+      } else if (status === StatusPagamento.PENDENTE) {
+        novoStatus = StatusPagamento.PAGO;
+      } else {
+        novoStatus = StatusPagamento.ATRASADO;
+      }
+  
+      await updateStatus(id, novoStatus);
       window.location.reload();
     } catch (error) {
       console.error("Erro ao atualizar status:", error);
       alert("Erro ao atualizar status!");
     }
   };
+  
   return (
     <>
       <Header />

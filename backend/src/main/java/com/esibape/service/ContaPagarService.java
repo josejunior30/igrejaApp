@@ -80,7 +80,9 @@ public class ContaPagarService {
         ContaPagar entity = repository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("ContaPagar não encontrada para o ID: " + id));
 
+        atualizarStatusSeAtrasado(entity);
         entity.setStatus(novoStatus);
+        
 
         if (novoStatus == StatusPagamento.PAGO) {
             entity.setCreatedBy(getAuthenticatedUser());
@@ -114,6 +116,8 @@ public class ContaPagarService {
         LocalDateTime inicio = LocalDateTime.of(ano, mes, 1, 0, 0);
         LocalDateTime fim = inicio.withDayOfMonth(inicio.toLocalDate().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59);
 
+        List<ContaPagar> contas = repository.findByDataCriacaoBetween(inicio, fim);
+        contas.forEach(this::atualizarStatusSeAtrasado);
         return repository.findByDataCriacaoBetween(inicio, fim)
             .stream().map(ContaPagarDTO::new)
             .collect(Collectors.toList());
@@ -141,6 +145,10 @@ public class ContaPagarService {
     public List<ContaPagarDTO> findByDescricaoStatusMesAno(String descricao, int mes, int ano) {
         LocalDate inicio = LocalDate.of(ano, mes, 1);
         LocalDate fim = inicio.withDayOfMonth(inicio.lengthOfMonth());
+        List<ContaPagar> contas = repository.findByDescricaoAproximada(descricao, StatusPagamento.PAGO, inicio, fim);
+
+        // 🔹 Atualizando status antes de retornar
+        contas.forEach(this::atualizarStatusSeAtrasado);
 
         return repository.findByDescricaoAproximada(descricao, StatusPagamento.PAGO, inicio, fim)
             .stream()
@@ -152,6 +160,10 @@ public class ContaPagarService {
     public List<ContaPagarDTO> findByDescricaoAndAno(String descricao, int ano) {
         LocalDate inicio = LocalDate.of(ano, 1, 1);
         LocalDate fim = LocalDate.of(ano, 12, 31);
+        List<ContaPagar> contas = repository.findByDescricaoAproximada(descricao, StatusPagamento.PAGO, inicio, fim);
+
+        // 🔹 Atualizando status antes de retornar
+        contas.forEach(this::atualizarStatusSeAtrasado);
 
         return repository.findByDescricaoAproximada(descricao, StatusPagamento.PAGO, inicio, fim)
             .stream()

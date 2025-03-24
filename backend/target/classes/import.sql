@@ -162,7 +162,7 @@ INSERT INTO tb_lista_presenca_Visitante_Ebd (data, chamada_Visitante, visitante_
 
 
 
-INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Salario Pastoral', 1500.00, '2025-03-10', 'PENDENTE', '2025-03-06')
+INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Salario Pastoral', 1500.00, '2025-04-10', 'PENDENTE', '2025-03-06')
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Salario Ministro de Musica', 1200.00, '2025-03-10', 'PENDENTE', '2025-03-06')
 
 INSERT INTO tb_conta_pagar (descricao, valor, data_vencimento, status, data_criacao) VALUES ('Internet', 120.15, '2025-03-10', 'PENDENTE', '2025-03-06')
