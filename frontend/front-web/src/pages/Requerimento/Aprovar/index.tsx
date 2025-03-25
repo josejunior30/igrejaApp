@@ -19,6 +19,7 @@ const RequerimentoAprovar: React.FC = () => {
     dataRequerimento: new Date(),
     dataEvento: new Date(),
     dataPagamento: new Date(),
+    descricaoRequerimento: { descricao: "" },
     dataAprovacao: new Date(),
     statusRequerimento: StatusRequerimento.PENDENTE,
     responsavel: "",

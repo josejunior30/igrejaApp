@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   deleteContaPagar,
- 
+  findAllDescricao,
   findByDescricaoAno,
   findByDescricaoMesAndAno,
   findByMesAno,
@@ -10,6 +10,7 @@ import {
 } from "../../../service/ContaPagarService";
 import {
   contaPagar,
+  DescricaoConta,
   StatusPagamento,
   TipoDespesa,
 } from "../../../models/contaPagar";
@@ -22,15 +23,17 @@ import { hasAnyRoles } from "../../../service/AuthService";
 import Botoes from "../../../components/botoes";
 import { PiTrashFill } from "react-icons/pi";
 import { Button, Modal } from "react-bootstrap";
+
 const ContaPagar = () => {
   const [contas, setContas] = useState<contaPagar[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
-
+  const [descricaoContas, setDescricaoContas] = useState<DescricaoConta[]>([]);
   const handleShowSearch = () => setShowSearchModal(true);
   const handleCloseSearch = () => setShowSearchModal(false);
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
+
   const [totalPesquisa, setTotalPesquisa] = useState(0);
   const [filtro, setFiltro] = useState({
     descricao: "",
@@ -40,6 +43,7 @@ const ContaPagar = () => {
 
   const [novaConta, setNovaConta] = useState<Partial<contaPagar>>({
     descricao: "",
+    descricaoConta: undefined,
     dataVencimento: new Date(),
     valor: 0,
     tipoDespesa: TipoDespesa.VARIAVEL,
@@ -56,22 +60,29 @@ const ContaPagar = () => {
     }
     fetchData();
   }, [filtro.mes, filtro.ano]);
+  useEffect(() => {
+    async function fetchDescricaoContas() {
+      try {
+        const response = await findAllDescricao(); 
+        setDescricaoContas(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar descrições de contas:", error);
+      }
+    }
+    fetchDescricaoContas();
+  }, []);
 
   // Atualizar estado da nova conta dinamicamente
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = event.target;
 
-    if (name === "valor") {
-      let valor = value.replace(/\D/g, "");
-
-      if (valor === "") valor = "0";
-
-      let valorNumerico = parseFloat((parseInt(valor, 10) / 100).toFixed(2));
-
-      setNovaConta((prev) => ({
-        ...prev,
-        valor: valorNumerico || 0,
-      }));
+    if (name === "descricaoConta") {
+      const descricaoObj = descricaoContas.find(
+        (desc) => desc.descricao === value
+      );
+      setNovaConta((prev) => ({ ...prev, descricaoConta: descricaoObj })); // Sem null, apenas undefined ou objeto válido
     } else {
       setNovaConta((prev) => ({
         ...prev,
@@ -196,14 +207,12 @@ const ContaPagar = () => {
     if (!confirmacao) return;
   
     try {
-      let novoStatus;
+      let novoStatus: StatusPagamento;
   
       if (status === StatusPagamento.PAGO) {
         novoStatus = StatusPagamento.PENDENTE;
-      } else if (status === StatusPagamento.PENDENTE) {
-        novoStatus = StatusPagamento.PAGO;
       } else {
-        novoStatus = StatusPagamento.ATRASADO;
+        novoStatus = StatusPagamento.PAGO; // Agora cobre PENDENTE e ATRASADO
       }
   
       await updateStatus(id, novoStatus);
@@ -220,26 +229,26 @@ const ContaPagar = () => {
       <div className="container-fluid mt-5 pt-3">
         <div className="row justify-content-center">
           <Botoes />
-          <h3 className="titulo-conta mb-5">Cadastro de Conta a Pagar</h3>
-          <span className="mes-contaPagar-Pagar">
-            <button
-              className="btn-left-conta-Pagar"
-              onClick={handleMesAnterior}
-            >
-              <FaAngleLeft />
-            </button>
-            {new Date(filtro.ano, filtro.mes - 1).toLocaleString("pt-BR", {
-              month: "long",
-            })}{" "}
-            / {filtro.ano}
-            <button
-              className="btn-right-conta-Pagar"
-              onClick={handleMesProximo}
-            >
-              <FaAngleRight />
-            </button>
-          </span>
-
+          <div className="col-12 d-flex">
+            <span className="mes-contaPagar-Pagar">
+              <button
+                className="btn-left-conta-Pagar"
+                onClick={handleMesAnterior}
+              >
+                <FaAngleLeft />
+              </button>
+              {new Date(filtro.ano, filtro.mes - 1).toLocaleString("pt-BR", {
+                month: "long",
+              })}{" "}
+              / {filtro.ano}
+              <button
+                className="btn-right-conta-Pagar"
+                onClick={handleMesProximo}
+              >
+                <FaAngleRight />
+              </button>
+            </span>
+          </div>
           <Modal show={showModal} onHide={handleClose} centered>
             <Modal.Header closeButton>
               <Modal.Title>Cadastro de Conta a Pagar</Modal.Title>
@@ -247,16 +256,22 @@ const ContaPagar = () => {
             <Modal.Body>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label className="form-label">Descrição</label>
-                  <input
-                    type="text"
+                  <select
                     className="form-control"
-                    placeholder="Descrição"
-                    name="descricao"
-                    value={novaConta.descricao}
+                    name="descricaoConta"
+                    value={novaConta.descricaoConta?.descricao || ""}
                     onChange={handleChange}
                     required
-                  />
+                  >
+                    <option value="" disabled>
+                      Selecione...
+                    </option>
+                    {descricaoContas.map((desc) => (
+                      <option key={desc.descricao} value={desc.descricao}>
+                        {desc.descricao}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Vencimento</label>
@@ -272,7 +287,7 @@ const ContaPagar = () => {
                 <div className="mb-3">
                   <label className="form-label">Valor</label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     placeholder="R$ 0,00"
                     name="valor"
@@ -320,7 +335,8 @@ const ContaPagar = () => {
             </Modal.Body>
           </Modal>
 
-          <div className="justify-content-center text-center mt-3">
+          <div className="col-12 justify-content-center text-center mt-3 d-flex">
+            <h4 className="titulo-conta">Cadastro de Conta a Pagar</h4>
             <button className="btn-adicionar-conta" onClick={handleShow}>
               + Adicionar
             </button>
@@ -334,17 +350,7 @@ const ContaPagar = () => {
               <Modal.Title>Pesquisa de Contas</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="mb-3">
-                <label className="form-label">Descrição</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Digite a descrição"
-                  name="descricao"
-                  value={filtro.descricao}
-                  onChange={handleFiltroChange}
-                />
-              </div>
+              
               <div className="mb-3">
                 <label className="form-label">Mês</label>
                 <select
@@ -437,7 +443,7 @@ const ContaPagar = () => {
                             "pt-BR"
                           )}
                         </td>
-                        <td>{conta.descricao}</td>
+                        <td>{conta.descricaoConta.descricao}</td>
                         <td>
                           R${" "}
                           {conta.valor.toLocaleString("pt-BR", {

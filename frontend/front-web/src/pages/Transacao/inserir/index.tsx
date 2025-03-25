@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import "./styles.css";
-import { insertTransacao } from "../../../service/TransacaoService";
+import { findAllDescricaoReceita, insertTransacao } from "../../../service/TransacaoService";
 import { Modal, Button } from "react-bootstrap";
+import { DescricaoReceita } from "../../../models/transacao";
 
 interface TransacaoProps {
   show: boolean;
@@ -9,12 +10,28 @@ interface TransacaoProps {
 }
 
 const Transacao = ({ show, onHide }: TransacaoProps) => {
-  const [descricao, setDescricao] = useState("");
+  const [descricaoReceita, setDescricaoReceita] = useState<DescricaoReceita[]>([]);
+  const [selectedDescricao, setSelectedDescricao] = useState<string>(""); 
   const [valor, setValor] = useState<number | "">("");
   const [data, setData] = useState("");
 
   useEffect(() => {
-    setData(new Date().toISOString().split("T")[0]); // Define data como hoje
+    setData(new Date().toISOString().split("T")[0]);
+  }, []);
+
+  useEffect(() => {
+    async function fetchDescricaoContas() {
+      try {
+        const response = await findAllDescricaoReceita();
+        setDescricaoReceita(response.data);
+        if (response.data.length > 0) {
+          setSelectedDescricao(response.data[0].descricao); // Seleciona a primeira opção automaticamente
+        }
+      } catch (error) {
+        console.error("Erro ao buscar descrições de receitas:", error);
+      }
+    }
+    fetchDescricaoContas();
   }, []);
 
   const handleValorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +44,8 @@ const Transacao = ({ show, onHide }: TransacaoProps) => {
     event.preventDefault();
 
     const transacao = {
-      descricao,
-      isReceita: true, // Sempre será uma receita (ganho)
+      descricaoReceita: { descricao: selectedDescricao }, // Usa a opção selecionada
+      isReceita: true,
       tipoDespesa: null,
       valor: valor || 0,
       data,
@@ -37,10 +54,9 @@ const Transacao = ({ show, onHide }: TransacaoProps) => {
     try {
       await insertTransacao(transacao);
       alert("Transação adicionada com sucesso!");
-      setDescricao("");
       setValor("");
       setData(new Date().toISOString().split("T")[0]);
-      onHide(); // Fecha o modal após a inserção
+      onHide();
     } catch (error) {
       console.error("Erro ao adicionar transação:", error);
       alert("Erro ao adicionar transação.");
@@ -55,15 +71,19 @@ const Transacao = ({ show, onHide }: TransacaoProps) => {
       <Modal.Body>
         <form className="formulario-transacao" onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Descrição</label>
-            <input
-              type="text"
+            <label className="form-label">Descrição da Receita</label>
+            <select
               className="form-control"
-              value={descricao}
-              placeholder="Insira a descrição"
-              onChange={(e) => setDescricao(e.target.value)}
+              value={selectedDescricao}
+              onChange={(e) => setSelectedDescricao(e.target.value)}
               required
-            />
+            >
+              {descricaoReceita.map((item, index) => (
+                <option key={index} value={item.descricao}>
+                  {item.descricao}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="mb-3">

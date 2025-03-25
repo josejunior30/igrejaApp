@@ -20,6 +20,8 @@ import com.esibape.DTO.ProdutoDTO;
 import com.esibape.DTO.RequerimentoOrçamentoDTO;
 import com.esibape.entities.Cargo;
 import com.esibape.entities.ContaPagar;
+import com.esibape.entities.DescricaoReceita;
+import com.esibape.entities.DescricaoRequerimento;
 import com.esibape.entities.Lideranca;
 import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
@@ -27,6 +29,7 @@ import com.esibape.entities.StatusPagamento;
 import com.esibape.entities.StatusRequerimento;
 import com.esibape.entities.TipoDespesa;
 import com.esibape.repository.ContaPagarRepository;
+import com.esibape.repository.DescricaoRequerimentoRepository;
 import com.esibape.repository.LiderancaRepository;
 import com.esibape.repository.RequerimentoOrçamentoRepository;
 
@@ -42,6 +45,9 @@ public class RequerimentoOrçamentoService {
 	 
 		@Autowired
 		private ContaPagarRepository contaPagarRepository;
+		
+		@Autowired
+		private DescricaoRequerimentoRepository descricaoRequerimentoRepository;
 		 
 			@Autowired
 			private ContaPagarService contaPagarService;
@@ -71,9 +77,22 @@ public class RequerimentoOrçamentoService {
 	    String authenticatedUser = contaPagarService.getAuthenticatedUser();
 	    System.out.println("Authenticated User in RequerimentoOrçamentoDTO insert: " + authenticatedUser);
 
+	    if (dto.getDescricaoRequerimento() == null || dto.getDescricaoRequerimento().getDescricao() == null || dto.getDescricaoRequerimento().getDescricao().trim().isEmpty()) {
+            throw new IllegalArgumentException("A descrição não pode ser nula ou vazia!");
+        }
+	    // Buscar ou criar a descrição corretamente
+        DescricaoRequerimento descricaoRequerimento = descricaoRequerimentoRepository.findByDescricao(dto.getDescricaoRequerimento().getDescricao().trim())
+            .orElseGet(() -> {
+                DescricaoRequerimento novaDescricao = new DescricaoRequerimento();
+                novaDescricao.setDescricao(dto.getDescricaoRequerimento().getDescricao().trim());
+                return descricaoRequerimentoRepository.save(novaDescricao);
+            });
+
+	    
+	    
 	    RequerimentoOrçamento entity = new RequerimentoOrçamento();
 	    copyDtoToEntity(dto, entity);
-
+	    entity.setDescricaoRequerimento(descricaoRequerimento);  
 	    entity.setStatusRequerimento(StatusRequerimento.PENDENTE);
 	    entity.setCreatedByRequerimento(authenticatedUser);
 
@@ -130,7 +149,7 @@ public class RequerimentoOrçamentoService {
 	        if (contaPagar == null) {
 	            // Criar uma nova ContaPagar se não existir
 	            contaPagar = new ContaPagar();
-	            contaPagar.setDescricao("Pedido: " + entity.getPergunta1());
+	            contaPagar.setDescricao("Pedido: " + entity.getDescricaoRequerimento());
 	            contaPagar.setDataCriacao(LocalDateTime.now());
 	            contaPagar.setStatus(StatusPagamento.PENDENTE);
 	            contaPagar.setTipoDespesa(TipoDespesa.VARIAVEL);
@@ -260,6 +279,7 @@ public class RequerimentoOrçamentoService {
         entity.setPergunta1(dto.getPergunta1());
         entity.setPergunta2(dto.getPergunta2());
         entity.setResponsavel(dto.getResponsavel());
+        
         entity.setQuantidade(dto.getQuantidade());
         entity.setEmailResponsavel(dto.getEmailResponsavel());
         entity.setStatusRequerimento(dto.getStatusRequerimento());

@@ -37,7 +37,7 @@ const Botoes = () => {
         <button
           className={`menu-transferencia ${location.pathname === "/transacao-exibir" ? "ativo" : ""}`}
         >
-          Ganhos
+          Receita
         </button>
       </Link>
 

@@ -1,13 +1,13 @@
 .menu-transferencia{
   margin-right: 20px;
   width: 200px;
-  height: 40px;
+  height: 30px;
   border-radius: 10px;
   margin-bottom: 50px;
   background-color: var(--color-coral);
   color:white;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
  }
  .menu-transferencia.ativo {
   background-color: var(--color-turquoise); 
@@ -24,11 +24,11 @@
 .menu-transferencia-home{
   margin-right: 20px;
   width: 100px;
-  height: 40px;
+  height: 30px;
   border-radius: 10px;
   margin-bottom: 50px;
   background-color: var(--color-coral);
   color:white;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
  }

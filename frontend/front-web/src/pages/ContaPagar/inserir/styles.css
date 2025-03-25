@@ -1,63 +1,69 @@
-.insert-conta{
+.insert-conta {
   margin-right: 10px;
 }
-.btn-pagar{
+.btn-pagar {
   margin-left: 20px;
   width: 85px;
-  }
+}
 
-.label-conta{
-  color:white;
+.label-conta {
+  color: white;
 }
-.titulo-conta{
-  color:white;
+.titulo-conta {
+  color: white;
 }
-.total-pago{
-  color:white;
+.total-pago {
+  color: white;
 }
-.btn-pesquisa-conta{
+.btn-pesquisa-conta {
   margin-right: 10px;
 }
-.titulo-pesquisa-paga{
-  color:white;
-}
-.mes-contaPagar-Pagar{
-  color:white;
-  position: absolute;
-  font-size: 20px;
- left: 70vw;
-top:40vh;
+.titulo-pesquisa-paga {
+  color: white;
 
 }
-.valor-total{
+.mes-contaPagar-Pagar {
+  color: white;
+  position: absolute;
+  font-size: 20px;
+  left: 70vw;
+  top: 40vh;
+}
+.valor-total {
   color: #10f508;
 }
-.btn-left-conta-Pagar{
+.btn-left-conta-Pagar {
   background: none;
   color: white;
 }
-.btn-right-conta-Pagar{
+.btn-right-conta-Pagar {
   background: none;
   color: white;
 }
-.btn-pesquisa-pagar{
+.btn-pesquisa-pagar {
   background-color: var(--color-coral);
-  color:white;
+  color: white;
   width: 150px;
   height: 50px;
   border-radius: 10px;
   font-weight: bolder;
   margin-left: 10px;
 }
-.conta-pagar-table{
-  font-size: 14px!important;
+.conta-pagar-table {
+  font-size: 14px !important;
 }
-.total-pesquisa{
-  color:white;
+.titulo-conta{
+  color: white;
+  position: absolute;
+  left: 12vw;
+  margin-top: 10px;
 }
-.btn-adicionar-conta{
+.total-pesquisa {
+  color: white;
+}
+.btn-adicionar-conta {
   background-color: var(--color-coral);
-  color:white;
+  color: white;
   width: 150px;
   height: 50px;
   border-radius: 10px;

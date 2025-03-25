@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.esibape.DTO.TransacaoDTO;
+import com.esibape.entities.DescricaoReceita;
 import com.esibape.entities.Transacao;
+import com.esibape.repository.DescricaoReceitaRepository;
 import com.esibape.repository.TransacaoRepository;
 
 
@@ -17,6 +18,9 @@ import com.esibape.repository.TransacaoRepository;
 public class TransacaoService {
     @Autowired
     private TransacaoRepository repository;
+    
+    @Autowired
+    private DescricaoReceitaRepository descricaoReceitaRepository;
 
     @Transactional(readOnly = true)
     public List<TransacaoDTO> findAll() {
@@ -35,16 +39,27 @@ public class TransacaoService {
 
     @Transactional
     public TransacaoDTO insert(TransacaoDTO dto) {
-        if (dto == null) {
-            throw new IllegalArgumentException("Transação não pode ser nula");
-        }
+    	  if (dto.getDescricaoReceita() == null || dto.getDescricaoReceita().getDescricao() == null || dto.getDescricaoReceita().getDescricao().trim().isEmpty()) {
+              throw new IllegalArgumentException("A descrição não pode ser nula ou vazia!");
+          }
+
+    	
+    	  // Buscar ou criar a descrição corretamente
+          DescricaoReceita descricaoReceita = descricaoReceitaRepository.findByDescricao(dto.getDescricaoReceita().getDescricao().trim())
+              .orElseGet(() -> {
+                  DescricaoReceita novaDescricao = new DescricaoReceita();
+                  novaDescricao.setDescricao(dto.getDescricaoReceita().getDescricao().trim());  // Agora está correto
+                  return descricaoReceitaRepository.save(novaDescricao);
+              });
 
         Transacao entity = new Transacao();
         copyDtoToEntity(dto, entity);
+        entity.setDescricaoReceita(descricaoReceita);
         entity = repository.save(entity);
         return new TransacaoDTO(entity);
     }
 
+   
     @Transactional
     public void delete(Long id) {
         if (!repository.existsById(id)) {

@@ -5,6 +5,10 @@ import * as authService from "../service/AuthService";
 export function findAll() {
   return axios.get(`${BASE_URL}/transacao`);
 }
+
+export function findAllDescricaoReceita() {
+  return axios.get(`${BASE_URL}/descricao-receita`);
+}
 export function findAno(ano: number = 2025) {
   return axios.get(`${BASE_URL}/transacao/ano/${ano}`);
 }

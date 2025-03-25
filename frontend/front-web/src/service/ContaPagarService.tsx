@@ -7,6 +7,9 @@ import { StatusPagamento } from "../models/contaPagar";
 export function findAllContaPagar() {
   return axios.get(`${BASE_URL}/contaPagar`);
 }
+export function findAllDescricao() {
+  return axios.get(`${BASE_URL}/descricao-conta`);
+}
 
 export async function insertContaPagar(ContaPagar: any) {
   const token = getAccessToken();

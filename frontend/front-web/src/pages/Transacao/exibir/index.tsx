@@ -190,7 +190,7 @@ const TransacaoExibir = () => {
                   filteredTransacao.map((t) => (
                     <tr key={t.id}>
                       <td>{new Date(t.data).toLocaleDateString()}</td>
-                      <td>{t.descricao}</td>
+                      <td>{t.descricaoReceita.descricao}</td>
                       <td>
                         R${" "}
                         {t.valor.toLocaleString("pt-BR", {

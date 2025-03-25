@@ -33,6 +33,9 @@ public class RequerimentoOrçamento implements Serializable {
     @Enumerated(EnumType.STRING)
     private StatusRequerimento statusRequerimento;
     private LocalDate dataPagamento;
+    @ManyToOne
+    @JoinColumn(name = "descricao_id", nullable = false)
+    private DescricaoRequerimento descricaoRequerimento;
     private String pergunta1;
     private String pergunta2;
     private String responsavel;
@@ -53,10 +56,12 @@ public class RequerimentoOrçamento implements Serializable {
     public RequerimentoOrçamento() {}
 
 
+
 	public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovacao,
-			StatusRequerimento statusRequerimento, LocalDate dataPagamento, String pergunta1, String pergunta2,
-			String responsavel, String emailResponsavel, String local, Integer quantidade, String createdByRequerimento,
-			BigDecimal total, ContaPagar contaPagar, List<Produto> produto) {
+			StatusRequerimento statusRequerimento, LocalDate dataPagamento, DescricaoRequerimento descricaoRequerimento,
+			String pergunta1, String pergunta2, String responsavel, String emailResponsavel, String local,
+			Integer quantidade, String createdByRequerimento, BigDecimal total, ContaPagar contaPagar,
+			List<Produto> produto) {
 		super();
 		this.id = id;
 		this.dataRequerimento = dataRequerimento;
@@ -64,6 +69,7 @@ public class RequerimentoOrçamento implements Serializable {
 		this.dataAprovacao = dataAprovacao;
 		this.statusRequerimento = statusRequerimento;
 		this.dataPagamento = dataPagamento;
+		this.descricaoRequerimento = descricaoRequerimento;
 		this.pergunta1 = pergunta1;
 		this.pergunta2 = pergunta2;
 		this.responsavel = responsavel;
@@ -112,7 +118,21 @@ public class RequerimentoOrçamento implements Serializable {
         this.dataRequerimento = dataRequerimento;
     }
 
-    public LocalDate getDataEvento() {
+	
+
+	public DescricaoRequerimento getDescricaoRequerimento() {
+		return descricaoRequerimento;
+	}
+
+
+
+	public void setDescricaoRequerimento(DescricaoRequerimento descricaoRequerimento) {
+		this.descricaoRequerimento = descricaoRequerimento;
+	}
+
+
+
+	public LocalDate getDataEvento() {
         return dataEvento;
     }
 
@@ -145,15 +165,9 @@ public class RequerimentoOrçamento implements Serializable {
 
 
 
-
-
-
 	public void setContaPagar(ContaPagar contaPagar) {
 		this.contaPagar = contaPagar;
 	}
-
-
-
 
 
 

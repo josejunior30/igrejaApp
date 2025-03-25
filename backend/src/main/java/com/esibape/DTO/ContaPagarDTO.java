@@ -11,6 +11,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 import com.esibape.entities.ContaPagar;
+import com.esibape.entities.DescricaoConta;
 import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusPagamento;
 import com.esibape.entities.TipoDespesa;
@@ -32,6 +33,7 @@ public class ContaPagarDTO implements Serializable{
 	    private LocalDateTime dataCriacao;
 	    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	    private LocalDateTime dataPagamento;
+	    private DescricaoConta descricaoConta;
 	    private String createdBy;
 	    private String createdByConta;
 	    private TipoDespesa tipoDespesa;
@@ -43,8 +45,10 @@ public class ContaPagarDTO implements Serializable{
 	}
 
 	public ContaPagarDTO(ContaPagar entity) {
+		
 		this.id=entity.getId();
 		descricao= entity.getDescricao();
+		   this.descricaoConta = entity.getDescricaoConta();
 		dataVencimento=entity.getDataVencimento();
 		dataCriacao=entity.getDataCriacao();
 		status=entity.getStatus();
@@ -65,6 +69,14 @@ public class ContaPagarDTO implements Serializable{
 		return id;
 	}
 
+
+	public DescricaoConta getDescricaoConta() {
+		return descricaoConta;
+	}
+
+	public void setDescricaoConta(DescricaoConta descricaoConta) {
+		this.descricaoConta = descricaoConta;
+	}
 
 	public void setId(Long id) {
 		this.id = id;

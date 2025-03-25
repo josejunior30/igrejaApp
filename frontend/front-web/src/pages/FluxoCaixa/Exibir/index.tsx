@@ -299,7 +299,7 @@ const FluxoCaixa = () => {
                           ganhos.map((t) => (
                             <tr key={t.id}>
                               <td>{new Date(t.data).toLocaleDateString()}</td>
-                              <td>{t.descricao}</td>
+                              <td>{t.descricaoReceita.descricao}</td>
                               <td>
                                 R${" "}
                                 {t.valor.toLocaleString("pt-BR", {
@@ -336,7 +336,7 @@ const FluxoCaixa = () => {
                           despesas.map((t) => (
                             <tr key={t.id}>
                               <td>{new Date(t.data).toLocaleDateString()}</td>
-                              <td>{t.descricao}</td>
+                              <td>{t.descricaoReceita.descricao}</td>
                               <td>
                                 R${" "}
                                 {t.valor.toLocaleString("pt-BR", {

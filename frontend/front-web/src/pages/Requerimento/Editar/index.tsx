@@ -25,6 +25,7 @@ const RequerimentoEditar: React.FC = () => {
     conta_pagar_id:0,
     local: "",
     Total: 0,
+    descricaoRequerimento: { descricao: "" },
     pergunta1: "",
     pergunta2: "",
     produto: [],

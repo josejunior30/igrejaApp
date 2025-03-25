@@ -16,10 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esibape.DTO.ContaPagarDTO;
 import com.esibape.entities.ContaPagar;
+import com.esibape.entities.DescricaoConta;
+import com.esibape.entities.DescricaoReceita;
 import com.esibape.entities.StatusPagamento;
 import com.esibape.entities.TipoDespesa;
 import com.esibape.entities.Transacao;
 import com.esibape.repository.ContaPagarRepository;
+import com.esibape.repository.DescricaoContaRepository;
+import com.esibape.repository.DescricaoReceitaRepository;
 import com.esibape.repository.TransacaoRepository;
 
 
@@ -31,7 +35,10 @@ public class ContaPagarService {
 
     @Autowired
     private TransacaoRepository transacaoRepository;
-
+    @Autowired
+    private DescricaoContaRepository descricaoContaRepository;
+    @Autowired
+    private DescricaoReceitaRepository descricaoReceitaRepository;
     @Transactional(readOnly = true)
     public List<ContaPagarDTO> findAll() {
         List<ContaPagar> list = repository.findAll();
@@ -50,16 +57,31 @@ public class ContaPagarService {
             })
             .orElseThrow(() -> new EntityNotFoundException("ContaPagar não encontrada para o ID: " + id));
     }
-
+    
     @Transactional
     public ContaPagarDTO insert(ContaPagarDTO dto) {
+        if (dto.getDescricaoConta() == null || dto.getDescricaoConta().getDescricao() == null || dto.getDescricaoConta().getDescricao().trim().isEmpty()) {
+            throw new IllegalArgumentException("A descrição não pode ser nula ou vazia!");
+        }
+
+        // Buscar ou criar a descrição corretamente
+        DescricaoConta descricaoConta = descricaoContaRepository.findByDescricao(dto.getDescricaoConta().getDescricao().trim())
+            .orElseGet(() -> {
+                DescricaoConta novaDescricao = new DescricaoConta();
+                novaDescricao.setDescricao(dto.getDescricaoConta().getDescricao().trim());  // Agora está correto
+                return descricaoContaRepository.save(novaDescricao);
+            });
+
         ContaPagar entity = new ContaPagar();
         copyDtoToEntity(dto, entity);
+        entity.setDescricaoConta(descricaoConta);
         entity.setStatus(StatusPagamento.PENDENTE);
         entity.setCreatedByConta(getAuthenticatedUser());
         entity = repository.save(entity);
+
         return new ContaPagarDTO(entity);
     }
+
 
     public String getAuthenticatedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -82,19 +104,28 @@ public class ContaPagarService {
 
         atualizarStatusSeAtrasado(entity);
         entity.setStatus(novoStatus);
-        
 
         if (novoStatus == StatusPagamento.PAGO) {
             entity.setCreatedBy(getAuthenticatedUser());
 
+            // Criar uma variável final para armazenar a descrição antes da consulta
+            final String descricaoContaTexto = entity.getDescricaoConta().getDescricao();
+
+            // Buscar ou criar a DescricaoReceita antes de atribuí-la à Transacao
+            DescricaoReceita descricaoReceita = descricaoReceitaRepository.findByDescricao(descricaoContaTexto)
+                .orElseGet(() -> {
+                    DescricaoReceita novaDescricao = new DescricaoReceita();
+                    novaDescricao.setDescricao(descricaoContaTexto);
+                    return descricaoReceitaRepository.save(novaDescricao); // Salva antes de usar
+                });
+
             Transacao transacao = new Transacao();
             transacao.setValor(entity.getValor());
             transacao.setData(LocalDate.now());
-            transacao.setDescricao(entity.getDescricao());
+            transacao.setDescricaoReceita(descricaoReceita); // Agora usando um objeto salvo
             transacao.setIsReceita(false);
-            transacao.setContaPagar(entity); 
+            transacao.setContaPagar(entity);
 
-            // Definir tipo de despesa antes de salvar
             if (entity.isFixa()) {
                 transacao.setTipoDespesa(TipoDespesa.FIXO);
             } else {
@@ -103,13 +134,14 @@ public class ContaPagarService {
 
             transacaoRepository.save(transacao);
         } else if (novoStatus == StatusPagamento.PENDENTE) {
-            // Deletar a transação associada, se existir
             transacaoRepository.deleteByContaPagar(entity);
         }
 
         entity = repository.save(entity);
         return new ContaPagarDTO(entity);
     }
+
+
 
     @Transactional(readOnly = true)
     public List<ContaPagarDTO> findByMesAnoDataCriacao(int mes, int ano) {

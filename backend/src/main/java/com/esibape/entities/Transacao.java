@@ -26,6 +26,9 @@ public class Transacao implements Serializable{
 	private BigDecimal valor;
 	private LocalDate data;
 	private String descricao;
+    @ManyToOne
+    @JoinColumn(name = "descricao_id", nullable = false)
+    private DescricaoReceita descricaoReceita;
 	private Boolean isReceita;
 	 @Enumerated(EnumType.STRING)
 	private TipoDespesa tipoDespesa;
@@ -37,19 +40,20 @@ public class Transacao implements Serializable{
 		
 	}
 
-	
-
-	public Transacao(Long id, BigDecimal valor, LocalDate data, String descricao, Boolean isReceita,
-			TipoDespesa tipoDespesa, ContaPagar contaPagar) {
+	public Transacao(Long id, BigDecimal valor, LocalDate data, String descricao, DescricaoReceita descricaoReceita,
+			Boolean isReceita, TipoDespesa tipoDespesa, ContaPagar contaPagar) {
 		super();
 		this.id = id;
 		this.valor = valor;
 		this.data = data;
 		this.descricao = descricao;
+		this.descricaoReceita = descricaoReceita;
 		this.isReceita = isReceita;
 		this.tipoDespesa = tipoDespesa;
 		this.contaPagar = contaPagar;
 	}
+
+
 
 
 
@@ -115,6 +119,14 @@ public class Transacao implements Serializable{
 		this.tipoDespesa = tipoDespesa;
 	}
 
+
+	public DescricaoReceita getDescricaoReceita() {
+		return descricaoReceita;
+	}
+
+	public void setDescricaoReceita(DescricaoReceita descricaoReceita) {
+		this.descricaoReceita = descricaoReceita;
+	}
 
 	@Override
 	public int hashCode() {

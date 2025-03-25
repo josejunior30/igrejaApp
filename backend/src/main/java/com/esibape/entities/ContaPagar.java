@@ -16,6 +16,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,7 +35,7 @@ public class ContaPagar implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+
     private String descricao;
 
     @Column(nullable = false)
@@ -47,6 +49,10 @@ public class ContaPagar implements Serializable{
     private StatusPagamento status;
 
 
+    @ManyToOne
+    @JoinColumn(name = "descricao_id", nullable = false)
+    private DescricaoConta descricaoConta;
+
     @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(updatable = false, nullable = false)
@@ -54,7 +60,7 @@ public class ContaPagar implements Serializable{
     
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataPagamento;
-    
+
     private String createdByConta;
     @Enumerated(EnumType.STRING)
     private TipoDespesa tipoDespesa;
@@ -69,20 +75,21 @@ public class ContaPagar implements Serializable{
     	
     }
     
-    
-	
+
 
 
 
 	public ContaPagar(Long id, String descricao, BigDecimal valor, LocalDate dataVencimento, StatusPagamento status,
-			LocalDateTime dataCriacao, LocalDateTime dataPagamento, String createdByConta, TipoDespesa tipoDespesa,
-			String createdBy, List<Transacao> transacao, List<RequerimentoOrçamento> requerimentoOrçamento) {
+			DescricaoConta descricaoConta, LocalDateTime dataCriacao, LocalDateTime dataPagamento,
+			String createdByConta, TipoDespesa tipoDespesa, String createdBy, List<Transacao> transacao,
+			List<RequerimentoOrçamento> requerimentoOrçamento) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.valor = valor;
 		this.dataVencimento = dataVencimento;
 		this.status = status;
+		this.descricaoConta = descricaoConta;
 		this.dataCriacao = dataCriacao;
 		this.dataPagamento = dataPagamento;
 		this.createdByConta = createdByConta;
@@ -91,7 +98,6 @@ public class ContaPagar implements Serializable{
 		this.transacao = transacao;
 		this.requerimentoOrçamento = requerimentoOrçamento;
 	}
-
 
 
 
@@ -127,6 +133,22 @@ public class ContaPagar implements Serializable{
 	public void setTransacao(List<Transacao> transacao) {
 		this.transacao = transacao;
 	}
+
+
+
+
+	public DescricaoConta getDescricaoConta() {
+		return descricaoConta;
+	}
+
+
+
+
+
+	public void setDescricaoConta(DescricaoConta descricaoConta) {
+		this.descricaoConta = descricaoConta;
+	}
+
 
 
 

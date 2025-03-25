@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.esibape.entities.DescricaoReceita;
 import com.esibape.entities.TipoDespesa;
 import com.esibape.entities.Transacao;
 
@@ -17,6 +18,7 @@ public class TransacaoDTO implements Serializable {
 	private LocalDate data;
 	private String descricao;
 	private Boolean isReceita;
+    private DescricaoReceita descricaoReceita;
 	private TipoDespesa tipoDespesa;
 	  private ContaPagarDTO contaPagar; 
 	
@@ -30,6 +32,7 @@ public class TransacaoDTO implements Serializable {
 		this.data= entity.getData();
 		this.descricao = entity.getDescricao();
 		this.isReceita =entity.getIsReceita();
+		this.descricaoReceita=entity.getDescricaoReceita();
 		this.tipoDespesa=entity.getTipoDespesa();
 		this.valor =entity.getValor();
 		 if (entity.getContaPagar() != null) {
@@ -64,6 +67,14 @@ public class TransacaoDTO implements Serializable {
 
 	public String getDescricao() {
 		return descricao;
+	}
+
+	public DescricaoReceita getDescricaoReceita() {
+		return descricaoReceita;
+	}
+
+	public void setDescricaoReceita(DescricaoReceita descricaoReceita) {
+		this.descricaoReceita = descricaoReceita;
 	}
 
 	public void setDescricao(String descricao) {

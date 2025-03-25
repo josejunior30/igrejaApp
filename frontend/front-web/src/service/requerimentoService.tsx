@@ -6,7 +6,9 @@ import { RoleEnum } from "../models/auth";
 export function findAll(){
     return axios.get(`${BASE_URL}/requerimento`);
 }
-
+export function findAllDescricaoRequerimento(){
+  return axios.get(`${BASE_URL}/descricao-requerimento`);
+}
 export function findById(id:number){
     return axios.get(`${BASE_URL}/requerimento/${id}`);
 }

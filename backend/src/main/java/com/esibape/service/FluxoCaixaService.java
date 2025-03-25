@@ -129,7 +129,7 @@ public class FluxoCaixaService {
         if (result.isEmpty()) {
             fluxoCaixa = new FluxoCaixa(null, receitaTotal, despesaTotal, saldoLiquido, despesaFixa, despesaVariavel, mes, ano);
         } else {
-            fluxoCaixa = result.get(0); // Pega o primeiro registro encontrado
+            fluxoCaixa = result.get(0);
             fluxoCaixa.setReceitaTotal(receitaTotal);
             fluxoCaixa.setDespesaTotal(despesaTotal);
             fluxoCaixa.setDespesaFixa(despesaFixa);

@@ -1,20 +1,26 @@
-
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./styles.css";
 import {
+  DescricaoRequerimento,
   Produto,
   requerimentoOrçamento,
 } from "../../../models/requerimentoOrçamento";
 import Header from "../../../components/Header";
 import { StatusRequerimento } from "../../../models/requerimentoOrçamento";
-import { insertRequerimento } from "../../../service/requerimentoService";
+import {
+  findAllDescricaoRequerimento,
+  insertRequerimento,
+} from "../../../service/requerimentoService";
 
 const RequerimentoOrçamento: React.FC = () => {
   const navigate = useNavigate();
   const loadingImage = "/imagens/loading.gif";
   const [loading, setLoading] = useState(false);
+  const [descricaoRequerimentos, setDescricaoRequerimentos] = useState<
+    DescricaoRequerimento[]
+  >([]);
   const [requerimentoOrçamento, setRequerimentoOrçamento] =
     useState<requerimentoOrçamento>({
       id: 0,
@@ -22,11 +28,12 @@ const RequerimentoOrçamento: React.FC = () => {
       dataEvento: new Date(),
       dataPagamento: new Date(),
       dataAprovacao: new Date(),
+      descricaoRequerimento: { descricao: "" },
       statusRequerimento: StatusRequerimento.PENDENTE,
       emailResponsavel: "",
       responsavel: "",
-      conta_pagar_id:0,
-      createdByRequerimento:"",
+      conta_pagar_id: 0,
+      createdByRequerimento: "",
       local: "",
       Total: 0,
       pergunta1: "",
@@ -40,7 +47,7 @@ const RequerimentoOrçamento: React.FC = () => {
     id: 0,
     nome: "",
     preço: 0,
-    quantidade: 1, 
+    quantidade: 1,
   });
 
   const formatarDataEvento = (data: any) => {
@@ -50,16 +57,42 @@ const RequerimentoOrçamento: React.FC = () => {
     }
     return "";
   };
-
+  useEffect(() => {
+    async function fetchDescricaoRequerimentos() {
+      try {
+        const response = await findAllDescricaoRequerimento();
+        setDescricaoRequerimentos(response.data);
+        if (response.data.length > 0) {
+          setRequerimentoOrçamento((prev) => ({
+            ...prev,
+            descricaoReceita: response.data[0], // Seleciona a primeira opção automaticamente
+          }));
+        }
+      } catch (error) {
+        console.error("Erro ao buscar descrições de requerimentos:", error);
+      }
+    }
+    fetchDescricaoRequerimentos();
+  }, []);
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
-    setRequerimentoOrçamento((prevData: any) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if (name === "descricaoRequerimento") {
+      const descricaoSelecionada = descricaoRequerimentos.find(
+        (desc) => desc.descricao === value
+      );
+      setRequerimentoOrçamento((prev) => ({
+        ...prev,
+        descricaoRequerimento: descricaoSelecionada || { descricao: "" }, // Corrigido
+      }));
+    }else {
+      setRequerimentoOrçamento((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleProductChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,7 +120,7 @@ const RequerimentoOrçamento: React.FC = () => {
         id: prevState.produto.length + 1,
         nome: newProduto.nome,
         preço: newProduto.preço,
-        quantidade: newProduto.quantidade, 
+        quantidade: newProduto.quantidade,
       };
 
       console.log("Produto adicionado:", novoProduto);
@@ -108,33 +141,43 @@ const RequerimentoOrçamento: React.FC = () => {
   };
 
   const handlePrecoChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let valor = e.target.value.replace(/\D/g, ""); 
+    let valor = e.target.value.replace(/\D/g, "");
 
     if (valor === "") valor = "0";
 
-    let valorNumerico = (parseInt(valor, 10) / 100).toFixed(2); 
+    let valorNumerico = (parseInt(valor, 10) / 100).toFixed(2);
 
     setNewProduto((prevProduto) => ({
       ...prevProduto,
-      preço: parseFloat(valorNumerico), 
+      preço: parseFloat(valorNumerico),
     }));
   };
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
-    console.log(
-      "Requerimento antes do POST:",
-      JSON.stringify(requerimentoOrçamento, null, 2)
-    );
     setLoading(true);
+
+    // 🔹 Verifica se a descrição foi selecionada corretamente
+    if (!requerimentoOrçamento.descricaoRequerimento?.descricao) {
+      alert("Por favor, selecione uma descrição válida.");
+      setLoading(false);
+      return;
+    }
+
+    // 🔹 Ajusta o objeto antes de enviar para garantir que `descricaoReceita` tenha o ID e a descrição corretos
+    const dadosParaEnvio = {
+      ...requerimentoOrçamento,
+      descricaoReceita: descricaoRequerimentos.find(
+        (desc) =>
+          desc.descricao ===
+          requerimentoOrçamento.descricaoRequerimento.descricao
+      ) || { id: null, descricao: "" }, // Garante que sempre haverá um ID ou um objeto válido
+    };
+
     try {
-
-      const response = await insertRequerimento(requerimentoOrçamento);
-
-      console.log("Resposta da API:", response.data);
+      await insertRequerimento(dadosParaEnvio);
       alert("Requerimento enviado com sucesso!");
 
-     
+      // 🔹 Reseta o formulário após o envio bem-sucedido
       setRequerimentoOrçamento({
         id: 0,
         dataRequerimento: new Date(),
@@ -144,22 +187,22 @@ const RequerimentoOrçamento: React.FC = () => {
         statusRequerimento: StatusRequerimento.PENDENTE,
         emailResponsavel: "",
         responsavel: "",
-        conta_pagar_id:0,
+        conta_pagar_id: 0,
         local: "",
         Total: 0,
         createdByRequerimento: "",
         pergunta1: "",
         pergunta2: "",
+        descricaoRequerimento: { descricao: "" }, // Resetando corretamente
         produto: [],
       });
-
     } catch (error) {
       console.error("Erro ao enviar requerimento:", error);
-      alert("Erro ao enviar o requerimento. Por favor, tente novamente.");
-    }finally{
+      alert("Erro ao enviar o requerimento.");
+    } finally {
       setLoading(false);
     }
-};
+  };
 
   const handleGoBack = () => {
     navigate(-1);
@@ -172,7 +215,6 @@ const RequerimentoOrçamento: React.FC = () => {
         <div className="container col-md-8 col-12" id="relatorio-add">
           <form onSubmit={handleSubmit} className="row p-4 g-4">
             <h3>Relatório de Orçamento</h3>
-
 
             <div className="col-md-4">
               <label htmlFor="responsavel" className="form-label">
@@ -188,7 +230,29 @@ const RequerimentoOrçamento: React.FC = () => {
                 required
               />
             </div>
-
+            <div className="col-md-4">
+              <label htmlFor="descricaoRequerimento" className="form-label">
+                Descrição do Requerimento:
+              </label>
+              <select
+                className="form-control"
+                name="descricaoRequerimento"
+                value={
+                  requerimentoOrçamento.descricaoRequerimento.descricao || ""
+                }
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>
+                  Selecione uma descrição...
+                </option>
+                {descricaoRequerimentos.map((desc, index) => (
+                  <option key={index} value={desc.descricao}>
+                    {desc.descricao}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="col-md-4">
               <label htmlFor="local" className="form-label">
                 Local:
@@ -217,7 +281,7 @@ const RequerimentoOrçamento: React.FC = () => {
                 required
               />
             </div>
-       
+
             <div className="col-md-4">
               <label htmlFor="dataEvento" className="form-label">
                 Data do Evento:
@@ -245,7 +309,6 @@ const RequerimentoOrçamento: React.FC = () => {
               />
             </div>
 
- 
             <div className="col-12">
               <label htmlFor="O que vai ser feito ?" className="form-label">
                 O que vai ser feito?
@@ -261,7 +324,6 @@ const RequerimentoOrçamento: React.FC = () => {
               />
             </div>
 
-     
             <div className="col-12">
               <label
                 htmlFor="Qual o motivo de ser feito ?"
@@ -359,23 +421,22 @@ const RequerimentoOrçamento: React.FC = () => {
             </label>
 
             <div className="d-grid gap-2 col-md-6 mx-auto mt-5">
-            {loading ? (
-                    <img
-                      src={loadingImage}
-                      alt="Carregando..."
-                      className="rounded mx-auto d-block "
-                      id="loading-image"
-                    />
-                  ) : (
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      id="btn-logar"
-                    >
-                   Enviar
-                    </button>
-                  )}
-             
+              {loading ? (
+                <img
+                  src={loadingImage}
+                  alt="Carregando..."
+                  className="rounded mx-auto d-block "
+                  id="loading-image"
+                />
+              ) : (
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  id="btn-logar"
+                >
+                  Enviar
+                </button>
+              )}
             </div>
           </form>
         </div>

@@ -78,7 +78,7 @@ const Inicial = () => {
           <div className="col-12 col-md-3 container-menu">
             <Link to="/secretaria" onClick={(e) => handleDoubleClick(e, "/membro")}>
               <img src={secretaria} alt="Secretaria" className="img-fluid img-menu" />
-              <h3>Secretaria</h3>
+              <h3>Secretaría</h3>
             </Link>
           </div>
 
@@ -95,7 +95,7 @@ const Inicial = () => {
             <Link to="/trilho" onClick={(e) => handleDoubleClick(e, "/trilho")}>
               <img src={cfc} alt="CFC" className="img-fluid img-menu" />
               <h3>Centro</h3>
-              <h3>Formaçao Crista</h3>
+              <h3>Formação Cristã</h3>
             </Link>
           </div>
 
