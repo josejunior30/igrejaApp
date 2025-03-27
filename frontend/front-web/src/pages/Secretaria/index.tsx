@@ -14,19 +14,18 @@ import { MembroDTO } from "../../models/membro";
 import "./styles.css";
 import Header from "../../components/Header";
 import Sidebar from "../../components/sidebar";
-import { MdGroups2 } from "react-icons/md";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCakeCandles,
-  faChartLine,
+  
   faChildren,
   faPeopleGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import { HiUserGroup } from "react-icons/hi";
 import { FaChartSimple } from "react-icons/fa6";
 import { TbClockHour5 } from "react-icons/tb";
-import { FaBirthdayCake, FaRegCalendarAlt } from "react-icons/fa";
-import { LiaBirthdayCakeSolid } from "react-icons/lia";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const MenuSecretaria = () => {
   const [loadingEventos, setLoadingEventos] = useState(true);
@@ -211,8 +210,11 @@ const MenuSecretaria = () => {
                   {membros.map((membro) => (
                     <tr key={membro.id}>
                       <td>{formatDiaMes(new Date(membro.dataNascimento))}</td>{" "}
-                      <td>{membro.nome}</td>
-                      <td>{membro.idade} anos</td>
+                     
+                      <td> <Link to={`/membro/${membro.id}`} className="name-link">{membro.nome}  </Link></td>
+                    
+                      <td><Link to={`/membro/${membro.id}`} className="name-link">{membro.idade} anos</Link></td>
+                   
                     </tr>
                   ))}
                 </tbody>

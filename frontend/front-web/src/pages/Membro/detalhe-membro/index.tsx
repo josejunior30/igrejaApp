@@ -111,114 +111,122 @@ const Detalhes = () => {
   return (
     <>
       <Header />
-      <div className="container-fluid mt-5 pt-5">
-        <div className="row justify-content-center text-center ">
-          <div
-            className="col-md-3 col-7 m-5 md-5 pb-3 text-center"
-            id="dadosMembros"
-          >
+      <div className="container-fluid mt-5 ">
+        <div className="row pt-2">
+          <div className="col-md-6 m-5 md-5 pb-3  dadosMembros">
             {MembroDTO ? (
               <>
-                <img
-                  src={MembroDTO.url}
-                  alt="Foto do Membro"
-                  className="img-fluid mb-3 rounded mx-auto d-block foto-membro "
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  ref={inputRef}
-                  style={{ display: "none" }}
-                />
-                <span
-                  className="status"
-                  style={{ color: getColorByStauts(MembroDTO.membroStatus) }}
-                >
-                  {MembroDTO.membroStatus}
-                </span>
-                {MembroDTO?.desligamento && (
-                  <span className="desligamento">
-                    {new Date(MembroDTO.desligamento).toLocaleDateString()}
-                  </span>
-                )}
+                <div className="d-flex">
+                  <img
+                    src={MembroDTO.url}
+                    alt="Foto do Membro"
+                    className="img-fluid mb-3 d-block foto-de-membro "
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    ref={inputRef}
+                    style={{ display: "none" }}
+                  />
 
-                <span className="nome-id-membro">
-                  {MembroDTO.nome} {MembroDTO.sobrenome}
-                </span>
-                <p className="dados">
-                  <span>CPF:</span> {MembroDTO.cpf}
-                </p>
-                <p className="dados">
-                  <span>Idade:</span> {MembroDTO.idade}
-                </p>
-                <p className="dados">
-                  <span>Estado Civil:</span> {MembroDTO.estadoCivil}
-                </p>
-                <p className="dados">
-                  <span>Data de Nascimento:</span>{" "}
-                  {new Date(MembroDTO.dataNascimento).toLocaleDateString()}
-                </p>
-                <p className="dados">
-                  <span>Email:</span> {MembroDTO.email}
-                </p>
-                <p className="dados">
-                  <span>Telefone:</span> {MembroDTO.telefone}
-                </p>
+                  <div className="dados-pessoais">
+                    <span
+                      className="status-membro"
+                      style={{
+                        color: getColorByStauts(MembroDTO.membroStatus),
+                      }}
+                    >
+                      {MembroDTO.membroStatus}
+                    </span>
+                    <p className="nome-membro">
+                      {MembroDTO.nome} {MembroDTO.sobrenome}
+                    </p>
+                    <div className="d-flex">
+                      <p className="dados-m">
+                        <span>Data de Nascimento:</span>{" "}
+                        {new Date(
+                          MembroDTO.dataNascimento
+                        ).toLocaleDateString()}
+                      </p>
+                      <p className="dados-m">
+                        <span>Idade:</span> {MembroDTO.idade}
+                      </p>
+                    </div>
+                    <div className="d-flex ">
+                      <p className="dados-m">
+                        <span>CPF:</span> {MembroDTO.cpf}
+                      </p>
+                      <p className="dados-m">
+                        <span>Estado Civil:</span> {MembroDTO.estadoCivil}
+                      </p>
+                    </div>
+                    <div className="d-flex">
+                      <p className="dados-m">
+                        <span>Email:</span> {MembroDTO.email}
+                      </p>
+                      <p className="dados-m">
+                        <span>Telefone:</span> {MembroDTO.telefone}
+                      </p>
+                    </div>
+                    <div className="d-flex">
+                      <p className="dados-m">
+                        <span>Membro por: </span> {MembroDTO.membroTipo}{" "}
+                      </p>
+                      <p className="dados-m">
+                        <span>Ano: </span> {MembroDTO.ano}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 {MembroDTO.curso && (
                   <p className="dados-trilho offset-2 mb-5">
                     <span>Trilho:</span> {MembroDTO.curso.nome}
                   </p>
                 )}
-                <p className="dados">
-                  <span>Membro por: </span> {MembroDTO.membroTipo}{" "}
-                  <span>Ano: </span> {MembroDTO.ano}
-                </p>
-                <div className="botoes-container">
-                  <Link to={`/membro/atualizar/${id}`}>
-                    <button className="botao-editar">Editar</button>
-                  </Link>
-                  <button onClick={handleDeleteClick} className="botao-deletar">
-                    Deletar
-                  </button>
-                </div>
+
+                {MembroDTO?.desligamento && (
+                  <span className="desligamento">
+                    {new Date(MembroDTO.desligamento).toLocaleDateString()}
+                  </span>
+                )}
               </>
             ) : (
               <p>Carregando detalhes do membro...</p>
             )}
           </div>
-
-          <div
-            className="col-md-3 col-7 m-5 md-5 text-center align-content-center"
-            id="endereço"
-          >
-            {MembroDTO ? (
-              <div className="conteudo-centralizado-endereço">
-                <p className="text-h2">Endereço</p>
-                <p className="dados">
+          {MembroDTO ? (
+            <div className="endereço-membro col-md-4 text-center m-5">
+              <p className="titulo-endereço">Endereço</p>
+              <div className="d-flex justify-content-center ">
+                <p className="dados-m">
                   <span>Rua:</span> {MembroDTO.rua}
                 </p>
-                <p className="dados">
-                  <span>Bairro:</span> {MembroDTO.bairro}
-                </p>
-                <p className="dados">
+                <p className="dados-m">
                   <span>Número:</span> {MembroDTO.numero}
                 </p>
-                <p className="dados">
+              </div>
+              <div className="d-flex justify-content-center ">
+                <p className="dados-m">
+                  <span>Bairro:</span> {MembroDTO.bairro}
+                </p>
+
+                <p className="dados-m">
                   <span>Cidade:</span> {MembroDTO.cidade}
                 </p>
-                <p className="dados">
-                  <span>Complemento:</span> {MembroDTO.complemento}
-                </p>
-                <p className="dados">
-                  <span>CEP:</span> {MembroDTO.cep}
-                </p>
               </div>
-            ) : (
-              <p>Carregando detalhes do membro...</p>
-            )}
-          </div>
-
+              <p className="dados-m">
+                <span>Complemento:</span> {MembroDTO.complemento}
+              </p>
+              <p className="dados-m">
+                <span>CEP:</span> {MembroDTO.cep}
+              </p>
+            </div>
+          ) : (
+            <p>Carregando detalhes do membro...</p>
+          )}
+          <div className="row"></div>
           {showDeleteConfirmation && (
             <div className="modal-confirm">
               <span className="icone-confirm">
@@ -241,11 +249,21 @@ const Detalhes = () => {
             />
           )}
         </div>
-        <div className="row  text-center">
-          <div className="col-2 offset-4 mb-5" id="voltar-membro">
-            <button className="btn btn-primary" onClick={handleGoBack}>
+        <div className="row  text-center justify-content-center">
+          <div className="col-md-9">
+            <div className="botoes-membros-container">
+              <Link to={`/membro/atualizar/${id}`}>
+                <button className="botao-editar-membro">Editar</button>
+              </Link>
+              <button onClick={handleDeleteClick} className="botao-deletar-membro">
+                Deletar
+              </button>
+              <button className="btn btn-primary  voltar-detalhe-membro" onClick={handleGoBack}>
               Voltar
             </button>
+            </div>
+
+        
           </div>
         </div>
       </div>

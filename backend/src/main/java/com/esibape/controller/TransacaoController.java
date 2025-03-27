@@ -3,6 +3,7 @@ package com.esibape.controller;
 
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,27 +54,32 @@ public class TransacaoController {
 			
 			return ResponseEntity.created(uri).body(entity);
 		}		
-		   @GetMapping("/ano/{ano}")
+		  @GetMapping("/ano/{ano}")
 		    public ResponseEntity<List<TransacaoDTO>> getTransacoesPorAno(@PathVariable int ano) {
-		        List<TransacaoDTO> transacoes = service.buscarPorAno(ano);
-		        return ResponseEntity.ok(transacoes);
+		        return (ano > 0) 
+		            ? ResponseEntity.ok(service.buscarPorAno(ano)) 
+		            : ResponseEntity.badRequest().body(Collections.emptyList());
 		    }
 		@DeleteMapping(value="/{id}")
 		public ResponseEntity<TransacaoDTO>delete(@PathVariable Long id){
 			 service.delete(id);
 			return ResponseEntity.noContent().build();
 		}
-		  @GetMapping("/mes/{mes}/ano/{ano}")
+		   @GetMapping("/mes/{mes}/ano/{ano}")
 		    public ResponseEntity<List<TransacaoDTO>> getTransacoesPorMesEAno(@PathVariable int mes, @PathVariable int ano) {
-		        List<TransacaoDTO> transacoes = service.buscarPorMesEAno(mes, ano);
-		        return ResponseEntity.ok(transacoes);
+		        return (mes >= 1 && mes <= 12 && ano > 0) 
+		            ? ResponseEntity.ok(service.buscarPorMesEAno(mes, ano)) 
+		            : ResponseEntity.badRequest().body(Collections.emptyList());
 		    }
-		  @GetMapping("/buscar")
+
+		    @GetMapping("/buscar")
 		    public ResponseEntity<List<TransacaoDTO>> buscarPorDescricao(
 		            @RequestParam String descricao,
 		            @RequestParam(required = false) Integer mes,
 		            @RequestParam int ano) {
-		        List<TransacaoDTO> transacoes = service.buscarPorDescricao(descricao, mes, ano);
-		        return ResponseEntity.ok(transacoes);
+
+		        return (!descricao.trim().isEmpty() && ano > 0 && (mes == null || (mes >= 1 && mes <= 12))) 
+		            ? ResponseEntity.ok(service.buscarPorDescricao(descricao, mes, ano)) 
+		            : ResponseEntity.badRequest().body(Collections.emptyList());
 		    }
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TransacaoDTO } from "../../../models/transacao";
+import { DescricaoReceita, TransacaoDTO } from "../../../models/transacao";
 import * as TransacaoService from "../../../service/TransacaoService";
 import Header from "../../../components/Header";
 import "./styles.css";
@@ -17,15 +17,15 @@ const TransacaoExibir = () => {
   );
   const [totalPesquisa, setTotalPesquisa] = useState<number>(0);
   const [termoPesquisa, setTermoPesquisa] = useState<string>("");
-
-
+  const [descricaoReceita, setDescricaoReceita] = useState<DescricaoReceita[]>(
+    []
+  );
+  const [selectedDescricao, setSelectedDescricao] = useState<string>("");
   const [mes, setMes] = useState<number>(new Date().getMonth() + 1);
   const [ano, setAno] = useState<number>(new Date().getFullYear());
 
-
   const [showModal, setShowModal] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
-
 
   useEffect(() => {
     TransacaoService.findByMesAno(mes, ano)
@@ -34,19 +34,33 @@ const TransacaoExibir = () => {
         aplicarFiltros(response.data);
       })
       .catch((error) => console.error("Erro ao buscar dados:", error));
-  }, [mes, ano]); 
+  }, [mes, ano]);
 
   const handleSearch = () => {
-    if (termoPesquisa.trim() === "") return;
-
-    TransacaoService.findBybuscarPorDescricao(termoPesquisa, mes, ano)
+    if (selectedDescricao.trim() === "") return;
+  
+    TransacaoService.findBybuscarPorDescricao(selectedDescricao, mes, ano)
       .then((response) => {
         aplicarFiltros(response.data);
-        setShowSearchModal(false); 
+        setShowSearchModal(false);
       })
       .catch((error) => console.error("Erro ao buscar transações:", error));
   };
-
+  
+  useEffect(() => {
+    async function fetchDescricaoContas() {
+      try {
+        const response = await TransacaoService.findAllDescricaoReceita();
+        setDescricaoReceita(response.data);
+        if (response.data.length > 0) {
+          setSelectedDescricao(response.data[0].descricao); // Seleciona a primeira opção automaticamente
+        }
+      } catch (error) {
+        console.error("Erro ao buscar descrições de receitas:", error);
+      }
+    }
+    fetchDescricaoContas();
+  }, []);
   const aplicarFiltros = (lista: TransacaoDTO[]) => {
     const filtrado = lista.filter((t) => t.isReceita);
     setFilteredTransacao(filtrado);
@@ -75,19 +89,18 @@ const TransacaoExibir = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 pt-3">
-        
         <div className="row justify-content-center">
-        <Botoes/>
+          <Botoes />
           <div className="col-md-12 text-center mt-3 mb-3">
-            <button  className="btn-pesquisa-ganho"
-        
+            <button
+              className="btn-pesquisa-ganho"
               onClick={() => setShowModal(true)}
             >
-             + Inserir
+              + Inserir
             </button>
 
             <button
-             className="btn-pesquisa-ganho"
+              className="btn-pesquisa-ganho"
               onClick={() => setShowSearchModal(true)}
             >
               <FaSearch /> Pesquisar
@@ -100,18 +113,23 @@ const TransacaoExibir = () => {
               centered
             >
               <Modal.Header closeButton>
-                <Modal.Title>Pesquisar Transações</Modal.Title>
+                <Modal.Title>Pesquisar </Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <div className="mb-3">
                   <label className="form-label">Descrição</label>
-                  <input
-                    type="text"
+                  <select
                     className="form-control"
-                    placeholder="Insira a descrição"
-                    value={termoPesquisa}
-                    onChange={(e) => setTermoPesquisa(e.target.value)}
-                  />
+                    value={selectedDescricao}
+                    onChange={(e) => setSelectedDescricao(e.target.value)}
+                    required
+                  >
+                    {descricaoReceita.map((item, index) => (
+                      <option key={index} value={item.descricao}>
+                        {item.descricao}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Mês</label>
@@ -162,7 +180,7 @@ const TransacaoExibir = () => {
 
         {filteredTransacao.length > 0 && (
           <div className="text-center mt-2 totalFiltro">
-            <h5>Total das Transações do Mês:</h5>
+            <h5>Total Receita no Mês:</h5>
             <p className="total-transacao">
               <strong>
                 {totalPesquisa.toLocaleString("pt-BR", {
@@ -175,7 +193,7 @@ const TransacaoExibir = () => {
         )}
 
         <div className="row justify-content-center">
-          <div className="col-10">
+          <div className="col-8">
             <table className="table table-striped text-center mt-4">
               <thead className="thead">
                 <tr>

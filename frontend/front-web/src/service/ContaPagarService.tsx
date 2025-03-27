@@ -78,16 +78,16 @@ export async function updateStatus(id: number, status: StatusPagamento) {
 export function findByDescricaoMesAndAno(
   mes: number,
   ano: number,
-  descricao: string
+  descricaoConta: string
 ) {
   return axios.get(
-    `${BASE_URL}/contaPagar/buscar-por-data?descricao=${descricao}&mes=${mes}&ano=${ano}`
+    `${BASE_URL}/contaPagar/buscar-por-data?descricaoConta=${descricaoConta}&mes=${mes}&ano=${ano}`
   );
 }
 
-export function findByDescricaoAno(ano: number, descricao: string) {
+export function findByDescricaoAno(ano: number, descricaoConta: string) {
   return axios.get(
-    `${BASE_URL}/contaPagar/buscar-por-ano?descricao=${descricao}&ano=${ano}`
+    `${BASE_URL}/contaPagar/buscar-por-ano?descricaoConta=${descricaoConta}&ano=${ano}`
   );
 }
 export function findByMesAno(ano: number, mes: number) {

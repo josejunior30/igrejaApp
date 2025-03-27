@@ -67,7 +67,6 @@ public class TransacaoService {
         }
         repository.deleteById(id);
     }
-
     @Transactional(readOnly = true)
     public List<TransacaoDTO> buscarPorMesEAno(int mes, int ano) {
         return repository.findByMesEAno(mes, ano).stream()
@@ -84,22 +83,26 @@ public class TransacaoService {
 
     @Transactional(readOnly = true)
     public List<TransacaoDTO> buscarPorDescricao(String descricao, Integer mes, int ano) {
-        List<Transacao> transacoes;
-        
         if (descricao == null || descricao.trim().isEmpty()) {
             throw new IllegalArgumentException("A descrição não pode ser nula ou vazia.");
         }
 
-        if (mes == null || mes == 0) {
-            transacoes = repository.buscarPorDescricaoEAno("%" + descricao + "%", ano);
+        if (ano <= 0) {
+            throw new IllegalArgumentException("O ano deve ser maior que zero.");
+        }
+
+        List<Transacao> transacoes;
+        if (mes == null || mes <= 0) {
+            transacoes = repository.buscarPorDescricaoReceitaEAno(descricao, ano);
         } else {
-            transacoes = repository.buscarPorDescricaoMesEAno("%" + descricao + "%", mes, ano);
+            transacoes = repository.buscarPorDescricaoReceitaMesEAno(descricao, mes, ano);
         }
 
         return transacoes.stream()
             .map(TransacaoDTO::new)
             .collect(Collectors.toList());
     }
+
 
     private void copyDtoToEntity(TransacaoDTO dto, Transacao entity) {
         entity.setData(dto.getData());

@@ -17,19 +17,19 @@ import com.esibape.entities.StatusPagamento;
 
 @Repository
 public interface ContaPagarRepository extends JpaRepository<ContaPagar, Long> {
-	
-	@Query("SELECT c FROM ContaPagar c WHERE " +
-		       "LOWER(c.descricao) LIKE LOWER(CONCAT('%', :descricao, '%')) " + 
-		       "AND c.status = :status " +
-		       "AND c.dataVencimento BETWEEN :inicio AND :fim")
-		List<ContaPagar> findByDescricaoAproximada(
-		    @Param("descricao") String descricao,
-		    @Param("status") StatusPagamento status,
-		    @Param("inicio") LocalDate inicio,
-		    @Param("fim") LocalDate fim
-		);
+    
+    @Query("SELECT c FROM ContaPagar c WHERE " +
+           "LOWER(c.descricaoConta.descricao) LIKE LOWER(CONCAT('%', :descricaoConta, '%')) " + 
+           "AND c.status = :status " +
+           "AND c.dataVencimento BETWEEN :inicio AND :fim")
+    List<ContaPagar> findByDescricaoContaAproximada(
+        @Param("descricaoConta") String descricaoConta,
+        @Param("status") StatusPagamento status,
+        @Param("inicio") LocalDate inicio,
+        @Param("fim") LocalDate fim
+    );
 
-	List<ContaPagar> findByDataCriacaoBetween(LocalDateTime inicio, LocalDateTime fim);
+    List<ContaPagar> findByDataCriacaoBetween(LocalDateTime inicio, LocalDateTime fim);
 
 
 	Optional<RequerimentoOrçamento> findByDescricao(String string);

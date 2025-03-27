@@ -233,7 +233,7 @@ const Membro = () => {
                       </select>
                     </div>
                     <button className="btn btn-success" onClick={handlePrint}>
-                      <PiPrinterFill /> Imprimir Tabela
+                      <PiPrinterFill /> Imprimir
                     </button>
                   </div>
                 </div>

@@ -69,32 +69,33 @@ public class ContaPagarController {
 			}
 			
 			// 🔹 Buscar contas pagas filtrando por descrição, mês e ano
-		    @GetMapping("/buscar-por-data")
-		    public ResponseEntity<List<ContaPagarDTO>> buscarPorDescricaoStatusMesAno(
-		        @RequestParam String descricao, 
-		        @RequestParam(required = true) Integer mes, 
-		        @RequestParam(required = true) Integer ano
-		    ) {
-		        if (mes == null || ano == null) {
-		            return ResponseEntity.badRequest().body(null);
+			 @GetMapping("/buscar-por-data")
+		        public ResponseEntity<List<ContaPagarDTO>> buscarPorDescricaoContaStatusMesAno(
+		            @RequestParam String descricaoConta, 
+		            @RequestParam(required = true) Integer mes, 
+		            @RequestParam(required = true) Integer ano
+		        ) {
+		            if (mes == null || ano == null) {
+		                return ResponseEntity.badRequest().body(null);
+		            }
+		            
+		            List<ContaPagarDTO> contas = service.findByDescricaoContaStatusMesAno(descricaoConta, mes, ano);
+		            return ResponseEntity.ok(contas);
 		        }
-		        
-		        List<ContaPagarDTO> contas = service.findByDescricaoStatusMesAno(descricao, mes, ano);
-		        return ResponseEntity.ok(contas);
-		    }
 		    
-		    @GetMapping("/buscar-por-ano")
-		    public ResponseEntity<List<ContaPagarDTO>> buscarPorDescricaoAno(
-		        @RequestParam String descricao,
-		        @RequestParam Integer ano
-		    ) {
-		        if (ano == null) {
-		            return ResponseEntity.badRequest().body(null);
-		        }
+		    
+			 @GetMapping("/buscar-por-ano")
+			 public ResponseEntity<List<ContaPagarDTO>> buscarPorDescricaoContaAno(
+			     @RequestParam String descricaoConta,
+			     @RequestParam Integer ano
+			 ) {
+			     if (ano == null) {
+			         return ResponseEntity.badRequest().body(null);
+			     }
 
-		        List<ContaPagarDTO> contas = service.findByDescricaoAndAno(descricao, ano);
-		        return ResponseEntity.ok(contas);
-		    }
+			     List<ContaPagarDTO> contas = service.findByDescricaoContaAndAno(descricaoConta, ano);
+			     return ResponseEntity.ok(contas);
+			 }
 		    
 		    @GetMapping("/buscar-por-data-criacao")
 		    public ResponseEntity<List<ContaPagarDTO>> buscarPorMesAnoDataCriacao(

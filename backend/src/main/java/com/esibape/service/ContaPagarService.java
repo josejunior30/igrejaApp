@@ -174,34 +174,35 @@ public class ContaPagarService {
     }
 
     @Transactional(readOnly = true)
-    public List<ContaPagarDTO> findByDescricaoStatusMesAno(String descricao, int mes, int ano) {
+    public List<ContaPagarDTO> findByDescricaoContaStatusMesAno(String descricaoConta, int mes, int ano) {
         LocalDate inicio = LocalDate.of(ano, mes, 1);
         LocalDate fim = inicio.withDayOfMonth(inicio.lengthOfMonth());
-        List<ContaPagar> contas = repository.findByDescricaoAproximada(descricao, StatusPagamento.PAGO, inicio, fim);
+        List<ContaPagar> contas = repository.findByDescricaoContaAproximada(descricaoConta, StatusPagamento.PAGO, inicio, fim);
 
         // 🔹 Atualizando status antes de retornar
         contas.forEach(this::atualizarStatusSeAtrasado);
 
-        return repository.findByDescricaoAproximada(descricao, StatusPagamento.PAGO, inicio, fim)
-            .stream()
+        return contas.stream()
             .map(ContaPagarDTO::new)
             .collect(Collectors.toList());
     }
 
+    
     @Transactional(readOnly = true)
-    public List<ContaPagarDTO> findByDescricaoAndAno(String descricao, int ano) {
+    public List<ContaPagarDTO> findByDescricaoContaAndAno(String descricaoConta, int ano) {
         LocalDate inicio = LocalDate.of(ano, 1, 1);
         LocalDate fim = LocalDate.of(ano, 12, 31);
-        List<ContaPagar> contas = repository.findByDescricaoAproximada(descricao, StatusPagamento.PAGO, inicio, fim);
+        
+        List<ContaPagar> contas = repository.findByDescricaoContaAproximada(descricaoConta, StatusPagamento.PAGO, inicio, fim);
 
         // 🔹 Atualizando status antes de retornar
         contas.forEach(this::atualizarStatusSeAtrasado);
 
-        return repository.findByDescricaoAproximada(descricao, StatusPagamento.PAGO, inicio, fim)
-            .stream()
+        return contas.stream()
             .map(ContaPagarDTO::new)
             .collect(Collectors.toList());
     }
+
 
     @Transactional
     public void deleteContaPagar(Long id) {

@@ -36,7 +36,7 @@ const ContaPagar = () => {
 
   const [totalPesquisa, setTotalPesquisa] = useState(0);
   const [filtro, setFiltro] = useState({
-    descricao: "",
+    descricaoConta: "",
     mes: new Date().getMonth() + 1,
     ano: new Date().getFullYear(),
   });
@@ -60,11 +60,14 @@ const ContaPagar = () => {
     }
     fetchData();
   }, [filtro.mes, filtro.ano]);
-  useEffect(() => {
+   useEffect(() => {
     async function fetchDescricaoContas() {
       try {
-        const response = await findAllDescricao(); 
-        setDescricaoContas(response.data);
+        const response = await findAllDescricao();
+        const sortedData = response.data.sort((a: DescricaoConta, b: DescricaoConta) =>
+          a.descricao.localeCompare(b.descricao)
+        );
+        setDescricaoContas(sortedData);
       } catch (error) {
         console.error("Erro ao buscar descrições de contas:", error);
       }
@@ -82,7 +85,7 @@ const ContaPagar = () => {
       const descricaoObj = descricaoContas.find(
         (desc) => desc.descricao === value
       );
-      setNovaConta((prev) => ({ ...prev, descricaoConta: descricaoObj })); // Sem null, apenas undefined ou objeto válido
+      setNovaConta((prev) => ({ ...prev, descricaoConta: descricaoObj })); 
     } else {
       setNovaConta((prev) => ({
         ...prev,
@@ -151,7 +154,7 @@ const ContaPagar = () => {
     }));
   };
   const handlePesquisar = async () => {
-    if (!filtro.descricao.trim()) {
+    if (!filtro.descricaoConta.trim()) {
       alert("Por favor, digite uma descrição para a busca.");
       return;
     }
@@ -162,12 +165,12 @@ const ContaPagar = () => {
         Number.isInteger(filtro.mes) && filtro.mes > 0 ? filtro.mes : null;
 
       if (!mesValido) {
-        response = await findByDescricaoAno(filtro.ano, filtro.descricao);
+        response = await findByDescricaoAno(filtro.ano, filtro.descricaoConta);
       } else {
         response = await findByDescricaoMesAndAno(
           mesValido,
           filtro.ano,
-          filtro.descricao
+          filtro.descricaoConta
         );
       }
 
@@ -212,7 +215,7 @@ const ContaPagar = () => {
       if (status === StatusPagamento.PAGO) {
         novoStatus = StatusPagamento.PENDENTE;
       } else {
-        novoStatus = StatusPagamento.PAGO; // Agora cobre PENDENTE e ATRASADO
+        novoStatus = StatusPagamento.PAGO; 
       }
   
       await updateStatus(id, novoStatus);
@@ -350,7 +353,24 @@ const ContaPagar = () => {
               <Modal.Title>Pesquisa de Contas</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              
+            <div className="mb-3">
+                  <select
+                    className="form-control"
+                    name="descricaoConta"
+                    value={filtro.descricaoConta}
+                    onChange={handleFiltroChange}
+                    required
+                  >
+                    <option value="" disabled>
+                      Selecione...
+                    </option>
+                    {descricaoContas.map((desc) => (
+                      <option key={desc.descricao} value={desc.descricao}>
+                        {desc.descricao}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               <div className="mb-3">
                 <label className="form-label">Mês</label>
                 <select

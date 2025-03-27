@@ -10,9 +10,10 @@ import {
 import Header from "../../../components/Header";
 import { StatusRequerimento } from "../../../models/requerimentoOrçamento";
 import {
-  findAllDescricaoRequerimento,
+ 
   insertRequerimento,
 } from "../../../service/requerimentoService";
+import { findAllDescricao } from "../../../service/ContaPagarService";
 
 const RequerimentoOrçamento: React.FC = () => {
   const navigate = useNavigate();
@@ -60,12 +61,15 @@ const RequerimentoOrçamento: React.FC = () => {
   useEffect(() => {
     async function fetchDescricaoRequerimentos() {
       try {
-        const response = await findAllDescricaoRequerimento();
-        setDescricaoRequerimentos(response.data);
-        if (response.data.length > 0) {
+        const response = await findAllDescricao();
+        const sortedData = response.data.sort((a: DescricaoRequerimento, b: DescricaoRequerimento) =>
+          a.descricao.localeCompare(b.descricao)
+        );
+        setDescricaoRequerimentos(sortedData);
+        if (sortedData.length > 0) {
           setRequerimentoOrçamento((prev) => ({
             ...prev,
-            descricaoReceita: response.data[0], // Seleciona a primeira opção automaticamente
+            descricaoReceita: sortedData[0], // Seleciona a primeira opção automaticamente
           }));
         }
       } catch (error) {
@@ -74,6 +78,7 @@ const RequerimentoOrçamento: React.FC = () => {
     }
     fetchDescricaoRequerimentos();
   }, []);
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -232,7 +237,7 @@ const RequerimentoOrçamento: React.FC = () => {
             </div>
             <div className="col-md-4">
               <label htmlFor="descricaoRequerimento" className="form-label">
-                Descrição do Requerimento:
+                Pedido:
               </label>
               <select
                 className="form-control"

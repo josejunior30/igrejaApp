@@ -6,10 +6,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import com.esibape.entities.ContaPagar;
 import com.esibape.entities.Transacao;
 
@@ -25,16 +23,14 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
     @Query("SELECT t FROM Transacao t WHERE YEAR(t.data) = :ano")
     List<Transacao> findByAno(@Param("ano") int ano);
 
-    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricao) LIKE LOWER(CONCAT('%', :descricao, '%'))")
-    List<Transacao> buscarPorDescricao(@Param("descricao") String descricao);
+    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricaoReceita.descricao) LIKE LOWER(CONCAT('%', :descricaoReceita, '%'))")
+    List<Transacao> buscarPorDescricaoReceita(@Param("descricaoReceita") String descricaoReceita);
 
-    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricao) LIKE LOWER(CONCAT('%', :descricao, '%')) AND YEAR(t.data) = :ano")
-    List<Transacao> buscarPorDescricaoEAno(@Param("descricao") String descricao, @Param("ano") int ano);
+    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricaoReceita.descricao) LIKE LOWER(CONCAT('%', :descricaoReceita, '%')) AND YEAR(t.data) = :ano")
+    List<Transacao> buscarPorDescricaoReceitaEAno(@Param("descricaoReceita") String descricaoReceita, @Param("ano") int ano);
 
-    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricao) LIKE LOWER(CONCAT('%', :descricao, '%')) AND MONTH(t.data) = :mes AND YEAR(t.data) = :ano")
-    List<Transacao> buscarPorDescricaoMesEAno(@Param("descricao") String descricao, @Param("mes") int mes, @Param("ano") int ano);
+    @Query("SELECT t FROM Transacao t WHERE LOWER(t.descricaoReceita.descricao) LIKE LOWER(CONCAT('%', :descricaoReceita, '%')) AND MONTH(t.data) = :mes AND YEAR(t.data) = :ano")
+    List<Transacao> buscarPorDescricaoReceitaMesEAno(@Param("descricaoReceita") String descricaoReceita, @Param("mes") int mes, @Param("ano") int ano);
    
-	void deleteByContaPagar(ContaPagar entity);
-
-
+    void deleteByContaPagar(ContaPagar entity);
 }

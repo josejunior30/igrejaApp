@@ -10,14 +10,7 @@
   text-align: center;
 }
 
-.nome-id {
-  margin-top: 20px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #0b1f34;
-  padding-top: 10px;
-  text-decoration: underline;
-}
+
 .status {
   margin-top: 40px;
   font-size: 14px;
@@ -39,11 +32,6 @@
   right: 55vw;
 }
 
-.dados {
-  margin-top: 10px;
-
-  color: #0b1f34;
-}
 
 .dados-trilho {
   background-color: var(--color-coral);

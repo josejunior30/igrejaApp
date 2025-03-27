@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import com.esibape.entities.DescricaoRequerimento;
+import com.esibape.entities.DescricaoConta;
 import com.esibape.entities.Produto;
 import com.esibape.entities.RequerimentoOrçamento;
 import com.esibape.entities.StatusRequerimento;
@@ -21,7 +21,7 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	private LocalDate dataAprovacao;
 	private StatusRequerimento statusRequerimento;
 	private LocalDate dataPagamento;
-	 private DescricaoRequerimento descricaoRequerimento;
+	 private DescricaoConta descricaoRequerimento;
 	private String pergunta1;
 	private String pergunta2;
 	private String responsavel;
@@ -75,11 +75,12 @@ public class RequerimentoOrçamentoDTO implements Serializable{
 	}
 
 	
-	public DescricaoRequerimento getDescricaoRequerimento() {
+
+	public DescricaoConta getDescricaoRequerimento() {
 		return descricaoRequerimento;
 	}
 
-	public void setDescricaoRequerimento(DescricaoRequerimento descricaoRequerimento) {
+	public void setDescricaoRequerimento(DescricaoConta descricaoRequerimento) {
 		this.descricaoRequerimento = descricaoRequerimento;
 	}
 

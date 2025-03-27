@@ -262,7 +262,7 @@ const Financas = () => {
           <div className="col-4">
             <h5 className="titulo-graf-fin mb-4">Distribuição de Despesas</h5>
             {despesas.length > 0 ? (
-              <ResponsiveContainer width="100%" height={290}>
+              <ResponsiveContainer width="100%" height={330}>
                 <PieChart>
                   <Pie
                     data={despesas}

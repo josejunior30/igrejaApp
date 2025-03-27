@@ -35,7 +35,7 @@ public class RequerimentoOrçamento implements Serializable {
     private LocalDate dataPagamento;
     @ManyToOne
     @JoinColumn(name = "descricao_id", nullable = false)
-    private DescricaoRequerimento descricaoRequerimento;
+    private DescricaoConta descricaoRequerimento;
     private String pergunta1;
     private String pergunta2;
     private String responsavel;
@@ -56,9 +56,8 @@ public class RequerimentoOrçamento implements Serializable {
     public RequerimentoOrçamento() {}
 
 
-
 	public RequerimentoOrçamento(Long id, LocalDate dataRequerimento, LocalDate dataEvento, LocalDate dataAprovacao,
-			StatusRequerimento statusRequerimento, LocalDate dataPagamento, DescricaoRequerimento descricaoRequerimento,
+			StatusRequerimento statusRequerimento, LocalDate dataPagamento, DescricaoConta descricaoRequerimento,
 			String pergunta1, String pergunta2, String responsavel, String emailResponsavel, String local,
 			Integer quantidade, String createdByRequerimento, BigDecimal total, ContaPagar contaPagar,
 			List<Produto> produto) {
@@ -81,6 +80,10 @@ public class RequerimentoOrçamento implements Serializable {
 		this.contaPagar = contaPagar;
 		this.produto = produto;
 	}
+
+
+
+
 
 
 	public void setProduto(List<Produto> produto) {
@@ -119,17 +122,14 @@ public class RequerimentoOrçamento implements Serializable {
     }
 
 	
-
-	public DescricaoRequerimento getDescricaoRequerimento() {
+	public DescricaoConta getDescricaoRequerimento() {
 		return descricaoRequerimento;
 	}
 
 
-
-	public void setDescricaoRequerimento(DescricaoRequerimento descricaoRequerimento) {
+	public void setDescricaoRequerimento(DescricaoConta descricaoRequerimento) {
 		this.descricaoRequerimento = descricaoRequerimento;
 	}
-
 
 
 	public LocalDate getDataEvento() {

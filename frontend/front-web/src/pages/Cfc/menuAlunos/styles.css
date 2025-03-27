@@ -6,11 +6,12 @@
   background-color: white;
   border-radius: 10px;
   padding: 30px;
-  max-height: 200px;
+  max-height: 150px;
   overflow-y: auto !important;
+
 }
 .sobre-trilha {
-  font-size: 20px;
+  font-size: 16px;
 }
 .section-curso li {
   background-color: var(--color-form);
@@ -102,6 +103,7 @@
 .menu-curso {
   color: white;
   text-align: center;
+
 }
 .menu-curso p {
   color: black;
@@ -112,13 +114,16 @@
   border-radius: 10px;
   padding: 10px;
   margin-top: 20px;
+  font-size: 14px!important;
+
 }
+
 .curso-trilha {
   color: var(--color-coral);
-  font-size: 38px;
+  font-size: 22px;
 }
 .botoes {
-  justify-content: center; /* Centraliza os botões horizontalmente */
+  justify-content: center; 
   align-items: center;
   gap: 20px;
   display: flex;

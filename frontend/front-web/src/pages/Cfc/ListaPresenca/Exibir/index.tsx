@@ -120,7 +120,8 @@ const HistoricoChamadaEBD = () => {
           {loading ? (
             <div className="text-center">Carregando...</div>
           ) : presencas.length > 0 ? (
-            <table className="table table-striped">
+            <div className="col-11">
+            <table className="table table-striped tabela-chamada">
               <thead>
                 <tr>
                   <th>#</th>
@@ -140,10 +141,13 @@ const HistoricoChamadaEBD = () => {
                 ))}
               </tbody>
             </table>
+            </div>
           ) : (
             <div className="text-center">Nenhum dado encontrado.</div>
+
           )}
         </div>
+        
       </div>
     </>
   );

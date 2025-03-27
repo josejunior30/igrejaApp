@@ -117,21 +117,21 @@ const MenuOpcao = () => {
             <TiArrowBack /> Voltar
           </Link>
         </div>
-        <h1 className="titulo-curso text-center pt-5 ">
+        <h4 className="titulo-curso text-center pt-1 ">
           O que é o trilho{" "}
           <span className="curso-trilha">
             {loading ? "carregando..." : curso?.nome ?? "não encontrado"}?
           </span>
-        </h1>
+        </h4>
         <div className="row justify-content-center">
           <div className="section-trilho col-7 text-center align-self-center mt-3">
             <p className="sobre-trilha">{curso?.resumo}</p>
           </div>
         </div>
         <div className="row justify-content-center mb-5">
-          <h3 className="text-center escolha mt-3">
+          <h5 className="text-center escolha mt-3">
             Escolha o curso disponível:
-          </h3>
+          </h5>
           <div className="section-curso col-12  mt-3">
             {curso?.ebdCurso && curso.ebdCurso.length > 0 ? (
               <ul className="justify-content-center">
@@ -164,16 +164,16 @@ const MenuOpcao = () => {
                 position: "absolute",
                 top: menuPosition.top,
                 left: menuPosition.left,
-                maxWidth: "700px", // Restrições de largura
+                maxWidth: "700px",
                 minWidth: "600px",
-                maxHeight: "400px", // Restrições de altura
-                overflow: "hidden", // Rolagem se necessário
+                maxHeight: "400px", 
+                overflow: "hidden",
               }}
             >
               {curso?.ebdCurso
                 .filter((ebdCurso) => ebdCurso.id === selectedCursoId)
                 .map((ebdCurso) => (
-                  <p className="pt-4">
+                  <p className="pt-2">
                     • {ebdCurso.resumo.replace(/;/g, ";\n• ")}
                   </p>
                 ))}

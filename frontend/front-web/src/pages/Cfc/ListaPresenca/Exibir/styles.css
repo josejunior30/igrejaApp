@@ -25,6 +25,9 @@
 .dados-Historico {
   color: white;
 }
+.tabela-chamada{
+  font-size: 14px;
+}
 #container-img {
   transition: transform 0.6s;
   overflow: hidden;

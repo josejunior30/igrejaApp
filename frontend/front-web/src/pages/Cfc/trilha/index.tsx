@@ -154,10 +154,10 @@ const TrilhaId = () => {
                 <div>
                   <div className="form-check form-check-inline offset-9 mb-3 dataNascimento  ">
                     <button className="btn btn-success " onClick={handlePrint}>
-                      <PiPrinterFill /> Imprimir Tabela
+                      <PiPrinterFill /> Imprimir
                     </button>
                   </div>
-                  <table className="table table-striped">
+                  <table className="table table-striped ">
                     <thead>
                       <tr>
                         <th>#</th>
