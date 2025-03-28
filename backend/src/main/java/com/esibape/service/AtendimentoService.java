@@ -2,7 +2,6 @@ package com.esibape.service;
 
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -60,7 +59,14 @@ public class AtendimentoService {
     		return new AtendimentoDTO(entity);
     	
     }
-    
+
+    @Transactional(readOnly = true)
+    public List<AtendimentoDTO> findByYear(int year) {
+        List<Atendimento> atendimentos = repository.findByYear(year);
+        return atendimentos.stream()
+                           .map(AtendimentoDTO::new)
+                           .collect(Collectors.toList());
+    }
   
     
     public void delete(Long id) {
@@ -71,23 +77,33 @@ public class AtendimentoService {
         entity.setData(dto.getData());
         entity.setHorario(dto.getHorario());
         entity.setTipoAtendimento(dto.getTipoAtendimento());
-        
+
         if (dto.getMembroIds() != null && !dto.getMembroIds().isEmpty()) {
             Set<Membro> membros = dto.getMembroIds().stream()
                 .map(id -> membroRepository.findById(id)
-                    .orElseThrow())
+                    .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado: " + id)))
                 .collect(Collectors.toSet());
-            entity.setMembro(membros);
+
+            entity.getMembro().clear();
+            entity.getMembro().addAll(membros);
         }
+
         if (dto.getVisitanteIds() != null && !dto.getVisitanteIds().isEmpty()) {
             Set<Visitante> visitantes = dto.getVisitanteIds().stream()
                 .map(id -> visitanteRepository.findById(id)
-                		   .orElseThrow())
+                    .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado: " + id)))
                 .collect(Collectors.toSet());
-            entity.setVisitante(visitantes);
+
+            entity.getVisitante().clear();
+            entity.getVisitante().addAll(visitantes);
         }
     }
-   
+
+    @Transactional(readOnly = true)
+    public List<AtendimentoDTO> findByMesEAno(int mes, int ano) {
+        List<Atendimento> list = repository.findByMesEAno(mes, ano);
+        return list.stream().map(AtendimentoDTO::new).collect(Collectors.toList());
+    }
     
 }
 

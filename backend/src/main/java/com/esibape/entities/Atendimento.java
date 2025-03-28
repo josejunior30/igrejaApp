@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -35,10 +38,16 @@ public class Atendimento implements Serializable{
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate data; 
 	
-	@ManyToMany(mappedBy = "atendimentoMembro", fetch = FetchType.EAGER)
+	@ManyToMany( cascade = CascadeType.ALL)
+	@JoinTable(name="tb_atendimento_membro", 
+	    joinColumns = @JoinColumn(name= "atendimento_id"), 
+	    inverseJoinColumns = @JoinColumn(name= "membro_id"))
     private  Set<Membro> membro = new HashSet<>(); 
 	
-	@ManyToMany(mappedBy = "atendimentoVisitante", fetch = FetchType.EAGER)
+	@ManyToMany( cascade = CascadeType.ALL)
+	@JoinTable(name="tb_atendimento_visitante", 
+	    joinColumns = @JoinColumn(name= "atendimento_id"), 
+	    inverseJoinColumns = @JoinColumn(name= "visitante_id"))
 	private Set<Visitante> visitante = new HashSet<>(); 
 	
 	

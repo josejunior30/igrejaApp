@@ -68,9 +68,7 @@ public class Visitante {
 	@OneToMany(mappedBy = "visitante", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD = new ArrayList<>();
 	
-	@ManyToMany
-	@JoinTable(name="tb_atendimento_visitante", joinColumns =
-	@JoinColumn(name= "visitante_id"), inverseJoinColumns = @JoinColumn(name= "atendimento_id"))
+	@ManyToMany(mappedBy = "visitante")
 	Set<Atendimento>atendimentoVisitante = new HashSet<>();
 	
 	public Visitante() {

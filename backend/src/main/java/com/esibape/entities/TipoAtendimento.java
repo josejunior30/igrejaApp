@@ -4,7 +4,7 @@ package com.esibape.entities;
 public enum TipoAtendimento {
     FAMILIAR("pago"),
     PASTORAL("atrasado"),
-    lIDERES("atrasado"),
+    LIDERES("atrasado"),
     PREPARACAO_CASAMENTO("atrasado"),
     PSICOSOCIAL("atrasado"),
     

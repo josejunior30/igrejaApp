@@ -19,7 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -72,9 +71,7 @@ public class Membro implements Serializable {
 	@OneToOne(mappedBy= "membro", cascade = CascadeType.ALL)
 	private FileStorage foto;
 	
-	@ManyToMany
-	@JoinTable(name="tb_atendimento_membro", joinColumns =
-	@JoinColumn(name= "membro_id"), inverseJoinColumns = @JoinColumn(name= "atendimento_id"))
+	@ManyToMany(mappedBy = "membro")
 	Set<Atendimento>atendimentoMembro = new HashSet<>();
 	public Membro() {
 		

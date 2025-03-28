@@ -6,12 +6,9 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
 import com.esibape.entities.Atendimento;
-import com.esibape.entities.EBDCurso;
 import com.esibape.entities.Membro;
 import com.esibape.entities.TipoAtendimento;
 import com.esibape.entities.Visitante;
@@ -25,8 +22,10 @@ public class AtendimentoDTO implements Serializable{
 	private TipoAtendimento tipoAtendimento;
 	private LocalTime horario;
 	private LocalDate data; 
-	  private Set<Long> membroIds;
+	  private Set<Long> membroIds =  new HashSet<>(); 
 	private Set<Long> visitanteIds = new HashSet<>(); 
+	 private Set<String> membroNomes;   
+	    private Set<String> visitanteNomes;
 	
 	public AtendimentoDTO() {
 		
@@ -34,18 +33,28 @@ public class AtendimentoDTO implements Serializable{
 	}
 	
 	public AtendimentoDTO(Atendimento atendimento) {
-	    this.id = atendimento.getId();
-	    this.horario = atendimento.getHorario();
-	    this.tipoAtendimento = atendimento.getTipoAtendimento();
-	    this.data = atendimento.getData();
-	    this.membroIds = atendimento.getMembro().stream()
-	            .map(Membro::getId)
-	            .collect(Collectors.toSet());
-	    this.visitanteIds = atendimento.getVisitante().stream()
-	            .map(Visitante::getId)
-	            .collect(Collectors.toSet());
-	}
-	
+        this.id = atendimento.getId();
+        this.horario = atendimento.getHorario();
+        this.tipoAtendimento = atendimento.getTipoAtendimento();
+        this.data = atendimento.getData();
+
+        this.membroIds = atendimento.getMembro().stream()
+                .map(Membro::getId)
+                .collect(Collectors.toSet());
+
+        this.visitanteIds = atendimento.getVisitante().stream()
+                .map(Visitante::getId)
+                .collect(Collectors.toSet());
+
+        this.membroNomes = atendimento.getMembro().stream()
+                .map(m -> m.getNome() + " " + m.getSobrenome()) // Nome + Sobrenome
+                .collect(Collectors.toSet());
+
+        this.visitanteNomes = atendimento.getVisitante().stream()
+                .map(v -> v.getNome() + " " + v.getSobrenome()) // Nome + Sobrenome
+                .collect(Collectors.toSet());
+    }
+
 
 
 	public Long getId() {
@@ -74,6 +83,22 @@ public class AtendimentoDTO implements Serializable{
 
 	public LocalDate getData() {
 		return data;
+	}
+
+	public Set<String> getMembroNomes() {
+		return membroNomes;
+	}
+
+	public void setMembroNomes(Set<String> membroNomes) {
+		this.membroNomes = membroNomes;
+	}
+
+	public Set<String> getVisitanteNomes() {
+		return visitanteNomes;
+	}
+
+	public void setVisitanteNomes(Set<String> visitanteNomes) {
+		this.visitanteNomes = visitanteNomes;
 	}
 
 	public void setData(LocalDate data) {

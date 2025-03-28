@@ -57,6 +57,7 @@ import FluxoCaixa from "./pages/FluxoCaixa/Exibir";
 import ContaPagar from "./pages/ContaPagar/inserir";
 import MenuSecretaria from "./pages/Secretaria";
 import Financas from "./pages/Financas";
+import Gabinete from "./pages/gabinete";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -352,6 +353,7 @@ function App() {
     
           <Route path="/transacao-exibir" element={<TransacaoExibir />} />
           <Route path="/financas" element={<Financas />} />
+          <Route path="/gabinete" element={<Gabinete />} />
           <Route
             path="/fluxo-caixa"
             element={

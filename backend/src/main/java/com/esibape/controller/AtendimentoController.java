@@ -14,12 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.esibape.DTO.AlunosDTO;
 import com.esibape.DTO.AtendimentoDTO;
-import com.esibape.DTO.CursoDTO;
 import com.esibape.service.AtendimentoService;
-import com.esibape.service.CursoService;
+
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -49,11 +46,20 @@ public class AtendimentoController {
 		return ResponseEntity.created(uri).body(entity);
 	}
 
-	
+    @GetMapping("/ano/{year}")
+    public ResponseEntity<List<AtendimentoDTO>> getByYear(@PathVariable int year) {
+        List<AtendimentoDTO> atendimentos = service.findByYear(year);
+        return ResponseEntity.ok(atendimentos);
+    }
 	
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<Void>delete(@PathVariable Long id){
 		 service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	@GetMapping("/mes/{mes}/ano/{ano}")
+    public ResponseEntity<List<AtendimentoDTO>> findByMesEAno(@PathVariable int mes, @PathVariable int ano) {
+        List<AtendimentoDTO> lista = service.findByMesEAno(mes, ano);
+        return ResponseEntity.ok().body(lista);
+    }
 }
