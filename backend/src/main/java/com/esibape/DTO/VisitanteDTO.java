@@ -43,7 +43,7 @@ public class VisitanteDTO {
 	private String cidade;
 	private String complemento;
 	private String url;
-
+	
 	
 	private VisitanteStatus visitanteStatus;
 

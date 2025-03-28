@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -54,10 +55,10 @@ public class Membro implements Serializable {
 	private Integer ano;
 	private String opcaoCurso;
 	private Boolean apostila = false;
-	 @Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING)
 	private MembroStatus membroStatus;
-	 @Enumerated(EnumType.STRING)
-		private MembroTipo membroTipo;
+	@Enumerated(EnumType.STRING)
+	private MembroTipo membroTipo;
 
 	
 	@ManyToMany
@@ -71,18 +72,22 @@ public class Membro implements Serializable {
 	@OneToOne(mappedBy= "membro", cascade = CascadeType.ALL)
 	private FileStorage foto;
 	
+	@ManyToMany
+	@JoinTable(name="tb_atendimento_membro", joinColumns =
+	@JoinColumn(name= "membro_id"), inverseJoinColumns = @JoinColumn(name= "atendimento_id"))
+	Set<Atendimento>atendimentoMembro = new HashSet<>();
 	public Membro() {
 		
 	}
 	
 
-
+	
 
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
 			String cidade, String complemento, String url, LocalDate desligamento, Integer ano, String opcaoCurso,
 			Boolean apostila, MembroStatus membroStatus, MembroTipo membroTipo, Set<EBDCurso> ebdCurso,
-			List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto) {
+			List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto, Set<Atendimento> atendimentoMembro) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -109,11 +114,8 @@ public class Membro implements Serializable {
 		this.ebdCurso = ebdCurso;
 		this.listaPresencaEBD = listaPresencaEBD;
 		this.foto = foto;
+		this.atendimentoMembro = atendimentoMembro;
 	}
-
-
-
-
 
 
 
@@ -145,6 +147,22 @@ public class Membro implements Serializable {
 	}
 
 
+
+
+
+
+
+
+	public Set<Atendimento> getAtendimentoMembro() {
+		return atendimentoMembro;
+	}
+
+
+
+
+	public void setAtendimentoMembro(Set<Atendimento> atendimentoMembro) {
+		this.atendimentoMembro = atendimentoMembro;
+	}
 
 
 

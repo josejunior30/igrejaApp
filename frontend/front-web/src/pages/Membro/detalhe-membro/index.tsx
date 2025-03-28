@@ -112,7 +112,7 @@ const Detalhes = () => {
     <>
       <Header />
       <div className="container-fluid mt-5 ">
-        <div className="row pt-2">
+        <div className="row pt-5">
           <div className="col-md-6 m-5 md-5 pb-3  dadosMembros">
             {MembroDTO ? (
               <>
@@ -139,6 +139,12 @@ const Detalhes = () => {
                     >
                       {MembroDTO.membroStatus}
                     </span>
+                    
+                {MembroDTO?.desligamento && (
+                  <span className="desligamento-membro ">
+                    {new Date(MembroDTO.desligamento).toLocaleDateString()}
+                  </span>
+                )}
                     <p className="nome-membro">
                       {MembroDTO.nome} {MembroDTO.sobrenome}
                     </p>
@@ -186,11 +192,6 @@ const Detalhes = () => {
                   </p>
                 )}
 
-                {MembroDTO?.desligamento && (
-                  <span className="desligamento">
-                    {new Date(MembroDTO.desligamento).toLocaleDateString()}
-                  </span>
-                )}
               </>
             ) : (
               <p>Carregando detalhes do membro...</p>

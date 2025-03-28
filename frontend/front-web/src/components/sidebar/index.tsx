@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import "./styles.css";
 import { FaTrainSubway } from "react-icons/fa6";
+import { IoSchool } from "react-icons/io5";
 const Sidebar: React.FC = () => {
   const [showSubmenu, setShowSubmenu] = useState(false);
   
@@ -65,7 +66,8 @@ const Sidebar: React.FC = () => {
         </li>
         <li className="nav-item">
           <Link to="/trilho" className="nav-link">
-            <FaBible className="me-2" /> CFC
+          <IoSchool /> CFC
+
           </Link>
         </li>
       </ul>

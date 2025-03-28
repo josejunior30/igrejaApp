@@ -1,22 +1,22 @@
-.dadosMembros{
+.dadosMembros {
   background-color: white;
   border-radius: 20px;
 }
-.nome-membro{
-font-size: 24px;
-color: var(--color-form);
-font-weight: bolder;
-margin-left: 15px;
-margin-bottom: 5px;
+.nome-membro {
+  font-size: 24px;
+  color: var(--color-form);
+  font-weight: bolder;
+  margin-left: 15px;
+  margin-bottom: 5px;
 }
 
-.dados-pessoais{
-display: block;
-position: relative;
- 
+.dados-pessoais {
+  display: block;
+  position: relative;
+
   margin-top: 25px;
 }
-.foto-de-membro{
+.foto-de-membro {
   border-radius: 20px;
   display: block;
   height: 200px;
@@ -28,24 +28,23 @@ position: relative;
 }
 .dados-m span {
   font-weight: bold;
- margin-left: 10px;
- color: var(--color-form);
+  margin-left: 10px;
+  color: var(--color-form);
 }
-.endereço-membro{
+.endereço-membro {
   background-color: white;
   border-radius: 20px;
 }
-.status-membro{
-margin-left: 26vw;
-margin-top: -22px;
+.status-membro {
+  margin-left: 26vw;
+  margin-top: -22px;
   font-size: 12px;
   font-weight: bold;
   padding-top: 10px;
   text-decoration: underline;
   position: absolute;
- 
 }
-.titulo-endereço{
+.titulo-endereço {
   background-color: var(--color-form);
   margin-top: 20px;
   padding: 10px;
@@ -69,15 +68,13 @@ margin-top: -22px;
   width: 150px;
 }
 .botao-editar-membro:hover {
-
   background-color: var(--color-coral);
- 
 }
-.voltar-detalhe-membro{
-  font-size: 12px!important;
+.voltar-detalhe-membro {
+  font-size: 12px !important;
   width: 120px;
   position: absolute;
-margin-left: 60vw;
+  margin-left: 60vw;
 }
 .botao-deletar-membro {
   background-color: #f44336;
@@ -89,4 +86,14 @@ margin-left: 60vw;
   margin: 0 30px;
   padding: 10px 20px;
   font-weight: bolder;
+}
+.desligamento-membro {
+margin-left: 25vw;
+  font-size: 16px;
+  font-weight: bold;
+  padding-top: 10px;
+  color: #c70909;
+  text-decoration: underline;
+  position: absolute;
+ 
 }

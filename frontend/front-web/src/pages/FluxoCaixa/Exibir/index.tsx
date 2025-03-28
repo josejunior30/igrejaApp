@@ -412,8 +412,8 @@ const FluxoCaixa = () => {
                 {fluxo && (
                   <div className="mt-4 d-flex justify-content-center align-items-center mb-5 fluxo-caixa-container">
                     {/* Saldo Líquido */}
-                    <div className="text-center me-5">
-                      <h4>Saldo Líquido no Mes</h4>
+                    <div className="text-center me-5 saldo-mes">
+                      <h4 className="saldo-titulo">Saldo Líquido no Mês</h4>
                       <hr className="my-2 linha" />
                       <p
                         className="saldo-liquido"
@@ -431,8 +431,8 @@ const FluxoCaixa = () => {
                     </div>
 
                     {/* Saldo Total (Acumulado) */}
-                    <div className="text-center">
-                      <h4>Saldo Liquido Total</h4>
+                    <div className="text-center saldo-total">
+                      <h4 className="saldo-titulo">Saldo Líquido Total</h4>
                       <hr className="my-2 linha" />
                       <p
                         className="saldo-liquido"

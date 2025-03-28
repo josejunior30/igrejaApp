@@ -68,18 +68,21 @@ public class Visitante {
 	@OneToMany(mappedBy = "visitante", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD = new ArrayList<>();
 	
+	@ManyToMany
+	@JoinTable(name="tb_atendimento_visitante", joinColumns =
+	@JoinColumn(name= "visitante_id"), inverseJoinColumns = @JoinColumn(name= "atendimento_id"))
+	Set<Atendimento>atendimentoVisitante = new HashSet<>();
+	
 	public Visitante() {
 		
 		
 	}
 
-
-
 	public Visitante(Long id, String nome, String sobrenome, Integer idade, String email, String telefone,
 			LocalDate dataNascimento, Boolean apostila, String cpf, MembroEstado estadoCivil, String rua, String cep,
 			String numero, String bairro, String cidade, String complemento, String url,
 			VisitanteStatus visitanteStatus, Set<EBDCurso> ebdCursoVisitante, String opcaoCurso,
-			List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD) {
+			List<ListaPresencaVisitanteEBD> listaPresencaVisitanteEBD, Set<Atendimento> atendimentoVisitante) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -102,7 +105,9 @@ public class Visitante {
 		this.ebdCursoVisitante = ebdCursoVisitante;
 		this.opcaoCurso = opcaoCurso;
 		this.listaPresencaVisitanteEBD = listaPresencaVisitanteEBD;
+		this.atendimentoVisitante = atendimentoVisitante;
 	}
+
 
 
 
@@ -206,6 +211,14 @@ public class Visitante {
 
 
 
+
+	public Set<Atendimento> getAtendimentoVisitante() {
+		return atendimentoVisitante;
+	}
+
+	public void setAtendimentoVisitante(Set<Atendimento> atendimentoVisitante) {
+		this.atendimentoVisitante = atendimentoVisitante;
+	}
 
 	public String getCpf() {
 		return cpf;

@@ -1,0 +1,104 @@
+package com.esibape.DTO;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import com.esibape.entities.Atendimento;
+import com.esibape.entities.EBDCurso;
+import com.esibape.entities.Membro;
+import com.esibape.entities.TipoAtendimento;
+import com.esibape.entities.Visitante;
+
+
+public class AtendimentoDTO implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	private Long id;
+	@Enumerated(EnumType.STRING)
+	private TipoAtendimento tipoAtendimento;
+	private LocalTime horario;
+	private LocalDate data; 
+	  private Set<Long> membroIds;
+	private Set<Long> visitanteIds = new HashSet<>(); 
+	
+	public AtendimentoDTO() {
+		
+		
+	}
+	
+	public AtendimentoDTO(Atendimento atendimento) {
+	    this.id = atendimento.getId();
+	    this.horario = atendimento.getHorario();
+	    this.tipoAtendimento = atendimento.getTipoAtendimento();
+	    this.data = atendimento.getData();
+	    this.membroIds = atendimento.getMembro().stream()
+	            .map(Membro::getId)
+	            .collect(Collectors.toSet());
+	    this.visitanteIds = atendimento.getVisitante().stream()
+	            .map(Visitante::getId)
+	            .collect(Collectors.toSet());
+	}
+	
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public TipoAtendimento getTipoAtendimento() {
+		return tipoAtendimento;
+	}
+
+	public void setTipoAtendimento(TipoAtendimento tipoAtendimento) {
+		this.tipoAtendimento = tipoAtendimento;
+	}
+
+	public LocalTime getHorario() {
+		return horario;
+	}
+
+	public void setHorario(LocalTime horario) {
+		this.horario = horario;
+	}
+
+	public LocalDate getData() {
+		return data;
+	}
+
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+
+
+
+	public Set<Long> getMembroIds() {
+		return membroIds;
+	}
+
+	public void setMembroIds(Set<Long> membroIds) {
+		this.membroIds = membroIds;
+	}
+
+	public Set<Long> getVisitanteIds() {
+		return visitanteIds;
+	}
+
+	public void setVisitanteIds(Set<Long> visitanteIds) {
+		this.visitanteIds = visitanteIds;
+	}
+
+
+
+
+}

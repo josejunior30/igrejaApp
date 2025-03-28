@@ -1,48 +1,61 @@
 .ganho-bg {
-
-  color: #00ff3c!important; /* Verde Escuro para Contraste */
+  color: #00ff3c !important;
   font-weight: bold;
 }
-
+.saldo-mes {
+  background-color: var(--color-turquoise);
+  justify-content: center;
+  align-content: center;
+  padding: 10px;
+  border-radius: 10px;
+  color: var(--color-black);
+}
+.saldo-total {
+  background-color: var(--color-turquoise);
+  justify-content: center;
+  align-content: center;
+  border-radius: 10px;
+  padding: 10px;
+  color: var(--color-black);
+}
+.saldo-titulo{
+font-weight: bold;
+}
 .despesa-bg {
-
-  color: #f80000!important; /* Texto Branco para Contraste */
+  color: #f80000 !important;
   font-weight: bold;
 }
 .saldo-liquido {
-  font-size: 40px;
+  font-size: 30px;
   color: white;
   font-weight: bolder;
 }
-.btn-anual{
-  margin-left: 10px!important;
+.btn-anual {
+  margin-left: 10px !important;
 }
-.DespesaTotal{
+.DespesaTotal {
   font-size: 22px;
   font-weight: bolder;
 }
-.titulo-transacao{
-  
-  color: white!important;
+.titulo-transacao {
+  color: white !important;
 }
 .saldo-liquido {
-
   color: white;
 }
-.titulo-fluxo-caixa{
-  color:white;
-}
-.fluxo-caixa-container{
+.titulo-fluxo-caixa {
   color: white;
 }
-.linha{
-  color:white;
-
+.fluxo-caixa-container {
+  color: white;
 }
-.totalFiltro{
-  color:white;
+.linha {
+  color: white;
 }
-.totalFiltro p{
-  color:white;
+.totalFiltro {
+  color: white;
+}
+.totalFiltro p {
+  color: white;
   font-size: 20px;
 }
