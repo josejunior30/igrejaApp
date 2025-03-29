@@ -8,11 +8,24 @@ export function findById(id: number) {
     return axios.get(`${BASE_URL}/atendimento`);
   }
   
-  export function insertAluno(atendimento: any) {
+  export function insertAtendimento(atendimento: any) {
     return axios.post(`${BASE_URL}/atendimento`, atendimento);
   }
   export function findByAno(ano: number) {
     return axios.get(`${BASE_URL}/atendimento/ano/${ano}`);
+  }
+
+  export function findByProximos() {
+    return axios.get(`${BASE_URL}/atendimento/proximos`);
+  }
+  export function findAllMembros() {
+    return axios.get(`${BASE_URL}/membro`);
+  }
+  export function findAllVisitantes() {
+    return axios.get(`${BASE_URL}/visitantes`);
+  }
+  export function findByUltimos() {
+    return axios.get(`${BASE_URL}/atendimento/ultimos`);
   }
   export function findByAnoAtual(ano: number = new Date().getFullYear()) {
     return axios.get(`${BASE_URL}/atendimento/ano/${ano}`);

@@ -45,7 +45,17 @@ public class AtendimentoController {
 				.buildAndExpand(entity.getId()).toUri();
 		return ResponseEntity.created(uri).body(entity);
 	}
+    @GetMapping("/proximos")
+    public ResponseEntity<List<AtendimentoDTO>> getProximosAtendimentos() {
+        List<AtendimentoDTO> lista = service.findProximosAtendimentos();
+        return ResponseEntity.ok(lista);
+    }
 
+    @GetMapping("/ultimos")
+    public ResponseEntity<List<AtendimentoDTO>> getUltimosAtendimentos() {
+        List<AtendimentoDTO> lista = service.findUltimosAtendimentos();
+        return ResponseEntity.ok(lista);
+    }
     @GetMapping("/ano/{year}")
     public ResponseEntity<List<AtendimentoDTO>> getByYear(@PathVariable int year) {
         List<AtendimentoDTO> atendimentos = service.findByYear(year);

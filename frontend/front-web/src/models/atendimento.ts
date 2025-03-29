@@ -3,6 +3,8 @@ export type Atendimento = {
     data:Date;
     horario:string;
    tipoAtendimento: TipoAtendimento;
+   membroNomes:string[];
+   visitanteNomes:string[];
   };
 
   export enum TipoAtendimento {

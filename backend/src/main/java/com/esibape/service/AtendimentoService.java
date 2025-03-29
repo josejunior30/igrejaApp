@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,7 +74,19 @@ public class AtendimentoService {
     public void delete(Long id) {
     	repository.deleteById(id);
     }
-    
+    @Transactional(readOnly = true)
+    public List<AtendimentoDTO> findProximosAtendimentos() {
+        Pageable pageable = PageRequest.of(0, 5);
+        List<Atendimento> list = repository.findProximosAtendimentos(pageable);
+        return list.stream().map(AtendimentoDTO::new).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<AtendimentoDTO> findUltimosAtendimentos() {
+        Pageable pageable = PageRequest.of(0, 5);
+        List<Atendimento> list = repository.findUltimosAtendimentos(pageable);
+        return list.stream().map(AtendimentoDTO::new).collect(Collectors.toList());
+    }
     private void copyDtoToEntity(AtendimentoDTO dto, Atendimento entity) {
         entity.setData(dto.getData());
         entity.setHorario(dto.getHorario());
