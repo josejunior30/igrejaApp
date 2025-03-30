@@ -1,11 +1,21 @@
-.dados-atendimento{
-background-color: white;
-width: 150px;
-height: 60px;
-margin-right: 20px;
+.dados-atendimento {
+  background-color: white;
+  width: 150px;
+  height: 60px;
+  margin-right: 20px;
 }
 
-.dados-atendimento span{
- display: block;
-  
-  }
+.dados-atendimento span {
+  display: block;
+}
+.ultimos-atendimentos {
+  color: white;
+}
+.titulo-grafico-atendimento {
+  color: white;
+  font-size: 20px;
+}
+.atendimento-tipo {
+  background-color: var(--color-form);
+  width: 200px;
+}

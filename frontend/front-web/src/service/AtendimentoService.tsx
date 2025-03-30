@@ -22,7 +22,7 @@ export function findById(id: number) {
     return axios.get(`${BASE_URL}/membro`);
   }
   export function findAllVisitantes() {
-    return axios.get(`${BASE_URL}/visitantes`);
+    return axios.get(`${BASE_URL}/visitante`);
   }
   export function findByUltimos() {
     return axios.get(`${BASE_URL}/atendimento/ultimos`);
