@@ -40,14 +40,14 @@ public class Atendimento implements Serializable{
 	
 	@ManyToMany( cascade = CascadeType.ALL)
 	@JoinTable(name="tb_atendimento_membro", 
-	    joinColumns = @JoinColumn(name= "atendimento_id"), 
-	    inverseJoinColumns = @JoinColumn(name= "membro_id"))
+	    joinColumns = @JoinColumn(name= "atendimento_id",nullable = true), 
+	    inverseJoinColumns = @JoinColumn(name= "membro_id",nullable = true))
     private  Set<Membro> membro = new HashSet<>(); 
 	
 	@ManyToMany( cascade = CascadeType.ALL)
 	@JoinTable(name="tb_atendimento_visitante", 
-	    joinColumns = @JoinColumn(name= "atendimento_id"), 
-	    inverseJoinColumns = @JoinColumn(name= "visitante_id"))
+	    joinColumns = @JoinColumn(name= "atendimento_id",nullable = true), 
+	    inverseJoinColumns = @JoinColumn(name= "visitante_id",nullable = true))
 	private Set<Visitante> visitante = new HashSet<>(); 
 	
 	

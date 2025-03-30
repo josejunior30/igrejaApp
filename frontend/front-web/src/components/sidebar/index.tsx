@@ -65,8 +65,8 @@ const Sidebar: React.FC = () => {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/trilho" className="nav-link">
-          <IoSchool /> CFC
+          <Link to="/gabinete" className="nav-link">
+          <FaBible /> Gabinete
 
           </Link>
         </li>

@@ -51,8 +51,8 @@ const Gabinete = () => {
     data: "",
     horario: "",
     tipoAtendimento: TipoAtendimento.FAMILIAR,
-    membroIds: 0,
-    visitanteIds: 0,
+    membroIds: [] as number[],
+    visitanteIds: [] as number[],
   });
 
   useEffect(() => {
@@ -172,18 +172,15 @@ const Gabinete = () => {
     event: React.ChangeEvent<HTMLSelectElement>,
     field: "membroIds" | "visitanteIds"
   ) => {
-    const selectedIds = Array.from(event.target.selectedOptions).map(
-      (option) => option.value
+    const selectedIds = Array.from(event.target.selectedOptions, (option) =>
+      Number(option.value)
     );
-
-    console.log(`Selecionados para ${field}:`, selectedIds); // Debug dos IDs selecionados
 
     setNovoAtendimento((prev) => ({
       ...prev,
       [field]: selectedIds,
     }));
   };
-
   // Submete o formulário
   const handleSubmit = () => {
     console.log(
@@ -213,10 +210,60 @@ const Gabinete = () => {
       "0"
     )}`;
   };
+
+  const formatTipoAtendimento = (tipo: TipoAtendimento): string => {
+    const tipoMapeado: Record<TipoAtendimento, string> = {
+      [TipoAtendimento.PASTORAL]: "Aconselhamento Pastoral",
+      [TipoAtendimento.FAMILIAR]: "Aconselhamento Familiar",
+      [TipoAtendimento.LIDERES]: "Reuniao de Lideres",
+      [TipoAtendimento.PREPARACAO_CASAMENTO]: "Preparaçao para casamento",
+      [TipoAtendimento.PSICOSOCIAL]: "aconselhamento Psicosocial",
+      [TipoAtendimento.NOVOS_CONVERTIDOS]: "Novos Convertidos",
+    };
+    return tipoMapeado[tipo] || tipo;
+  };
+  const getSelectedNames = (
+    ids: number[],
+    list: { id: number; nome: string }[]
+  ) => {
+    return list
+      .filter((item) => ids.includes(item.id))
+      .map((item) => item.nome)
+      .join(", ");
+  };
+  const handleDoubleClick = (
+    id: number,
+    field: "membroIds" | "visitanteIds"
+  ) => {
+    setNovoAtendimento((prev) => {
+      const ids = prev[field].includes(id)
+        ? prev[field].filter((item) => item !== id)
+        : [...prev[field], id];
+      return { ...prev, [field]: ids };
+    });
+  };
   return (
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
+        <div className="row justify-content-center d-flex">
+          <div className="col-12 mt-2 mb-2 text-center">
+            <button
+              className=" btn-atendimento"
+              data-bs-toggle="modal"
+              data-bs-target="#atendimentoModal"
+            >
+              Novo Atendimento
+            </button>
+            <button
+              className="btn-atendimento "
+              data-bs-toggle="modal"
+              data-bs-target="#atendimentoModal"
+            >
+              Historico
+            </button>
+          </div>
+        </div>
         <div className="row justify-content-center">
           <div className="col-2 dados-atendimento">
             <span>Atendimentos no mês</span>
@@ -231,51 +278,35 @@ const Gabinete = () => {
             <span>{liderancaAtendimentos}</span>
           </div>
         </div>
-        <div className="row justify-content-center d-flex gap-1">
-          <div className="col-5 mt-4 mb-2">
-          <button
-          className="btn btn-primary mt-3"
-          data-bs-toggle="modal"
-          data-bs-target="#atendimentoModal"
-        >
-          Novo Atendimento
-        </button>
-        <button
-          className="btn btn-primary mt-3"
-          data-bs-toggle="modal"
-          data-bs-target="#atendimentoModal"
-        >
-        Historico de Atendimento
-        </button>
-          </div>
-      
-        </div>
       </div>
-      <div className="row justify-content-center">
+      <div className="row justify-content-center mb-5">
         <div className="col-4 mt-4">
           <div style={{ width: "100%", height: 300 }}>
             <h4 className="text-center titulo-grafico-atendimento">
               Tipos de Atendimento
             </h4>
             <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={dados}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name} ${Math.round(percent * 100)}%`}
-                outerRadius={100}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {dados.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(value) => `${value} atendimentos`} />
-              <Legend />
-            </PieChart>
+              <PieChart>
+                <Pie
+                  data={dados}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${Math.round(percent * 100)}%`}
+                  outerRadius={100}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {dados.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => `${value} atendimentos`} />
+                <Legend />
+              </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
@@ -286,21 +317,28 @@ const Gabinete = () => {
           <ul className="list-group">
             {proximosAtendimentos.map((atendimento) => (
               <li key={atendimento.id} className="list-group-item">
-              <span className="atendimento-tipo">{formatDiaMes(new Date(atendimento.data))} - {formatHorario(atendimento.horario)} -{" "}
-                {atendimento.tipoAtendimento}
-                </span>
-                <div>
-                  <strong>Membros:</strong> {atendimento.membroNomes}
+                <div className="atendimento-tipo">
+                  <span>
+                    {formatDiaMes(new Date(atendimento.data))} -{" "}
+                    {formatHorario(atendimento.horario)} -{" "}
+                    {formatTipoAtendimento(atendimento.tipoAtendimento)}
+                  </span>
                 </div>
-                <div>
-                  <strong>Visitantes:</strong> {atendimento.visitanteNomes}
+                <div className="nome-atendimento">
+                <ul className="nome-atendimento">
+                    {[
+                      ...(atendimento.membroNomes || []),
+                      ...(atendimento.visitanteNomes || []),
+                    ].map((nome, index) => (
+                      <li key={index}>{nome}</li>
+                    ))}
+                  </ul>
                 </div>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Seção de Últimos Atendimentos */}
         <div className="col-3 mt-4">
           <h4 className="ultimos-atendimentos text-center">
             Últimos Atendimentos
@@ -308,23 +346,31 @@ const Gabinete = () => {
           <ul className="list-group">
             {ultimosAtendimentos.map((atendimento) => (
               <li key={atendimento.id} className="list-group-item">
-              <span className="atendimento-tipo"> {formatDiaMes(new Date(atendimento.data))}-   {formatHorario(atendimento.horario)} -{" "}
-                {atendimento.tipoAtendimento}
-                </span>
-                <div>
-                  <strong>Membros:</strong> {atendimento.membroNomes}
+                <div className="atendimento-tipo">
+                  <span>
+                    {" "}
+                    {formatDiaMes(new Date(atendimento.data))}-{" "}
+                    {formatHorario(atendimento.horario)} -{" "}
+                    {formatTipoAtendimento(atendimento.tipoAtendimento)}
+                  </span>
                 </div>
                 <div>
-                  <strong>Visitantes:</strong> {atendimento.visitanteNomes}
+                  <ul className="nome-atendimento">
+                    {[
+                      ...(atendimento.membroNomes || []),
+                      ...(atendimento.visitanteNomes || []),
+                    ].map((nome, index) => (
+                      <li key={index}>{nome}</li>
+                    ))}
+                  </ul>
                 </div>
+                <div></div>
               </li>
             ))}
           </ul>
         </div>
-
-        {/* Botão para abrir o modal */}
       </div>
-      {/* Modal para adicionar novo atendimento */}
+
       <div
         className="modal fade"
         id="atendimentoModal"
@@ -370,36 +416,52 @@ const Gabinete = () => {
               >
                 {Object.values(TipoAtendimento).map((tipo) => (
                   <option key={tipo} value={tipo}>
-                    {tipo}
+                    {formatTipoAtendimento(tipo)}
                   </option>
                 ))}
               </select>
 
               <label>Membros:</label>
-              <select
-                className="form-select"
-                value={novoAtendimento.membroIds}
-                onChange={(event) => handleSelectChange(event, "membroIds")}
-              >
+              <select className="form-select" multiple>
                 {membros.map((membro) => (
-                  <option key={membro.id} value={membro.id}>
+                  <option
+                    key={membro.id}
+                    value={membro.id}
+                    onDoubleClick={() =>
+                      handleDoubleClick(membro.id, "membroIds")
+                    }
+                  >
                     {membro.nome}
                   </option>
                 ))}
               </select>
+              <p>
+                selecionados:{" "}
+                <strong>
+                  {getSelectedNames(novoAtendimento.membroIds, membros)}
+                </strong>
+              </p>
 
               <label>Visitantes:</label>
-              <select
-                className="form-select"
-                value={novoAtendimento.visitanteIds}
-                onChange={(event) => handleSelectChange(event, "visitanteIds")}
-              >
+              <select className="form-select" multiple>
                 {visitantes.map((visitante) => (
-                  <option key={visitante.id} value={visitante.id}>
+                  <option
+                    key={visitante.id}
+                    value={visitante.id}
+                    onDoubleClick={() =>
+                      handleDoubleClick(visitante.id, "visitanteIds")
+                    }
+                  >
                     {visitante.nome}
                   </option>
                 ))}
               </select>
+              <p>
+                selecionados:{" "}
+                <strong>
+                  {getSelectedNames(novoAtendimento.visitanteIds, visitantes)}
+                </strong>
+              </p>
             </div>
             <div className="modal-footer">
               <button

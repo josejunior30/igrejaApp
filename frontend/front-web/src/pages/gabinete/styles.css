@@ -1,15 +1,23 @@
 .dados-atendimento {
   background-color: white;
-  width: 150px;
+  width: 140px;
   height: 60px;
   margin-right: 20px;
+  background-color: var(--color-turquoise);
+  align-content: center;
+  border-radius: 10px;
+  font-size: 14px;
 }
 
 .dados-atendimento span {
   display: block;
+  text-align: center;
+  font-weight: bolder;
+
 }
 .ultimos-atendimentos {
   color: white;
+  font-size: 18px;
 }
 .titulo-grafico-atendimento {
   color: white;
@@ -17,5 +25,21 @@
 }
 .atendimento-tipo {
   background-color: var(--color-form);
-  width: 200px;
+font-weight: bolder;
+padding: 5px;
+font-size: 14px;
+}
+.btn-atendimento{
+  background-color: var(--color-coral)!important;
+  width: 150px;
+  height: 40px;
+  margin-right: 20px;
+  border-radius: 10px;
+  color:white;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+.nome-atendimento li{
+  font-size: 14px;
+  list-style: none;
 }
