@@ -13,7 +13,6 @@
   display: block;
   text-align: center;
   font-weight: bolder;
-
 }
 .ultimos-atendimentos {
   color: white;
@@ -25,21 +24,50 @@
 }
 .atendimento-tipo {
   background-color: var(--color-form);
-font-weight: bolder;
-padding: 5px;
-font-size: 14px;
+  font-weight: bolder;
+  padding: 5px;
+  font-size: 14px;
 }
-.btn-atendimento{
-  background-color: var(--color-coral)!important;
+.btn-atendimento {
+  background-color: var(--color-coral) !important;
   width: 150px;
   height: 40px;
   margin-right: 20px;
   border-radius: 10px;
-  color:white;
+  color: white;
   margin-bottom: 20px;
   font-size: 12px;
 }
-.nome-atendimento li{
+.nome-atendimento li {
   font-size: 14px;
   list-style: none;
+}
+.modal-custom {
+  max-width: 100%!important; /* Ajuste conforme necessário */
+  width: 100%;
+}
+.modal-container{
+width: 100vw!important;
+margin-top: 55vh;
+}
+.atendimento-Modal{
+  max-width: 100%!important;
+}
+.dados-inserir-atendimento{
+margin-right: 10px;
+}
+.select-dados-atendimento option{
+height: 24px;
+  font-size: 12px;
+}
+.select-dados-atendimento{
+  height: 140px;
+  font-size: 12px;
+}
+.label-atendimento{
+  font-weight: bold;
+  margin-top: 5px;
+}
+.selecionados{
+  margin-top: 5px;
 }

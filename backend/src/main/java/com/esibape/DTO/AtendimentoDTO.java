@@ -3,11 +3,15 @@ package com.esibape.DTO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
 import com.esibape.entities.Atendimento;
 import com.esibape.entities.Membro;
 import com.esibape.entities.TipoAtendimento;
@@ -22,6 +26,8 @@ public class AtendimentoDTO implements Serializable{
 	private TipoAtendimento tipoAtendimento;
 	private LocalTime horario;
 	private LocalDate data; 
+	private List<String> outro;
+
 	  private Set<Long> membroIds =  new HashSet<>(); 
 	private Set<Long> visitanteIds = new HashSet<>(); 
 	 private Set<String> membroNomes;   
@@ -35,6 +41,7 @@ public class AtendimentoDTO implements Serializable{
 	public AtendimentoDTO(Atendimento atendimento) {
         this.id = atendimento.getId();
         this.horario = atendimento.getHorario();
+
         this.tipoAtendimento = atendimento.getTipoAtendimento();
         this.data = atendimento.getData();
 
@@ -53,6 +60,8 @@ public class AtendimentoDTO implements Serializable{
         this.visitanteNomes = atendimento.getVisitante().stream()
                 .map(v -> v.getNome() + " " + v.getSobrenome()) // Nome + Sobrenome
                 .collect(Collectors.toSet());
+        
+        this.outro = new ArrayList<>(atendimento.getOutro());
     }
 
 
@@ -75,6 +84,15 @@ public class AtendimentoDTO implements Serializable{
 
 	public LocalTime getHorario() {
 		return horario;
+	}
+
+
+	public List<String> getOutro() {
+		return outro;
+	}
+
+	public void setOutro(List<String> outro) {
+		this.outro = outro;
 	}
 
 	public void setHorario(LocalTime horario) {

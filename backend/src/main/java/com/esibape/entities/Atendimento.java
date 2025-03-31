@@ -3,15 +3,19 @@ package com.esibape.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,6 +42,12 @@ public class Atendimento implements Serializable{
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate data; 
 	
+	@ElementCollection
+	@CollectionTable(name = "tb_atendimento_outro", joinColumns = @JoinColumn(name = "atendimento_id"))
+	@Column(name = "outro")
+	private List<String> outro = new ArrayList<>();
+
+	
 	@ManyToMany( cascade = CascadeType.ALL)
 	@JoinTable(name="tb_atendimento_membro", 
 	    joinColumns = @JoinColumn(name= "atendimento_id",nullable = true), 
@@ -56,17 +66,20 @@ public class Atendimento implements Serializable{
 		
 	}
 
+	
 
-	public Atendimento(Long id, TipoAtendimento tipoAtendimento, LocalTime horario, LocalDate data, Set<Membro> membro,
-			Set<Visitante> visitante) {
+	public Atendimento(Long id, TipoAtendimento tipoAtendimento, LocalTime horario, LocalDate data, List<String> outro,
+			Set<Membro> membro, Set<Visitante> visitante) {
 		super();
 		this.id = id;
 		this.tipoAtendimento = tipoAtendimento;
 		this.horario = horario;
 		this.data = data;
+		this.outro = outro;
 		this.membro = membro;
 		this.visitante = visitante;
 	}
+
 
 
 	public Long getId() {
@@ -97,6 +110,20 @@ public class Atendimento implements Serializable{
 	public void setHorario(LocalTime horario) {
 		this.horario = horario;
 	}
+
+
+
+
+	public List<String> getOutro() {
+		return outro;
+	}
+
+
+
+	public void setOutro(List<String> outro) {
+		this.outro = outro;
+	}
+
 
 
 	public LocalDate getData() {

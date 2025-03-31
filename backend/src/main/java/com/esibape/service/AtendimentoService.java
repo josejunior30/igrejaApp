@@ -92,6 +92,11 @@ public class AtendimentoService {
         entity.setHorario(dto.getHorario());
         entity.setTipoAtendimento(dto.getTipoAtendimento());
 
+        if (dto.getOutro() != null) {
+            entity.getOutro().clear();
+            entity.getOutro().addAll(dto.getOutro());
+        }
+
         if (dto.getMembroIds() != null && !dto.getMembroIds().isEmpty()) {
             Set<Membro> membros = dto.getMembroIds().stream()
                 .map(id -> membroRepository.findById(id)
@@ -112,6 +117,7 @@ public class AtendimentoService {
             entity.getVisitante().addAll(visitantes);
         }
     }
+
 
     @Transactional(readOnly = true)
     public List<AtendimentoDTO> findByMesEAno(int mes, int ano) {

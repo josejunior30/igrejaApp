@@ -34,7 +34,7 @@ const Gabinete = () => {
   const [membros, setMembros] = useState<MembroDTO[]>([]);
   const [visitantes, setVisitantes] = useState<visitante[]>([]);
   const [dados, setDados] = useState<{ name: string; value: number }[]>([]);
-
+  const [outroNome, setOutroNome] = useState("");
   const [proximosAtendimentos, setProximosAtendimentos] = useState<
     Atendimento[]
   >([]);
@@ -46,15 +46,29 @@ const Gabinete = () => {
   const [liderancaAtendimentos, setLiderancaAtendimentos] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
-  // Estado para o novo atendimento
   const [novoAtendimento, setNovoAtendimento] = useState({
     data: "",
     horario: "",
+    outro: [] as string[],
     tipoAtendimento: TipoAtendimento.FAMILIAR,
     membroIds: [] as number[],
     visitanteIds: [] as number[],
   });
-
+  const handleAddOutro = () => {
+    if (outroNome.trim() !== "") {
+      setNovoAtendimento((prev) => ({
+        ...prev,
+        outro: [...prev.outro, outroNome.trim()],
+      }));
+      setOutroNome(""); // Limpa o input após adicionar
+    }
+  };
+  const handleRemoveOutro = (nome: string) => {
+    setNovoAtendimento((prev) => ({
+      ...prev,
+      outro: prev.outro.filter((n) => n !== nome),
+    }));
+  };
   useEffect(() => {
     findByAnoAtual()
       .then((response) => {
@@ -110,7 +124,6 @@ const Gabinete = () => {
       });
   }, []);
 
-  // Busca os próximos 5 atendimentos
   useEffect(() => {
     findByProximos()
       .then((response) => {
@@ -121,7 +134,6 @@ const Gabinete = () => {
       });
   }, []);
 
-  // Busca os últimos 5 atendimentos
   useEffect(() => {
     findByUltimos()
       .then((response) => {
@@ -145,8 +157,11 @@ const Gabinete = () => {
   useEffect(() => {
     findAllMembros()
       .then((response) => {
-        console.log("Membros recebidos:", response.data);
-        setMembros(response.data);
+        const membrosOrdenados = response.data.sort(
+          (a: { nome: string }, b: { nome: any }) =>
+            a.nome.localeCompare(b.nome)
+        );
+        setMembros(membrosOrdenados);
       })
       .catch((error) => console.error("Erro ao buscar membros:", error));
   }, []);
@@ -154,8 +169,11 @@ const Gabinete = () => {
   useEffect(() => {
     findAllVisitantes()
       .then((response) => {
-        console.log("Visitantes recebidos:", response.data);
-        setVisitantes(response.data); // Correção: antes estava setando membros
+        const visitantesOrdenados = response.data.sort(
+          (a: { nome: string }, b: { nome: any }) =>
+            a.nome.localeCompare(b.nome)
+        );
+        setVisitantes(visitantesOrdenados);
       })
       .catch((error) => console.error("Erro ao buscar visitantes:", error));
   }, []);
@@ -181,6 +199,7 @@ const Gabinete = () => {
       [field]: selectedIds,
     }));
   };
+
   // Submete o formulário
   const handleSubmit = () => {
     console.log(
@@ -215,9 +234,9 @@ const Gabinete = () => {
     const tipoMapeado: Record<TipoAtendimento, string> = {
       [TipoAtendimento.PASTORAL]: "Aconselhamento Pastoral",
       [TipoAtendimento.FAMILIAR]: "Aconselhamento Familiar",
-      [TipoAtendimento.LIDERES]: "Reuniao de Lideres",
-      [TipoAtendimento.PREPARACAO_CASAMENTO]: "Preparaçao para casamento",
-      [TipoAtendimento.PSICOSOCIAL]: "aconselhamento Psicosocial",
+      [TipoAtendimento.LIDERES]: "Reunião de Lideres",
+      [TipoAtendimento.PREPARACAO_CASAMENTO]: "Preparação para casamento",
+      [TipoAtendimento.PSICOSOCIAL]: "Aconselhamento Psicosocial",
       [TipoAtendimento.NOVOS_CONVERTIDOS]: "Novos Convertidos",
     };
     return tipoMapeado[tipo] || tipo;
@@ -325,10 +344,11 @@ const Gabinete = () => {
                   </span>
                 </div>
                 <div className="nome-atendimento">
-                <ul className="nome-atendimento">
+                  <ul className="nome-atendimento">
                     {[
                       ...(atendimento.membroNomes || []),
                       ...(atendimento.visitanteNomes || []),
+                      ...(atendimento.outro || []),
                     ].map((nome, index) => (
                       <li key={index}>{nome}</li>
                     ))}
@@ -359,6 +379,7 @@ const Gabinete = () => {
                     {[
                       ...(atendimento.membroNomes || []),
                       ...(atendimento.visitanteNomes || []),
+                      ...(atendimento.outro || []),
                     ].map((nome, index) => (
                       <li key={index}>{nome}</li>
                     ))}
@@ -369,17 +390,18 @@ const Gabinete = () => {
             ))}
           </ul>
         </div>
+        <div className="col-1"></div>
       </div>
 
       <div
-        className="modal fade"
+        className="modal fade modal-container mb-5"
         id="atendimentoModal"
         tabIndex={-1}
         aria-labelledby="modalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
-          <div className="modal-content">
+        <div className="modal-dialog modal-custom">
+          <div className="modal-content atendimento-Modal">
             <div className="modal-header">
               <h5 className="modal-title">Novo Atendimento</h5>
               <button
@@ -389,40 +411,51 @@ const Gabinete = () => {
               ></button>
             </div>
             <div className="modal-body">
-              <label>Data:</label>
-              <input
-                type="date"
-                className="form-control"
-                name="data"
-                value={novoAtendimento.data}
-                onChange={handleChange}
-              />
+              <div className="col-12 d-flex">
+                <div className="col-4 dados-inserir-atendimento">
+                  <label className="form-label label-atendimento">Data:</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    name="data"
+                    value={novoAtendimento.data}
+                    onChange={handleChange}
+                  />
+                </div>
 
-              <label>Horário:</label>
-              <input
-                type="time"
-                className="form-control"
-                name="horario"
-                value={novoAtendimento.horario}
-                onChange={handleChange}
-              />
+                <div className="col-2 dados-inserir-atendimento">
+                  <label className="form-label label-atendimento">
+                    Horário:
+                  </label>
+                  <input
+                    type="time"
+                    className="form-control"
+                    name="horario"
+                    value={novoAtendimento.horario}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-5 dados-inserir-atendimento">
+                  <label className="form-label label-atendimento">
+                    Tipo de Atendimento:
+                  </label>
+                  <select
+                    className="form-select"
+                    name="tipoAtendimento"
+                    value={novoAtendimento.tipoAtendimento}
+                    onChange={handleChange}
+                  >
+                    {Object.values(TipoAtendimento).map((tipo) => (
+                      <option key={tipo} value={tipo}>
+                        {formatTipoAtendimento(tipo)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-              <label>Tipo de Atendimento:</label>
-              <select
-                className="form-select"
-                name="tipoAtendimento"
-                value={novoAtendimento.tipoAtendimento}
-                onChange={handleChange}
-              >
-                {Object.values(TipoAtendimento).map((tipo) => (
-                  <option key={tipo} value={tipo}>
-                    {formatTipoAtendimento(tipo)}
-                  </option>
-                ))}
-              </select>
-
-              <label>Membros:</label>
-              <select className="form-select" multiple>
+              <label className="form-label label-atendimento">Membros:</label>
+              <select className="form-select select-dados-atendimento" multiple>
                 {membros.map((membro) => (
                   <option
                     key={membro.id}
@@ -431,19 +464,21 @@ const Gabinete = () => {
                       handleDoubleClick(membro.id, "membroIds")
                     }
                   >
-                    {membro.nome}
+                    {membro.nome} {membro.sobrenome}
                   </option>
                 ))}
               </select>
-              <p>
+              <p className="selecionados">
                 selecionados:{" "}
                 <strong>
                   {getSelectedNames(novoAtendimento.membroIds, membros)}
                 </strong>
               </p>
 
-              <label>Visitantes:</label>
-              <select className="form-select" multiple>
+              <label className="form-label label-atendimento">
+                Visitantes:
+              </label>
+              <select className="form-select select-dados-atendimento" multiple>
                 {visitantes.map((visitante) => (
                   <option
                     key={visitante.id}
@@ -452,16 +487,48 @@ const Gabinete = () => {
                       handleDoubleClick(visitante.id, "visitanteIds")
                     }
                   >
-                    {visitante.nome}
+                    {visitante.nome} {visitante.sobrenome}
                   </option>
                 ))}
               </select>
-              <p>
+              <p className="selecionados">
                 selecionados:{" "}
                 <strong>
                   {getSelectedNames(novoAtendimento.visitanteIds, visitantes)}
                 </strong>
               </p>
+              <div className="modal-body">
+                <label className="form-label label-atendimento">
+                  Não Cadastrado
+                </label>
+                <div className="d-flex">
+                  <input
+                    type="text"
+                    className="form-control me-2"
+                    value={outroNome}
+                    onChange={(e) => setOutroNome(e.target.value)}
+                    placeholder="Digite um nome"
+                  />
+                  <button className="btn btn-primary" onClick={handleAddOutro}>
+                    Adicionar
+                  </button>
+                </div>
+
+                {novoAtendimento.outro.length > 0 && (
+                  <ul className="list-group mt-2">
+                    {novoAtendimento.outro.map((nome) => (
+                      <li
+                        key={nome}
+                        className="list-group-item d-flex justify-content-between align-items-center"
+                        onDoubleClick={() => handleRemoveOutro(nome)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {nome} <span className="badge bg-danger">x</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
             <div className="modal-footer">
               <button
