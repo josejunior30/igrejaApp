@@ -11,6 +11,10 @@
 .status-matriculado {
   color: green;
   font-weight: bold;
+  position: relative;
+margin-left: 20vw;
+font-size: 18px;
+top:-8vw;
 }
 
 .status-desmatriculado {

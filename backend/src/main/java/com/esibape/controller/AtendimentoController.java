@@ -3,6 +3,7 @@ package com.esibape.controller;
 
 import java.net.URI;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.esibape.DTO.AtendimentoDTO;
 import com.esibape.service.AtendimentoService;
 
@@ -67,9 +70,13 @@ public class AtendimentoController {
 		 service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+
 	@GetMapping("/mes/{mes}/ano/{ano}")
-    public ResponseEntity<List<AtendimentoDTO>> findByMesEAno(@PathVariable int mes, @PathVariable int ano) {
-        List<AtendimentoDTO> lista = service.findByMesEAno(mes, ano);
-        return ResponseEntity.ok().body(lista);
-    }
+	public ResponseEntity<List<AtendimentoDTO>> findByMesEAno(@PathVariable int mes, @PathVariable int ano) {
+	    List<AtendimentoDTO> lista = service.findByMesOuAno(mes, ano);
+	    return ResponseEntity.ok().body(lista);
+	}
+
+
+
 }

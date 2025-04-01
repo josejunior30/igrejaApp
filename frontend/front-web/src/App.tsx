@@ -58,6 +58,7 @@ import ContaPagar from "./pages/ContaPagar/inserir";
 import MenuSecretaria from "./pages/Secretaria";
 import Financas from "./pages/Financas";
 import Gabinete from "./pages/gabinete";
+import Atendimentos from "./pages/gabinete/atendimentos";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -370,7 +371,14 @@ function App() {
               </PrivateRoute>
             }
           />
-        
+          <Route
+            path="/gabinete-atendimento"
+            element={
+              <PrivateRoute>
+                <Atendimentos/>
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Router>
     </ContextToken.Provider>

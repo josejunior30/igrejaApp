@@ -21,6 +21,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { Link } from "react-router-dom";
 const COLORS = [
   "#0088FE",
   "#00C49F",
@@ -274,13 +275,15 @@ const Gabinete = () => {
             >
               Novo Atendimento
             </button>
+            <Link to={"/gabinete-atendimento"}>
             <button
               className="btn-atendimento "
-              data-bs-toggle="modal"
-              data-bs-target="#atendimentoModal"
+          
             >
+             
               Historico
             </button>
+            </Link>
           </div>
         </div>
         <div className="row justify-content-center">

@@ -26,4 +26,8 @@ public interface AtendimentoRepository extends JpaRepository<Atendimento, Long> 
 
     @Query("SELECT a FROM Atendimento a WHERE a.data <= CURRENT_DATE ORDER BY a.data DESC")
     List<Atendimento> findUltimosAtendimentos(Pageable pageable);
+    
+    @Query("SELECT a FROM Atendimento a WHERE FUNCTION('YEAR', a.data) = :ano")
+    List<Atendimento> findByAno(@Param("ano") int ano);
+    
 }

@@ -118,12 +118,29 @@ public class AtendimentoService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<AtendimentoDTO> findByMesOuAno(Integer mes, int ano) {
+        List<Atendimento> list;
+        
+        if (mes == null) {
+            list = repository.findByYear(ano); // Busca apenas por ano
+        } else {
+            list = repository.findByMesEAno(mes, ano); // Busca por mês e ano
+        }
+        
+        return list.stream().map(AtendimentoDTO::new).collect(Collectors.toList());
+    }
 
     @Transactional(readOnly = true)
     public List<AtendimentoDTO> findByMesEAno(int mes, int ano) {
         List<Atendimento> list = repository.findByMesEAno(mes, ano);
         return list.stream().map(AtendimentoDTO::new).collect(Collectors.toList());
     }
-    
+   
+    @Transactional(readOnly = true)
+    public List<AtendimentoDTO> findByAno(int ano) {
+        List<Atendimento> list = repository.findByAno(ano);
+        return list.stream().map(AtendimentoDTO::new).collect(Collectors.toList());
+    }
 }
 
