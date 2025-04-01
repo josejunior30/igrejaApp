@@ -8,6 +8,20 @@
   height: 400px;
   margin-top: 20%;
 }
+.status-matriculado {
+  color: green;
+  font-weight: bold;
+}
+
+.status-desmatriculado {
+  color: red;
+  font-weight: bold;
+  border-color: red;
+position: relative;
+margin-left: 20vw;
+font-size: 18px;
+top:-8vw;
+}
 
 #dados img {
   border-radius: 20px;
@@ -118,7 +132,6 @@ td i {
   padding-top: 10px;
   text-decoration: underline;
 }
-
 
 .botoes-container {
   display: flex;
