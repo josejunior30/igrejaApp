@@ -4,17 +4,26 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name="tb_servico")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Servico implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -24,12 +33,16 @@ public class Servico implements Serializable{
     private Long id;
 
     private String descricao;
-
+    @ManyToOne
+    @JoinColumn(name = "ordem_servico_id")
+    private OrdemServico ordemServico;
+    
     @Enumerated(EnumType.STRING)
     private StatusServico statusServico;
 
-    @OneToMany
-    private List<MaterialObra> MaterialObra;
+    @OneToMany(mappedBy = "servico", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    private List<MaterialObra> materialObra;
     
     public Servico() {
     	
@@ -42,7 +55,7 @@ public class Servico implements Serializable{
 		this.id = id;
 		this.descricao = descricao;
 		this.statusServico = statusServico;
-		MaterialObra = materialObra;
+		this.materialObra = materialObra;
 	}
 
 	public Long getId() {
@@ -65,16 +78,25 @@ public class Servico implements Serializable{
 		return statusServico;
 	}
 
+	public OrdemServico getOrdemServico() {
+		return ordemServico;
+	}
+
+	public void setOrdemServico(OrdemServico ordemServico) {
+		this.ordemServico = ordemServico;
+	}
+
 	public void setStatusServico(StatusServico statusServico) {
 		this.statusServico = statusServico;
 	}
 
+
 	public List<MaterialObra> getMaterialObra() {
-		return MaterialObra;
+		return materialObra;
 	}
 
 	public void setMaterialObra(List<MaterialObra> materialObra) {
-		MaterialObra = materialObra;
+		this.materialObra = materialObra;
 	}
 
 	@Override

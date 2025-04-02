@@ -61,7 +61,7 @@ const Gabinete = () => {
         ...prev,
         outro: [...prev.outro, outroNome.trim()],
       }));
-      setOutroNome(""); // Limpa o input após adicionar
+      setOutroNome("");
     }
   };
   const handleRemoveOutro = (nome: string) => {
@@ -92,7 +92,6 @@ const Gabinete = () => {
       .then((response) => {
         const atendimentos: Atendimento[] = response.data;
 
-        // Contagem dos tipos de atendimento
         const contagem = atendimentos.reduce<Record<TipoAtendimento, number>>(
           (acc, atendimento) => {
             acc[atendimento.tipoAtendimento] =
@@ -102,7 +101,6 @@ const Gabinete = () => {
           {} as Record<TipoAtendimento, number>
         );
 
-        // Transformar os dados para o formato do gráfico
         const dadosFormatados = Object.entries(contagem).map(
           ([tipo, count]) => ({
             name: tipo,
@@ -145,12 +143,10 @@ const Gabinete = () => {
       });
   }, []);
 
-  // Abre o modal
   const abrirModal = () => {
     setShowModal(true);
   };
 
-  // Fecha o modal
   const fecharModal = () => {
     setShowModal(false);
   };
@@ -201,7 +197,14 @@ const Gabinete = () => {
     }));
   };
 
-  // Submete o formulário
+  const handleClearSelection = () => {
+    setNovoAtendimento((prev) => ({
+      ...prev,
+      membroIds: [],
+      visitanteIds: [],
+    }));
+  };
+
   const handleSubmit = () => {
     console.log(
       "Novo atendimento antes do envio:",
@@ -262,27 +265,18 @@ const Gabinete = () => {
       return { ...prev, [field]: ids };
     });
   };
+
   return (
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center d-flex">
           <div className="col-12 mt-2 mb-2 text-center">
-            <button
-              className=" btn-atendimento"
-              data-bs-toggle="modal"
-              data-bs-target="#atendimentoModal"
-            >
+            <button className=" btn-atendimento" onClick={abrirModal}>
               Novo Atendimento
             </button>
             <Link to={"/gabinete-atendimento"}>
-            <button
-              className="btn-atendimento "
-          
-            >
-             
-              Historico
-            </button>
+              <button className="btn-atendimento ">Historico</button>
             </Link>
           </div>
         </div>
@@ -300,258 +294,282 @@ const Gabinete = () => {
             <span>{liderancaAtendimentos}</span>
           </div>
         </div>
- 
-      <div className="row justify-content-center mb-5">
-        <div className="col-4 mt-4">
-          <div style={{ width: "100%", height: 300 }}>
-            <h4 className="text-center titulo-grafico-atendimento">
-              Tipos de Atendimento
+
+        <div className="row justify-content-center mb-5">
+          <div className="col-4 mt-4">
+            <div style={{ width: "100%", height: 300 }}>
+              <h4 className="text-center titulo-grafico-atendimento">
+                Tipos de Atendimento
+              </h4>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={dados}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) =>
+                      `${Math.round(percent * 100)}%`
+                    }
+                    outerRadius={100}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {dados.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value) => `${value} atendimentos`} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+          <div className="col-3 mt-4">
+            <h4 className="ultimos-atendimentos text-center">
+              Próximos Atendimentos
             </h4>
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={dados}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${Math.round(percent * 100)}%`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
+            <ul className="list-group">
+              {proximosAtendimentos.map((atendimento) => (
+                <li key={atendimento.id} className="list-group-item">
+                  <div className="atendimento-tipo">
+                    <span>
+                      {formatDiaMes(new Date(atendimento.data))} -{" "}
+                      {formatHorario(atendimento.horario)} -{" "}
+                      {formatTipoAtendimento(atendimento.tipoAtendimento)}
+                    </span>
+                  </div>
+                  <div className="nome-atendimento">
+                    <ul className="nome-atendimento">
+                      {[
+                        ...(atendimento.membroNomes || []),
+                        ...(atendimento.visitanteNomes || []),
+                        ...(atendimento.outro || []),
+                      ].map((nome, index) => (
+                        <li key={index}>{nome}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="col-3 mt-4">
+            <h4 className="ultimos-atendimentos text-center">
+              Últimos Atendimentos
+            </h4>
+            <ul className="list-group">
+              {ultimosAtendimentos.map((atendimento) => (
+                <li key={atendimento.id} className="list-group-item">
+                  <div className="atendimento-tipo">
+                    <span>
+                      {" "}
+                      {formatDiaMes(new Date(atendimento.data))}-{" "}
+                      {formatHorario(atendimento.horario)} -{" "}
+                      {formatTipoAtendimento(atendimento.tipoAtendimento)}
+                    </span>
+                  </div>
+                  <div>
+                    <ul className="nome-atendimento">
+                      {[
+                        ...(atendimento.membroNomes || []),
+                        ...(atendimento.visitanteNomes || []),
+                        ...(atendimento.outro || []),
+                      ].map((nome, index) => (
+                        <li key={index}>{nome}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div></div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="col-1"></div>
+        </div>
+        {showModal && (
+          <div className="modal-overlay">
+            <div className="custom-modal">
+              <div className="modal-header">
+                <h5 className="modal-title">Novo Atendimento</h5>
+                <button
+                  type="button"
+                  className="close-button"
+                  onClick={fecharModal}
                 >
-                  {dados.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(value) => `${value} atendimentos`} />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-        <div className="col-3 mt-4">
-          <h4 className="ultimos-atendimentos text-center">
-            Próximos Atendimentos
-          </h4>
-          <ul className="list-group">
-            {proximosAtendimentos.map((atendimento) => (
-              <li key={atendimento.id} className="list-group-item">
-                <div className="atendimento-tipo">
-                  <span>
-                    {formatDiaMes(new Date(atendimento.data))} -{" "}
-                    {formatHorario(atendimento.horario)} -{" "}
-                    {formatTipoAtendimento(atendimento.tipoAtendimento)}
-                  </span>
-                </div>
-                <div className="nome-atendimento">
-                  <ul className="nome-atendimento">
-                    {[
-                      ...(atendimento.membroNomes || []),
-                      ...(atendimento.visitanteNomes || []),
-                      ...(atendimento.outro || []),
-                    ].map((nome, index) => (
-                      <li key={index}>{nome}</li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="col-3 mt-4">
-          <h4 className="ultimos-atendimentos text-center">
-            Últimos Atendimentos
-          </h4>
-          <ul className="list-group">
-            {ultimosAtendimentos.map((atendimento) => (
-              <li key={atendimento.id} className="list-group-item">
-                <div className="atendimento-tipo">
-                  <span>
-                    {" "}
-                    {formatDiaMes(new Date(atendimento.data))}-{" "}
-                    {formatHorario(atendimento.horario)} -{" "}
-                    {formatTipoAtendimento(atendimento.tipoAtendimento)}
-                  </span>
-                </div>
-                <div>
-                  <ul className="nome-atendimento">
-                    {[
-                      ...(atendimento.membroNomes || []),
-                      ...(atendimento.visitanteNomes || []),
-                      ...(atendimento.outro || []),
-                    ].map((nome, index) => (
-                      <li key={index}>{nome}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div></div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="col-1"></div>
-      </div>
-
-      <div
-        className="modal fade modal-container mb-5"
-        id="atendimentoModal"
-        tabIndex={-1}
-        aria-labelledby="modalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-custom">
-          <div className="modal-content atendimento-Modal">
-            <div className="modal-header">
-              <h5 className="modal-title">Novo Atendimento</h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <div className="col-12 d-flex">
-                <div className="col-4 dados-inserir-atendimento">
-                  <label className="form-label label-atendimento">Data:</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    name="data"
-                    value={novoAtendimento.data}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="col-2 dados-inserir-atendimento">
-                  <label className="form-label label-atendimento">
-                    Horário:
-                  </label>
-                  <input
-                    type="time"
-                    className="form-control"
-                    name="horario"
-                    value={novoAtendimento.horario}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="col-5 dados-inserir-atendimento">
-                  <label className="form-label label-atendimento">
-                    Tipo de Atendimento:
-                  </label>
-                  <select
-                    className="form-select"
-                    name="tipoAtendimento"
-                    value={novoAtendimento.tipoAtendimento}
-                    onChange={handleChange}
-                  >
-                    {Object.values(TipoAtendimento).map((tipo) => (
-                      <option key={tipo} value={tipo}>
-                        {formatTipoAtendimento(tipo)}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                  &times;
+                </button>
               </div>
-
-              <label className="form-label label-atendimento">Membros:</label>
-              <select className="form-select select-dados-atendimento" multiple>
-                {membros.map((membro) => (
-                  <option
-                    key={membro.id}
-                    value={membro.id}
-                    onDoubleClick={() =>
-                      handleDoubleClick(membro.id, "membroIds")
-                    }
-                  >
-                    {membro.nome} {membro.sobrenome}
-                  </option>
-                ))}
-              </select>
-              <p className="selecionados">
-                selecionados:{" "}
-                <strong>
-                  {getSelectedNames(novoAtendimento.membroIds, membros)}
-                </strong>
-              </p>
-
-              <label className="form-label label-atendimento">
-                Visitantes:
-              </label>
-              <select className="form-select select-dados-atendimento" multiple>
-                {visitantes.map((visitante) => (
-                  <option
-                    key={visitante.id}
-                    value={visitante.id}
-                    onDoubleClick={() =>
-                      handleDoubleClick(visitante.id, "visitanteIds")
-                    }
-                  >
-                    {visitante.nome} {visitante.sobrenome}
-                  </option>
-                ))}
-              </select>
-              <p className="selecionados">
-                selecionados:{" "}
-                <strong>
-                  {getSelectedNames(novoAtendimento.visitanteIds, visitantes)}
-                </strong>
-              </p>
               <div className="modal-body">
-                <label className="form-label label-atendimento">
-                  Não Cadastrado
-                </label>
-                <div className="d-flex">
-                  <input
-                    type="text"
-                    className="form-control me-2"
-                    value={outroNome}
-                    onChange={(e) => setOutroNome(e.target.value)}
-                    placeholder="Digite um nome"
-                  />
-                  <button className="btn btn-primary" onClick={handleAddOutro}>
-                    Adicionar
-                  </button>
+                <div className="col-12 d-flex">
+                  <div className="col-3 dados-inserir-atendimento">
+                    <label className="form-label label-atendimento">
+                      Data:
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="data"
+                      value={novoAtendimento.data}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="col-2 dados-inserir-atendimento">
+                    <label className="form-label label-atendimento">
+                      Horário:
+                    </label>
+                    <input
+                      type="time"
+                      className="form-control"
+                      name="horario"
+                      value={novoAtendimento.horario}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="col-5 dados-inserir-atendimento ">
+                    <label className="form-label label-atendimento">
+                      Tipo de Atendimento:
+                    </label>
+                    <select
+                      className="form-select"
+                      name="tipoAtendimento"
+                      value={novoAtendimento.tipoAtendimento}
+                      onChange={handleChange}
+                    >
+                      {Object.values(TipoAtendimento).map((tipo) => (
+                        <option key={tipo} value={tipo}>
+                          {formatTipoAtendimento(tipo)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
+                <div className="col-12 d-flex">
+                  <div className="col-6">
+                    <label className="form-label label-atendimento">
+                      Membros:
+                    </label>
+                    <select
+                      className="form-select select-dados-atendimento"
+                      multiple
+                    >
+                      {membros.map((membro) => (
+                        <option
+                          key={membro.id}
+                          value={membro.id}
+                          onDoubleClick={() =>
+                            handleDoubleClick(membro.id, "membroIds")
+                          }
+                        >
+                          {membro.nome} {membro.sobrenome}
+                        </option>
+                      ))}
+                    </select>
 
-                {novoAtendimento.outro.length > 0 && (
-                  <ul className="list-group mt-2">
-                    {novoAtendimento.outro.map((nome) => (
-                      <li
-                        key={nome}
-                        className="list-group-item d-flex justify-content-between align-items-center"
-                        onDoubleClick={() => handleRemoveOutro(nome)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {nome} <span className="badge bg-danger">x</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                    <p className="selecionados">
+                      selecionados:{" "}
+                      <strong>
+                        {getSelectedNames(novoAtendimento.membroIds, membros)}
+                      </strong>
+                    </p>
+                  </div>
+
+                  <div className="col-6">
+                    <label className="form-label label-atendimento">
+                      Visitantes:
+                    </label>
+                    <select
+                      className="form-select select-dados-atendimento"
+                      multiple
+                    >
+                      {visitantes.map((visitante) => (
+                        <option
+                          key={visitante.id}
+                          value={visitante.id}
+                          onDoubleClick={() =>
+                            handleDoubleClick(visitante.id, "visitanteIds")
+                          }
+                        >
+                          {visitante.nome} {visitante.sobrenome}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="selecionados">
+                      selecionados:{" "}
+                      <strong>
+                        {getSelectedNames(
+                          novoAtendimento.visitanteIds,
+                          visitantes
+                        )}
+                      </strong>
+                    </p>
+                    <button
+                      onClick={handleClearSelection}
+                      className="limpar-atendimento"
+                    
+                    >
+                      Limpar Seleção
+                    </button>
+                  </div>
+                </div>
+                <div className="modal-body">
+                  <label className="form-label label-atendimento">
+                    Não Cadastrado
+                  </label>
+                  <div className="d-flex col-8">
+                    <input
+                      type="text"
+                      className="form-control me-2"
+                      value={outroNome}
+                      onChange={(e) => setOutroNome(e.target.value)}
+                      placeholder="Digite um nome"
+                    />
+                    <button
+                      className="btn btn-primary"
+                      onClick={handleAddOutro}
+                    >
+                      Adicionar
+                    </button>
+                  </div>
+                  {novoAtendimento.outro.length > 0 && (
+                    <ul className="list-group mt-2">
+                      {novoAtendimento.outro.map((nome) => (
+                        <li
+                          key={nome}
+                          className="list-group-item d-flex justify-content-between align-items-center"
+                          onDoubleClick={() => handleRemoveOutro(nome)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          {nome} <span className="badge bg-danger">x</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={fecharModal}
+                >
+                  Fechar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={handleSubmit}
+                >
+                  Criar
+                </button>
               </div>
             </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Fechar
-              </button>
-              <button
-                type="button"
-                className="btn btn-success"
-                onClick={handleSubmit}
-              >
-                Criar
-              </button>
-            </div>
           </div>
-        </div>
-      </div>
+        )}
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Atendimento } from "../../../models/atendimento";
+import { Atendimento, TipoAtendimento } from "../../../models/atendimento";
 import * as AtendimentoService from "../../../service/AtendimentoService";
 import Header from "../../../components/Header";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
@@ -36,7 +36,25 @@ const Atendimentos = () => {
       setFiltro((prev) => ({ ...prev, ano: novoAno }));
     }
   };
-
+  const formatHorario = (horario: any) => {
+    if (!horario) return "";
+    const [hour, minute] = horario;
+    return `${String(hour).padStart(2, "0")}:${String(minute).padStart(
+      2,
+      "0"
+    )}`;
+  };
+  const formatTipoAtendimento = (tipo: TipoAtendimento): string => {
+    const tipoMapeado: Record<TipoAtendimento, string> = {
+      [TipoAtendimento.PASTORAL]: "Aconselhamento Pastoral",
+      [TipoAtendimento.FAMILIAR]: "Aconselhamento Familiar",
+      [TipoAtendimento.LIDERES]: "Reunião de Lideres",
+      [TipoAtendimento.PREPARACAO_CASAMENTO]: "Preparação para casamento",
+      [TipoAtendimento.PSICOSOCIAL]: "Aconselhamento Psicosocial",
+      [TipoAtendimento.NOVOS_CONVERTIDOS]: "Novos Convertidos",
+    };
+    return tipoMapeado[tipo] || tipo;
+  };
   const handlePesquisarAnual = () => {
     AtendimentoService.findByAno(filtro.ano)
       .then((response) => setAtendimentos(response.data))
@@ -62,8 +80,7 @@ const Atendimentos = () => {
       <Header />
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center">
-          <div className="col-10">
-          <span className="meses-atendimento">
+            <span className="meses-atendimento">
               <button
                 className="btn-left-conta-Pagar"
                 onClick={handleMesAnterior}
@@ -81,7 +98,9 @@ const Atendimentos = () => {
                 <FaAngleRight />
               </button>
             </span>
-            <select value={filtro.ano || ""} onChange={handleAnoChange}>
+            <div className="col-12 d-flex justify-content-center mt-5">
+            <div className="col-1 offset-3">
+            <select value={filtro.ano || ""} onChange={handleAnoChange} className="form-select mx-2">
               <option value={new Date().getFullYear()}>
                 {new Date().getFullYear()}
               </option>
@@ -89,13 +108,18 @@ const Atendimentos = () => {
                 {new Date().getFullYear() - 1}
               </option>
             </select>
+           
+            </div>
+            <div className="col-4 offset-1">
             <button className="btn btn-primary ml-2" onClick={handlePesquisarAnual}>
               Pesquisar Anual
             </button>
-            <h2 className="text-2xl font-bold mb-4">
-              Atendimentos - {filtro.mes}/{filtro.ano}
-            </h2>
-            <table className="table table-striped text-center">
+            </div>
+            </div>
+          <div className="col-10">
+
+    
+            <table className="table table-striped text-center mt-5">
               <thead className="thead ">
                 <tr>
                   <th scope="col">ID</th>
@@ -112,8 +136,9 @@ const Atendimentos = () => {
                   <tr key={atendimento.id} className="hover:bg-gray-100">
                     <td>{atendimento.id}</td>
                     <td>{formatDiaMes(new Date(atendimento.data))}</td>
-                    <td>{atendimento.horario}</td>
-                    <td>{atendimento.tipoAtendimento}</td>
+                    <td>{formatHorario(atendimento.horario)}</td>
+                    <td>{formatTipoAtendimento(atendimento.tipoAtendimento)}</td>
+
                     <td>
                       {atendimento.membroNomes.length > 0
                         ? atendimento.membroNomes.join(", ")

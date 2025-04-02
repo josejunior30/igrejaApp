@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name="tb_ordem_servico")
 public class OrdemServico implements Serializable{
@@ -25,7 +29,8 @@ public class OrdemServico implements Serializable{
 
     private String descricao;
 
-    @OneToMany
+    @OneToMany(mappedBy = "ordemServico", cascade = CascadeType.ALL,  orphanRemoval = true)
+ 
     private List<Servico> servicos;
 
     @Enumerated(EnumType.STRING)

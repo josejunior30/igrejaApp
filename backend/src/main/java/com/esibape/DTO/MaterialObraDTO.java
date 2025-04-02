@@ -1,0 +1,95 @@
+package com.esibape.DTO;
+
+import java.io.Serializable;
+import com.esibape.entities.MaterialObra;
+import com.esibape.entities.Servico;
+
+
+
+
+public class MaterialObraDTO implements Serializable{
+	private static final long serialVersionUID = 1L;
+	   private Long id;
+
+	    private String nome;
+	    private Servico servico;
+	    private Boolean checkInConfirmado; 
+	
+	public MaterialObraDTO() {
+			
+			
+	}
+
+
+
+	public MaterialObraDTO(MaterialObra entity) {
+		this.id= entity.getId();
+		this.nome=entity.getNome();
+		this.checkInConfirmado=entity.getCheckInConfirmado();
+		this.servico =entity.getServico();
+		
+	}
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+
+	public Servico getServico() {
+		return servico;
+	}
+
+
+
+	public void setServico(Servico servico) {
+		this.servico = servico;
+	}
+
+
+
+	public Boolean getCheckInConfirmado() {
+		return checkInConfirmado;
+	}
+
+
+
+	public void setCheckInConfirmado(Boolean checkInConfirmado) {
+		this.checkInConfirmado = checkInConfirmado;
+	}
+
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+
+	public boolean isCheckInConfirmado() {
+		return checkInConfirmado;
+	}
+
+
+
+	public void setCheckInConfirmado(boolean checkInConfirmado) {
+		this.checkInConfirmado = checkInConfirmado;
+	}
+	
+	
+	
+}
