@@ -300,7 +300,7 @@ const Gabinete = () => {
             <span>{liderancaAtendimentos}</span>
           </div>
         </div>
-      </div>
+ 
       <div className="row justify-content-center mb-5">
         <div className="col-4 mt-4">
           <div style={{ width: "100%", height: 300 }}>
@@ -551,6 +551,7 @@ const Gabinete = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

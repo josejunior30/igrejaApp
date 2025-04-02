@@ -2,17 +2,17 @@ package com.esibape.entities;
 
 
 public enum DescricaoPadrao {
-    LUZ("pago"),
-    AGUA("atrasado"),
-    CAFE_COMUNHAO("atrasado"),
-    DESCARTAVEL("atrasado"),
-    MATERIAL_LIMPEZA("atrasado"),
-    SALARIO_PASTORAL("atrasado"),
-    SALARIO_MINISTRO_MUSICA("atrasado"),
-    EVENTO("atrasado"),
-    PRESENTE("atrasado"),
+    LUZ("luz"),
+    AGUA("agua"),
+    CAFE_COMUNHAO("cafe comunhao"),
+    DESCARTAVEL("descartavel"),
+    MATERIAL_LIMPEZA("material limpeza"),
+    SALARIO_PASTORAL("salario"),
+    SALARIO_MINISTRO_MUSICA("salario"),
+    EVENTO("evento"),
+    PRESENTE("presente"),
     OUTRO("outro"),
-    INTERNET("pendente");
+    INTERNET("internet");
 
     private final String descricaoPadrao ;
 
