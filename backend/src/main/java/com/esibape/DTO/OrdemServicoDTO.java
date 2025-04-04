@@ -1,6 +1,7 @@
 package com.esibape.DTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.esibape.entities.OrdemServico;
@@ -12,7 +13,7 @@ public class OrdemServicoDTO implements Serializable{
 
     private Long id;
     private String descricao;
-    private List<ServicoDTO> servicos;
+    private List<ServicoDTO> servicos = new ArrayList<>();
     private StatusOrdemDeServico statusOrdem;
     
     public OrdemServicoDTO() {

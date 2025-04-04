@@ -31,7 +31,6 @@ public class MaterialObra implements Serializable {
 
 	    @ManyToOne
 	    @JoinColumn(name = "servico_id")
-	
 	    private Servico servico;
 	    public MaterialObra() {
 	    	

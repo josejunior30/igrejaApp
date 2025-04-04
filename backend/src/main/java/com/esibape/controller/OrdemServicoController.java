@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.esibape.DTO.AlunosDTO;
 import com.esibape.DTO.CalendarioDTO;
 import com.esibape.DTO.CriancaDTO;
 import com.esibape.DTO.OrdemServicoDTO;
@@ -36,7 +37,11 @@ public class OrdemServicoController {
     private OrdemServicoService service;
 
 
-
+    @GetMapping
+    public ResponseEntity <List<OrdemServicoDTO>>findAll(){
+    	List<OrdemServicoDTO>ordem = service.findAll();
+    	return ResponseEntity.ok().body(ordem);
+    }
 
 @PostMapping
 public ResponseEntity<OrdemServico> criarOrdemServico(@RequestBody OrdemServico ordemServico) {

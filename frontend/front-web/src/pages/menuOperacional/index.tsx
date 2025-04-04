@@ -1,4 +1,4 @@
-import React from "react";
+
 import { GrDocumentPerformance } from "react-icons/gr";
 
 import { Link } from "react-router-dom";
@@ -6,9 +6,7 @@ import "./styles.css";
 import Header from "../../components/Header";
 import { GrDocumentText } from "react-icons/gr";
 
-const controle = "https://i.postimg.cc/PJQGzWw6/pexels-goumbik-590020.jpg";
-const requerimento =
-  "https://i.postimg.cc/zDtF3L65/pexels-mikhail-nilov-6963017.jpg";
+
 
 const OperacionalMenu = () => (
   <>

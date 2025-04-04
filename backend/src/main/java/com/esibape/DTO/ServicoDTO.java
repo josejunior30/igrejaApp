@@ -1,6 +1,7 @@
 package com.esibape.DTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import com.esibape.entities.MaterialObra;
 import com.esibape.entities.OrdemServico;
@@ -14,7 +15,7 @@ public class ServicoDTO implements Serializable {
     private String descricao;
     private StatusServico statusServico;
     private OrdemServico ordemServico;
-    private List<MaterialObraDTO> materialObra;
+    private List<MaterialObraDTO> materialObra =  new ArrayList<>();
     
     public ServicoDTO() {
     	

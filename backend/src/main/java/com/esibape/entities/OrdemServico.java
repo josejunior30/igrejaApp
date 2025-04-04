@@ -1,6 +1,7 @@
 package com.esibape.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,8 +31,7 @@ public class OrdemServico implements Serializable{
     private String descricao;
 
     @OneToMany(mappedBy = "ordemServico", cascade = CascadeType.ALL,  orphanRemoval = true)
- 
-    private List<Servico> servicos;
+    private List<Servico> servicos=  new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private StatusOrdemDeServico statusOrdem;

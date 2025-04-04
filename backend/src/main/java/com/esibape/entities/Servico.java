@@ -1,6 +1,7 @@
 package com.esibape.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +43,7 @@ public class Servico implements Serializable{
 
     @OneToMany(mappedBy = "servico", cascade = CascadeType.ALL, orphanRemoval = true)
 
-    private List<MaterialObra> materialObra;
+    private List<MaterialObra> materialObra = new ArrayList<>();
     
     public Servico() {
     	

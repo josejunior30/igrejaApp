@@ -59,6 +59,7 @@ import MenuSecretaria from "./pages/Secretaria";
 import Financas from "./pages/Financas";
 import Gabinete from "./pages/gabinete";
 import Atendimentos from "./pages/gabinete/atendimentos";
+import InsertOrdem from "./pages/OrdemServico/inserir";
 
 function App() {
   const [contextTokenPayload, setContextTokenPayload] =
@@ -376,6 +377,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Atendimentos/>
+              </PrivateRoute>
+            }
+          />
+             <Route
+            path="/ordem-servico"
+            element={
+              <PrivateRoute>
+               <InsertOrdem/>
               </PrivateRoute>
             }
           />

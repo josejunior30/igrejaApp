@@ -26,16 +26,21 @@ public class OrdemServicoService {
 
     @Autowired
     private MaterialObraRepository materialObraRepository;
-	@Transactional(readOnly = true)
-	public List<OrdemServicoDTO>findAll(){
-		List<OrdemServico> list = repository.findAll();
-				 return list.stream()
-				            .map(x -> {
-				            	OrdemServicoDTO dto = new OrdemServicoDTO(x, x.getServicos());
-				                return dto;
-				            })
-				            .collect(Collectors.toList());
-	}
+	
+    @Transactional(readOnly = true)
+    public List<OrdemServicoDTO> findAll() {
+        List<OrdemServico> list = repository.findAll();
+        return list.stream()
+                   .map(ordem -> {
+                       // Garante que a lista de serviços seja carregada
+                       ordem.getServicos().forEach(servico -> {
+                           servico.getMaterialObra().size(); // Força a inicialização
+                       });
+                       return new OrdemServicoDTO(ordem, ordem.getServicos());
+                   })
+                   .collect(Collectors.toList());
+    }
+
 	@Transactional(readOnly = true)
     public OrdemServicoDTO findById(Long id) {
 		OrdemServico entity = repository.findById(id)
