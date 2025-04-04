@@ -26,7 +26,7 @@ Este projeto está sendo desenvolvido por mim,  como forma de portifolio e apren
 
 ![membros](https://github.com/user-attachments/assets/7677aab0-6ea3-4ace-9b5b-181614213db5)
 
-![membrosdetalhes](https://github.com/user-attachments/assets/e7d1ea99-b75d-4ea8-baa4-7a61a4d974ee)
+![detalhes](https://github.com/user-attachments/assets/6dc41167-8b06-4502-a221-c628d5903c11)
 
 ![financeiro](https://github.com/user-attachments/assets/1b470a85-87c0-4cd6-a26e-92985047ea9a)
 
