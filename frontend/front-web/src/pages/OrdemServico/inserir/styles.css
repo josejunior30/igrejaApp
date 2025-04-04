@@ -78,8 +78,10 @@
   height: 40px;
   align-content: center;
  position: absolute;
- margin-left: 60vw;
- margin-top: -18vh;
+ margin-left: 35vw;
+ color:white;
+ font-weight: bold;
+
 
 }
 .titulo-ordem{
@@ -101,4 +103,9 @@
   padding: 1px 8px;
   font-size: 12px;
   position: absolute;
+}
+.input-material{
+  width: 350px;
+  height: 35px;
+  border-radius: 5px;
 }
