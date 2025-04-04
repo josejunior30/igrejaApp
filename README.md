@@ -14,6 +14,7 @@ O objetivo deste projeto é criar uma plataforma abrangente para auxiliar na ges
 
 - **Frontend:**
   - React
+  - -Bootstrap
   - TypeScript
   - HTML/CSS 
 
