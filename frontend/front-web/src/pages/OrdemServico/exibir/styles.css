@@ -1,0 +1,44 @@
+/* styles.css */
+.container {
+  padding: 1rem;
+}
+
+
+.servico-click {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.modal-overlay-ordem {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content-ordem {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  z-index: 1001;
+}
+
+.modal-close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: transparent;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+}

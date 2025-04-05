@@ -11,7 +11,6 @@ import com.esibape.DTO.ServicoDTO;
 import com.esibape.entities.MaterialObra;
 import com.esibape.entities.OrdemServico;
 import com.esibape.entities.Servico;
-import com.esibape.repository.MaterialObraRepository;
 import com.esibape.repository.OrdemServicoRepository;
 
 import com.esibape.repository.ServicoRepository;
@@ -24,30 +23,33 @@ public class OrdemServicoService {
 	@Autowired
 	private ServicoRepository servicoRepository;
 
-    @Autowired
-    private MaterialObraRepository materialObraRepository;
-	
+ 
+	@Transactional(readOnly = true)
+	public List<OrdemServicoDTO> findAll() {
+	    List<OrdemServico> list = repository.findAll();
+
+	    return list.stream()
+	               .map(ordem -> {
+	                   ordem.getServicos().forEach(servico -> servico.getMaterialObra().size());
+	                   return new OrdemServicoDTO(ordem, true); // ← inclui materialObra
+	               })
+	               .collect(Collectors.toList());
+	}
+
+
     @Transactional(readOnly = true)
-    public List<OrdemServicoDTO> findAll() {
-        List<OrdemServico> list = repository.findAll();
-        return list.stream()
-                   .map(ordem -> {
-                       // Garante que a lista de serviços seja carregada
-                       ordem.getServicos().forEach(servico -> {
-                           servico.getMaterialObra().size(); // Força a inicialização
-                       });
-                       return new OrdemServicoDTO(ordem, ordem.getServicos());
-                   })
-                   .collect(Collectors.toList());
+    public OrdemServicoDTO findById(Long id) {
+        OrdemServico entity = repository.findById(id)
+            .orElseThrow(() -> new NoSuchElementException("Ordem serviço não encontrado"));
+
+        // Garante que serviços e seus materiais sejam carregados antes do DTO
+        entity.getServicos().forEach(servico -> {
+            servico.getMaterialObra().size();
+        });
+
+        return new OrdemServicoDTO(entity, entity.getServicos());
     }
 
-	@Transactional(readOnly = true)
-    public OrdemServicoDTO findById(Long id) {
-		OrdemServico entity = repository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Ordem serviço não encontrado"));
-		OrdemServicoDTO dto = new OrdemServicoDTO(entity, entity.getServicos());
-     return dto;
-    }
 	
 	   public void delete(Long id) {
 	    	repository.deleteById(id);

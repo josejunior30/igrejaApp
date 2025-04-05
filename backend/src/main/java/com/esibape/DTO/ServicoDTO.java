@@ -14,7 +14,6 @@ public class ServicoDTO implements Serializable {
     private Long id;
     private String descricao;
     private StatusServico statusServico;
-    private OrdemServico ordemServico;
     private List<MaterialObraDTO> materialObra =  new ArrayList<>();
     
     public ServicoDTO() {
@@ -26,20 +25,23 @@ public class ServicoDTO implements Serializable {
 	public ServicoDTO(Servico entity) {
 	    this.id = entity.getId();
 	    this.descricao = entity.getDescricao();
-	    this.ordemServico=entity.getOrdemServico();
+
 	    this.statusServico = entity.getStatusServico();
 	  
-	   
+	    if (entity.getMaterialObra() != null) {
+	        entity.getMaterialObra().forEach(material ->
+	            this.materialObra.add(new MaterialObraDTO(material))
+	        );
+	    }
 	}
 
-	public ServicoDTO(Servico entity, List<MaterialObra> materialObra) {
-		this(entity);
-
-		 materialObra.forEach(x-> this. materialObra.add(new MaterialObraDTO(x)));
-		
-		
-	}
 	
+	
+	public ServicoDTO(Servico entity, List<MaterialObra> materialObra) {
+	    this(entity);
+	    materialObra.forEach(x -> this.materialObra.add(new MaterialObraDTO(x)));
+	}
+
 
 
 	public Long getId() {
@@ -58,16 +60,6 @@ public class ServicoDTO implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-
-	public OrdemServico getOrdemServico() {
-		return ordemServico;
-	}
-
-
-	public void setOrdemServico(OrdemServico ordemServico) {
-		this.ordemServico = ordemServico;
 	}
 
 

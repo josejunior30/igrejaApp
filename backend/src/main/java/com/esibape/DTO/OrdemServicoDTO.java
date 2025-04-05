@@ -25,11 +25,25 @@ public class OrdemServicoDTO implements Serializable{
     id = entity.getId();
 	descricao = entity.getDescricao();
 	statusOrdem = entity.getStatusOrdem();
+
 }
-    public OrdemServicoDTO(OrdemServico entity, List<Servico>servicos) {
-    	this(entity);
-		servicos.forEach(x-> this.servicos.add(new ServicoDTO(x)));
-		
+
+    public OrdemServicoDTO(OrdemServico entity, List<Servico> servicos) {
+        this(entity);
+        servicos.forEach(servico -> this.servicos.add(new ServicoDTO(servico)));
+    }
+    public OrdemServicoDTO(OrdemServico entity, boolean includeMaterialObra) {
+        this(entity);
+
+        if (includeMaterialObra) {
+            for (Servico servico : entity.getServicos()) {
+                this.servicos.add(new ServicoDTO(servico, servico.getMaterialObra()));
+            }
+        } else {
+            for (Servico servico : entity.getServicos()) {
+                this.servicos.add(new ServicoDTO(servico));
+            }
+        }
     }
 
 	public Long getId() {

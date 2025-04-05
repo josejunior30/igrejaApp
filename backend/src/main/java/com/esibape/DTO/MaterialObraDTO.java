@@ -12,7 +12,7 @@ public class MaterialObraDTO implements Serializable{
 	   private Long id;
 
 	    private String nome;
-	    private Servico servico;
+
 	    private Boolean checkInConfirmado; 
 	
 	public MaterialObraDTO() {
@@ -26,7 +26,7 @@ public class MaterialObraDTO implements Serializable{
 		this.id= entity.getId();
 		this.nome=entity.getNome();
 		this.checkInConfirmado=entity.getCheckInConfirmado();
-		this.servico =entity.getServico();
+	
 		
 	}
 
@@ -50,15 +50,6 @@ public class MaterialObraDTO implements Serializable{
 
 
 
-	public Servico getServico() {
-		return servico;
-	}
-
-
-
-	public void setServico(Servico servico) {
-		this.servico = servico;
-	}
 
 
 
