@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import * as OrdemServicoService from "../../../service/OrdemServicoService";
-import { OrdemServico, Servico } from "../../../models/ordemServico";
+import {
+  OrdemServicoDTO,
+
+  ServicoDTO,
+} from "../../../models/ordemServico";
 import "./styles.css";
 
 const ExibirOrdem = () => {
-  const [ordensServico, setOrdensServico] = useState<OrdemServico[]>([]);
+  const [ordensServico, setOrdensServico] = useState<OrdemServicoDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [servicoSelecionado, setServicoSelecionado] = useState<Servico | null>(null);
+  const [servicoSelecionado, setServicoSelecionado] =
+    useState<ServicoDTO | null>(null);
 
   useEffect(() => {
     OrdemServicoService.findAll()
@@ -21,7 +26,7 @@ const ExibirOrdem = () => {
       });
   }, []);
 
-  const abrirModal = (servico: Servico) => {
+  const abrirModal = (servico: ServicoDTO) => {
     setServicoSelecionado(servico);
     setModalOpen(true);
   };
@@ -29,6 +34,27 @@ const ExibirOrdem = () => {
   const fecharModal = () => {
     setServicoSelecionado(null);
     setModalOpen(false);
+  };
+  const handleToggleCheckin = (
+    materialId: number,
+    index: number,
+    currentState: boolean
+  ) => {
+    const novoValor = !currentState;
+
+    OrdemServicoService.patchMaterial(materialId, novoValor)
+      .then(() => {
+        if (!servicoSelecionado) return;
+
+        const updatedServ = { ...servicoSelecionado };
+        updatedServ.materialObra = updatedServ.materialObra.map((m, i) =>
+          i === index ? { ...m, checkInConfirmado: novoValor } : m
+        );
+        setServicoSelecionado(updatedServ);
+      })
+      .catch((error) => {
+        console.error("Erro ao atualizar check-in:", error);
+      });
   };
 
   return (
@@ -45,7 +71,9 @@ const ExibirOrdem = () => {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={4}>Carregando...</td></tr>
+              <tr>
+                <td colSpan={4}>Carregando...</td>
+              </tr>
             ) : (
               ordensServico.map((ordem) => (
                 <tr key={ordem.id}>
@@ -72,18 +100,43 @@ const ExibirOrdem = () => {
 
       {modalOpen && servicoSelecionado && (
         <div className="modal-overlay-ordem" onClick={fecharModal}>
-          <div className="modal-content-ordem" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={fecharModal}>&times;</button>
+          <div
+            className="modal-content-ordem"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="modal-close" onClick={fecharModal}>
+              &times;
+            </button>
             <h2>Detalhes do Serviço</h2>
-            <p><strong>ID:</strong> {servicoSelecionado.id}</p>
-            <p><strong>Descrição:</strong> {servicoSelecionado.descricao}</p>
-            <p><strong>Status:</strong> {servicoSelecionado.statusServico}</p>
+            <p>
+              <strong>ID:</strong> {servicoSelecionado.id}
+            </p>
+            <p>
+              <strong>Descrição:</strong> {servicoSelecionado.descricao}
+            </p>
+            <p>
+              <strong>Status:</strong> {servicoSelecionado.statusServico}
+            </p>
             <h4>Materiais</h4>
             {servicoSelecionado.materialObra.length > 0 ? (
               <ul>
                 {servicoSelecionado.materialObra.map((mat, idx) => (
-                  <li key={idx}>
-                    {mat.nome} — Check-In: {mat.checkInConfirmado ? "✔️" : "❌"} 
+                  <li key={idx} className="material-item">
+                    <span>{mat.nome}</span>
+                    <div
+                      onClick={() =>
+                        handleToggleCheckin(mat.id, idx, mat.checkInConfirmado)
+                      }
+                    >
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={mat.checkInConfirmado}
+                          readOnly
+                        />
+                        <span className="slider round"></span>
+                      </label>
+                    </div>
                   </li>
                 ))}
               </ul>

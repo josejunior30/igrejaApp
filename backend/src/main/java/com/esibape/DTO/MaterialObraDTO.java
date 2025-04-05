@@ -13,7 +13,8 @@ public class MaterialObraDTO implements Serializable{
 
 	    private String nome;
 
-	    private Boolean checkInConfirmado; 
+	    private Boolean checkInConfirmado = false;
+
 	
 	public MaterialObraDTO() {
 			
@@ -25,8 +26,7 @@ public class MaterialObraDTO implements Serializable{
 	public MaterialObraDTO(MaterialObra entity) {
 		this.id= entity.getId();
 		this.nome=entity.getNome();
-		this.checkInConfirmado=entity.getCheckInConfirmado();
-	
+		  this.checkInConfirmado = entity.getCheckInConfirmado() != null ? entity.getCheckInConfirmado() : false;
 		
 	}
 
@@ -59,9 +59,9 @@ public class MaterialObraDTO implements Serializable{
 
 
 
-	public void setCheckInConfirmado(Boolean checkInConfirmado) {
-		this.checkInConfirmado = checkInConfirmado;
-	}
+	  public void setCheckInConfirmado(Boolean checkInConfirmado) {
+	        this.checkInConfirmado = checkInConfirmado != null ? checkInConfirmado : false;
+	    }
 
 
 
@@ -71,16 +71,6 @@ public class MaterialObraDTO implements Serializable{
 
 
 
-	public boolean isCheckInConfirmado() {
-		return checkInConfirmado;
-	}
-
-
-
-	public void setCheckInConfirmado(boolean checkInConfirmado) {
-		this.checkInConfirmado = checkInConfirmado;
-	}
-	
 	
 	
 }

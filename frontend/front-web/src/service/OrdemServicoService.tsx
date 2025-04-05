@@ -13,3 +13,10 @@ export function findById(id: number) {
     return axios.post(`${BASE_URL}/ordens-servico`, ordemServico);
   }
 
+
+export function patchMaterial(id: number, checkInConfirmado: boolean) {
+  return axios.patch(`${BASE_URL}/materiais/${id}/checkin`, {
+    checkInConfirmado,
+  });
+}
+

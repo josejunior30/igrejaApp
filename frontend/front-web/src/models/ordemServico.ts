@@ -33,3 +33,23 @@ export type MaterialObra = {
   checkInConfirmado: boolean;
   servico_id?: number;
 };
+
+export type OrdemServicoDTO = {
+  id?: number;
+  descricao: string;
+  servicos: ServicoDTO[];
+  statusOrdem: StatusOrdemDeServico;
+};
+export type ServicoDTO = {
+  id?: number;
+  descricao: string;
+  ordem_servico_id?: number;
+  statusServico: StatusServico;
+  materialObra: MaterialObraDTO[];
+};
+export type MaterialObraDTO = {
+  id: number;
+  nome: string;
+  checkInConfirmado: boolean;
+  servico_id?: number;
+};

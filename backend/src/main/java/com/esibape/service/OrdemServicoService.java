@@ -1,18 +1,20 @@
 package com.esibape.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.esibape.DTO.OrdemServicoDTO;
 import com.esibape.DTO.ServicoDTO;
 import com.esibape.entities.MaterialObra;
 import com.esibape.entities.OrdemServico;
 import com.esibape.entities.Servico;
 import com.esibape.repository.OrdemServicoRepository;
-
 import com.esibape.repository.ServicoRepository;
 
 
@@ -76,7 +78,11 @@ public class OrdemServicoService {
 	            }
 	        }
 	        return repository.save(ordemServico);
+	        
+	        
 	    }
+	   
+
 	private void copyDtoToEntity(OrdemServicoDTO dto, OrdemServico entity) {
       
         entity.setDescricao(dto.getDescricao());
