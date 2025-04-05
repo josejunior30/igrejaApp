@@ -94,7 +94,11 @@
   margin-left: 20px;
 }
 
-
+.salva-ordem{
+  position: absolute;
+  margin-top: -7.5vh;
+  margin-left: 10vw;
+}
 .remove-serviço {
   background-color: red;
   margin-left: 40px;

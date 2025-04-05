@@ -213,7 +213,12 @@ const InsertOrdem = () => {
                 onChange={handleChangeOrdem}
               />
             </div>
-
+            <div className="mt-4 col-12 text-center">
+                <button onClick={handleSubmit} className="btn btn-success me-3 salva-ordem">
+                  Salvar Ordem
+                </button>
+            
+            </div>
             <div className="col-4 mt-5 offset-3">
               <h5 className="titulo-ordem">Serviços</h5>
               <button onClick={adicionarServico} className="add-serviço">
@@ -250,13 +255,7 @@ const InsertOrdem = () => {
               ))}
             </div>
 
-            <div className="row justify-content-center">
-              <div className="mt-4 col-12 text-center">
-                <button onClick={handleSubmit} className="btn btn-success me-3">
-                  Salvar Ordem
-                </button>
-              </div>
-            </div>
+             
           </div>
         </div>
       </div>

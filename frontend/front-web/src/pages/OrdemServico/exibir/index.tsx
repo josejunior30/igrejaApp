@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import * as OrdemServicoService from "../../../service/OrdemServicoService";
-import {
-  OrdemServicoDTO,
-
-  ServicoDTO,
-} from "../../../models/ordemServico";
+import { OrdemServicoDTO, ServicoDTO } from "../../../models/ordemServico";
 import "./styles.css";
 
 const ExibirOrdem = () => {
   const [ordensServico, setOrdensServico] = useState<OrdemServicoDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [servicoSelecionado, setServicoSelecionado] =
-    useState<ServicoDTO | null>(null);
+  const [servicoSelecionado, setServicoSelecionado] = useState<ServicoDTO | null>(null);
 
   useEffect(() => {
     OrdemServicoService.findAll()
@@ -35,11 +32,8 @@ const ExibirOrdem = () => {
     setServicoSelecionado(null);
     setModalOpen(false);
   };
-  const handleToggleCheckin = (
-    materialId: number,
-    index: number,
-    currentState: boolean
-  ) => {
+
+  const handleToggleCheckin = (materialId: number, index: number, currentState: boolean) => {
     const novoValor = !currentState;
 
     OrdemServicoService.patchMaterial(materialId, novoValor)
@@ -57,9 +51,89 @@ const ExibirOrdem = () => {
       });
   };
 
+  const handlePrint = () => {
+    if (!servicoSelecionado) return;
+  
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 15;
+    let cursorY = 20;
+  
+    // Título principal
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text("Relatório do Serviço", pageWidth / 2, cursorY, { align: "center" });
+  
+    // Linha separadora
+    cursorY += 6;
+    doc.setDrawColor(100);
+    doc.line(margin, cursorY, pageWidth - margin, cursorY);
+    cursorY += 10;
+  
+    // Informações básicas
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Data de Emissão: ${new Date().toLocaleString("pt-BR")}`, margin, cursorY);
+    cursorY += 8;
+    doc.text(`ID Serviço: ${servicoSelecionado.id}`, margin, cursorY);
+    cursorY += 8;
+    doc.text(`Descrição: ${servicoSelecionado.descricao}`, margin, cursorY);
+    cursorY += 8;
+    doc.text(`Status: ${servicoSelecionado.statusServico}`, margin, cursorY);
+    cursorY += 12;
+  
+    // Tabela de materiais
+    if (servicoSelecionado.materialObra.length > 0) {
+      const tableData = servicoSelecionado.materialObra.map((mat) => [
+        mat.id,
+        mat.nome,
+        mat.checkInConfirmado
+          ? {
+              content: "ok",
+              styles: { textColor: [0, 150, 0] as [number, number, number] },
+            }
+          : {
+              content: "X",
+              styles: { textColor: [200, 0, 0] as [number, number, number] },
+            },
+      ]);
+      
+      
+      autoTable(doc, {
+        head: [["ID", "Nome do Material", "Check-in"]],
+        body: tableData,
+        startY: cursorY,
+        margin: { left: margin, right: margin },
+        styles: { halign: "center" },
+        headStyles: {
+          fillColor: [41, 128, 185],
+          textColor: 255,
+          fontStyle: "bold",
+        },
+      });
+      
+    } else {
+      doc.text("Nenhum material registrado.", margin, cursorY);
+    }
+  
+    // Rodapé
+    const footerY = doc.internal.pageSize.getHeight() - 15;
+    doc.setFontSize(10);
+    doc.setTextColor(150);
+    doc.text("Sistema de Gestão de Ordens de Serviço", pageWidth / 2, footerY, {
+      align: "center",
+    });
+  
+    // Salvar
+    doc.save(`servico_${servicoSelecionado.id}.pdf`);
+  };
+
   return (
     <>
-      <div className="container -fluid">
+      <div className="row justify-content-center pt-5">
+        <div className="col-8">
+
+        
         <table className="table table-striped text-center">
           <thead className="thead ">
             <tr>
@@ -97,43 +171,27 @@ const ExibirOrdem = () => {
           </tbody>
         </table>
       </div>
-
-      {modalOpen && servicoSelecionado && (
+      </div>
+      {modalOpen && servicoSelecionado && ordensServico && (
         <div className="modal-overlay-ordem" onClick={fecharModal}>
-          <div
-            className="modal-content-ordem"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className="modal-close" onClick={fecharModal}>
-              &times;
-            </button>
-            <h2>Detalhes do Serviço</h2>
-            <p>
-              <strong>ID:</strong> {servicoSelecionado.id}
-            </p>
-            <p>
-              <strong>Descrição:</strong> {servicoSelecionado.descricao}
-            </p>
-            <p>
-              <strong>Status:</strong> {servicoSelecionado.statusServico}
-            </p>
-            <h4>Materiais</h4>
+          <div className="modal-content-ordem" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={fecharModal}>&times;</button>
+
+            <button onClick={handlePrint}>Imprimir</button>
+            <h5 className="titulo-materias">Detalhes do Serviço</h5>
+            <p><strong>Nº Serviço:</strong> {servicoSelecionado.id}</p>
+            <p><strong>Descrição:</strong> {servicoSelecionado.descricao}</p>
+            <p><strong>Status:</strong> {servicoSelecionado.statusServico}</p>
+
+            <h5 className="titulo-materias">Materiais</h5>
             {servicoSelecionado.materialObra.length > 0 ? (
               <ul>
                 {servicoSelecionado.materialObra.map((mat, idx) => (
                   <li key={idx} className="material-item">
-                    <span>{mat.nome}</span>
-                    <div
-                      onClick={() =>
-                        handleToggleCheckin(mat.id, idx, mat.checkInConfirmado)
-                      }
-                    >
+                    <div className="mt-3" onClick={() => handleToggleCheckin(mat.id, idx, mat.checkInConfirmado)}>
+                      <span>{mat.nome}</span>
                       <label className="switch">
-                        <input
-                          type="checkbox"
-                          checked={mat.checkInConfirmado}
-                          readOnly
-                        />
+                        <input type="checkbox" checked={mat.checkInConfirmado} readOnly />
                         <span className="slider round"></span>
                       </label>
                     </div>

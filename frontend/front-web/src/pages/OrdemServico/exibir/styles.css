@@ -9,6 +9,10 @@
   cursor: pointer;
   text-decoration: underline;
 }
+.titulo-materias{
+  background-color: var(--color-form);
+  padding: 10px;
+}
 
 .modal-overlay-ordem {
   position: fixed;
@@ -22,7 +26,9 @@
   justify-content: center;
   z-index: 1000;
 }
+.checkin-material{
 
+}
 .modal-content-ordem {
   background-color: white;
   padding: 2rem;
