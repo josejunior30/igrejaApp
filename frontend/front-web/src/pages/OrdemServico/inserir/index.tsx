@@ -212,13 +212,11 @@ const InsertOrdem = () => {
                 value={ordemServico.descricao}
                 onChange={handleChangeOrdem}
               />
-            </div>
-            <div className="mt-4 col-12 text-center">
-                <button onClick={handleSubmit} className="btn btn-success me-3 salva-ordem">
-                  Salvar Ordem
+                <button onClick={handleSubmit} className=" salva-ordem">
+                  Salvar
                 </button>
-            
             </div>
+       
             <div className="col-4 mt-5 offset-3">
               <h5 className="titulo-ordem">Serviços</h5>
               <button onClick={adicionarServico} className="add-serviço">

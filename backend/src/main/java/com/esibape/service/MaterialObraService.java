@@ -16,6 +16,9 @@ public class MaterialObraService {
 
     @Autowired
     private MaterialObraRepository repository;
+    @Autowired
+    private ServicoService servicoService; 
+
 
     @Transactional
     public void atualizarCheckIn(Long id, Boolean checkIn) {
@@ -24,6 +27,9 @@ public class MaterialObraService {
 
         material.setCheckInConfirmado(checkIn != null ? checkIn : false);
         repository.save(material);
+
+        if (material.getServico() != null && material.getServico().getId() != null) {
+            servicoService.verificarMateriaisEAtualizarStatus(material.getServico().getId());
+        }
     }
-    
 }

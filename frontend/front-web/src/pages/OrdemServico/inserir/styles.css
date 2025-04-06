@@ -92,12 +92,20 @@
   font-weight: bolder;
   color: var(--color-black);
   margin-left: 20px;
+  color:white;
+ font-weight: bold;
 }
 
 .salva-ordem{
   position: absolute;
-  margin-top: -7.5vh;
-  margin-left: 10vw;
+  color:white;
+  font-weight: bold;
+  margin-left: 35vw;
+  width: 190px;
+  background-color: blue;
+  border-radius: 10px;
+  height: 40px;
+  align-content: center;
 }
 .remove-serviço {
   background-color: red;
@@ -112,4 +120,8 @@
   width: 350px;
   height: 35px;
   border-radius: 5px;
+}
+.serivço-lista {
+
+  
 }

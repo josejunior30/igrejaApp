@@ -3,13 +3,12 @@
   padding: 1rem;
 }
 
-
 .servico-click {
   color: blue;
   cursor: pointer;
   text-decoration: underline;
 }
-.titulo-materias{
+.titulo-materias {
   background-color: var(--color-form);
   padding: 10px;
 }
@@ -24,36 +23,40 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
 }
-.checkin-material{
 
-}
 .modal-content-ordem {
   background-color: white;
   padding: 2rem;
   border-radius: 0.5rem;
-  width: 90%;
-  max-width: 600px;
+  width: 40%;
+  margin-top: -20px;
+  max-height: 85vh;
   position: relative;
-  z-index: 1001;
+  overflow-y: auto;
 }
 
 .modal-close {
   position: absolute;
-  right: 1rem;
   top: 1rem;
-  background: transparent;
-  font-size: 1.5rem;
+  right: 1rem;
+  background: none;
   border: none;
+  font-size: 1.5rem;
+  z-index: 10;
   cursor: pointer;
 }
+.servico-click {
+  color: white !important;
+  text-decoration: none;
+}
 .switch {
-  position: relative;
-  display: inline-block;
+  position: absolute;
+  margin-top: -4vh;
   width: 44px;
-  height: 24px;
-  margin-left: 12px;
+  height: 20px;
+  left: 30vw;
 }
 
 .switch input {
@@ -74,10 +77,10 @@
 .slider::before {
   position: absolute;
   content: "";
-  height: 18px;
-  width: 18px;
+  height: 16px;
+  width: 16px;
   left: 4px;
-  bottom: 3px;
+  bottom: 2px;
   background-color: white;
   transition: 0.4s;
   border-radius: 50%;
@@ -89,4 +92,87 @@ input:checked + .slider {
 
 input:checked + .slider::before {
   transform: translateX(20px);
+}
+/* File: styles.css */
+
+.servico-toggle {
+  cursor: pointer;
+  color: white;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.servico-toggle:hover {
+  color: #0056b3;
+}
+
+.servico-click {
+  cursor: pointer;
+  color: #28a745;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  text-align: center !important;
+}
+
+.servico-click-menu {
+  cursor: pointer;
+  color: #28a745;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  max-width: 100px !important;
+  margin-left: 40vw;
+}
+.servico-click:hover {
+  color: #1e7e34;
+}
+.servico-toggle-wrapper {
+  display: flex;
+
+  justify-content: center;
+  cursor: default;
+}
+.servico-seta {
+  cursor: pointer;
+  padding-left: 8px;
+  user-select: none;
+  position: absolute;
+  margin-left: 20vw;
+}
+.servico-seta:hover {
+  color: red;
+}
+.material-item {
+  border: solid 1px rgb(175, 175, 175);
+  font-weight: bold;
+}
+.sub-row {
+  background-color: #f8f9fa !important;
+  transition: all 0.3s ease;
+  width: 100px;
+}
+
+.sub-row:hover {
+  background-color: #e2e6ea;
+}
+.lista-serviços {
+  text-align: center;
+}
+.sub-row td {
+  padding-left: 2rem;
+  font-style: italic;
+  color: #555;
+}
+.status-pendente {
+  color: red;
+  font-weight: bold;
+}
+
+.status-andamento {
+  color: goldenrod;
+  font-weight: bold;
+}
+
+.status-concluida {
+  color: green;
+  font-weight: bold;
 }
