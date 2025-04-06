@@ -6,7 +6,7 @@ export type OrdemServico = {
 };
 
 export enum StatusOrdemDeServico {
-  PAGO = "PAGO",
+
   PENDENTE = "PENDENTE",
   EM_ANDAMENTO = "EM_ANDAMENTO",
   CONCLUIDA = "CONCLUIDA",
@@ -21,7 +21,7 @@ export type Servico = {
 };
 
 export enum StatusServico {
-  PAGO = "PAGO",
+
   PENDENTE = "PENDENTE",
   EM_ANDAMENTO = "EM_ANDAMENTO",
   CONCLUIDA = "CONCLUIDA",

@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import * as OrdemServicoService from "../../../service/OrdemServicoService";
-import { OrdemServicoDTO, ServicoDTO } from "../../../models/ordemServico";
+import {
+  OrdemServicoDTO,
+  ServicoDTO,
+  StatusServico,
+} from "../../../models/ordemServico";
 import "./styles.css";
 
 const ExibirOrdem = () => {
@@ -13,6 +17,8 @@ const ExibirOrdem = () => {
   const [servicoSelecionado, setServicoSelecionado] =
     useState<ServicoDTO | null>(null);
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
+
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
   useEffect(() => {
     OrdemServicoService.findAll()
@@ -27,13 +33,11 @@ const ExibirOrdem = () => {
   }, []);
 
   const abrirModal = (servico: ServicoDTO) => {
-    // Remove duplicações de materiais por id
     const materiaisUnicos = servico.materialObra.filter(
       (mat, index, self) => index === self.findIndex((m) => m.id === mat.id)
     );
 
     const servicoLimpo = { ...servico, materialObra: materiaisUnicos };
-
     setServicoSelecionado(servicoLimpo);
     setModalOpen(true);
   };
@@ -41,6 +45,7 @@ const ExibirOrdem = () => {
   const fecharModal = () => {
     setServicoSelecionado(null);
     setModalOpen(false);
+    setConfirmModalOpen(false);
   };
 
   const toggleRow = (id: number) => {
@@ -49,11 +54,7 @@ const ExibirOrdem = () => {
     );
   };
 
-  const handleToggleCheckin = (
-    materialId: number,
-    index: number,
-    currentState: boolean
-  ) => {
+  const handleToggleCheckin = (materialId: number, index: number, currentState: boolean) => {
     const novoValor = !currentState;
     OrdemServicoService.patchMaterial(materialId, novoValor)
       .then(() => {
@@ -71,7 +72,6 @@ const ExibirOrdem = () => {
 
   const handlePrint = () => {
     if (!servicoSelecionado) return;
-
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 15;
@@ -79,9 +79,7 @@ const ExibirOrdem = () => {
 
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
-    doc.text("Relatório do Serviço", pageWidth / 2, cursorY, {
-      align: "center",
-    });
+    doc.text("Relatório do Serviço", pageWidth / 2, cursorY, { align: "center" });
     cursorY += 6;
     doc.setDrawColor(100);
     doc.line(margin, cursorY, pageWidth - margin, cursorY);
@@ -89,11 +87,7 @@ const ExibirOrdem = () => {
 
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
-    doc.text(
-      `Data de Emissão: ${new Date().toLocaleString("pt-BR")}`,
-      margin,
-      cursorY
-    );
+    doc.text(`Data de Emissão: ${new Date().toLocaleString("pt-BR")}`, margin, cursorY);
     cursorY += 8;
     doc.text(`ID Serviço: ${servicoSelecionado.id}`, margin, cursorY);
     cursorY += 8;
@@ -107,14 +101,8 @@ const ExibirOrdem = () => {
         mat.id,
         mat.nome,
         mat.checkInConfirmado
-          ? {
-              content: "ok",
-              styles: { textColor: [0, 150, 0] as [number, number, number] },
-            }
-          : {
-              content: "X",
-              styles: { textColor: [200, 0, 0] as [number, number, number] },
-            },
+          ? { content: "ok", styles: { textColor: [0, 150, 0] as [number, number, number] } }
+          : { content: "X", styles: { textColor: [200, 0, 0] as [number, number, number] } },
       ]);
 
       autoTable(doc, {
@@ -142,28 +130,59 @@ const ExibirOrdem = () => {
 
     doc.save(`servico_${servicoSelecionado.id}.pdf`);
   };
-  const formatarStatusServico = (status: string) => {
-    switch (status) {
-      case "PENDENTE":
-        return "Pendente";
-      case "EM_ANDAMENTO":
-        return "Em andamento";
-      case "CONCLUIDA":
-        return "Concluída";
-      default:
-        return status;
+
+  const handleStatusChange = () => {
+    if (!servicoSelecionado || servicoSelecionado.id === undefined) return;
+    const novoStatus: StatusServico = StatusServico.CONCLUIDA;
+
+    OrdemServicoService.atualizarStatusServico(servicoSelecionado.id, novoStatus)
+      .then(() => {
+        setServicoSelecionado({
+          ...servicoSelecionado,
+          statusServico: novoStatus,
+        });
+        setOrdensServico((prev) =>
+          prev.map((ordem) => ({
+            ...ordem,
+            servicos: ordem.servicos.map((servico) =>
+              servico.id === servicoSelecionado.id
+                ? { ...servico, statusServico: novoStatus }
+                : servico
+            ),
+          }))
+        );
+      })
+      .catch((error) => {
+        console.error("Erro ao atualizar status do serviço:", error);
+      });
+  };
+
+  const abrirConfirmacaoConclusao = () => {
+    if (servicoSelecionado?.statusServico !== "CONCLUIDA") {
+      setConfirmModalOpen(true);
     }
   };
+
+  const confirmarConclusaoServico = () => {
+    handleStatusChange();
+    setConfirmModalOpen(false);
+  };
+
+  const formatarStatusServico = (status: string) => {
+    switch (status) {
+      case "PENDENTE": return "Pendente";
+      case "EM_ANDAMENTO": return "Em andamento";
+      case "CONCLUIDA": return "Concluída";
+      default: return status;
+    }
+  };
+
   const getStatusClass = (status: string) => {
     switch (status) {
-      case "PENDENTE":
-        return "status-pendente";
-      case "EM_ANDAMENTO":
-        return "status-andamento";
-      case "CONCLUIDA":
-        return "status-concluida";
-      default:
-        return "";
+      case "PENDENTE": return "status-pendente";
+      case "EM_ANDAMENTO": return "status-andamento";
+      case "CONCLUIDA": return "status-concluida";
+      default: return "";
     }
   };
 
@@ -216,7 +235,7 @@ const ExibirOrdem = () => {
                           </div>
                         )}
                       </td>
-                      <td>{ordem.statusOrdem}</td>
+                      <td> {formatarStatusServico(ordem.statusOrdem)}</td>
                     </tr>
                     {expandedRows.includes(ordem.id!) &&
                       ordem.servicos.slice(1).map((servico) => (
@@ -259,7 +278,17 @@ const ExibirOrdem = () => {
             >
               Imprimir
             </button>
-
+            <div className="d-flex align-items-center">
+              <label className="me-2 mb-0">Concluir Serviço</label>
+              <label className="switch-status">
+                <input
+                  type="checkbox"
+                  checked={servicoSelecionado.statusServico === "CONCLUIDA"}
+                  onChange={abrirConfirmacaoConclusao}
+                />
+                <span className="slider round"></span>
+              </label>
+            </div>
             <h5 className="titulo-materias">Detalhes do Serviço</h5>
             <p>
               <strong>Nº Serviço:</strong> {servicoSelecionado.id}
@@ -282,7 +311,7 @@ const ExibirOrdem = () => {
                 {servicoSelecionado.materialObra.map((mat, idx) => (
                   <li
                     key={mat.id}
-                    className="material-item align-content-center"
+                    className="material-item-lista align-content-center"
                   >
                     <div
                       className="mt-3"
@@ -308,6 +337,18 @@ const ExibirOrdem = () => {
             ) : (
               <p>Nenhum material registrado.</p>
             )}
+          </div>
+        </div>
+        
+      )}
+      {confirmModalOpen && (
+        <div className="modal-overlay-ordem" onClick={() => setConfirmModalOpen(false)}>
+          <div className="modal-content-ordem" onClick={(e) => e.stopPropagation()}>
+            <h5>Tem certeza que deseja concluir o serviço? uma vez concluido nao sera possivel retroceder</h5>
+            <div className="d-flex justify-content-end gap-2">
+              <button className="btn btn-secondary" onClick={() => setConfirmModalOpen(false)}>Cancelar</button>
+              <button className="btn btn-primary" onClick={confirmarConclusaoServico}>Sim, concluir</button>
+            </div>
           </div>
         </div>
       )}

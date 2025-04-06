@@ -4,6 +4,7 @@ import { HiUserGroup } from "react-icons/hi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChildReaching } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { GiHammerNails } from "react-icons/gi";
 
 import "./styles.css";
 import { FaTrainSubway } from "react-icons/fa6";
@@ -67,6 +68,11 @@ const Sidebar: React.FC = () => {
         <li className="nav-item">
           <Link to="/gabinete" className="nav-link">
           <FaBible /> Gabinete
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/ordem-servico" className="nav-link">
+          <GiHammerNails />Obras/Reparos
 
           </Link>
         </li>

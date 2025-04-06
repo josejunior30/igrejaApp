@@ -39,6 +39,11 @@ public class ServicoService {
 
 		        if (todosConfirmados) {
 		            servico.setStatusServico(StatusServico.EM_ANDAMENTO);
+
+		            if (servico.getOrdemServico() != null) {
+		                servico.getOrdemServico().setStatusOrdem(StatusOrdemDeServico.EM_ANDAMENTO);
+		                ordemServicoRepository.save(servico.getOrdemServico());
+		            }
 		        } else {
 		            servico.setStatusServico(StatusServico.PENDENTE);
 		        }
@@ -46,7 +51,6 @@ public class ServicoService {
 
 		    servicoRepository.save(servico);
 		}
-
 	 @Transactional
 	 public void atualizarStatusServico(Long servicoId, StatusServico novoStatus) {
 	     Servico servico = servicoRepository.findById(servicoId)

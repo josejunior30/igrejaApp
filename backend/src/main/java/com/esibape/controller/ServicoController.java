@@ -24,7 +24,7 @@ public class ServicoController {
             @RequestBody StatusServico novoStatus) {
 
         servicoService.atualizarStatusServico(id, novoStatus);
-        return ResponseEntity.noContent().build(); // 204
+        return ResponseEntity.noContent().build(); 
     }
 
 

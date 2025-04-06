@@ -19,4 +19,10 @@ export function patchMaterial(id: number, checkInConfirmado: boolean) {
     checkInConfirmado,
   });
 }
+export function atualizarStatusServico(id: number, novoStatus: string) {
+  return axios.patch(`${BASE_URL}/servicos/${id}/status`, novoStatus, {
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
+
 

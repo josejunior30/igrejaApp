@@ -24,7 +24,8 @@ public class OrdemServicoService {
 	private OrdemServicoRepository repository;
 	@Autowired
 	private ServicoRepository servicoRepository;
-
+	@Autowired
+	private  ServicoService servicoService;
  
 	@Transactional(readOnly = true)
 	public List<OrdemServicoDTO> findAll() {
@@ -33,7 +34,7 @@ public class OrdemServicoService {
 	    return list.stream()
 	               .map(ordem -> {
 	                   ordem.getServicos().forEach(servico -> servico.getMaterialObra().size());
-	                   return new OrdemServicoDTO(ordem, true); // ← inclui materialObra
+	                   return new OrdemServicoDTO(ordem, true); 
 	               })
 	               .collect(Collectors.toList());
 	}
@@ -44,7 +45,7 @@ public class OrdemServicoService {
         OrdemServico entity = repository.findById(id)
             .orElseThrow(() -> new NoSuchElementException("Ordem serviço não encontrado"));
 
-        // Garante que serviços e seus materiais sejam carregados antes do DTO
+   
         entity.getServicos().forEach(servico -> {
             servico.getMaterialObra().size();
         });
@@ -77,11 +78,18 @@ public class OrdemServicoService {
 	                }
 	            }
 	        }
-	        return repository.save(ordemServico);
-	        
-	        
+
+	        OrdemServico saved = repository.save(ordemServico);
+
+	        // Chamada para o outro módulo aqui
+	        saved.getServicos().forEach(servico -> 
+	            servicoService.verificarMateriaisEAtualizarStatus(servico.getId())
+	        );
+
+	        return saved;
 	    }
-	   
+
+
 
 	private void copyDtoToEntity(OrdemServicoDTO dto, OrdemServico entity) {
       
