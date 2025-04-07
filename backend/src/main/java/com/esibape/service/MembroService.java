@@ -173,7 +173,7 @@ public class MembroService {
                 }
                 return aniversario;
             }))
-            .limit(5)
+            .limit(8)
             .toList();
         
         proximosAniversariantes.forEach(this::atualizarIdade);
