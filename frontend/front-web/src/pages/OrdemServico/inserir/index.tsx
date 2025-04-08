@@ -219,7 +219,7 @@ const InsertOrdem = () => {
        
             <div className="col-4 mt-5 offset-3">
               <h5 className="titulo-ordem">Serviços</h5>
-              <button onClick={adicionarServico} className="add-serviço">
+              <button onClick={adicionarServico} className="button-primary-large" id="add-serviço">
                 + Adicionar Serviço
               </button>
               {servicos.map((servico, servicoIndex) => (

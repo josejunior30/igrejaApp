@@ -272,11 +272,11 @@ const Gabinete = () => {
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center d-flex">
           <div className="col-12 mt-2 mb-2 text-center">
-            <button className=" btn-atendimento" onClick={abrirModal}>
+            <button className=" button-primary" id="btn-historico" onClick={abrirModal}>
               Novo Atendimento
             </button>
             <Link to={"/gabinete-atendimento"}>
-              <button className="btn-atendimento ">Historico</button>
+              <button className="button-primary" >Historico</button>
             </Link>
           </div>
         </div>

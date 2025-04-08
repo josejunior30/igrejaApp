@@ -1,28 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap");
 
 :root {
-  --color-turquoise: #00D4FF;
+  --color-turquoise: #00d4ff;
   --color-coral: #ed7947;
   --color-dimgray: #4c5d67;
   --color-darkslategray: #37474f;
   --color-black: #0b1f34;
-  --color-form:#0b869b;
+  --color-form: #0b869b;
 }
 
-body, html {
+body,
+html {
   padding: 0;
   margin: 0;
-
+}
+.button-primary {
+  background-color: var(--color-coral);
+  width: 150px;
+  height: 40px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
 }
 
+.button-primary-large {
+  border-radius: 10px;
+  height: 40px;
+  align-content: center;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  width: 190px;
+  background-color: var(--color-coral);
+}
 * {
-  font-family: 'Play', sans-serif;
+  font-family: "Play", sans-serif;
 }
 
-
-  
-html{
- background-color:var(--color-black) ;
+html {
+  background-color: var(--color-black);
 }
 
 a {

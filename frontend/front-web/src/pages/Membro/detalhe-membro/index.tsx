@@ -7,8 +7,8 @@ import { deleteMembro } from "../../formMembro/excluirMembro";
 import SuccessModal from "../../../components/Modal";
 import { CgDanger } from "react-icons/cg";
 import Header from "../../../components/Header";
-import { Foto } from "../../../models/foto";
-import { uploadImagem } from "../../../service/imagemService";
+
+import userDefault from "../../../assets/userDefault.jpeg";
 
 const Detalhes = () => {
   const { id } = useParams<{ id: string }>() ?? { id: "" };
@@ -17,8 +17,10 @@ const Detalhes = () => {
   const [MembroDTO, setMembroDTO] = useState<MembroDTO>();
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [Foto, setFoto] = useState<Foto>();
-  const [imageUrl, setImageUrl] = useState<string>();
+  const dropRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
 
   const loadMembroDTO = (id: number) => {
     membroService
@@ -29,7 +31,6 @@ const Detalhes = () => {
       })
       .catch((error) => {
         console.error("Erro ao buscar detalhes do membro:", error);
-        // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
       })
       .finally(() => {
         setLoading(false);
@@ -43,10 +44,31 @@ const Detalhes = () => {
         loadMembroDTO(idNumber);
       } else {
         console.error("ID inválido:", id);
-        // Trate o caso de um ID inválido (por exemplo, redirecione o usuário para uma página de erro)
       }
     }
   }, [id]);
+  const handleFileUpload = (file: File) => {
+    if (!id || isNaN(+id)) return;
+
+    membroService
+      .patchFotoPerfil(+id, file)
+      .then(() => {
+        window.location.reload(); // força atualização total da página
+      })
+      .catch((err) => console.error("Erro ao atualizar imagem:", err));
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (e.dataTransfer.files.length > 0) {
+      const file = e.dataTransfer.files[0];
+      handleFileUpload(file);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
 
   const handleModalClose = () => {
     setIsModalVisible(false);
@@ -73,31 +95,6 @@ const Detalhes = () => {
     navigate(-1);
   };
 
-  const handleImageChange = async (event: any) => {
-    const file = event.target.files[0];
-    if (file) {
-      try {
-        if (MembroDTO) {
-          const id = MembroDTO.id;
-          const url = await uploadImagem(id, file);
-
-          setFoto({
-            id: id,
-            fileDownloadUri: url,
-          });
-
-          setImageUrl(url);
-        } else {
-          console.error(
-            "MembroDTO é undefined. Não é possível obter o ID do membro."
-          );
-        }
-      } catch (error) {
-        console.error("CHANGE:", error);
-      }
-    }
-  };
-  const inputRef = useRef<HTMLInputElement>(null);
   const getColorByStauts = (tipoCulto: string) => {
     switch (tipoCulto) {
       case "AFASTADO":
@@ -108,6 +105,13 @@ const Detalhes = () => {
         return "#28a745";
     }
   };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleFileUpload(file);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -117,18 +121,34 @@ const Detalhes = () => {
             {MembroDTO ? (
               <>
                 <div className="d-flex">
-                  <img
-                    src={MembroDTO.url}
-                    alt="Foto do Membro"
-                    className="img-fluid mb-3 d-block foto-de-membro "
-                  />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    ref={inputRef}
-                    style={{ display: "none" }}
-                  />
+                  <div
+                    ref={dropRef}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    className="dropzone-container"
+                  >
+                    <img
+                      src={MembroDTO.url ? MembroDTO.url : userDefault}
+                      alt="Foto do Membro"
+                      className="img-fluid mb-3 d-block foto-de-membro"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => inputRef.current?.click()}
+                    />
+                    <input
+                      ref={inputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      style={{ display: "none" }}
+                    />
+                    {isHovered && (
+                      <p className="text-center small text-muted arraste">
+                        Arraste aqui a foto
+                      </p>
+                    )}
+                  </div>
 
                   <div className="dados-pessoais">
                     <span
@@ -139,12 +159,12 @@ const Detalhes = () => {
                     >
                       {MembroDTO.membroStatus}
                     </span>
-                    
-                {MembroDTO?.desligamento && (
-                  <span className="desligamento-membro ">
-                    {new Date(MembroDTO.desligamento).toLocaleDateString()}
-                  </span>
-                )}
+
+                    {MembroDTO?.desligamento && (
+                      <span className="desligamento-membro ">
+                        {new Date(MembroDTO.desligamento).toLocaleDateString()}
+                      </span>
+                    )}
                     <p className="nome-membro">
                       {MembroDTO.nome} {MembroDTO.sobrenome}
                     </p>
@@ -191,7 +211,6 @@ const Detalhes = () => {
                     <span>Trilho:</span> {MembroDTO.curso.nome}
                   </p>
                 )}
-
               </>
             ) : (
               <p>Carregando detalhes do membro...</p>
@@ -256,15 +275,19 @@ const Detalhes = () => {
               <Link to={`/membro/atualizar/${id}`}>
                 <button className="botao-editar-membro">Editar</button>
               </Link>
-              <button onClick={handleDeleteClick} className="botao-deletar-membro">
+              <button
+                onClick={handleDeleteClick}
+                className="botao-deletar-membro"
+              >
                 Deletar
               </button>
-              <button className="btn btn-primary  voltar-detalhe-membro" onClick={handleGoBack}>
-              Voltar
-            </button>
+              <button
+                className="btn btn-primary  voltar-detalhe-membro"
+                onClick={handleGoBack}
+              >
+                Voltar
+              </button>
             </div>
-
-        
           </div>
         </div>
       </div>

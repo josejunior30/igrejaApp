@@ -97,3 +97,21 @@ margin-left: 25vw;
   position: absolute;
  
 }
+
+.arraste{
+  position: absolute;
+  margin-left: 30px;
+}
+
+.dropzone-container {
+
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.dropzone-container:hover {
+  border-color: #007bff;
+  cursor: pointer;
+}

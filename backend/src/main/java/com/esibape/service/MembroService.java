@@ -13,6 +13,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.esibape.DTO.MembroDTO;
 import com.esibape.entities.EBDCurso;
@@ -29,6 +30,9 @@ public class MembroService {
 
     @Autowired
     private EBDCursoRepository ebdCursoRepository;
+    
+    @Autowired
+    private S3StorageService s3StorageService;
     
     @Transactional(readOnly = true)
     public List<MembroDTO> findAll() {
@@ -72,13 +76,10 @@ public class MembroService {
     public MembroDTO addEbdCursoToMembro(Long membroId, Long cursoId) {
         Membro membro = repository.findById(membroId)
             .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
-
         EBDCurso curso = ebdCursoRepository.findById(cursoId)
             .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
-
         membro.getEbdCurso().add(curso);
         repository.save(membro);
-
         return new MembroDTO(membro, membro.getEbdCurso());
     }
     
@@ -135,26 +136,15 @@ public class MembroService {
     } 
     @Transactional
     public void patchOpcao(Long membroId, String opcaoCurso) {
-        // Localiza o membro pelo ID, lança exceção se não encontrar
         Membro membro = repository.findById(membroId)
                                          .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
-
-        // Atualiza a opção do curso
         membro.setOpcaoCurso(opcaoCurso);
-
-        // Salva o visitante atualizado no banco
         repository.save(membro);
     }
     @Transactional
     public void patchApostila(Long membroId, Boolean apostila) {
-        // Localiza o Visitante pelo ID, lança exceção se não encontrar
         Membro membro = repository.findById(membroId)
                                          .orElseThrow(() -> new EntityNotFoundException("Visitante não encontrado"));
-
-        // Atualiza o campo 'apostila'
-        membro.setApostila(apostila != null ? apostila : false); // Garante um valor booleano válido
-
-        // Salva o visitante atualizado no banco
         repository.save(membro);
     }
 
@@ -190,6 +180,23 @@ public class MembroService {
         return membrosAtivos.stream()
             .map(MembroDTO::new)
             .collect(Collectors.toList());
+    }
+    
+    @Transactional
+    public MembroDTO uploadFotoPerfil(Long membroId, MultipartFile file) {
+        Membro membro = repository.findById(membroId)
+            .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado"));
+
+        String contentType = file.getContentType();
+        if (contentType == null || !(contentType.equals("image/jpeg") || contentType.equals("image/png"))) {
+            throw new IllegalArgumentException("Apenas arquivos JPEG ou PNG são permitidos.");
+        }
+
+        String url = s3StorageService.uploadFile(file);
+        membro.setUrl(url);
+        membro = repository.save(membro);
+
+        return new MembroDTO(membro);
     }
 
 

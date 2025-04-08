@@ -71,22 +71,16 @@
   background: #28a745;
   color: white;
 }
-.add-serviço {
-  width: 190px;
-  background-color: var(--color-coral);
-  border-radius: 10px;
-  height: 40px;
-  align-content: center;
- position: absolute;
- margin-left: 35vw;
- color:white;
- font-weight: bold;
+#add-serviço{
 
+ margin-left: 35vw;
+ position: absolute;
 
 }
 .titulo-ordem{
   color: white;
 }
+
 .descricao-serviço {
   font-size: 20px;
   font-weight: bolder;
