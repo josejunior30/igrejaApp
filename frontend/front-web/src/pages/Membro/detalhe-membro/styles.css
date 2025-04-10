@@ -1,5 +1,5 @@
 .dadosMembros {
-  background-color: white;
+  background-color: var(--color-white);
   border-radius: 20px;
 }
 .nome-membro {
@@ -13,7 +13,6 @@
 .dados-pessoais {
   display: block;
   position: relative;
-
   margin-top: 25px;
 }
 .foto-de-membro {
@@ -23,7 +22,6 @@
   width: 200px;
   margin-top: 3%;
   border: solid 5px;
-
   border-color: var(--color-form);
 }
 .dados-m span {
@@ -32,13 +30,13 @@
   color: var(--color-form);
 }
 .endereço-membro {
-  background-color: white;
+  background-color: var(--color-white);
   border-radius: 20px;
 }
 .status-membro {
-  margin-left: 26vw;
+  margin-left: 24vw;
   margin-top: -22px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bold;
   padding-top: 10px;
   text-decoration: underline;
@@ -57,54 +55,36 @@
   font-size: 12px;
 }
 
-.botao-editar-membro {
-  margin: 0 10px;
-  padding: 10px 20px;
-  background-color: var(--color-turquoise);
-  font-weight: bolder;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 150px;
-}
-.botao-editar-membro:hover {
-  background-color: var(--color-coral);
-}
 .voltar-detalhe-membro {
   font-size: 12px !important;
   width: 120px;
   position: absolute;
   margin-left: 60vw;
 }
-.botao-deletar-membro {
-  background-color: #f44336;
-  width: 150px;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+#botao-editar-membro{
+  margin: 0 10px;
+
+  margin-left: 5vw;
+}
+#botao-deletar-membro{
   margin: 0 30px;
-  padding: 10px 20px;
-  font-weight: bolder;
 }
 .desligamento-membro {
-margin-left: 25vw;
+  margin-left: 24vw;
   font-size: 16px;
   font-weight: bold;
   padding-top: 10px;
-  color: #c70909;
+  color: var(--color-red);
   text-decoration: underline;
   position: absolute;
- 
 }
 
-.arraste{
+.arraste {
   position: absolute;
   margin-left: 30px;
 }
 
 .dropzone-container {
-
   padding: 10px;
   border-radius: 10px;
   text-align: center;
@@ -112,6 +92,6 @@ margin-left: 25vw;
 }
 
 .dropzone-container:hover {
-  border-color: #007bff;
+  border-color: var(--color-form);
   cursor: pointer;
 }

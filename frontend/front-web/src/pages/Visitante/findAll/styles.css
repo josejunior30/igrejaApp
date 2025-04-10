@@ -2,11 +2,11 @@
   color: white;
 }
 td .afastado a {
-  background-color: rgb(255, 238, 0);
+  background-color: var(--color-yellow);
   font-weight: bold;
 }
 .dataNascimento {
-  color: white;
+  color: var(--color-white);
 }
 
 .legenda {

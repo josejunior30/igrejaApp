@@ -61,3 +61,13 @@ export function patchUpdateApostila(visitanteId: number, apostila: boolean) {
     }
   );
 }
+export function patchFotoPerfil(id: number, file: File) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  return axios.patch(`${BASE_URL}/membro/${id}/foto`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  });
+}

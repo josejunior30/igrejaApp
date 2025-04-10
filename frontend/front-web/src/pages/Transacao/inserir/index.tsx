@@ -25,7 +25,7 @@ const Transacao = ({ show, onHide }: TransacaoProps) => {
         const response = await findAllDescricaoReceita();
         setDescricaoReceita(response.data);
         if (response.data.length > 0) {
-          setSelectedDescricao(response.data[0].descricao); // Seleciona a primeira opção automaticamente
+          setSelectedDescricao(response.data[0].descricao); 
         }
       } catch (error) {
         console.error("Erro ao buscar descrições de receitas:", error);
@@ -44,7 +44,7 @@ const Transacao = ({ show, onHide }: TransacaoProps) => {
     event.preventDefault();
 
     const transacao = {
-      descricaoReceita: { descricao: selectedDescricao }, // Usa a opção selecionada
+      descricaoReceita: { descricao: selectedDescricao }, 
       isReceita: true,
       tipoDespesa: null,
       valor: valor || 0,

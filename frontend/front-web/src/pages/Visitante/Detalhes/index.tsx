@@ -6,30 +6,30 @@ import { deleteVisitante } from "../../../service/visitanteService";
 import SuccessModal from "../../../components/Modal";
 import { CgDanger } from "react-icons/cg";
 import Header from "../../../components/Header";
-import { Foto } from "../../../models/foto";
-import { uploadImagem } from "../../../service/imagemService";
 import { visitante } from "../../../models/visitante";
+import userDefault from "../../../assets/userDefault.jpeg";
 
 const DetalhesVisitante = () => {
   const { id } = useParams<{ id: string }>() ?? { id: "" };
   const navigate = useNavigate();
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [MembroDTO, setMembroDTO] = useState<visitante>();
+  const [visitanteDTO, setVisitanteDTO] = useState<visitante>();
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [Foto, setFoto] = useState<Foto>();
-  const [imageUrl, setImageUrl] = useState<string>();
+  const dropRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  
 
   const loadMembroDTO = (id: number) => {
     visitanteService
       .findById(id)
       .then((response) => {
         console.log("Detalhes do Membro:", response.data);
-        setMembroDTO(response.data);
+        setVisitanteDTO(response.data);
       })
       .catch((error) => {
         console.error("Erro ao buscar detalhes do membro:", error);
-        // Trate o estado de erro (por exemplo, exiba uma mensagem de erro)
       })
       .finally(() => {
         setLoading(false);
@@ -43,14 +43,35 @@ const DetalhesVisitante = () => {
         loadMembroDTO(idNumber);
       } else {
         console.error("ID inválido:", id);
-        // Trate o caso de um ID inválido (por exemplo, redirecione o usuário para uma página de erro)
       }
     }
   }, [id]);
+  const handleFileUpload = (file: File) => {
+    if (!id || isNaN(+id)) return;
+
+    visitanteService
+      .patchFotoPerfil(+id, file)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => console.error("Erro ao atualizar imagem:", err));
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (e.dataTransfer.files.length > 0) {
+      const file = e.dataTransfer.files[0];
+      handleFileUpload(file);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
 
   const handleModalClose = () => {
     setIsModalVisible(false);
-    navigate("/visitante");
+    navigate("/membro");
   };
 
   const handleDeleteClick = () => {
@@ -73,140 +94,123 @@ const DetalhesVisitante = () => {
     navigate(-1);
   };
 
-  const handleImageChange = async (event: any) => {
-    const file = event.target.files[0];
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
-      try {
-        if (MembroDTO) {
-          const id = MembroDTO.id;
-          const url = await uploadImagem(id, file);
-
-          setFoto({
-            id: id,
-            fileDownloadUri: url,
-          });
-
-          setImageUrl(url);
-        } else {
-          console.error(
-            "MembroDTO é undefined. Não é possível obter o ID do membro."
-          );
-        }
-      } catch (error) {
-        console.error("CHANGE:", error);
-      }
+      handleFileUpload(file);
     }
   };
-  const inputRef = useRef<HTMLInputElement>(null);
-  const getColorByStauts = (tipoCulto: string) => {
-    switch (tipoCulto) {
-      case "NIVEL_1":
-        return "#010727";
-      case "NIVEL_2":
-        return "#0056b3";
-      case "NIVEL_3":
-        return "#00c2f3";
-      default:
-        return "#28a745";
-    }
-  };
+
   return (
     <>
       <Header />
-      <div className="container-fluid mt-5 pt-5">
-        <div className="row justify-content-center text-center ">
-          <div className="col-md-4 col-7 m-5 md-5 pb-3 text-center" id="dados">
-            {MembroDTO ? (
+      <div className="container-fluid mt-5 ">
+        <div className="row pt-5">
+          <div className="col-md-6 m-5 md-5 pb-3  dadosMembros">
+            {visitanteDTO ? (
               <>
-                <img
-                  src={Foto?.fileDownloadUri}
-                  alt="Foto do Membro"
-                  className="img-fluid mb-3 rounded mx-auto d-block "
-                  id="foto-membro"
-                  onClick={() => inputRef.current?.click()}
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  ref={inputRef}
-                  style={{ display: "none" }}
-                />
-                <span
-                  className="status"
-                  style={{ color: getColorByStauts(MembroDTO.visitanteStatus) }}
-                >
-                  {MembroDTO.visitanteStatus}
-                </span>
+                <div className="d-flex">
+                  <div
+                    ref={dropRef}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    className="dropzone-container"
+                  >
+                    <img
+                      src={visitanteDTO.url ? visitanteDTO.url : userDefault}
+                      alt="Foto do Membro"
+                      className="img-fluid mb-3 d-block foto-de-membro"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => inputRef.current?.click()}
+                    />
+                    <input
+                      ref={inputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      style={{ display: "none" }}
+                    />
+                    {isHovered && (
+                      <p className="text-center small text-muted arraste">
+                        Arraste aqui a foto
+                      </p>
+                    )}
+                  </div>
 
-                <span className="nome-id">
-                  {MembroDTO.nome} {MembroDTO.sobrenome}
-                </span>
-                <p className="dados">
-                  <span>CPF:</span> {MembroDTO.cpf}
-                </p>
-                <p className="dados">
-                  <span>Idade:</span> {MembroDTO.idade}
-                </p>
-                <p className="dados">
-                  <span>Estado Civil:</span> {MembroDTO.estadoCivil}
-                </p>
-                <p className="dados">
-                  <span>Data de Nascimento:</span>{" "}
-                  {new Date(MembroDTO.dataNascimento).toLocaleDateString()}
-                </p>
-                <p className="dados">
-                  <span>Email:</span> {MembroDTO.email}
-                </p>
-                <p className="dados">
-                  <span>Telefone:</span> {MembroDTO.telefone}
-                </p>
-
-                <div className="botoes-container">
-                  <Link to={`/visitante/editar/${id}`}>
-                    <button className="botao-editar">Editar</button>
-                  </Link>
-                  <button onClick={handleDeleteClick} className="botao-deletar">
-                    Deletar
-                  </button>
+                  <div className="dados-pessoais">
+                  
+                    <p className="nome-membro">
+                      {visitanteDTO.nome} {visitanteDTO.sobrenome}
+                    </p>
+                    <div className="d-flex">
+                      <p className="dados-m">
+                        <span>Data de Nascimento:</span>{" "}
+                        {new Date(
+                         visitanteDTO.dataNascimento
+                        ).toLocaleDateString()}
+                      </p>
+                      <p className="dados-m">
+                        <span>Idade:</span> {visitanteDTO.idade}
+                      </p>
+                    </div>
+                    <div className="d-flex ">
+                      <p className="dados-m">
+                        <span>CPF:</span> {visitanteDTO.cpf}
+                      </p>
+                      <p className="dados-m">
+                        <span>Estado Civil:</span> {visitanteDTO.estadoCivil}
+                      </p>
+                    </div>
+                    <div className="d-flex">
+                      <p className="dados-m">
+                        <span>Email:</span> {visitanteDTO.email}
+                      </p>
+                      <p className="dados-m">
+                        <span>Telefone:</span> {visitanteDTO.telefone}
+                      </p>
+                    </div>
+                   
+                  </div>
                 </div>
               </>
             ) : (
               <p>Carregando detalhes do membro...</p>
             )}
           </div>
-
-          <div
-            className="col-md-3 col-7 m-5 md-5 text-center align-content-center"
-            id="endereço"
-          >
-            {MembroDTO ? (
-              <div className="conteudo-centralizado-endereço">
-                <p className="text-h2">Endereço</p>
-                <p className="dados">
-                  <span>Rua:</span> {MembroDTO.rua}
+          {visitanteDTO ? (
+            <div className="endereço-membro col-md-4 text-center m-5">
+              <p className="titulo-endereço">Endereço</p>
+              <div className="d-flex justify-content-center ">
+                <p className="dados-m">
+                  <span>Rua:</span> {visitanteDTO.rua}
                 </p>
-                <p className="dados">
-                  <span>Bairro:</span> {MembroDTO.bairro}
-                </p>
-                <p className="dados">
-                  <span>Número:</span> {MembroDTO.numero}
-                </p>
-                <p className="dados">
-                  <span>Cidade:</span> {MembroDTO.cidade}
-                </p>
-                <p className="dados">
-                  <span>Complemento:</span> {MembroDTO.complemento}
-                </p>
-                <p className="dados">
-                  <span>CEP:</span> {MembroDTO.cep}
+                <p className="dados-m">
+                  <span>Número:</span> {visitanteDTO.numero}
                 </p>
               </div>
-            ) : (
-              <p>Carregando detalhes do membro...</p>
-            )}
-          </div>
+              <div className="d-flex justify-content-center ">
+                <p className="dados-m">
+                  <span>Bairro:</span> {visitanteDTO.bairro}
+                </p>
 
+                <p className="dados-m">
+                  <span>Cidade:</span> {visitanteDTO.cidade}
+                </p>
+              </div>
+              <p className="dados-m">
+                <span>Complemento:</span> {visitanteDTO.complemento}
+              </p>
+              <p className="dados-m">
+                <span>CEP:</span> {visitanteDTO.cep}
+              </p>
+            </div>
+          ) : (
+            <p>Carregando detalhes do membro...</p>
+          )}
+          <div className="row"></div>
           {showDeleteConfirmation && (
             <div className="modal-confirm">
               <span className="icone-confirm">
@@ -224,16 +228,31 @@ const DetalhesVisitante = () => {
           {isModalVisible && (
             <SuccessModal
               onClose={handleModalClose}
-              onRedirect={() => navigate("/visitante")}
+              onRedirect={() => navigate("/membro")}
               operation={"deletar"}
             />
           )}
         </div>
-        <div className="row  text-center">
-          <div className="col-2 offset-4 mb-5" id="voltar-membro">
-            <button className="btn btn-primary" onClick={handleGoBack}>
-              Voltar
-            </button>
+        <div className="row  text-center justify-content-center">
+          <div className="col-md-9">
+            <div className="botoes-membros-container">
+              <Link to={`/membro/atualizar/${id}`}>
+                <button className="button-primary" id="botao-editar-membro">Editar</button>
+              </Link>
+              <button
+                onClick={handleDeleteClick}
+                className="button-deletar"
+                id="botao-deletar-membro"
+              >
+                Deletar
+              </button>
+              <button
+                className="btn btn-primary  voltar-detalhe-membro"
+                onClick={handleGoBack}
+              >
+                Voltar
+              </button>
+            </div>
           </div>
         </div>
       </div>

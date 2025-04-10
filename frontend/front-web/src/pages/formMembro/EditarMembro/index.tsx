@@ -389,8 +389,8 @@ const FormularioUpdate = () => {
                 }
               />
             </div>
-            <div className="d-grid gap-2 col-6 mx-auto mt-5">
-              <button className="btn btn-primary" type="submit">
+            <div className="d-grid gap-2 col-3 mx-auto mt-5">
+              <button className="button-primary-large" type="submit">
                 Atualizar
               </button>
             </div>

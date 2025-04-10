@@ -20,7 +20,7 @@ const Detalhes = () => {
   const dropRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [uploading, setUploading] = useState(false);
+  
 
   const loadMembroDTO = (id: number) => {
     membroService
@@ -53,7 +53,7 @@ const Detalhes = () => {
     membroService
       .patchFotoPerfil(+id, file)
       .then(() => {
-        window.location.reload(); // força atualização total da página
+        window.location.reload();
       })
       .catch((err) => console.error("Erro ao atualizar imagem:", err));
   };
@@ -98,11 +98,11 @@ const Detalhes = () => {
   const getColorByStauts = (tipoCulto: string) => {
     switch (tipoCulto) {
       case "AFASTADO":
-        return "#fcba03";
+        return "var(--color-yellow)";
       case "DESLIGADO":
-        return "#c70909";
+        return "var(--color-red)";
       default:
-        return "#28a745";
+        return "var(--color-money)";
     }
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -273,11 +273,12 @@ const Detalhes = () => {
           <div className="col-md-9">
             <div className="botoes-membros-container">
               <Link to={`/membro/atualizar/${id}`}>
-                <button className="botao-editar-membro">Editar</button>
+                <button className="button-primary" id="botao-editar-membro">Editar</button>
               </Link>
               <button
                 onClick={handleDeleteClick}
-                className="botao-deletar-membro"
+                className="button-deletar"
+                id="botao-deletar-membro"
               >
                 Deletar
               </button>
