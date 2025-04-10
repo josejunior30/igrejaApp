@@ -272,11 +272,15 @@ const Gabinete = () => {
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center d-flex">
           <div className="col-12 mt-2 mb-2 text-center">
-            <button className=" button-primary" id="btn-historico" onClick={abrirModal}>
+            <button
+              className=" button-primary"
+              id="btn-historico"
+              onClick={abrirModal}
+            >
               Novo Atendimento
             </button>
             <Link to={"/gabinete-atendimento"}>
-              <button className="button-primary" >Historico</button>
+              <button className="button-primary">Historico</button>
             </Link>
           </div>
         </div>
@@ -453,23 +457,29 @@ const Gabinete = () => {
                     <label className="form-label label-atendimento">
                       Membros:
                     </label>
-                    <select
-                      className="form-select select-dados-atendimento"
-                      multiple
-                    >
+                    <div className="checkbox-list scroll-container">
                       {membros.map((membro) => (
-                        <option
-                          key={membro.id}
-                          value={membro.id}
-                          onDoubleClick={() =>
-                            handleDoubleClick(membro.id, "membroIds")
-                          }
-                        >
-                          {membro.nome} {membro.sobrenome}
-                        </option>
+                        <div key={membro.id} className="form-check">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`membro-${membro.id}`}
+                            checked={novoAtendimento.membroIds.includes(
+                              membro.id
+                            )}
+                            onChange={() =>
+                              handleDoubleClick(membro.id, "membroIds")
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`membro-${membro.id}`}
+                          >
+                            {membro.nome} {membro.sobrenome}
+                          </label>
+                        </div>
                       ))}
-                    </select>
-
+                    </div>
                     <p className="selecionados">
                       selecionados:{" "}
                       <strong>
@@ -482,22 +492,29 @@ const Gabinete = () => {
                     <label className="form-label label-atendimento">
                       Visitantes:
                     </label>
-                    <select
-                      className="form-select select-dados-atendimento"
-                      multiple
-                    >
+                    <div className="checkbox-list scroll-container">
                       {visitantes.map((visitante) => (
-                        <option
-                          key={visitante.id}
-                          value={visitante.id}
-                          onDoubleClick={() =>
-                            handleDoubleClick(visitante.id, "visitanteIds")
-                          }
-                        >
-                          {visitante.nome} {visitante.sobrenome}
-                        </option>
+                        <div key={visitante.id} className="form-check">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`visitante-${visitante.id}`}
+                            checked={novoAtendimento.visitanteIds.includes(
+                              visitante.id
+                            )}
+                            onChange={() =>
+                              handleDoubleClick(visitante.id, "visitanteIds")
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`visitante-${visitante.id}`}
+                          >
+                            {visitante.nome} {visitante.sobrenome}
+                          </label>
+                        </div>
                       ))}
-                    </select>
+                    </div>
                     <p className="selecionados">
                       selecionados:{" "}
                       <strong>
@@ -510,12 +527,12 @@ const Gabinete = () => {
                     <button
                       onClick={handleClearSelection}
                       className="limpar-atendimento"
-                    
                     >
                       Limpar Seleção
                     </button>
                   </div>
                 </div>
+
                 <div className="modal-body">
                   <label className="form-label label-atendimento">
                     Não Cadastrado

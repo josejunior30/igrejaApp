@@ -183,3 +183,14 @@
   padding: 3px 6px;
   border-radius: 50%;
 }
+.scroll-container {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+}
+.scroll-container label{
+color: #000000;
+
+}
