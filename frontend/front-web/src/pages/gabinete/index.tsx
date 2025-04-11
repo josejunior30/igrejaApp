@@ -362,7 +362,7 @@ const Gabinete = () => {
             </ul>
           </div>
 
-          <div className="col-3 mt-4">
+          <div className="col-md-3 mt-4">
             <h4 className="ultimos-atendimentos text-center">
               Últimos Atendimentos
             </h4>
@@ -410,7 +410,7 @@ const Gabinete = () => {
               </div>
               <div className="modal-body">
                 <div className="col-12 d-flex">
-                  <div className="col-3 dados-inserir-atendimento">
+                  <div className="col-md-3 dados-inserir-atendimento">
                     <label className="form-label label-atendimento">
                       Data:
                     </label>
@@ -422,7 +422,7 @@ const Gabinete = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="col-2 dados-inserir-atendimento">
+                  <div className="col-md-2 dados-inserir-atendimento">
                     <label className="form-label label-atendimento">
                       Horário:
                     </label>
@@ -434,7 +434,7 @@ const Gabinete = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="col-5 dados-inserir-atendimento ">
+                  <div className="col-md-5 dados-inserir-atendimento ">
                     <label className="form-label label-atendimento">
                       Tipo de Atendimento:
                     </label>
@@ -453,7 +453,7 @@ const Gabinete = () => {
                   </div>
                 </div>
                 <div className="col-12 d-flex">
-                  <div className="col-6">
+                  <div className="col-md-6">
                     <label className="form-label label-atendimento">
                       Membros:
                     </label>
@@ -488,7 +488,7 @@ const Gabinete = () => {
                     </p>
                   </div>
 
-                  <div className="col-6">
+                  <div className="col-md-6">
                     <label className="form-label label-atendimento">
                       Visitantes:
                     </label>
@@ -537,7 +537,7 @@ const Gabinete = () => {
                   <label className="form-label label-atendimento">
                     Não Cadastrado
                   </label>
-                  <div className="d-flex col-8">
+                  <div className="d-flex col-md-8">
                     <input
                       type="text"
                       className="form-control me-2"

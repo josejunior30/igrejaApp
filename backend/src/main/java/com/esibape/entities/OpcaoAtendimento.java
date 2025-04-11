@@ -1,7 +1,9 @@
 package com.esibape.entities;
 
 import java.io.Serializable;
+
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,24 +11,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-
 @Entity
-@Table(name="tb_descricao_receita")
-public class DescricaoReceita implements Serializable{
+@Table(name="tb_opcao_atendimento")
+public class OpcaoAtendimento implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-    @Column(nullable = false, unique = true, length = 100)  
-    private String descricao;
 
-	public DescricaoReceita() {
+	@Column(nullable = false, unique = true, length = 100)  
+	private String descricao;
+	
+	public OpcaoAtendimento() {
 		
 		
 	}
 
-	public DescricaoReceita(Long id, String descricao) {
+	public OpcaoAtendimento(Long id, String descricao) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -61,9 +63,8 @@ public class DescricaoReceita implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DescricaoReceita other = (DescricaoReceita) obj;
+		OpcaoAtendimento other = (OpcaoAtendimento) obj;
 		return Objects.equals(id, other.id);
 	}
 	
-
 }

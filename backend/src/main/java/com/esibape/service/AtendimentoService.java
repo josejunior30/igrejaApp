@@ -91,6 +91,7 @@ public class AtendimentoService {
         entity.setData(dto.getData());
         entity.setHorario(dto.getHorario());
         entity.setTipoAtendimento(dto.getTipoAtendimento());
+        entity.setOpcaoAtendimento(dto.getOpcaoAtendimento());
 
         if (dto.getOutro() != null) {
             entity.getOutro().clear();

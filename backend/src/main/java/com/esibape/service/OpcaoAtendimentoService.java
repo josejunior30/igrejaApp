@@ -7,40 +7,47 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.esibape.DTO.DescricaoContaDTO;
 import com.esibape.DTO.DescricaoReceitaDTO;
+import com.esibape.DTO.OpcaoAtendimentoDTO;
+import com.esibape.entities.DescricaoConta;
 import com.esibape.entities.DescricaoReceita;
+import com.esibape.entities.OpcaoAtendimento;
 import com.esibape.repository.DescricaoReceitaRepository;
+import com.esibape.repository.OpcaoAtendimentoRepository;
 
 
 
 @Service
-public class DescricaoReceitaService {
+public class OpcaoAtendimentoService {
     @Autowired
-    private DescricaoReceitaRepository repository;
-
+    private OpcaoAtendimentoRepository repository;
 
     @Transactional(readOnly = true)
-    public List<DescricaoReceitaDTO> findAll() {
-        List<DescricaoReceita> list = repository.findAll();
+    public List<OpcaoAtendimentoDTO> findAll() {
+        List<OpcaoAtendimento> list = repository.findAll();
         
         if (list.isEmpty()) {
             return Collections.emptyList();
         }
 
         return list.stream()
-            .map(DescricaoReceitaDTO::new)
+            .map(OpcaoAtendimentoDTO::new)
             .collect(Collectors.toList());
     }
+
+    
     @Transactional
-    public DescricaoReceitaDTO insert( DescricaoReceitaDTO dto) {
-    	DescricaoReceita entity =  new DescricaoReceita();
+    public OpcaoAtendimentoDTO insert( OpcaoAtendimentoDTO dto) {
+    	OpcaoAtendimento entity =  new OpcaoAtendimento();
     		copyDtoToEntity(dto, entity);	
     		entity = repository.save(entity);
-    		return new DescricaoReceitaDTO(entity);
+    		return new OpcaoAtendimentoDTO();
     	
     }
     
-	private void copyDtoToEntity(DescricaoReceitaDTO dto, DescricaoReceita entity) {
+	private void copyDtoToEntity(OpcaoAtendimentoDTO dto, OpcaoAtendimento entity) {
 	      
         entity.setDescricao(dto.getDescricao());
 

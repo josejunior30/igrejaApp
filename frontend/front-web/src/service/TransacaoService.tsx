@@ -63,3 +63,7 @@ export function deleteTransacao(id: number) {
 export function findByMesAno(mes: number, ano: number) {
   return axios.get(`${BASE_URL}/transacao/mes/${mes}/ano/${ano}`);
 }
+
+export function insertDescricaoReceita(descricao: any) {
+  return axios.post(`${BASE_URL}/descricao-receita`, descricao);
+}

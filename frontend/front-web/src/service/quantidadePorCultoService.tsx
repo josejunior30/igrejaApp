@@ -20,7 +20,7 @@ export function insertQuantidade(QuantidadePorCulto:any){
 export function updateMembro(id: number, MembroDTO:any){
     return axios.put(`${BASE_URL}/quantidade/${id}`, MembroDTO);
 }
-export function deleteMembro(id: number) {
+export function deleteQuantidade(id: number) {
     return axios.delete(`${BASE_URL}/quantidade/${id}`);
 }
 export function cultoPorMes(mes: number) {

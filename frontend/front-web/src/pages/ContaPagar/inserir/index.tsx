@@ -6,6 +6,7 @@ import {
   findByDescricaoMesAndAno,
   findByMesAno,
   insertContaPagar,
+  insertDescricaoConta,
   updateStatus,
 } from "../../../service/ContaPagarService";
 import {
@@ -33,6 +34,7 @@ const ContaPagar = () => {
   const handleCloseSearch = () => setShowSearchModal(false);
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
+  const [novaDescricao, setNovaDescricao] = useState("");
 
   const [totalPesquisa, setTotalPesquisa] = useState(0);
   const [filtro, setFiltro] = useState({
@@ -60,12 +62,13 @@ const ContaPagar = () => {
     }
     fetchData();
   }, [filtro.mes, filtro.ano]);
-   useEffect(() => {
+  useEffect(() => {
     async function fetchDescricaoContas() {
       try {
         const response = await findAllDescricao();
-        const sortedData = response.data.sort((a: DescricaoConta, b: DescricaoConta) =>
-          a.descricao.localeCompare(b.descricao)
+        const sortedData = response.data.sort(
+          (a: DescricaoConta, b: DescricaoConta) =>
+            a.descricao.localeCompare(b.descricao)
         );
         setDescricaoContas(sortedData);
       } catch (error) {
@@ -85,7 +88,7 @@ const ContaPagar = () => {
       const descricaoObj = descricaoContas.find(
         (desc) => desc.descricao === value
       );
-      setNovaConta((prev) => ({ ...prev, descricaoConta: descricaoObj })); 
+      setNovaConta((prev) => ({ ...prev, descricaoConta: descricaoObj }));
     } else {
       setNovaConta((prev) => ({
         ...prev,
@@ -208,16 +211,16 @@ const ContaPagar = () => {
         : "Tem certeza que deseja pagar?"
     );
     if (!confirmacao) return;
-  
+
     try {
       let novoStatus: StatusPagamento;
-  
+
       if (status === StatusPagamento.PAGO) {
         novoStatus = StatusPagamento.PENDENTE;
       } else {
-        novoStatus = StatusPagamento.PAGO; 
+        novoStatus = StatusPagamento.PAGO;
       }
-  
+
       await updateStatus(id, novoStatus);
       window.location.reload();
     } catch (error) {
@@ -225,7 +228,30 @@ const ContaPagar = () => {
       alert("Erro ao atualizar status!");
     }
   };
-  
+  const handleSalvarDescricao = async () => {
+    if (!novaDescricao.trim()) return alert("Informe uma descrição.");
+
+    try {
+      const res = await insertDescricaoConta({ descricao: novaDescricao });
+
+      const nova = res.data;
+      setDescricaoContas((prev) =>
+        [...prev, nova].sort((a, b) => a.descricao.localeCompare(b.descricao))
+      );
+
+      setNovaConta((prev) => ({
+        ...prev,
+        descricaoConta: nova,
+      }));
+
+      setNovaDescricao("");
+      alert("Descrição salva com sucesso!");
+    } catch (error) {
+      console.error("Erro ao salvar descrição:", error);
+      alert("Erro ao salvar descrição.");
+    }
+  };
+
   return (
     <>
       <Header />
@@ -259,6 +285,7 @@ const ContaPagar = () => {
             <Modal.Body>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
+                <label className="form-label">Selecione uma conta </label>
                   <select
                     className="form-control"
                     name="descricaoConta"
@@ -275,6 +302,21 @@ const ContaPagar = () => {
                       </option>
                     ))}
                   </select>
+                  <div className="mb-3">
+                    <label className="form-label">cadastre uma nova conta</label>
+                    <div className="d-flex gap-2">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Adicionar nova conta"
+                        value={novaDescricao}
+                        onChange={(e) => setNovaDescricao(e.target.value)}
+                      />
+                      <Button variant="success" onClick={handleSalvarDescricao}>
+                        Salvar
+                      </Button>
+                    </div>
+                  </div>
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Vencimento</label>
@@ -353,24 +395,24 @@ const ContaPagar = () => {
               <Modal.Title>Pesquisa de Contas</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <div className="mb-3">
-                  <select
-                    className="form-control"
-                    name="descricaoConta"
-                    value={filtro.descricaoConta}
-                    onChange={handleFiltroChange}
-                    required
-                  >
-                    <option value="" disabled>
-                      Selecione...
+              <div className="mb-3">
+                <select
+                  className="form-control"
+                  name="descricaoConta"
+                  value={filtro.descricaoConta}
+                  onChange={handleFiltroChange}
+                  required
+                >
+                  <option value="" disabled>
+                    Selecione...
+                  </option>
+                  {descricaoContas.map((desc) => (
+                    <option key={desc.descricao} value={desc.descricao}>
+                      {desc.descricao}
                     </option>
-                    {descricaoContas.map((desc) => (
-                      <option key={desc.descricao} value={desc.descricao}>
-                        {desc.descricao}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                  ))}
+                </select>
+              </div>
               <div className="mb-3">
                 <label className="form-label">Mês</label>
                 <select
