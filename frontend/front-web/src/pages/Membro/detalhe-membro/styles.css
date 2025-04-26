@@ -61,12 +61,20 @@
   position: absolute;
   margin-left: 60vw;
 }
+<<<<<<< HEAD
 #botao-editar-membro {
+=======
+#botao-editar-membro{
+>>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
   margin: 0 10px;
 
   margin-left: 5vw;
 }
+<<<<<<< HEAD
 #botao-deletar-membro {
+=======
+#botao-deletar-membro{
+>>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
   margin: 0 30px;
 }
 .desligamento-membro {

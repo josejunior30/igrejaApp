@@ -14,6 +14,8 @@ import {
 } from "chart.js";
 import "./styles.css";
 import { Link } from "react-router-dom";
+import { PiTrashFill } from "react-icons/pi";
+import { deleteQuantidade } from "../../../service/quantidadePorCultoService";
 
 ChartJS.register(
   ArcElement,
@@ -106,7 +108,6 @@ const NumeroCulto = () => {
 
     const totais = dados.map((dado) => dado.total);
 
-    // Aplicando cores conforme o tipo de culto
     const colors = dados.map((dado) => getColorByTipoCulto(dado.tipoCulto));
 
     return {
@@ -115,7 +116,7 @@ const NumeroCulto = () => {
         {
           label: "Total por Mês",
           data: totais,
-          backgroundColor: colors, // Usando cores dinâmicas para cada barra
+          backgroundColor: colors,
           borderColor: "#ffffff",
           borderWidth: 1,
         },
@@ -126,11 +127,26 @@ const NumeroCulto = () => {
   const getColorByTipoCulto = (tipoCulto: string) => {
     switch (tipoCulto) {
       case "CULTO_DA_MANHA":
-        return "#fcba03"; // Azul para culto da manhã
+        return "#fcba03";
       case "CULTO_DA_NOITE":
-        return "#134190"; // Amarelo para culto da noite
+        return "#134190";
       default:
-        return "#02fcfc"; // Cor padrão
+        return "#02fcfc";
+    }
+  };
+  const handleDelete = (id: number) => {
+    const confirmed = window.confirm("Tem certeza que deseja excluir ?");
+    if (confirmed) {
+      deleteQuantidade(id)
+        .then(() => {
+          setQuantidadePorCulto((prevState) =>
+            prevState.filter((req) => req.id !== id)
+          );
+          alert(" excluído com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao excluir :", error);
+        });
     }
   };
 
@@ -284,6 +300,7 @@ const NumeroCulto = () => {
                   <th scope="col">Membros</th>
                   <th scope="col">Tipo</th>
                   <th scope="col">Total</th>
+                  <th scope="col">Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -322,6 +339,14 @@ const NumeroCulto = () => {
                           : quantidade.tipoCulto}
                       </td>
                       <td className="total-verde">{quantidade.total}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(quantidade.id)}
+                        >
+                          <PiTrashFill />
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (

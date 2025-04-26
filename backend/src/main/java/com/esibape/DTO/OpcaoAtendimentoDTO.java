@@ -3,9 +3,17 @@ package com.esibape.DTO;
 import java.io.Serializable;
 import java.util.Objects;
 
+<<<<<<< HEAD
 import com.esibape.entities.OpcaoAtendimento;
 
 public class OpcaoAtendimentoDTO implements Serializable{
+=======
+import com.esibape.entities.DescricaoReceita;
+import com.esibape.entities.OpcaoAtendimento;
+
+
+	public class OpcaoAtendimentoDTO implements Serializable{
+>>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String descricao;
@@ -58,5 +66,9 @@ public class OpcaoAtendimentoDTO implements Serializable{
 	
 	
 	
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c

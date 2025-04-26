@@ -32,7 +32,7 @@
 }
 
 .btn-add {
-  width: 100%; /* Ocupa 100% da largura da div pai */
+  width: 100%;
   background-color: #ed7947;
   color: #fff;
   padding: 10px 15px;

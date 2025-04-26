@@ -99,3 +99,7 @@ export async function deleteContaPagar(id: number) {
 
   return axios.delete(`${BASE_URL}/contaPagar/${id}`);
 }
+
+export function insertDescricaoConta(descricao: any) {
+  return axios.post(`${BASE_URL}/descricao-conta`, descricao);
+}

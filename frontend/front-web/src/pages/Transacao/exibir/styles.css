@@ -1,14 +1,14 @@
 .ganho-bg {
 
-  color: #00ff3c!important; /* Verde Escuro para Contraste */
+  color: var(--color-money)!important; 
   font-weight: bold;
 }
 .total-transacao strong{
-  color: #00ff3c;
+  color: var(--color-money);
 }
 .btn-pesquisa-ganho{
   background-color: var(--color-coral);
-  color:white;
+  color:var(--color-white);
   width: 150px;
   height: 50px;
   border-radius: 10px;
@@ -17,6 +17,6 @@
 }
 .despesa-bg {
 
-  color: #f80000!important; /* Texto Branco para Contraste */
+  color: var(--color-red)!important;
   font-weight: bold;
 }

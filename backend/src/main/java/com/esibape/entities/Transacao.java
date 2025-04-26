@@ -30,11 +30,11 @@ public class Transacao implements Serializable{
     @JoinColumn(name = "descricao_id", nullable = false)
     private DescricaoReceita descricaoReceita;
 	private Boolean isReceita;
-	 @Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING)
 	private TipoDespesa tipoDespesa;
-	 @ManyToOne
-	 @JoinColumn(name = "conta_pagar_id")
-	 private ContaPagar contaPagar; 
+	@ManyToOne
+	@JoinColumn(name = "conta_pagar_id")
+	private ContaPagar contaPagar; 
 
 	public Transacao() {
 		

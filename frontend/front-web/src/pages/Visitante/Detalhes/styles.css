@@ -1,0 +1,98 @@
+.dadosMembros {
+    background-color: var(--color-white);
+    border-radius: 20px;
+  }
+  .nome-membro {
+    font-size: 24px;
+    color: var(--color-form);
+    font-weight: bolder;
+    margin-left: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .dados-pessoais {
+    display: block;
+    position: relative;
+    margin-top: 25px;
+  }
+  .foto-de-membro {
+    border-radius: 20px;
+    display: block;
+    height: 200px;
+    width: 200px;
+    margin-top: 3%;
+    border: solid 5px;
+    border-color: var(--color-form);
+  }
+  .dados-m span {
+    font-weight: bold;
+    margin-left: 10px;
+    color: var(--color-form);
+  }
+  .endereço-membro {
+    background-color: var(--color-white);
+    border-radius: 20px;
+  }
+  .status-membro {
+    margin-left: 24vw;
+    margin-top: -22px;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 10px;
+    text-decoration: underline;
+    position: absolute;
+  }
+  .titulo-endereço {
+    background-color: var(--color-form);
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .botoes-membros-container {
+    display: flex;
+    margin-top: 20px;
+    font-size: 12px;
+  }
+  
+  .voltar-detalhe-membro {
+    font-size: 12px !important;
+    width: 120px;
+    position: absolute;
+    margin-left: 60vw;
+  }
+  #botao-editar-membro{
+    margin: 0 10px;
+  
+    margin-left: 5vw;
+  }
+  #botao-deletar-membro{
+    margin: 0 30px;
+  }
+  .desligamento-membro {
+    margin-left: 24vw;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 10px;
+    color: var(--color-red);
+    text-decoration: underline;
+    position: absolute;
+  }
+  
+  .arraste {
+    position: absolute;
+    margin-left: 30px;
+  }
+  
+  .dropzone-container {
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+  
+  .dropzone-container:hover {
+    border-color: var(--color-form);
+    cursor: pointer;
+  }
+  

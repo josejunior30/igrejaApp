@@ -1,6 +1,10 @@
 package com.esibape.entities;
 
 import java.io.Serializable;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -66,6 +70,10 @@ public class OpcaoAtendimento implements Serializable{
 		return Objects.equals(id, other.id);
 	}
 	
+<<<<<<< HEAD
 }
 
 
+=======
+}
+>>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c

@@ -31,6 +31,27 @@ public class DescricaoReceitaService {
             .map(DescricaoReceitaDTO::new)
             .collect(Collectors.toList());
     }
+    @Transactional
+    public DescricaoReceitaDTO insert( DescricaoReceitaDTO dto) {
+    	DescricaoReceita entity =  new DescricaoReceita();
+    		copyDtoToEntity(dto, entity);	
+    		entity = repository.save(entity);
+    		return new DescricaoReceitaDTO(entity);
+    	
+    }
+    
+	private void copyDtoToEntity(DescricaoReceitaDTO dto, DescricaoReceita entity) {
+	      
+        entity.setDescricao(dto.getDescricao());
 
+   
+     
+	}
+	
+	   public void delete(Long id) {
+	    	repository.deleteById(id);
+	    }
+    
+   
    
 }

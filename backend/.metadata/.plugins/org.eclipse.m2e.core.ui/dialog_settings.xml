@@ -62,6 +62,7 @@
 	</section>
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\jose\Desktop\sibape\igrejaApp\backend"/>
 			<item value="C:\Users\josel\Desktop\SIBAPE\igrejaApp\backend"/>
 		</list>
 		<list key="projectNameTemplate">

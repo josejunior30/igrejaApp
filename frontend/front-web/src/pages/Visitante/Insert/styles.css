@@ -55,39 +55,6 @@
 }
 
 
-.btn-add {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #ed7947;
-    color: #fff;
-    cursor: pointer;
-    width: 20%;
-    margin-left: 40%;
-  margin-top: 20px;
-  font-size: 18px;
-}
-
-.btn-add:hover,
-.btn-add:focus {
-  background-color: #004080;
-}
-
-.add-voltar {
-  margin-top: 40px;
-  background-color: #0056b3;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: background-color 0.3s ease-in-out;
-}
 
 
 .titulo-form h3{
