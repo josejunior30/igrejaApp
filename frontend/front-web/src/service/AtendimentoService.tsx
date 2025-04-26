@@ -37,3 +37,11 @@ export function findByAnoMesAno(ano: number ,mes: number) {
 export function findByAno(ano: number ) {
   return axios.get(`${BASE_URL}/atendimento/ano/${ano}`);
 }
+
+export function findAllOpcaoAtendimento() {
+  return axios.get(`${BASE_URL}/opcao-atendimento`);
+}
+
+export function insertOpcaoAtendimento(descricao: any) {
+  return axios.post(`${BASE_URL}/opcao-atendimento`, descricao);
+}

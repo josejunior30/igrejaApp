@@ -90,7 +90,7 @@ public class AtendimentoService {
     private void copyDtoToEntity(AtendimentoDTO dto, Atendimento entity) {
         entity.setData(dto.getData());
         entity.setHorario(dto.getHorario());
-        entity.setTipoAtendimento(dto.getTipoAtendimento());
+        entity.setOpcaoAtendimento(dto.getOpcaoAtendimento());
 
         if (dto.getOutro() != null) {
             entity.getOutro().clear();
@@ -143,4 +143,3 @@ public class AtendimentoService {
         return list.stream().map(AtendimentoDTO::new).collect(Collectors.toList());
     }
 }
-

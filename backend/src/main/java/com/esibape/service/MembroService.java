@@ -15,10 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.esibape.DTO.CargoMembroDTO;
 import com.esibape.DTO.MembroDTO;
+import com.esibape.entities.CargoMembro;
 import com.esibape.entities.EBDCurso;
 import com.esibape.entities.Membro;
 import com.esibape.entities.MembroStatus;
+import com.esibape.repository.CargoMembroRepository;
 import com.esibape.repository.EBDCursoRepository;
 import com.esibape.repository.MembroRepository;
 
@@ -30,6 +33,9 @@ public class MembroService {
 
     @Autowired
     private EBDCursoRepository ebdCursoRepository;
+    @Autowired
+    private CargoMembroRepository cargoMembroRepository;
+    
     
     @Autowired
     private S3StorageService s3StorageService;
@@ -48,7 +54,7 @@ public class MembroService {
         Membro membro = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado"));
         atualizarIdade(membro);
-        return new MembroDTO(membro, membro.getEbdCurso());
+        return new MembroDTO(membro, membro.getEbdCurso(), membro.getCargoMembro());
     }
     @Transactional
     public MembroDTO insert( MembroDTO dto) {
@@ -80,7 +86,7 @@ public class MembroService {
             .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
         membro.getEbdCurso().add(curso);
         repository.save(membro);
-        return new MembroDTO(membro, membro.getEbdCurso());
+        return new MembroDTO(membro, membro.getEbdCurso(),membro.getCargoMembro());
     }
     
 
@@ -107,8 +113,22 @@ public class MembroService {
         entity.setAno(dto.getAno());
         entity.setMembroTipo(dto.getMembroTipo());
         entity.setMembroStatus(dto.getMembroStatus());
-    }
     
+        
+        for (CargoMembroDTO cargoDTO : dto.getCargoMembro()) {
+            CargoMembro cargo = cargoMembroRepository.findById(cargoDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Cargo não encontrado: " + cargoDTO.getId()));
+            entity.getCargoMembro().add(cargo);
+        }
+    }
+    private CargoMembro convertCargoMembroDtoToEntity(CargoMembroDTO dto) {
+        CargoMembro cargo = new CargoMembro();
+        cargo.setId(dto.getId()); // se necessário. Em inserções, o ID provavelmente será gerado.
+        cargo.setNome(dto.getNome());
+        // Realize outras mapeações se houver mais campos
+        return cargo;
+    }
+
     
     @Transactional(readOnly = true)
 	public List<MembroDTO> findByNomeIgnoreCaseContaining(String nome) {
@@ -201,4 +221,3 @@ public class MembroService {
 
 
 }
-

@@ -1,4 +1,6 @@
-import { curso } from "./trilha";
+
+
+
 
 export type MembroDTO = {
   id: number;
@@ -21,10 +23,24 @@ export type MembroDTO = {
   ano: number;
   membroStatus: string;
   membroTipo: string;
-  curso: curso;
+  ebdCurso: EbdCurso[];
   opcaoCurso: string;
   apostila: boolean;
+  cargoMembro:CargoMembro[];
 };
+
+interface EbdCurso {
+  id: number;
+  nome: string;
+  resumo: string;
+
+}
+interface CargoMembro {
+  id: number;
+  nome: string;
+  resumo: string;
+
+}
 export type MembrosDTO = {
   id: number;
   nome: string;

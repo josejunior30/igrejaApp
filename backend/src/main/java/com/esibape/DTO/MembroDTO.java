@@ -7,16 +7,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
+
+import com.esibape.entities.CargoMembro;
 import com.esibape.entities.EBDCurso;
 import com.esibape.entities.ListaPresencaEBD;
 import com.esibape.entities.Membro;
 import com.esibape.entities.MembroEstado;
 import com.esibape.entities.MembroStatus;
 import com.esibape.entities.MembroTipo;
+
 
 
 
@@ -51,6 +56,7 @@ public class MembroDTO implements Serializable{
 	private MembroStatus membroStatus;
 	
 	private MembroTipo membroTipo;
+Set<CargoMembroDTO>cargoMembro = new HashSet<>();
 	Set<EBDCursoDTO>ebdCurso = new HashSet<>();
 	   
 	private List<ListaPresencaEBDDTO> listaPresencaEBD = new ArrayList<>();
@@ -82,20 +88,20 @@ public class MembroDTO implements Serializable{
 		this.membroStatus =entity.getMembroStatus();
 		this.ano =entity.getAno();
 		this.membroTipo= entity.getMembroTipo();
-
-	     
-		
+		  
+        
 	}
 	
-	 public MembroDTO(Membro entity, Set<EBDCurso>ebdCurso) {
+	 public MembroDTO(Membro entity, Set<EBDCurso>ebdCurso, Set<CargoMembro>cargoMembro ) {
 	        this(entity);
 	      
+	  
 	        ebdCurso.forEach(cat-> this.ebdCurso.add(new EBDCursoDTO(cat)));
+	        cargoMembro.forEach(cat2-> this.cargoMembro.add(new CargoMembroDTO(cat2)));
+		      
 	      
 	        }
 	    
-
-
 
 	public Set<EBDCursoDTO> getEbdCurso() {
 		return ebdCurso;
@@ -117,6 +123,14 @@ public class MembroDTO implements Serializable{
 
 
 
+
+	public Set<CargoMembroDTO> getCargoMembro() {
+		return cargoMembro;
+	}
+
+	public void setCargoMembro(Set<CargoMembroDTO> cargoMembro) {
+		this.cargoMembro = cargoMembro;
+	}
 
 	public MembroDTO(Membro entity, List<ListaPresencaEBD>listaPresencaEBD) {
 		 this(entity);

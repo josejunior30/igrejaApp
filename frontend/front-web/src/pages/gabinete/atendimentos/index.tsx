@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Atendimento, TipoAtendimento } from "../../../models/atendimento";
 import * as AtendimentoService from "../../../service/AtendimentoService";

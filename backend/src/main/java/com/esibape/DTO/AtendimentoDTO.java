@@ -9,29 +9,25 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
 import com.esibape.entities.Atendimento;
 import com.esibape.entities.Membro;
-import com.esibape.entities.TipoAtendimento;
+import com.esibape.entities.OpcaoAtendimento;
 import com.esibape.entities.Visitante;
+
 
 
 public class AtendimentoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	@Enumerated(EnumType.STRING)
-	private TipoAtendimento tipoAtendimento;
 	private LocalTime horario;
 	private LocalDate data; 
 	private List<String> outro;
-
-	  private Set<Long> membroIds =  new HashSet<>(); 
+	private OpcaoAtendimento opcaoAtendimento;
+	private Set<Long> membroIds =  new HashSet<>(); 
 	private Set<Long> visitanteIds = new HashSet<>(); 
-	 private Set<String> membroNomes;   
-	    private Set<String> visitanteNomes;
+	private Set<String> membroNomes;   
+	private Set<String> visitanteNomes;
 	
 	public AtendimentoDTO() {
 		
@@ -41,8 +37,8 @@ public class AtendimentoDTO implements Serializable{
 	public AtendimentoDTO(Atendimento atendimento) {
         this.id = atendimento.getId();
         this.horario = atendimento.getHorario();
+        this.opcaoAtendimento= atendimento.getOpcaoAtendimento();
 
-        this.tipoAtendimento = atendimento.getTipoAtendimento();
         this.data = atendimento.getData();
 
         this.membroIds = atendimento.getMembro().stream()
@@ -54,11 +50,11 @@ public class AtendimentoDTO implements Serializable{
                 .collect(Collectors.toSet());
 
         this.membroNomes = atendimento.getMembro().stream()
-                .map(m -> m.getNome() + " " + m.getSobrenome()) // Nome + Sobrenome
+                .map(m -> m.getNome() + " " + m.getSobrenome())
                 .collect(Collectors.toSet());
 
         this.visitanteNomes = atendimento.getVisitante().stream()
-                .map(v -> v.getNome() + " " + v.getSobrenome()) // Nome + Sobrenome
+                .map(v -> v.getNome() + " " + v.getSobrenome())
                 .collect(Collectors.toSet());
         
         this.outro = new ArrayList<>(atendimento.getOutro());
@@ -74,13 +70,6 @@ public class AtendimentoDTO implements Serializable{
 		this.id = id;
 	}
 
-	public TipoAtendimento getTipoAtendimento() {
-		return tipoAtendimento;
-	}
-
-	public void setTipoAtendimento(TipoAtendimento tipoAtendimento) {
-		this.tipoAtendimento = tipoAtendimento;
-	}
 
 	public LocalTime getHorario() {
 		return horario;
@@ -124,6 +113,14 @@ public class AtendimentoDTO implements Serializable{
 	}
 
 
+
+	public OpcaoAtendimento getOpcaoAtendimento() {
+		return opcaoAtendimento;
+	}
+
+	public void setOpcaoAtendimento(OpcaoAtendimento opcaoAtendimento) {
+		this.opcaoAtendimento = opcaoAtendimento;
+	}
 
 	public Set<Long> getMembroIds() {
 		return membroIds;

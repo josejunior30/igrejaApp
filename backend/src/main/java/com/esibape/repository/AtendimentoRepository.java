@@ -1,6 +1,8 @@
 package com.esibape.repository;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -29,5 +31,7 @@ public interface AtendimentoRepository extends JpaRepository<Atendimento, Long> 
     
     @Query("SELECT a FROM Atendimento a WHERE FUNCTION('YEAR', a.data) = :ano")
     List<Atendimento> findByAno(@Param("ano") int ano);
+
+	List<Atendimento> findByDataAndHorarioBetween(LocalDate hoje, LocalTime inicio, LocalTime fim);
     
 }

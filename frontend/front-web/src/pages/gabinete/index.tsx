@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
+
 import Header from "../../components/Header";
 import "./styles.css";
 import {
   findAllMembros,
+  findAllOpcaoAtendimento,
   findAllVisitantes,
   findByAnoAtual,
   findByAnoMesAtual,
   findByProximos,
   findByUltimos,
   insertAtendimento,
+  insertOpcaoAtendimento,
 } from "../../service/AtendimentoService";
-import { Atendimento, TipoAtendimento } from "../../models/atendimento";
+import {
+  Atendimento,
+  OpcaoAtendimento,
+
+} from "../../models/atendimento";
 import { MembroDTO } from "../../models/membro";
 import { visitante } from "../../models/visitante";
 import {
@@ -22,6 +29,11 @@ import {
   Tooltip,
 } from "recharts";
 import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+
+
+import { formatHorario } from "../../components/formatacao/hora";
+import { formatDiaMes } from "../../components/formatacao/data";
 const COLORS = [
   "#0088FE",
   "#00C49F",
@@ -42,17 +54,22 @@ const Gabinete = () => {
   const [ultimosAtendimentos, setUltimosAtendimentos] = useState<Atendimento[]>(
     []
   );
+  const [novaDescricao, setNovaDescricao] = useState("");
   const [totalAtendimentos, setTotalAtendimentos] = useState(0);
   const [mesAtendimentos, setMesAtendimentos] = useState(0);
   const [liderancaAtendimentos, setLiderancaAtendimentos] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [opcaoAtendimento, setOpcaoAtendimento] = useState<OpcaoAtendimento[]>(
+    []
+  );
 
+  const [selectedDescricao, setSelectedDescricao] = useState<number>(0);
   const [novoAtendimento, setNovoAtendimento] = useState({
     data: "",
     horario: "",
     outro: [] as string[],
-    tipoAtendimento: TipoAtendimento.FAMILIAR,
     membroIds: [] as number[],
+    opcaoAtendimento: { id: selectedDescricao },
     visitanteIds: [] as number[],
   });
   const handleAddOutro = () => {
@@ -78,7 +95,7 @@ const Gabinete = () => {
 
         const lideresCount = response.data.filter(
           (atendimento: Atendimento) =>
-            atendimento.tipoAtendimento === "LIDERES"
+            atendimento.opcaoAtendimento.descricao === "Reuniao com as bases"
         ).length;
 
         setLiderancaAtendimentos(lideresCount);
@@ -91,28 +108,28 @@ const Gabinete = () => {
     findByAnoAtual()
       .then((response) => {
         const atendimentos: Atendimento[] = response.data;
-
-        const contagem = atendimentos.reduce<Record<TipoAtendimento, number>>(
+  
+        const contagem = atendimentos.reduce<Record<string, number>>(
           (acc, atendimento) => {
-            acc[atendimento.tipoAtendimento] =
-              (acc[atendimento.tipoAtendimento] || 0) + 1;
+            const descricao = atendimento.opcaoAtendimento?.descricao || "Outro";
+            acc[descricao] = (acc[descricao] || 0) + 1;
             return acc;
           },
-          {} as Record<TipoAtendimento, number>
+          {} as Record<string, number>
         );
-
+  
         const dadosFormatados = Object.entries(contagem).map(
-          ([tipo, count]) => ({
-            name: tipo,
+          ([descricao, count]) => ({
+            name: descricao,
             value: count,
           })
         );
-
+  
         setDados(dadosFormatados);
       })
       .catch((error) => console.error("Erro ao buscar atendimentos:", error));
   }, []);
-
+  
   useEffect(() => {
     findByAnoMesAtual()
       .then((response) => {
@@ -183,19 +200,6 @@ const Gabinete = () => {
       [event.target.name]: event.target.value,
     });
   };
-  const handleSelectChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-    field: "membroIds" | "visitanteIds"
-  ) => {
-    const selectedIds = Array.from(event.target.selectedOptions, (option) =>
-      Number(option.value)
-    );
-
-    setNovoAtendimento((prev) => ({
-      ...prev,
-      [field]: selectedIds,
-    }));
-  };
 
   const handleClearSelection = () => {
     setNovoAtendimento((prev) => ({
@@ -220,31 +224,8 @@ const Gabinete = () => {
         console.error("Erro ao criar atendimento:", error);
       });
   };
-  const formatDiaMes = (data: Date) => {
-    const dia = data.getDate();
-    const mes = data.getMonth() + 1;
-    return `${dia < 10 ? `0${dia}` : dia}/${mes < 10 ? `0${mes}` : mes}`;
-  };
-  const formatHorario = (horario: any) => {
-    if (!horario) return "";
-    const [hour, minute] = horario;
-    return `${String(hour).padStart(2, "0")}:${String(minute).padStart(
-      2,
-      "0"
-    )}`;
-  };
 
-  const formatTipoAtendimento = (tipo: TipoAtendimento): string => {
-    const tipoMapeado: Record<TipoAtendimento, string> = {
-      [TipoAtendimento.PASTORAL]: "Aconselhamento Pastoral",
-      [TipoAtendimento.FAMILIAR]: "Aconselhamento Familiar",
-      [TipoAtendimento.LIDERES]: "Reunião de Lideres",
-      [TipoAtendimento.PREPARACAO_CASAMENTO]: "Preparação para casamento",
-      [TipoAtendimento.PSICOSOCIAL]: "Aconselhamento Psicosocial",
-      [TipoAtendimento.NOVOS_CONVERTIDOS]: "Novos Convertidos",
-    };
-    return tipoMapeado[tipo] || tipo;
-  };
+
   const getSelectedNames = (
     ids: number[],
     list: { id: number; nome: string }[]
@@ -265,18 +246,75 @@ const Gabinete = () => {
       return { ...prev, [field]: ids };
     });
   };
+  useEffect(() => {
+    async function fetchDescricaoContas() {
+      try {
+        const response = await findAllOpcaoAtendimento();
+        setOpcaoAtendimento(response.data);
+        if (response.data.length > 0) {
+          setSelectedDescricao(response.data[0].descricao);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar descrições de receitas:", error);
+      }
+    }
+    fetchDescricaoContas();
+  }, []);
 
+  const handleSalvarDescricao = async () => {
+    const nova = novaDescricao.trim();
+    if (!nova) return alert("Informe uma descrição.");
+  
+    const jaExiste = opcaoAtendimento.some(
+      (item) => item.descricao.toLowerCase() === nova.toLowerCase()
+    );
+    if (jaExiste) {
+      alert("Essa descrição já existe.");
+      return;
+    }
+  
+    try {
+      const res = await insertOpcaoAtendimento({ descricao: nova });
+      const descricaoInserida = res.data;
+  
+      if (!descricaoInserida || !descricaoInserida.descricao) {
+        throw new Error("Descrição retornada é inválida");
+      }
+  
+      setOpcaoAtendimento((prev) =>
+        [...prev, descricaoInserida].sort((a, b) =>
+          (a.descricao || "").localeCompare(b.descricao || "")
+        )
+      );
+  
+      setNovoAtendimento((prev) => ({
+        ...prev,
+        opcaoAtendimento: descricaoInserida,
+      }));
+  
+      setNovaDescricao("");
+      alert("Descrição salva com sucesso!");
+    } catch (error) {
+      console.error("Erro ao salvar descrição:", error);
+      alert("Erro ao salvar descrição.");
+    }
+  };
+  
   return (
     <>
       <Header />
       <div className="container-fluid mt-5 pt-5">
         <div className="row justify-content-center d-flex">
           <div className="col-12 mt-2 mb-2 text-center">
-            <button className=" button-primary" id="btn-historico" onClick={abrirModal}>
+            <button
+              className=" button-primary"
+              id="btn-historico"
+              onClick={abrirModal}
+            >
               Novo Atendimento
             </button>
             <Link to={"/gabinete-atendimento"}>
-              <button className="button-primary" >Historico</button>
+              <button className="button-primary">Historico</button>
             </Link>
           </div>
         </div>
@@ -339,7 +377,7 @@ const Gabinete = () => {
                     <span>
                       {formatDiaMes(new Date(atendimento.data))} -{" "}
                       {formatHorario(atendimento.horario)} -{" "}
-                      {formatTipoAtendimento(atendimento.tipoAtendimento)}
+                      {atendimento.opcaoAtendimento.descricao}
                     </span>
                   </div>
                   <div className="nome-atendimento">
@@ -358,7 +396,7 @@ const Gabinete = () => {
             </ul>
           </div>
 
-          <div className="col-3 mt-4">
+          <div className="col-md-3 mt-4">
             <h4 className="ultimos-atendimentos text-center">
               Últimos Atendimentos
             </h4>
@@ -370,7 +408,7 @@ const Gabinete = () => {
                       {" "}
                       {formatDiaMes(new Date(atendimento.data))}-{" "}
                       {formatHorario(atendimento.horario)} -{" "}
-                      {formatTipoAtendimento(atendimento.tipoAtendimento)}
+            
                     </span>
                   </div>
                   <div>
@@ -406,7 +444,7 @@ const Gabinete = () => {
               </div>
               <div className="modal-body">
                 <div className="col-12 d-flex">
-                  <div className="col-3 dados-inserir-atendimento">
+                  <div className="col-md-3 dados-inserir-atendimento">
                     <label className="form-label label-atendimento">
                       Data:
                     </label>
@@ -418,7 +456,7 @@ const Gabinete = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="col-2 dados-inserir-atendimento">
+                  <div className="col-md-2 dados-inserir-atendimento">
                     <label className="form-label label-atendimento">
                       Horário:
                     </label>
@@ -430,46 +468,79 @@ const Gabinete = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="col-5 dados-inserir-atendimento ">
+                  <div className="col-md-5 dados-inserir-atendimento ">
                     <label className="form-label label-atendimento">
                       Tipo de Atendimento:
                     </label>
                     <select
                       className="form-select"
-                      name="tipoAtendimento"
-                      value={novoAtendimento.tipoAtendimento}
-                      onChange={handleChange}
+                      value={novoAtendimento.opcaoAtendimento.id}
+                      onChange={(e) => {
+                        const selectedId = parseInt(e.target.value, 10);
+                        const selected = opcaoAtendimento.find(
+                          (item) => item.id === selectedId
+                        );
+                        if (selected) {
+                          setNovoAtendimento((prev) => ({
+                            ...prev,
+                            opcaoAtendimento: selected,
+                          }));
+                        }
+                      }}
+                      required
                     >
-                      {Object.values(TipoAtendimento).map((tipo) => (
-                        <option key={tipo} value={tipo}>
-                          {formatTipoAtendimento(tipo)}
+                      {opcaoAtendimento.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.descricao}
                         </option>
                       ))}
                     </select>
                   </div>
                 </div>
+                <div className="col-6"></div>
+                <div className="mb-3 col-6">
+                  <label className="form-label">cadastre uma nova conta</label>
+                  <div className="d-flex gap-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Adicionar nova conta"
+                      value={novaDescricao}
+                      onChange={(e) => setNovaDescricao(e.target.value)}
+                    />
+                    <Button variant="success" onClick={handleSalvarDescricao}>
+                      Salvar
+                    </Button>
+                  </div>
+                </div>
                 <div className="col-12 d-flex">
-                  <div className="col-6">
+                  <div className="col-md-6">
                     <label className="form-label label-atendimento">
                       Membros:
                     </label>
-                    <select
-                      className="form-select select-dados-atendimento"
-                      multiple
-                    >
+                    <div className="checkbox-list scroll-container">
                       {membros.map((membro) => (
-                        <option
-                          key={membro.id}
-                          value={membro.id}
-                          onDoubleClick={() =>
-                            handleDoubleClick(membro.id, "membroIds")
-                          }
-                        >
-                          {membro.nome} {membro.sobrenome}
-                        </option>
+                        <div key={membro.id} className="form-check">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`membro-${membro.id}`}
+                            checked={novoAtendimento.membroIds.includes(
+                              membro.id
+                            )}
+                            onChange={() =>
+                              handleDoubleClick(membro.id, "membroIds")
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`membro-${membro.id}`}
+                          >
+                            {membro.nome} {membro.sobrenome}
+                          </label>
+                        </div>
                       ))}
-                    </select>
-
+                    </div>
                     <p className="selecionados">
                       selecionados:{" "}
                       <strong>
@@ -478,26 +549,33 @@ const Gabinete = () => {
                     </p>
                   </div>
 
-                  <div className="col-6">
+                  <div className="col-md-6">
                     <label className="form-label label-atendimento">
                       Visitantes:
                     </label>
-                    <select
-                      className="form-select select-dados-atendimento"
-                      multiple
-                    >
+                    <div className="checkbox-list scroll-container">
                       {visitantes.map((visitante) => (
-                        <option
-                          key={visitante.id}
-                          value={visitante.id}
-                          onDoubleClick={() =>
-                            handleDoubleClick(visitante.id, "visitanteIds")
-                          }
-                        >
-                          {visitante.nome} {visitante.sobrenome}
-                        </option>
+                        <div key={visitante.id} className="form-check">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`visitante-${visitante.id}`}
+                            checked={novoAtendimento.visitanteIds.includes(
+                              visitante.id
+                            )}
+                            onChange={() =>
+                              handleDoubleClick(visitante.id, "visitanteIds")
+                            }
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`visitante-${visitante.id}`}
+                          >
+                            {visitante.nome} {visitante.sobrenome}
+                          </label>
+                        </div>
                       ))}
-                    </select>
+                    </div>
                     <p className="selecionados">
                       selecionados:{" "}
                       <strong>
@@ -510,17 +588,17 @@ const Gabinete = () => {
                     <button
                       onClick={handleClearSelection}
                       className="limpar-atendimento"
-                    
                     >
                       Limpar Seleção
                     </button>
                   </div>
                 </div>
+
                 <div className="modal-body">
                   <label className="form-label label-atendimento">
                     Não Cadastrado
                   </label>
-                  <div className="d-flex col-8">
+                  <div className="d-flex col-md-8">
                     <input
                       type="text"
                       className="form-control me-2"

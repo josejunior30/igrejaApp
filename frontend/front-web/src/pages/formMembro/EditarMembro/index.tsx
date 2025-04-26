@@ -18,13 +18,8 @@ const FormularioUpdate = () => {
     idade: 0,
     dataNascimento: new Date(),
     telefone: "",
-    curso: {
-      id: 0,
-      nome: "",
-      visitante: [],
-      membro: [],
-      EBDCurso: [],
-    },
+    cargoMembro: [],
+    ebdCurso: [],
 
     membroStatus: "",
     ano: 0,

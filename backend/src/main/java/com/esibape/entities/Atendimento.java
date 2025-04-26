@@ -14,17 +14,17 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 
 
@@ -35,13 +35,16 @@ public class Atendimento implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Enumerated(EnumType.STRING)
-	private TipoAtendimento tipoAtendimento;
+
 	@JsonFormat(pattern = "HH:mm")
 	private LocalTime horario;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate data; 
+	@ManyToOne
+	@JoinColumn(name = "opcao_id", nullable = false)
+	private OpcaoAtendimento opcaoAtendimento;
 	
+
 	@ElementCollection
 	@CollectionTable(name = "tb_atendimento_outro", joinColumns = @JoinColumn(name = "atendimento_id"))
 	@Column(name = "outro")
@@ -66,15 +69,13 @@ public class Atendimento implements Serializable{
 		
 	}
 
-	
-
-	public Atendimento(Long id, TipoAtendimento tipoAtendimento, LocalTime horario, LocalDate data, List<String> outro,
-			Set<Membro> membro, Set<Visitante> visitante) {
+	public Atendimento(Long id, LocalTime horario, LocalDate data,
+			OpcaoAtendimento opcaoAtendimento, List<String> outro, Set<Membro> membro, Set<Visitante> visitante) {
 		super();
 		this.id = id;
-		this.tipoAtendimento = tipoAtendimento;
 		this.horario = horario;
 		this.data = data;
+		this.opcaoAtendimento = opcaoAtendimento;
 		this.outro = outro;
 		this.membro = membro;
 		this.visitante = visitante;
@@ -91,15 +92,6 @@ public class Atendimento implements Serializable{
 		this.id = id;
 	}
 
-
-	public TipoAtendimento getTipoAtendimento() {
-		return tipoAtendimento;
-	}
-
-
-	public void setTipoAtendimento(TipoAtendimento tipoAtendimento) {
-		this.tipoAtendimento = tipoAtendimento;
-	}
 
 
 	public LocalTime getHorario() {
@@ -119,6 +111,14 @@ public class Atendimento implements Serializable{
 	}
 
 
+
+	public OpcaoAtendimento getOpcaoAtendimento() {
+		return opcaoAtendimento;
+	}
+
+	public void setOpcaoAtendimento(OpcaoAtendimento opcaoAtendimento) {
+		this.opcaoAtendimento = opcaoAtendimento;
+	}
 
 	public void setOutro(List<String> outro) {
 		this.outro = outro;

@@ -58,12 +58,18 @@ public class Membro implements Serializable {
 	private MembroStatus membroStatus;
 	@Enumerated(EnumType.STRING)
 	private MembroTipo membroTipo;
+	
+
+	@ManyToMany
+	@JoinTable(name="tb_cargo_membro", joinColumns =
+	@JoinColumn(name= "membro_id"), inverseJoinColumns = @JoinColumn(name= "cargo_id"))
+	private Set<CargoMembro>cargoMembro = new HashSet<>();
 
 	
 	@ManyToMany
 	@JoinTable(name="tb_ebd_curso_membro", joinColumns =
 	@JoinColumn(name= "membro_id"), inverseJoinColumns = @JoinColumn(name= "ebd_curso_id"))
-	Set<EBDCurso>ebdCurso = new HashSet<>();
+	private Set<EBDCurso>ebdCurso = new HashSet<>();
 	
 	@OneToMany(mappedBy = "membro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ListaPresencaEBD> listaPresencaEBD = new ArrayList<>();
@@ -78,13 +84,12 @@ public class Membro implements Serializable {
 	}
 	
 
-	
-
 	public Membro(Long id, String nome, String sobrenome, String email, LocalDate dataNascimento, Integer idade,
 			String telefone, String cpf, MembroEstado estadoCivil, String rua, String cep, String numero, String bairro,
 			String cidade, String complemento, String url, LocalDate desligamento, Integer ano, String opcaoCurso,
-			Boolean apostila, MembroStatus membroStatus, MembroTipo membroTipo, Set<EBDCurso> ebdCurso,
-			List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto, Set<Atendimento> atendimentoMembro) {
+			Boolean apostila, MembroStatus membroStatus, MembroTipo membroTipo, Set<CargoMembro> cargoMembro,
+			Set<EBDCurso> ebdCurso, List<ListaPresencaEBD> listaPresencaEBD, FileStorage foto,
+			Set<Atendimento> atendimentoMembro) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -108,13 +113,12 @@ public class Membro implements Serializable {
 		this.apostila = apostila;
 		this.membroStatus = membroStatus;
 		this.membroTipo = membroTipo;
+		this.cargoMembro = cargoMembro;
 		this.ebdCurso = ebdCurso;
 		this.listaPresencaEBD = listaPresencaEBD;
 		this.foto = foto;
 		this.atendimentoMembro = atendimentoMembro;
 	}
-
-
 
 
 	public Long getId() {
@@ -144,12 +148,6 @@ public class Membro implements Serializable {
 	}
 
 
-
-
-
-
-
-
 	public Set<Atendimento> getAtendimentoMembro() {
 		return atendimentoMembro;
 	}
@@ -163,16 +161,19 @@ public class Membro implements Serializable {
 
 
 
-
 	public MembroTipo getMembroTipo() {
 		return membroTipo;
 	}
 
 
+	public Set<CargoMembro> getCargoMembro() {
+		return cargoMembro;
+	}
 
 
-
-
+	public void setCargoMembro(Set<CargoMembro> cargoMembro) {
+		this.cargoMembro = cargoMembro;
+	}
 
 
 	public void setMembroTipo(MembroTipo membroTipo) {
