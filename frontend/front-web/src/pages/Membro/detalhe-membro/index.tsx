@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { MembroDTO } from "../../../models/membro";
@@ -21,10 +20,6 @@ const Detalhes = () => {
   const dropRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-<<<<<<< HEAD
-=======
-  
->>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
 
   const loadMembroDTO = (id: number) => {
     membroService
@@ -307,13 +302,13 @@ const Detalhes = () => {
           <div className="col-md-9">
             <div className="botoes-membros-container">
               <Link to={`/membro/atualizar/${id}`}>
-<<<<<<< HEAD
                 <button className="button-primary" id="botao-editar-membro">
                   Editar
                 </button>
-=======
-                <button className="button-primary" id="botao-editar-membro">Editar</button>
->>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
+
+                <button className="button-primary" id="botao-editar-membro">
+                  Editar
+                </button>
               </Link>
               <button
                 onClick={handleDeleteClick}
