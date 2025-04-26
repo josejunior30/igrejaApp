@@ -8,33 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-<<<<<<< HEAD
+
 import com.esibape.DTO.OpcaoAtendimentoDTO;
 import com.esibape.entities.OpcaoAtendimento;
 import com.esibape.repository.OpcaoAtendimentoRepository;
 
-=======
-import com.esibape.DTO.DescricaoContaDTO;
-import com.esibape.DTO.DescricaoReceitaDTO;
-import com.esibape.DTO.OpcaoAtendimentoDTO;
-import com.esibape.entities.DescricaoConta;
-import com.esibape.entities.DescricaoReceita;
-import com.esibape.entities.OpcaoAtendimento;
-import com.esibape.repository.DescricaoReceitaRepository;
-import com.esibape.repository.OpcaoAtendimentoRepository;
 
 
-
->>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
 @Service
 public class OpcaoAtendimentoService {
     @Autowired
     private OpcaoAtendimentoRepository repository;
 
-<<<<<<< HEAD
-    
-=======
->>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
     @Transactional(readOnly = true)
     public List<OpcaoAtendimentoDTO> findAll() {
         List<OpcaoAtendimento> list = repository.findAll();
@@ -54,11 +39,7 @@ public class OpcaoAtendimentoService {
     	OpcaoAtendimento entity =  new OpcaoAtendimento();
     		copyDtoToEntity(dto, entity);	
     		entity = repository.save(entity);
-<<<<<<< HEAD
     		return new OpcaoAtendimentoDTO(entity);
-=======
-    		return new OpcaoAtendimentoDTO();
->>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
     	
     }
     

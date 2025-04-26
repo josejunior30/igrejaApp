@@ -90,10 +90,6 @@ public class AtendimentoService {
     private void copyDtoToEntity(AtendimentoDTO dto, Atendimento entity) {
         entity.setData(dto.getData());
         entity.setHorario(dto.getHorario());
-<<<<<<< HEAD
-=======
-        entity.setTipoAtendimento(dto.getTipoAtendimento());
->>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
         entity.setOpcaoAtendimento(dto.getOpcaoAtendimento());
 
         if (dto.getOutro() != null) {

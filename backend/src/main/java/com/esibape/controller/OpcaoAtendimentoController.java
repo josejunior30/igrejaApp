@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.esibape.DTO.OpcaoAtendimentoDTO;
 import com.esibape.service.OpcaoAtendimentoService;
 
+
 @CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping(value = "/opcao-atendimento")

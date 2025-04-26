@@ -26,8 +26,6 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
-
-
 @Entity
 @Table(name="tb_atendimento")
 public class Atendimento implements Serializable{
@@ -69,11 +67,7 @@ public class Atendimento implements Serializable{
 		
 	}
 
-<<<<<<< HEAD
 	public Atendimento(Long id, LocalTime horario, LocalDate data,
-=======
-	public Atendimento(Long id, TipoAtendimento tipoAtendimento, LocalTime horario, LocalDate data,
->>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
 			OpcaoAtendimento opcaoAtendimento, List<String> outro, Set<Membro> membro, Set<Visitante> visitante) {
 		super();
 		this.id = id;

@@ -1,10 +1,7 @@
 package com.esibape.entities;
 
 import java.io.Serializable;
-<<<<<<< HEAD
-=======
 
->>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -13,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 @Entity
 @Table(name="tb_opcao_atendimento")
 public class OpcaoAtendimento implements Serializable{
@@ -70,10 +66,4 @@ public class OpcaoAtendimento implements Serializable{
 		return Objects.equals(id, other.id);
 	}
 	
-<<<<<<< HEAD
 }
-
-
-=======
-}
->>>>>>> 1bbf3b950d3f4862793f9cbc6fa34d1336e3f09c

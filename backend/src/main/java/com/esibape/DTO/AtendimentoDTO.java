@@ -12,10 +12,7 @@ import java.util.stream.Collectors;
 import com.esibape.entities.Atendimento;
 import com.esibape.entities.Membro;
 import com.esibape.entities.OpcaoAtendimento;
-import com.esibape.entities.TipoAtendimento;
 import com.esibape.entities.Visitante;
-
-
 
 public class AtendimentoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
