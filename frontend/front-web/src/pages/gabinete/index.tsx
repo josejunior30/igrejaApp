@@ -13,11 +13,7 @@ import {
   insertAtendimento,
   insertOpcaoAtendimento,
 } from "../../service/AtendimentoService";
-import {
-  Atendimento,
-  OpcaoAtendimento,
-
-} from "../../models/atendimento";
+import { Atendimento, OpcaoAtendimento } from "../../models/atendimento";
 import { MembroDTO } from "../../models/membro";
 import { visitante } from "../../models/visitante";
 import {
@@ -30,7 +26,6 @@ import {
 } from "recharts";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-
 
 import { formatHorario } from "../../components/formatacao/hora";
 import { formatDiaMes } from "../../components/formatacao/data";
@@ -63,7 +58,10 @@ const Gabinete = () => {
     []
   );
 
-  const [selectedDescricao, setSelectedDescricao] = useState<number>(0);
+  const [selectedDescricao, setSelectedDescricao] = useState<number | null>(
+    null
+  );
+
   const [novoAtendimento, setNovoAtendimento] = useState({
     data: "",
     horario: "",
@@ -108,28 +106,29 @@ const Gabinete = () => {
     findByAnoAtual()
       .then((response) => {
         const atendimentos: Atendimento[] = response.data;
-  
+
         const contagem = atendimentos.reduce<Record<string, number>>(
           (acc, atendimento) => {
-            const descricao = atendimento.opcaoAtendimento?.descricao || "Outro";
+            const descricao =
+              atendimento.opcaoAtendimento?.descricao || "Outro";
             acc[descricao] = (acc[descricao] || 0) + 1;
             return acc;
           },
           {} as Record<string, number>
         );
-  
+
         const dadosFormatados = Object.entries(contagem).map(
           ([descricao, count]) => ({
             name: descricao,
             value: count,
           })
         );
-  
+
         setDados(dadosFormatados);
       })
       .catch((error) => console.error("Erro ao buscar atendimentos:", error));
   }, []);
-  
+
   useEffect(() => {
     findByAnoMesAtual()
       .then((response) => {
@@ -225,7 +224,6 @@ const Gabinete = () => {
       });
   };
 
-
   const getSelectedNames = (
     ids: number[],
     list: { id: number; nome: string }[]
@@ -251,16 +249,13 @@ const Gabinete = () => {
       try {
         const response = await findAllOpcaoAtendimento();
         setOpcaoAtendimento(response.data);
-        if (response.data.length > 0) {
-          setSelectedDescricao(response.data[0].descricao);
-        }
       } catch (error) {
         console.error("Erro ao buscar descrições de receitas:", error);
       }
     }
     fetchDescricaoContas();
   }, []);
-
+  
   const handleSalvarDescricao = async () => {
     const nova = novaDescricao.trim();
     if (!nova) return alert("Informe uma descrição.");
@@ -292,6 +287,7 @@ const Gabinete = () => {
         opcaoAtendimento: descricaoInserida,
       }));
   
+      setSelectedDescricao(descricaoInserida.id);
       setNovaDescricao("");
       alert("Descrição salva com sucesso!");
     } catch (error) {
@@ -299,7 +295,6 @@ const Gabinete = () => {
       alert("Erro ao salvar descrição.");
     }
   };
-  
   return (
     <>
       <Header />
@@ -408,7 +403,7 @@ const Gabinete = () => {
                       {" "}
                       {formatDiaMes(new Date(atendimento.data))}-{" "}
                       {formatHorario(atendimento.horario)} -{" "}
-            
+                      {atendimento.opcaoAtendimento.descricao}
                     </span>
                   </div>
                   <div>
@@ -472,15 +467,17 @@ const Gabinete = () => {
                     <label className="form-label label-atendimento">
                       Tipo de Atendimento:
                     </label>
+
                     <select
                       className="form-select"
-                      value={novoAtendimento.opcaoAtendimento.id}
+                      value={selectedDescricao || ""}
                       onChange={(e) => {
-                        const selectedId = parseInt(e.target.value, 10);
+                        const selectedId = Number(e.target.value);
                         const selected = opcaoAtendimento.find(
                           (item) => item.id === selectedId
                         );
                         if (selected) {
+                          setSelectedDescricao(selected.id);
                           setNovoAtendimento((prev) => ({
                             ...prev,
                             opcaoAtendimento: selected,
@@ -489,6 +486,9 @@ const Gabinete = () => {
                       }}
                       required
                     >
+                      <option value="" disabled>
+                        Selecione um tipo de atendimento
+                      </option>
                       {opcaoAtendimento.map((item) => (
                         <option key={item.id} value={item.id}>
                           {item.descricao}
